@@ -185,6 +185,12 @@ const ALLOWED_EMAILS = [];
 // SKUs que o comprador do produto principal já possui.
 const OWNED_DEFAULT = ['principal'];
 
+// Emails de teste com ownership fixo, independente do localStorage.
+const OWNED_BY_EMAIL = {
+  'teste.default@leadgo.dev': ['principal'],
+  'teste.completo@leadgo.dev': ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo']
+};
+
 const MODULES = [
   {
     sku:'principal', unlocked:true,
@@ -237,7 +243,7 @@ const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/20
 function getEmail(){try{return localStorage.getItem('mdt_email');}catch(e){return null;}}
 function setEmail(e){try{localStorage.setItem('mdt_email',e);}catch(e){}}
 function clearEmail(){try{localStorage.removeItem('mdt_email');}catch(e){}}
-function getOwned(){try{const v=JSON.parse(localStorage.getItem('mdt_owned'));return Array.isArray(v)?v:OWNED_DEFAULT.slice();}catch(e){return OWNED_DEFAULT.slice();}}
+function getOwned(){try{const email=getEmail();if(email){const hit=OWNED_BY_EMAIL[email.toLowerCase()];if(hit)return hit.slice();}const v=JSON.parse(localStorage.getItem('mdt_owned'));return Array.isArray(v)?v:OWNED_DEFAULT.slice();}catch(e){return OWNED_DEFAULT.slice();}}
 
 /* ---------- login ---------- */
 const loginForm=document.getElementById('login-form');
