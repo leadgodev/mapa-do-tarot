@@ -108,6 +108,49 @@
   .reader-pages{max-width:820px;margin:0 auto;padding:26px clamp(12px,3vw,24px) 80px;display:flex;flex-direction:column;gap:22px;}
   .reader-pages img{width:100%;border-radius:12px;box-shadow:var(--shadow-md);display:block;}
 </style>
+<!-- trackeador:pixel:start (gerado por trackeador init — não edite à mão) -->
+<script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
+<script>
+/* Propaga utm_* + _tkid nos links de checkout, inclusive no redirect entre domínios. */
+(function () {
+  var MATCH = ["/checkout","mercadopago","mercadolibre","mpago","hotmart","cakto","ggcheckout","kirvano","pay.","checkout."];
+  var UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  /* O tracking id vem SEMPRE do pixel core (/api/pixel), nunca de uma leitura
+     própria do cookie. Motivo: desde o pixel v7 a chave é namespeada por
+     oferta ("_tkid_<escopo>", escopo derivado do host) pra duas ofertas em
+     subdomínios do mesmo domínio registrável não dividirem o mesmo id. Quem
+     lê "_tkid" na mão pega a chave errada — ou, pior, a chave de OUTRA
+     oferta que esteja no mesmo pote de cookie. Reimplementar a derivação
+     aqui criaria duas cópias que divergem; então este bloco só pergunta. */
+  function tkid() {
+    var T = window.Trackeador;
+    return (T && T.getTrackingId && T.getTrackingId()) || null;
+  }
+  function isCheckout(href) { href = (href || "").toLowerCase(); for (var i = 0; i < MATCH.length; i++) if (href.indexOf(MATCH[i]) > -1) return true; return false; }
+  function decorate() {
+    var qs = new URLSearchParams(location.search);
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var el = links[i], raw = el.getAttribute("href") || "";
+      if (!isCheckout(raw) && !isCheckout(el.href)) continue;
+      try {
+        var u = new URL(el.href, location.href);
+        UTM.forEach(function (k) { var v = qs.get(k); if (v && !u.searchParams.get(k)) u.searchParams.set(k, v); });
+        var t = tkid(); if (t) u.searchParams.set("_tkid", t);
+        el.href = u.toString();
+      } catch (e) {}
+    }
+  }
+  if (document.readyState !== "loading") decorate();
+  else document.addEventListener("DOMContentLoaded", decorate);
+  /* O loader do pixel é async: numa página sem mutação de DOM, o decorate
+     acima pode rodar antes de window.Trackeador existir e o link ficaria sem
+     _tkid. O core dispara este evento no boot dele. */
+  document.addEventListener("trackeador:ready", decorate);
+  try { new MutationObserver(decorate).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) {}
+})();
+</script>
+<!-- trackeador:pixel:end -->
 </head>
 <body>
 
@@ -320,7 +363,9 @@ function openReader(sku){
   const m=MODULES.find(x=>x.sku===sku);
   document.getElementById('reader-title').textContent=m.title;
   const pages=document.getElementById('reader-pages');
-  pages.innerHTML = m.pages.map((p,i)=>'<img loading="'+(i<2?'eager':'lazy')+'" src="'+p+'" alt="'+m.title+' — página '+(i+1)+'">').join('');
+  pages.innerHTML = m.pages.length
+    ? m.pages.map((p,i)=>'<img loading="'+(i<2?'eager':'lazy')+'" src="'+p+'" alt="'+m.title+' — página '+(i+1)+'">').join('')
+    : '<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Conteúdo em produção ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Você já tem acesso liberado. Assim que este módulo for publicado, ele aparece aqui automaticamente — sem custo extra.</p></div>';
   location.hash='#ler/'+sku;
   route();
   window.scrollTo(0,0);
@@ -337,7 +382,7 @@ function route(){
     const sku=h.slice(5);
     const m=MODULES.find(x=>x.sku===sku);
     const owned=getOwned();
-    if(m && (m.unlocked||owned.includes(sku)) && m.pages.length){show('view-reader');return;}
+    if(m && (m.unlocked||owned.includes(sku))){show('view-reader');return;}
     location.hash='#hub';
   }
   renderHub();

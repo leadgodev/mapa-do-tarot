@@ -94,6 +94,49 @@
     .bonus-list>div>div>div:first-child{justify-content:center;}
   }
 </style>
+<!-- trackeador:pixel:start (gerado por trackeador init — não edite à mão) -->
+<script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
+<script>
+/* Propaga utm_* + _tkid nos links de checkout, inclusive no redirect entre domínios. */
+(function () {
+  var MATCH = ["/checkout","mercadopago","mercadolibre","mpago","hotmart","cakto","ggcheckout","kirvano","pay.","checkout."];
+  var UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  /* O tracking id vem SEMPRE do pixel core (/api/pixel), nunca de uma leitura
+     própria do cookie. Motivo: desde o pixel v7 a chave é namespeada por
+     oferta ("_tkid_<escopo>", escopo derivado do host) pra duas ofertas em
+     subdomínios do mesmo domínio registrável não dividirem o mesmo id. Quem
+     lê "_tkid" na mão pega a chave errada — ou, pior, a chave de OUTRA
+     oferta que esteja no mesmo pote de cookie. Reimplementar a derivação
+     aqui criaria duas cópias que divergem; então este bloco só pergunta. */
+  function tkid() {
+    var T = window.Trackeador;
+    return (T && T.getTrackingId && T.getTrackingId()) || null;
+  }
+  function isCheckout(href) { href = (href || "").toLowerCase(); for (var i = 0; i < MATCH.length; i++) if (href.indexOf(MATCH[i]) > -1) return true; return false; }
+  function decorate() {
+    var qs = new URLSearchParams(location.search);
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var el = links[i], raw = el.getAttribute("href") || "";
+      if (!isCheckout(raw) && !isCheckout(el.href)) continue;
+      try {
+        var u = new URL(el.href, location.href);
+        UTM.forEach(function (k) { var v = qs.get(k); if (v && !u.searchParams.get(k)) u.searchParams.set(k, v); });
+        var t = tkid(); if (t) u.searchParams.set("_tkid", t);
+        el.href = u.toString();
+      } catch (e) {}
+    }
+  }
+  if (document.readyState !== "loading") decorate();
+  else document.addEventListener("DOMContentLoaded", decorate);
+  /* O loader do pixel é async: numa página sem mutação de DOM, o decorate
+     acima pode rodar antes de window.Trackeador existir e o link ficaria sem
+     _tkid. O core dispara este evento no boot dele. */
+  document.addEventListener("trackeador:ready", decorate);
+  try { new MutationObserver(decorate).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) {}
+})();
+</script>
+<!-- trackeador:pixel:end -->
 </head>
 <body>
 <div style="background:var(--sky-300); font-family:var(--font-body); color:var(--ink-700); overflow-x:hidden; -webkit-font-smoothing:antialiased;">
