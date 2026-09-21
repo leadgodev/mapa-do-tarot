@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- REEMPLAZAR: verificación de dominio de Facebook del nuevo proyecto -->
+<title>Mapa do Tarot — Aprenda a Ler o Tarot Sem Decorar Nenhuma Carta</title>
+<meta name="description" content="O mapa visual que explica cada carta do Tarot, suas combinações e uma página para praticar — para você aprender de verdade, hoje mesmo. Sem decorar. Garantia de 7 dias.">
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2329461171213410');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2329461171213410&ev=PageView&noscript=1"/></noscript>
+<!-- /Meta Pixel -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids async defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://scripts.converteai.net">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional"></noscript>
+<style>
+  :root{
+    --teal-900:#1b1035; --teal-700:#2e1a47; --teal-600:#3d2360; --teal-500:#5a3691; --teal-300:#9b7fc4;
+    --sky-400:#a78bca; --sky-300:#bda6db; --sky-200:#d4c4e8; --sky-100:#e7ddf3;
+    --cream-300:#e6d4bd; --cream-200:#f0e5d3; --cream-100:#f7efe2; --paper:#faf4ea;
+    --orange-600:#6d28d9; --orange-500:#8b3ff0; --orange-400:#a668ff; --orange-200:#d9c2ff;
+    --gold-500:#cfa94d; --gold-300:#e3cd8e;
+    --ink-900:#14242f; --ink-700:#1b3340; --ink-500:#34505d; --ink-300:#6a8089;
+    --white:#fff;
+    --surface-card:var(--cream-200);
+    --accent:var(--orange-500); --accent-press:var(--orange-600); --accent-soft:var(--orange-200);
+    --highlight:var(--orange-200);
+    --border-soft:rgba(20,36,47,.12); --border-strong:rgba(20,36,47,.32);
+    --shadow-sm:0 2px 10px rgba(20,36,47,.08);
+    --shadow-md:0 10px 26px rgba(20,36,47,.13);
+    --shadow-lg:0 20px 50px rgba(20,36,47,.18);
+    --font-display:'Cormorant Garamond',Georgia,serif;
+    --font-heading:'Poppins',system-ui,sans-serif;
+    --font-body:'Poppins',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;}
+  img{max-width:100%;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; font-family:var(--font-heading); font-weight:700; text-transform:uppercase; letter-spacing:.04em; border-radius:999px; text-decoration:none; cursor:pointer; transition:transform .2s ease, background .2s ease, box-shadow .2s ease; border:none; line-height:1.1;}
+  .btn-lg{padding:18px 40px; font-size:16px;}
+  .btn-md{padding:15px 26px; font-size:14px; width:100%;}
+  .btn-primary{background:var(--accent); color:#fff; box-shadow:0 10px 24px rgba(217,89,15,.32);}
+  .btn-primary:hover{background:var(--accent-press); transform:translateY(-2px);}
+  .btn-primary:active{transform:translateY(1px);}
+  .btn-secondary{background:var(--cream-200); color:var(--ink-900); border:2px solid var(--accent);}
+  .btn-secondary:hover{background:var(--accent); color:#fff;}
+  .btn .arr{font-weight:400; font-size:1.1em;}
+  .icon-badge{width:66px; height:66px; border-radius:999px; background:var(--cream-200); display:flex; align-items:center; justify-content:center; flex:none; color:var(--accent-press);}
+  @keyframes peekMajor{0%,40%{opacity:1; transform:translateY(0) scale(1);}50%,90%{opacity:0; transform:translateY(10px) scale(.975);}100%{opacity:1; transform:translateY(0) scale(1);}}
+  @keyframes peekMinor{0%,40%{opacity:0; transform:translateY(10px) scale(.975);}50%,90%{opacity:1; transform:translateY(0) scale(1);}100%{opacity:0; transform:translateY(10px) scale(.975);}}
+  @keyframes labelMajor{0%,42%{opacity:1; transform:translateY(0);}50%,92%{opacity:0; transform:translateY(6px);}100%{opacity:1; transform:translateY(0);}}
+  @keyframes labelMinor{0%,42%{opacity:0; transform:translateY(6px);}50%,92%{opacity:1; transform:translateY(0);}100%{opacity:0; transform:translateY(6px);}}
+  .peek-major{animation:peekMajor 4.5s ease-in-out infinite;}
+  .peek-minor{animation:peekMinor 4.5s ease-in-out infinite;}
+  .peek-label-major{animation:labelMajor 4.5s ease-in-out infinite;}
+  .peek-label-minor{animation:labelMinor 4.5s ease-in-out infinite;}
+  @keyframes arrowBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
+  .arrow-bounce span{display:inline-block; animation:arrowBounce 1.1s ease-in-out infinite;}
+  .arrow-bounce span:nth-child(2){animation-delay:.12s;}
+  .arrow-bounce span:nth-child(3){animation-delay:.24s;}
+  .faq{background:var(--white); border-radius:12px; box-shadow:var(--shadow-sm); overflow:hidden;}
+  .faq>summary{list-style:none; display:flex; align-items:center; justify-content:space-between; gap:14px; padding:18px 22px; cursor:pointer; font-family:var(--font-heading); font-weight:600; font-size:16px; color:var(--ink-900);}
+  .faq>summary::-webkit-details-marker{display:none;}
+  .faq>summary .sign{color:var(--accent); font-size:22px; font-weight:400; flex:none; line-height:1; transition:transform .25s ease;}
+  .faq[open]>summary .sign{transform:rotate(45deg);}
+  .faq .ans{padding:0 22px 20px; margin:0; font-size:15px; line-height:1.6; color:var(--ink-700);}
+  @media (max-width:720px){
+    .item01-grid{grid-template-columns:1fr !important;}
+    .item01-grid>div:first-child{max-width:360px; margin:0 auto;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .peek-major,.peek-minor,.peek-label-major,.peek-label-minor,.arrow-bounce span{animation:none;}
+    .peek-minor,.peek-label-minor{opacity:0;}
+    html{scroll-behavior:auto;}
+  }
+  @media (max-width:640px){
+    .bonus-list>div{flex-direction:column; text-align:center;}
+    .bonus-list>div>img{width:82% !important; max-width:340px !important; margin:0 auto 8px;}
+    .bonus-list>div>div>div:first-child{justify-content:center;}
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18375796235"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18375796235');
+</script>
+</head>
+<body>
+<div style="background:var(--sky-300); font-family:var(--font-body); color:var(--ink-700); overflow-x:hidden; -webkit-font-smoothing:antialiased;">
+
+  <!-- ============ HERO ============ -->
+  <section style="position:relative; background:var(--sky-300); padding:clamp(48px,7vw,84px) 24px clamp(56px,7vw,92px); overflow:hidden;">
+    <div aria-hidden="true" style="position:absolute; top:6%; left:50%; width:920px; height:920px; transform:translateX(-50%); background:radial-gradient(circle, rgba(255,255,255,.55) 0%, transparent 62%); pointer-events:none;"></div>
+    <div aria-hidden="true" style="position:absolute; inset:0; background-image:url('assets/texture-paper.svg'); background-size:420px; opacity:.45; mix-blend-mode:multiply; pointer-events:none;"></div>
+    <div style="position:relative; z-index:1; max-width:880px; margin:0 auto; text-align:center;">
+      <div style="display:inline-flex; align-items:center; gap:10px; font-family:var(--font-heading); font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-500); opacity:.9; margin-bottom:26px;">
+        <span style="color:var(--orange-500); font-size:16px;">✦</span>
+        Aprenda a ler as cartas com clareza
+      </div>
+      <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(34px,5.2vw,58px); line-height:1.08; letter-spacing:-.01em; color:var(--ink-900); margin:0 0 22px;">Aprenda a Ler o Tarot <span style="color:var(--accent);">Sem Decorar</span> Nenhuma Carta</h1>
+      <p style="max-width:680px; margin:0 auto 36px; font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--ink-700);">O mapa visual que explica cada carta, suas combinações e te dá uma página para praticar — para você aprender de verdade, hoje mesmo. Sem livros grossos, sem termos confusos.</p>
+
+      <div style="width:min(400px,90vw); margin:0 auto 32px; border-radius:16px; overflow:hidden; box-shadow:var(--shadow-lg); background:var(--ink-900);">
+        <iframe title="Mapa do Tarot — vídeo" allow="autoplay; fullscreen; encrypted-media" style="width:100%; aspect-ratio:9/16; border:0; display:block;" srcdoc='&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;style&gt;html,body{margin:0;height:100%;background:#14242f;overflow:hidden}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;vturb-smartplayer id=&quot;vid-6a5d7745fc14b1fd524bbbbc&quot; style=&quot;display:block;width:100%&quot;&gt;&lt;/vturb-smartplayer&gt;&lt;script src=&quot;https://scripts.converteai.net/26b104be-5609-44db-9d44-9ec3e9c17047/players/6a5d7745fc14b1fd524bbbbc/v4/player.js&quot; async&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;'></iframe>
+      </div>
+
+      <div style="max-width:520px; margin:0 auto 24px; background:var(--cream-100); border-radius:16px; box-shadow:var(--shadow-md); padding:24px 26px 26px; text-align:center;">
+        <p style="margin:0 0 14px; font-size:15px; line-height:1.5; color:var(--ink-700);"><strong style="color:var(--accent-press);">Método simples, sem decorar:</strong> cada carta vem com significados claros, palavras-chave e combinações — para você ler com confiança hoje.</p>
+        <div style="margin:0 0 16px;"><span style="display:inline-block; background:var(--accent-soft); color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:16px; padding:8px 20px; border-radius:999px;">A partir de apenas R$17,90</span></div>
+        <a class="btn btn-lg btn-primary" href="index.html#oferta" style="width:100%;">Quero meu mapa agora <span class="arr">→</span></a>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+        <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; font-size:13.5px; color:var(--ink-700);">
+          <span style="display:inline-flex; align-items:center; gap:7px;"><span style="display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:12px; font-weight:700;">✓</span> Acesso imediato</span>
+          <span style="display:inline-flex; align-items:center; gap:7px;"><span style="display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:12px; font-weight:700;">✓</span> Garantia de 7 dias</span>
+          <span style="display:inline-flex; align-items:center; gap:7px;"><span style="display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:12px; font-weight:700;">✓</span> Pagamento seguro</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPENING / VALUE ============ -->
+  <section style="background:var(--cream-100); padding:clamp(56px,7vw,96px) 24px;">
+    <div style="max-width:1080px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:clamp(36px,5vw,72px); align-items:center;">
+      <div>
+        <h2 style="font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(28px,3.4vw,42px); line-height:1.15; color:var(--ink-900); margin:0 0 24px;">O Tarot sempre te chamou.</h2>
+        <p style="font-size:clamp(16px,1.5vw,18px); line-height:1.7; color:var(--ink-700); margin:0 0 18px;">Aquela sensação de poder olhar uma carta e entender a mensagem que ela tem para você. Mas toda vez que você tenta, trava no mesmo ponto: <strong style="color:var(--ink-900);">78 cartas, centenas de significados, e a ideia de ter que decorar tudo.</strong></p>
+        <p style="font-size:clamp(16px,1.5vw,18px); line-height:1.7; color:var(--ink-700); margin:0 0 18px;">O Mapa do Tarot nasce exatamente aí. Em vez de listas intermináveis para decorar, você recebe um mapa visual em que cada carta é explicada de forma simples, clara e conectada com as demais.</p>
+        <p style="font-size:clamp(16px,1.5vw,18px); line-height:1.7; color:var(--ink-700); margin:0;">E o mais importante: <span style="background:var(--highlight); color:var(--ink-900); padding:2px 8px; border-radius:8px; box-decoration-break:clone; -webkit-box-decoration-break:clone; font-weight:600;">uma página para praticar o que você aprende.</span> Porque o Tarot não se decora — se sente e se pratica.</p>
+      </div>
+      <div style="position:relative;">
+        <img src="assets/webp/producto-basico.webp" width="899" height="543" loading="lazy" decoding="async" alt="Mapa Completo do Tarot — guia visual em tablet" style="width:100%; height:auto; display:block; filter:drop-shadow(0 18px 30px rgba(20,36,47,.22));">
+        <div style="text-align:center; margin-top:26px;"><a class="btn btn-lg btn-primary" href="index.html#oferta">Quero meu mapa agora <span class="arr">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAIN ============ -->
+  <section style="position:relative; background:var(--teal-600); color:var(--cream-100); padding:clamp(56px,7vw,96px) 24px; overflow:hidden;">
+    <div aria-hidden="true" style="position:absolute; inset:0; background-image:url('assets/texture-paper.svg'); background-size:420px; opacity:.5; mix-blend-mode:multiply; pointer-events:none;"></div>
+    <div style="position:relative; z-index:1; max-width:920px; margin:0 auto;">
+      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(26px,3.2vw,36px); line-height:1.2; text-align:center; color:var(--cream-100); margin:0 0 12px;">Se você se identifica com isso, esse material é para você</h2>
+      <p style="text-align:center; font-size:16px; color:var(--gold-300); margin:0 0 44px;">Leia com calma. Você provavelmente vai reconhecer mais de uma.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px;">
+        <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:20px 22px;"><span style="color:var(--gold-300); font-size:20px; line-height:1.2; flex:none;">✦</span><p style="margin:0; font-size:16px; line-height:1.55;">Você assiste a um vídeo de Tarot, entende na hora… e em dois dias já não lembra de nada.</p></div>
+        <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:20px 22px;"><span style="color:var(--gold-300); font-size:20px; line-height:1.2; flex:none;">✦</span><p style="margin:0; font-size:16px; line-height:1.55;">Sente que precisa decorar as 78 cartas antes de conseguir ler alguma coisa.</p></div>
+        <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:20px 22px;"><span style="color:var(--gold-300); font-size:20px; line-height:1.2; flex:none;">✦</span><p style="margin:0; font-size:16px; line-height:1.55;">Tira as cartas, olha para elas e pensa: "e agora, o que isso significa junto?"</p></div>
+        <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:20px 22px;"><span style="color:var(--gold-300); font-size:20px; line-height:1.2; flex:none;">✦</span><p style="margin:0; font-size:16px; line-height:1.55;">Se perde entre tantos significados soltos, sem saber como conectá-los.</p></div>
+        <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:20px 22px;"><span style="color:var(--gold-300); font-size:20px; line-height:1.2; flex:none;">✦</span><p style="margin:0; font-size:16px; line-height:1.55;">Quer ler para você (ou para os seus) mas falta confiança.</p></div>
+        <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:20px 22px;"><span style="color:var(--gold-300); font-size:20px; line-height:1.2; flex:none;">✦</span><p style="margin:0; font-size:16px; line-height:1.55;">Depende de apps ou de buscar carta por carta toda vez.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METHOD / SOLUTION ============ -->
+  <section style="background:var(--cream-100); padding:clamp(56px,7vw,96px) 24px;">
+    <div style="max-width:1000px; margin:0 auto;">
+      <div style="text-align:center; max-width:760px; margin:0 auto 52px;">
+        <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(26px,3.4vw,38px); line-height:1.18; color:var(--ink-900); margin:0 0 16px;">O problema não é você. <span style="color:var(--accent);">É o método.</span></h2>
+        <p style="font-size:clamp(16px,1.5vw,18px); line-height:1.65; color:var(--ink-700); margin:0;">Aprender o Tarot como uma lista para decorar é exaustivo — e não funciona. O Mapa do Tarot usa um sistema diferente:</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:24px;">
+        <div style="background:var(--surface-card); border-radius:20px; padding:34px 28px; box-shadow:var(--shadow-md); text-align:center;">
+          <div style="display:flex; justify-content:center; margin-bottom:18px;"><span class="icon-badge"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></span></div>
+          <h3 style="font-family:var(--font-heading); font-weight:700; font-size:19px; color:var(--ink-900); margin:0 0 10px;">Um mapa visual e ilustrado</h3>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--ink-700);">Cada carta se entende num só olhar: símbolos, palavras-chave, lado positivo e negativo.</p>
+        </div>
+        <div style="background:var(--surface-card); border-radius:20px; padding:34px 28px; box-shadow:var(--shadow-md); text-align:center;">
+          <div style="display:flex; justify-content:center; margin-bottom:18px;"><span class="icon-badge"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span></div>
+          <h3 style="font-family:var(--font-heading); font-weight:700; font-size:19px; color:var(--ink-900); margin:0 0 10px;">Combinações explicadas</h3>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--ink-700);">Você entende o que as cartas dizem juntas — não isoladas. A mensagem completa, não fragmentos.</p>
+        </div>
+        <div style="background:var(--surface-card); border-radius:20px; padding:34px 28px; box-shadow:var(--shadow-md); text-align:center; position:relative;">
+          <div style="position:absolute; top:16px; right:16px;"><span style="display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:700; font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:4px 10px; border-radius:999px;">Novo</span></div>
+          <div style="display:flex; justify-content:center; margin-bottom:18px;"><span class="icon-badge"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></span></div>
+          <h3 style="font-family:var(--font-heading); font-weight:700; font-size:19px; color:var(--ink-900); margin:0 0 10px;">Uma página de prática</h3>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--ink-700);">Você treina suas leituras passo a passo, até que ler saia natural.</p>
+        </div>
+      </div>
+      <p style="text-align:center; max-width:680px; margin:40px auto 0; font-family:var(--font-display); font-style:italic; font-size:clamp(19px,2.2vw,25px); line-height:1.4; color:var(--teal-700);">Assim você não decora: compreende e pratica. A única forma de o Tarot realmente ficar com você.</p>
+
+      <!-- PEEK INSIDE -->
+      <div style="margin-top:clamp(48px,5vw,72px);">
+        <p style="text-align:center; font-family:var(--font-heading); font-weight:700; font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-500); margin:0 0 14px;"><span style="color:var(--accent);">✦</span> &nbsp;Um olhar real por dentro&nbsp; <span style="color:var(--accent);">✦</span></p>
+        <div style="display:flex; justify-content:center; margin:0 0 30px;">
+          <div style="position:relative; display:inline-flex; align-items:center; justify-content:center; min-width:188px; height:34px; padding:0 20px; border-radius:999px; background:var(--accent-soft); border:1px solid var(--accent); overflow:hidden;">
+            <span class="peek-label-major" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-weight:700; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-press);">✦ Arcanos Maiores ✦</span>
+            <span class="peek-label-minor" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-weight:700; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-press);">✦ Arcanos Menores ✦</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:clamp(20px,4vw,48px); justify-content:center; align-items:center; flex-wrap:wrap; max-width:1000px; margin:0 auto;">
+          <figure style="margin:0; flex:1; min-width:300px; max-width:480px; text-align:center;">
+            <div style="position:relative; aspect-ratio:1500/1061; border-radius:14px; overflow:hidden; box-shadow:var(--shadow-lg); border:6px solid var(--white); transform:rotate(-1.5deg);">
+              <img class="peek-major" src="assets/webp/map-fool.webp" width="880" height="619" loading="lazy" decoding="async" alt="O mapa visual — O Louco (Arcano Maior)" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <img class="peek-minor" src="assets/webp/map-knight.webp" width="880" height="619" loading="lazy" decoding="async" alt="O mapa visual — Cavaleiro de Espadas (Arcano Menor)" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <figcaption style="margin-top:16px; font-size:14px; color:var(--ink-700);"><strong style="font-family:var(--font-heading); color:var(--ink-900);">O mapa visual</strong> — cada carta em uma página: significado, símbolos, luz e sombra, combinações.</figcaption>
+          </figure>
+          <figure style="margin:0; flex:1; min-width:300px; max-width:480px; text-align:center;">
+            <div style="position:relative; aspect-ratio:1500/1054; border-radius:14px; overflow:hidden; box-shadow:var(--shadow-lg); border:6px solid var(--white); transform:rotate(1.5deg);">
+              <img class="peek-major" src="assets/webp/practice-fool.webp" width="880" height="618" loading="lazy" decoding="async" alt="A página de prática — O Louco (Arcano Maior)" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <img class="peek-minor" src="assets/webp/practice-knight.webp" width="880" height="618" loading="lazy" decoding="async" alt="A página de prática — Cavaleiro de Espadas (Arcano Menor)" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <figcaption style="margin-top:16px; font-size:14px; color:var(--ink-700);"><strong style="font-family:var(--font-heading); color:var(--ink-900);">A página de prática</strong> — para a mesma carta, para você treinar e fixar o que lê.</figcaption>
+          </figure>
+        </div>
+        <p style="text-align:center; max-width:560px; margin:26px auto 0; font-size:14px; line-height:1.55; color:var(--ink-500);">As <strong style="color:var(--ink-900);">78 cartas</strong> — Arcanos Maiores <em>e</em> Menores — têm o mesmo mapa visual e página de prática.</p>
+        <div style="text-align:center; margin-top:30px;"><a class="btn btn-lg btn-primary" href="index.html#oferta">Quero meu mapa agora <span class="arr">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BENEFITS ============ -->
+  <section style="background:var(--sky-300); padding:clamp(56px,7vw,96px) 24px;">
+    <div style="max-width:960px; margin:0 auto;">
+      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(26px,3.4vw,38px); text-align:center; color:var(--ink-900); margin:0 0 8px;">Isso é o que muda para você</h2>
+      <p style="text-align:center; font-size:16px; color:var(--ink-500); margin:0 0 48px;">Não é teoria: são coisas que você vai conseguir fazer.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:22px;">
+        <div style="display:flex; gap:18px; align-items:flex-start; background:var(--paper); border-radius:16px; padding:24px 26px; box-shadow:var(--shadow-sm);"><span class="icon-badge"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span><div><h3 style="font-family:var(--font-heading); font-weight:700; font-size:17.5px; color:var(--ink-900); margin:0 0 5px;">Você lê qualquer carta com confiança</h3><p style="margin:0; font-size:15px; line-height:1.55; color:var(--ink-700);">Mesmo que hoje você não saiba nada de Tarot.</p></div></div>
+        <div style="display:flex; gap:18px; align-items:flex-start; background:var(--paper); border-radius:16px; padding:24px 26px; box-shadow:var(--shadow-sm);"><span class="icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span><div><h3 style="font-family:var(--font-heading); font-weight:700; font-size:17.5px; color:var(--ink-900); margin:0 0 5px;">Você entende as combinações</h3><p style="margin:0; font-size:15px; line-height:1.55; color:var(--ink-700);">Não só cartas soltas — você interpreta a mensagem completa.</p></div></div>
+        <div style="display:flex; gap:18px; align-items:flex-start; background:var(--paper); border-radius:16px; padding:24px 26px; box-shadow:var(--shadow-sm);"><span class="icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><div><h3 style="font-family:var(--font-heading); font-weight:700; font-size:17.5px; color:var(--ink-900); margin:0 0 5px;">Você aprende em minutos</h3><p style="margin:0; font-size:15px; line-height:1.55; color:var(--ink-700);">O que outros levam meses — sem decorar nada.</p></div></div>
+        <div style="display:flex; gap:18px; align-items:flex-start; background:var(--paper); border-radius:16px; padding:24px 26px; box-shadow:var(--shadow-sm);"><span class="icon-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span><div><h3 style="font-family:var(--font-heading); font-weight:700; font-size:17.5px; color:var(--ink-900); margin:0 0 5px;">Você pratica e fixa</h3><p style="margin:0; font-size:15px; line-height:1.55; color:var(--ink-700);">Com a página de exercícios, o que você vê fica com você.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL PROOF ============ -->
+  <section style="background:var(--cream-100); padding:clamp(56px,7vw,96px) 24px;">
+    <div style="max-width:1000px; margin:0 auto;">
+      <div style="display:flex; gap:clamp(24px,6vw,80px); justify-content:center; flex-wrap:wrap; margin-bottom:52px; text-align:center;">
+        <div>
+          <div style="font-family:var(--font-heading); font-weight:800; font-size:clamp(34px,4.5vw,52px); color:var(--accent); line-height:1;">3.700<span style="font-size:.6em;">+</span></div>
+          <div style="font-size:15px; color:var(--ink-700); margin-top:8px;">pessoas já aprendem com o&nbsp;Mapa</div>
+        </div>
+        <div style="width:1px; background:var(--border-soft); align-self:stretch;"></div>
+        <div>
+          <div style="font-family:var(--font-heading); font-weight:800; font-size:clamp(34px,4.5vw,52px); color:var(--accent); line-height:1;">4,9<span style="font-size:.5em; color:var(--ink-500);">/5</span></div>
+          <div style="font-size:15px; color:var(--ink-700); margin-top:8px;">avaliação média · de leitoras do mundo todo</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:30px;">
+        <div style="width:100%; display:flex; justify-content:center;"><img src="assets/webp/etsy-badge.webp" width="900" height="300" loading="lazy" decoding="async" alt="Mapa do Tarot — 4,9 estrelas (1,8k avaliações), 3,7k vendas, 5 anos na plataforma" style="width:100%; max-width:680px; height:auto; display:block; border-radius:14px; filter:drop-shadow(0 10px 22px rgba(20,36,47,.16));"></div>
+        <div style="width:100%; display:flex; justify-content:center;"><img src="assets/webp/testimonios.webp" width="780" height="775" loading="lazy" decoding="async" alt="Comentários reais de clientes: adorei o material, super organizado e fácil de aprender, muito didático" style="width:100%; max-width:520px; height:auto; display:block; filter:drop-shadow(0 10px 22px rgba(20,36,47,.14));"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OFFER + PRICING ============ -->
+  <section id="oferta" style="position:relative; background:var(--teal-600); color:var(--cream-100); padding:clamp(56px,7vw,96px) 24px; overflow:hidden;">
+    <div aria-hidden="true" style="position:absolute; inset:0; background-image:url('assets/texture-paper.svg'); background-size:420px; opacity:.5; mix-blend-mode:multiply; pointer-events:none;"></div>
+    <div style="position:relative; z-index:1; max-width:920px; margin:0 auto;">
+      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(26px,3.4vw,38px); text-align:center; color:var(--cream-100); margin:0 0 40px;">Isto é <span style="color:var(--gold-300);">TUDO</span> o que você recebe hoje</h2>
+
+      <!-- ITEM 01 -->
+      <div class="item01-grid" style="display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(24px,4vw,46px); align-items:center; max-width:940px; margin:0 auto 12px;">
+        <div style="position:relative; display:flex; justify-content:center;">
+          <img src="assets/webp/producto-bundle.webp" width="1000" height="860" loading="lazy" decoding="async" alt="Mapa Completo do Tarot — com todos os materiais e bônus" style="width:100%; max-width:440px; height:auto; display:block; filter:drop-shadow(0 16px 30px rgba(0,0,0,.34));">
+          <span style="position:absolute; bottom:6%; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:7px 16px; border-radius:999px; box-shadow:var(--shadow-md); white-space:nowrap;">★ O conjunto completo</span>
+        </div>
+        <div style="background:var(--cream-100); color:var(--ink-700); border-radius:20px; padding:clamp(26px,3.5vw,38px); box-shadow:var(--shadow-lg);">
+          <span style="display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:12px; letter-spacing:.14em; text-transform:uppercase; padding:6px 16px; border-radius:8px; margin-bottom:16px;">Item 01</span>
+          <h3 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(22px,3vw,30px); line-height:1.12; color:var(--ink-900); margin:0 0 6px;">O Mapa Completo do Tarot</h3>
+          <p style="font-family:var(--font-display); font-style:italic; font-size:clamp(16px,2vw,20px); color:var(--accent-press); margin:0 0 18px;">Carta por carta, em um só mapa visual</p>
+          <div style="height:1px; background:var(--border-soft); margin:0 0 18px;"></div>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:11px;">
+            <li style="display:flex; gap:11px; align-items:flex-start; font-size:15px; line-height:1.4;"><span style="display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:11px; font-weight:700; flex:none; margin-top:1px;">✓</span> As 78 cartas explicadas — Arcanos Maiores e Menores</li>
+            <li style="display:flex; gap:11px; align-items:flex-start; font-size:15px; line-height:1.4;"><span style="display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:11px; font-weight:700; flex:none; margin-top:1px;">✓</span> Significados normais <span style="opacity:.6">e</span> invertidos</li>
+            <li style="display:flex; gap:11px; align-items:flex-start; font-size:15px; line-height:1.4;"><span style="display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:11px; font-weight:700; flex:none; margin-top:1px;">✓</span> Palavras-chave de cada carta</li>
+            <li style="display:flex; gap:11px; align-items:flex-start; font-size:15px; line-height:1.4;"><span style="display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:11px; font-weight:700; flex:none; margin-top:1px;">✓</span> Lado positivo <span style="opacity:.6">e</span> negativo de cada carta</li>
+            <li style="display:flex; gap:11px; align-items:flex-start; font-size:15px; line-height:1.4;"><span style="display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:11px; font-weight:700; flex:none; margin-top:1px;">✓</span> Combinações de cartas, lidas juntas</li>
+            <li style="display:flex; gap:11px; align-items:flex-start; font-size:15px; line-height:1.4;"><span style="display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:11px; font-weight:700; flex:none; margin-top:1px;">✓</span> Uma página de prática para treinar suas leituras</li>
+            <li style="display:flex; gap:11px; align-items:flex-start; font-size:15px; line-height:1.4;"><span style="display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); font-size:11px; font-weight:700; flex:none; margin-top:1px;">✓</span> Ideal para iniciantes — sem decorar</li>
+          </ul>
+          <p style="text-align:center; font-family:var(--font-display); font-style:italic; font-size:16px; color:var(--ink-500); margin:18px 0 0;">E muito mais…</p>
+        </div>
+      </div>
+
+      <!-- BONUS SHOWCASE -->
+      <div style="max-width:820px; margin:0 auto 44px;">
+        <p style="text-align:center; font-family:var(--font-heading); font-weight:800; font-size:clamp(20px,2.8vw,28px); color:var(--gold-300); margin:0 0 6px;">+ 4 Bônus Exclusivos — <span style="color:#fff;">100% GRÁTIS Hoje</span></p>
+        <p style="text-align:center; font-size:14px; color:var(--cream-100); opacity:.82; margin:0 0 32px;">Para que suas leituras fiquem ainda mais poderosas, você também recebe — sem custo extra:</p>
+        <div class="bonus-list" style="display:flex; flex-direction:column; gap:18px;">
+          <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
+            <img src="assets/webp/b3.webp" width="551" height="343" loading="lazy" decoding="async" alt="Bônus 1 — Guia de Interpretação Intuitiva" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 1</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">$19</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
+              <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Guia de Interpretação Intuitiva</h3>
+              <p style="margin:0; font-size:14px; line-height:1.55; color:var(--cream-100); opacity:.9;">Aprenda a ler os símbolos, sentir a mensagem e interpretar qualquer carta com clareza — além dos significados fixos.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
+            <img src="assets/webp/b1.webp" width="551" height="343" loading="lazy" decoding="async" alt="Bônus 2 — Livro das Tiragens" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 2</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">$17</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
+              <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Livro das Tiragens</h3>
+              <p style="margin:0; font-size:14px; line-height:1.55; color:var(--cream-100); opacity:.9;">Tiragens prontas para amor, dinheiro e decisões — comece a ler imediatamente sem adivinhar a disposição.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
+            <img src="assets/webp/b4.webp" width="551" height="343" loading="lazy" decoding="async" alt="Bônus 3 — Cuidado e Conexão com seu Tarot" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 3</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">$15</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
+              <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Cuidado e Conexão com seu Tarot</h3>
+              <p style="margin:0; font-size:14px; line-height:1.55; color:var(--cream-100); opacity:.9;">Como limpar, proteger e fortalecer o vínculo com seu baralho para que suas leituras fiquem mais nítidas e pessoais.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
+            <img src="assets/webp/b2.webp" width="551" height="343" loading="lazy" decoding="async" alt="Bônus 4 — Guia Passo a Passo: Minha Primeira Tiragem" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 4</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">$19</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
+              <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Guia Passo a Passo: "Minha Primeira Tiragem"</h3>
+              <p style="margin:0; font-size:14px; line-height:1.55; color:var(--cream-100); opacity:.9;">Um percurso guiado que te leva pela mão — do zero até sua primeira leitura completa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align:center; font-family:var(--font-heading); font-weight:800; font-size:clamp(17px,2.4vw,22px); letter-spacing:.06em; text-transform:uppercase; color:var(--cream-100); margin:0 0 26px;">Escolha a melhor opção para você:</p>
+
+      <!-- PLANS -->
+      <div style="display:flex; gap:22px; flex-wrap:wrap; align-items:stretch; justify-content:center; max-width:760px; margin:0 auto;">
+        <div class="plan-card" style="position:relative; flex:1; min-width:260px; background:var(--white); color:var(--ink-700); border:2px solid var(--border-soft); border-radius:18px; padding:30px 28px; display:flex; flex-direction:column;">
+          <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%);"><span style="display:inline-block; background:var(--ink-900); color:var(--cream-100); font-family:var(--font-heading); font-weight:700; font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:5px 16px; border-radius:999px; box-shadow:var(--shadow-sm); white-space:nowrap;">Plano Básico</span></div>
+          <div style="margin-bottom:20px; text-align:center;">
+            <img src="assets/webp/producto-basico.webp" width="899" height="543" loading="lazy" decoding="async" alt="Mapa do Tarot — guia visual" style="width:100%; max-width:320px; height:auto; display:block; margin:0 auto; filter:drop-shadow(0 10px 18px rgba(20,36,47,.22));">
+          </div>
+          <p style="margin:0 0 4px; font-family:var(--font-heading); font-weight:700; font-size:14px; color:var(--ink-900); line-height:1.35;">Materiais em versão PDF <span style="font-weight:600; color:var(--ink-500);">(Entrega Imediata)</span>:</p>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px; font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent-press);"><span style="color:var(--accent);">✦</span> Mapa do Tarot</div>
+          <div style="font-family:var(--font-heading); font-weight:800; font-size:46px; color:var(--ink-900); line-height:1; margin-bottom:10px;">R$17,90</div>
+          <p style="margin:0 0 14px; font-size:12px; color:var(--ink-300); line-height:1.4;">* O preço é convertido para sua moeda local no checkout.</p>
+          <p style="margin:0 0 18px; display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-700);"><span style="color:var(--accent-press);">⏱</span> Acesso imediato logo após a compra!</p>
+          <a class="btn btn-md btn-secondary" href="#checkout-pendente" onclick="return openDownsell(event)">Quero só o básico <span class="arr">→</span></a>
+          <p style="text-align:center; font-size:11.5px; color:var(--ink-300); margin:12px 0 18px;">Tarjeta &middot; PayPal &middot; Nequi &middot; Mercado&nbsp;Pago &middot; OXXO</p>
+          <div style="text-align:center;">
+            <p style="margin:0; font-family:var(--font-heading); font-weight:800; font-size:14px; color:var(--accent-press); line-height:1.4;">ATENÇÃO: temos uma oferta ainda melhor para você! Olha só abaixo</p>
+            <div class="arrow-bounce" style="display:flex; justify-content:center; gap:10px; color:var(--accent); font-size:26px; line-height:1; margin-top:6px;"><span>↓</span><span>↓</span><span>↓</span></div>
+          </div>
+        </div>
+
+        <div class="plan-card" style="position:relative; flex:1; min-width:260px; background:var(--cream-100); color:var(--ink-700); border:2.5px solid var(--accent); border-radius:18px; padding:30px 28px; box-shadow:var(--shadow-lg); display:flex; flex-direction:column;">
+          <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%);"><span style="display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:700; font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:5px 14px; border-radius:999px; box-shadow:var(--shadow-sm);">★ O preferido</span></div>
+          <div style="margin-bottom:20px; text-align:center;">
+            <img src="assets/webp/producto-bundle.webp" width="1000" height="860" loading="lazy" decoding="async" alt="Tudo incluído — o Mapa Completo do Tarot, páginas de prática e os 4 bônus" style="width:100%; max-width:300px; height:auto; display:block; margin:0 auto; filter:drop-shadow(0 10px 18px rgba(20,36,47,.22));">
+          </div>
+          <div style="font-family:var(--font-heading); font-weight:700; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-press); margin-bottom:8px;">Plano Completo</div>
+          <p style="margin:0 0 14px; font-size:13px; font-weight:600; color:var(--ink-900);">Todos os materiais em PDF — entrega imediata:</p>
+          <ul style="list-style:none; padding:0; margin:0 0 22px; display:flex; flex-direction:column; gap:9px; flex:1;">
+            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> O Mapa Completo do Tarot — cartas detalhadas</li>
+            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Significados e palavras-chave de cada carta (+ invertidas)</li>
+            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Mais de 150 exemplos reais de combinações</li>
+            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Os naipes e seus elementos explicados</li>
+            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Conselhos espirituais e interpretações práticas</li>
+            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Guia passo a passo para abrir e ler as cartas</li>
+            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> <span><strong>Bônus exclusivos:</strong> tiragens prontas + modelos de leitura + mini e-book de interpretação intuitiva</span></li>
+          </ul>
+          <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;"><span style="font-size:17px; color:var(--ink-300); text-decoration:line-through;">R$67</span><span style="font-family:var(--font-heading); font-weight:800; font-size:42px; color:var(--accent);">R$27,90</span></div>
+          <p style="margin:0 0 16px; font-size:13px; color:var(--ink-500);">Acesso imediato — enviado direto para o seu e-mail.</p>
+          <a class="btn btn-md btn-primary" href="#checkout-pendente">Quero o plano completo <span class="arr">→</span></a>
+          <p style="text-align:center; font-size:11.5px; color:var(--ink-300); margin:12px 0 0;">Tarjeta &middot; PayPal &middot; Nequi &middot; Mercado&nbsp;Pago &middot; OXXO</p>
+        </div>
+      </div>
+      <p style="text-align:center; font-size:13px; line-height:1.5; color:var(--gold-300); margin:26px auto 0; max-width:580px;"><span style="color:#fff;">✉ Acesso imediato</span> enviado para o seu e-mail assim que o pagamento é confirmado · checkout seguro · <span style="color:#fff;">os preços são convertidos para sua moeda local.</span></p>
+      <div style="position:relative; width:clamp(170px,38vw,210px); margin:34px auto 0; aspect-ratio:1;">
+        <div aria-hidden="true" style="position:absolute; inset:-24%; background:radial-gradient(circle, rgba(227,205,142,.55) 0%, rgba(207,169,77,.28) 42%, transparent 68%); border-radius:999px; pointer-events:none;"></div>
+        <img src="assets/webp/seal-7day-v2.webp" width="302" height="302" loading="lazy" decoding="async" alt="Garantia de devolução de 7 dias" style="position:relative; width:100%; height:auto; display:block; filter:drop-shadow(0 6px 16px rgba(154,120,41,.5));">
+      </div>
+      <div style="max-width:580px; margin:18px auto 0; text-align:center;">
+        <h3 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(20px,2.6vw,26px); color:var(--cream-100); margin:0 0 10px;">Garantia incondicional · Risco zero</h3>
+        <p style="font-size:15px; line-height:1.65; color:var(--cream-100); opacity:.9; margin:0;">Leve o Mapa, abra, pratique. Se por qualquer motivo você sentir que não é para você, nos escreva em até 7 dias e devolvemos 100% do seu dinheiro. Sem perguntas. O risco é todo nosso — você só precisa decidir começar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OBJECTIONS ============ -->
+  <section style="background:var(--cream-100); padding:clamp(56px,7vw,96px) 24px;">
+    <div style="max-width:780px; margin:0 auto;">
+      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(24px,3.2vw,34px); text-align:center; color:var(--ink-900); margin:0 0 44px;">O que você provavelmente está pensando</h2>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="background:var(--white); border-radius:16px; padding:26px 28px; box-shadow:var(--shadow-sm);">
+          <p style="margin:0 0 10px;"><span style="background:var(--highlight); color:var(--ink-900); padding:3px 12px; border-radius:8px; font-family:var(--font-heading); font-weight:700; font-size:14px;">"Mas no YouTube tem vídeos de Tarot grátis…"</span></p>
+          <p style="margin:0; font-size:15.5px; line-height:1.65; color:var(--ink-700);">É verdade. E é por isso que muita gente assiste por meses sem aprender a ler de verdade. Assistir é passivo: hoje você entende, amanhã esquece. Aqui você não só aprende — <strong style="color:var(--ink-900);">pratica com sua página de exercícios</strong> até que fique com você. Isso nenhum vídeo solto te dá.</p>
+        </div>
+        <div style="background:var(--white); border-radius:16px; padding:26px 28px; box-shadow:var(--shadow-sm);">
+          <p style="margin:0 0 10px;"><span style="background:var(--highlight); color:var(--ink-900); padding:3px 12px; border-radius:8px; font-family:var(--font-heading); font-weight:700; font-size:14px;">"Tenho medo de decorar as 78 cartas…"</span></p>
+          <p style="margin:0; font-size:15.5px; line-height:1.65; color:var(--ink-700);">Você não precisa decorar nada. Esse é justamente o ponto. O Mapa é visual: você entende cada carta pelos símbolos e palavras-chave, não de memória. <strong style="color:var(--ink-900);">Você lê olhando o mapa</strong> — como quem lê um mapa de verdade.</p>
+        </div>
+        <div style="background:var(--white); border-radius:16px; padding:26px 28px; box-shadow:var(--shadow-sm);">
+          <p style="margin:0 0 10px;"><span style="background:var(--highlight); color:var(--ink-900); padding:3px 12px; border-radius:8px; font-family:var(--font-heading); font-weight:700; font-size:14px;">"E se eu for totalmente iniciante?"</span></p>
+          <p style="margin:0; font-size:15.5px; line-height:1.65; color:var(--ink-700);">Perfeito, é feito para você. Você começa do zero e o guia "Minha Primeira Tiragem" te leva pela mão até sua primeira leitura.</p>
+        </div>
+        <div style="background:var(--white); border-radius:16px; padding:26px 28px; box-shadow:var(--shadow-sm);">
+          <p style="margin:0 0 10px;"><span style="background:var(--highlight); color:var(--ink-900); padding:3px 12px; border-radius:8px; font-family:var(--font-heading); font-weight:700; font-size:14px;">"Está tudo em português? Odeio quando aparece espanhol…"</span></p>
+          <p style="margin:0; font-size:15.5px; line-height:1.65; color:var(--ink-700);">A gente entende. Muitos e-books são traduzidos pela metade e deixam partes em espanhol que estragam a leitura. Aqui não: <strong style="color:var(--ink-900);">tudo está 100% em português</strong>, sem partes em espanhol nem mistura de idiomas.</p>
+        </div>
+        <div style="background:var(--white); border-radius:16px; padding:26px 28px; box-shadow:var(--shadow-sm);">
+          <p style="margin:0 0 10px;"><span style="background:var(--highlight); color:var(--ink-900); padding:3px 12px; border-radius:8px; font-family:var(--font-heading); font-weight:700; font-size:14px;">"Isso não é conteúdo feito com IA?"</span></p>
+          <p style="margin:0; font-size:15.5px; line-height:1.65; color:var(--ink-700);">Não. Cada página foi <strong style="color:var(--ink-900);">desenhada à mão</strong>, com base em referências de grandes obras do Tarot — não gerada por IA. Por isso o material é coerente, bonito e realmente útil para aprender.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section style="background:var(--cream-100); padding:clamp(56px,7vw,96px) 24px;">
+    <div style="max-width:720px; margin:0 auto;">
+      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(24px,3.2vw,34px); text-align:center; color:var(--ink-900); margin:0 0 40px;">Perguntas frequentes</h2>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <details class="faq" open><summary>Funciona se eu nunca li Tarot? <span class="sign">+</span></summary><p class="ans">Sim. É feito para começar do zero, passo a passo, no seu próprio ritmo.</p></details>
+        <details class="faq"><summary>Preciso decorar as cartas? <span class="sign">+</span></summary><p class="ans">Não. É um mapa visual: você lê olhando, não de memória.</p></details>
+        <details class="faq"><summary>Quanto tempo por dia eu preciso? <span class="sign">+</span></summary><p class="ans">O quanto você quiser. Você avança no seu ritmo e volta quando precisar — o acesso é vitalício.</p></details>
+        <details class="faq"><summary>Como recebo o material? <span class="sign">+</span></summary><p class="ans">Na hora, no seu e-mail, logo após o pagamento. É 100% digital (PDF).</p></details>
+        <details class="faq"><summary>Quais são as formas de pagamento? <span class="sign">+</span></summary><p class="ans">Cartão e os métodos disponíveis no checkout seguro. O preço é convertido para sua moeda local automaticamente.</p></details>
+        <details class="faq"><summary>O pagamento é seguro? <span class="sign">+</span></summary><p class="ans">Totalmente. Plataforma criptografada e reconhecida internacionalmente.</p></details>
+        <details class="faq"><summary>E se eu não gostar? <span class="sign">+</span></summary><p class="ans">Você tem 7 dias de garantia. Devolvemos 100%, sem perguntas.</p></details>
+        <details class="faq"><summary>Tenho suporte se eu travar? <span class="sign">+</span></summary><p class="ans">Sim, você pode nos escrever pelo Instagram (@mapadeltarot) ou por e-mail e a gente te ajuda.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section style="position:relative; background:var(--teal-700); color:var(--cream-100); padding:clamp(64px,8vw,104px) 24px; text-align:center; overflow:hidden;">
+    <div aria-hidden="true" style="position:absolute; top:0; left:50%; width:820px; height:820px; transform:translate(-50%,-30%); background:radial-gradient(circle, rgba(207,169,77,.22) 0%, transparent 62%); pointer-events:none;"></div>
+    <div style="position:relative; z-index:1; max-width:720px; margin:0 auto;">
+      <h2 style="font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(28px,4vw,46px); line-height:1.15; color:var(--cream-100); margin:0 0 22px;">Hoje você pode continuar do mesmo jeito… ou começar a ler.</h2>
+      <p style="font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--gold-300); margin:0 0 14px;">Imagine abrir seu baralho na próxima semana e entender o que as cartas têm a te dizer — com calma, com clareza, com confiança.</p>
+      <p style="font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--cream-100); margin:0 0 38px;">Você não precisa decorar 78 cartas. Não precisa de anos. Precisa do mapa certo.</p>
+      <a class="btn btn-lg btn-primary" href="#checkout-pendente">Quero começar hoje — R$27,90 <span class="arr">→</span></a>
+      <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; font-size:13.5px; color:var(--cream-100); opacity:.85; margin-top:22px;">
+        <span>✓ Acesso imediato</span><span>✓ Garantia de 7 dias</span><span>✓ Todos os bônus incluídos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--ink-900); color:var(--cream-200); padding:54px 24px; text-align:center;">
+    <img src="assets/webp/logo.webp" width="80" height="120" loading="lazy" decoding="async" alt="Mapa do Tarot" style="width:80px; height:auto; object-fit:contain; margin-bottom:16px;">
+    <p style="max-width:620px; margin:0 auto; font-size:12.5px; line-height:1.6; opacity:.7;">© 2026 Mapa do Tarot — Todos os direitos reservados. Este produto tem caráter educativo e não garante resultados específicos. O Tarot é uma ferramenta de autoconhecimento e reflexão.</p>
+    <div style="display:flex; gap:22px; justify-content:center; margin-top:20px; font-size:12.5px; font-family:var(--font-heading); letter-spacing:.06em; text-transform:uppercase; opacity:.85;">
+      <span>Termos</span><span>Privacidade</span><span>@mapadeltarot</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ DOWN-SELL MODAL ============ -->
+<div id="downsell" role="dialog" aria-modal="true" aria-labelledby="ds-title" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(12,36,42,.72); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); padding:20px; overflow-y:auto;">
+  <div style="max-width:440px; margin:6vh auto; background:var(--cream-100); border-radius:22px; box-shadow:0 30px 70px rgba(0,0,0,.45); padding:30px 26px 28px; text-align:center; position:relative; font-family:var(--font-body);">
+    <button type="button" onclick="closeDownsell()" aria-label="Fechar" style="position:absolute; top:14px; right:16px; background:none; border:none; font-size:26px; line-height:1; color:var(--ink-300); cursor:pointer;">×</button>
+    <div style="display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:6px 16px; border-radius:999px; margin-bottom:16px;">Espera — oferta especial</div>
+    <h3 id="ds-title" style="font-family:var(--font-heading); font-weight:800; font-size:clamp(21px,4.6vw,26px); line-height:1.15; color:var(--ink-900); margin:0 0 10px;">Leve <span style="color:var(--accent-press);">tudo</span> por quase o mesmo preço</h3>
+    <p style="margin:0 0 18px; font-size:15px; line-height:1.55; color:var(--ink-700);">Antes de ficar com o básico, leve o <strong style="color:var(--ink-900);">Mapa Completo + os 4 bônus</strong> — o método completo — por muito pouco a mais.</p>
+    <div style="background:var(--white); border:2px solid var(--accent); border-radius:16px; padding:20px 18px; margin-bottom:16px;">
+      <div style="display:flex; align-items:baseline; justify-content:center; gap:10px; margin-bottom:4px;"><span style="font-size:16px; color:var(--ink-300); text-decoration:line-through;">R$34</span><span style="font-family:var(--font-heading); font-weight:800; font-size:40px; color:var(--accent); line-height:1;">R$22,90</span></div>
+      <p style="margin:0 0 14px; font-size:12.5px; color:var(--ink-500);">Mapa Completo + Páginas de Prática + 4 Bônus</p>
+      <a class="btn btn-md btn-primary" href="#checkout-pendente" style="width:100%;">Sim! Melhorar para o completo — R$22,90 <span class="arr">→</span></a>
+    </div>
+    <a href="#checkout-pendente" onclick="closeDownsell()" style="display:inline-block; font-size:13px; color:var(--ink-300); text-decoration:underline; font-family:var(--font-heading);">Não, obrigado, continuar com o básico (R$16,90)</a>
+  </div>
+</div>
+
+<script>
+  function openDownsell(e){ if(e) e.preventDefault(); document.getElementById('downsell').style.display='block'; document.body.style.overflow='hidden'; return false; }
+  function closeDownsell(){ document.getElementById('downsell').style.display='none'; document.body.style.overflow=''; }
+  document.getElementById('downsell').addEventListener('click', function(ev){ if(ev.target===this) closeDownsell(); });
+  document.addEventListener('keydown', function(ev){ if(ev.key==='Escape') closeDownsell(); });
+</script>
+<script>
+  // Propaga UTMs (e demais parâmetros da URL) para os links de checkout
+  (function () {
+    var incoming = new URLSearchParams(window.location.search);
+    if (![].some.call(incoming.keys(), function () { return true; })) return;
+    document.querySelectorAll('a[href*="checkout-pendente"]').forEach(function (a) {
+      try {
+        var url = new URL(a.href);
+        incoming.forEach(function (value, key) { if (!url.searchParams.has(key)) url.searchParams.set(key, value); });
+        a.href = url.toString();
+      } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
