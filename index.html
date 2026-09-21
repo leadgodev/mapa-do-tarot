@@ -24,8 +24,8 @@
 <!-- /Meta Pixel -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://scripts.converteai.net">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" as="image" href="assets/webp/producto-basico.webp" fetchpriority="high">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional"></noscript>
 <style>
   :root{
@@ -155,7 +155,7 @@
 
       <div style="width:min(400px,90vw); margin:0 auto 32px; border-radius:16px; overflow:hidden; box-shadow:var(--shadow-lg); background:var(--ink-900);">
         <!-- TODO: mockup produto sendo gerado (pane banner) — imagem abaixo ainda é a referência do concorrente (producto-basico.webp, "Mapa del Tarot" em espanhol), trocar quando o mockup próprio (Aura Mystica) ficar pronto -->
-        <img src="assets/webp/producto-basico.webp" width="899" height="543" loading="lazy" decoding="async" alt="Mapa do Tarot — produto completo" style="width:100%; height:auto; display:block;">
+        <img src="assets/webp/producto-basico.webp" width="899" height="543" loading="eager" fetchpriority="high" decoding="async" alt="Mapa do Tarot — produto completo" style="width:100%; height:auto; display:block;">
       </div>
 
       <div style="max-width:520px; margin:0 auto 24px; background:var(--cream-100); border-radius:16px; box-shadow:var(--shadow-md); padding:24px 26px 26px; text-align:center;">
