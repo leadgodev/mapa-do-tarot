@@ -2,7 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<base href="/painel/">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, max-age=0, must-revalidate">
 <title>Mapa do Tarot — Área de Membros</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,6 +88,10 @@
   .card .body p{font-size:12.5px;color:var(--ink-300);margin:0;line-height:1.4;}
   .card .body .cta{margin-top:auto;padding-top:10px;font-family:var(--font-head);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);}
   .card.locked .body .cta{color:var(--ink-500);}
+  button.card{padding:0;text-align:left;font:inherit;color:inherit;touch-action:manipulation;}
+  .card:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  .card .body .card-title{font-family:var(--font-head);font-weight:700;font-size:15px;color:var(--ink-900);line-height:1.2;}
+  .card .body .card-subtitle{font-size:12.5px;color:var(--ink-300);line-height:1.4;}
 
   /* ===== MODAL ===== */
   .modal-bg{position:fixed;inset:0;z-index:100;background:rgba(20,36,47,.55);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -106,7 +113,11 @@
   .reader-bar .back:hover{color:var(--accent);}
   .reader-bar h2{font-family:var(--font-head);font-weight:700;font-size:15px;color:var(--ink-900);margin:0;}
   .reader-pages{max-width:820px;margin:0 auto;padding:26px clamp(12px,3vw,24px) 80px;display:flex;flex-direction:column;gap:22px;}
-  .reader-pages img{width:100%;border-radius:12px;box-shadow:var(--shadow-md);display:block;}
+  .reader-page{margin:0;width:100%;min-width:0;flex:none;}
+  .reader-pages img{width:100%;height:auto;min-height:1px;border-radius:12px;box-shadow:var(--shadow-md);display:block;}
+  .page-status{padding:16px;text-align:center;font-size:14px;line-height:1.5;background:var(--paper);border-radius:12px;}
+  .page-status p{margin:0 0 12px;}
+  .page-status a{display:block;margin-top:12px;text-decoration:underline;}
 </style>
 <!-- trackeador:pixel:start (gerado por trackeador init — não edite à mão) -->
 <script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
@@ -200,7 +211,7 @@
 <!-- ===================== READER ===================== -->
 <div id="view-reader" class="hidden">
   <div class="reader-bar">
-    <span class="back" id="reader-back">← Voltar</span>
+    <button type="button" class="back" id="reader-back" style="border:0;background:none;padding:8px 0;touch-action:manipulation;">← Voltar</button>
     <h2 id="reader-title"></h2>
   </div>
   <div class="reader-pages" id="reader-pages"></div>
@@ -227,6 +238,11 @@ const ALLOWED_EMAILS = [];
 
 // SKUs que o comprador do produto principal já possui.
 const OWNED_DEFAULT = ['principal'];
+
+// Coolify serves /painel without redirecting to /painel/. Never resolve assets
+// against that document URL: "conteudo/..." would become /conteudo/... (404).
+const ASSET_VERSION = '20260922-mobile-1';
+function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
 // Emails de teste com ownership fixo, independente do localStorage.
 const OWNED_BY_EMAIL = {
@@ -319,18 +335,22 @@ function renderHub(){
   grid.innerHTML='';
   MODULES.forEach(m=>{
     const unlocked = m.unlocked || owned.includes(m.sku);
-    const card=document.createElement('div');
+    // A native button activates with touch, mouse and keyboard without a
+    // touchend listener that would also fire while swiping the module carousel.
+    const card=document.createElement('button');
+    card.type='button';
+    card.dataset.sku=m.sku;
     card.className='card'+(unlocked?'':' locked');
     let badge = unlocked ? '<span class="badge badge-free">Liberado</span>'
               : (m.soon ? '<span class="badge badge-soon">Em breve</span>'
                         : '<span class="badge badge-price">'+m.price+'</span>');
-    const coverImg = m.cover ? '<img src="'+m.cover+'" alt="'+m.title+'">'
-                             : '<div style="width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></div>';
-    const lockOv = unlocked ? '' : '<div class="lock-ov">'+LOCK_SVG+'</div>';
+    const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
+                             : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
+    const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
     const cta = unlocked ? 'Acessar →' : (m.soon ? 'Desbloquear cedo' : 'Desbloquear');
     card.innerHTML=
-      '<div class="cover">'+coverImg+badge+lockOv+'</div>'+
-      '<div class="body"><h3>'+m.title+'</h3><p>'+m.subtitle+'</p><span class="cta">'+cta+'</span></div>';
+      '<span class="cover">'+coverImg+badge+lockOv+'</span>'+
+      '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
     card.addEventListener('click',()=>{
       if(unlocked) openReader(m.sku); else openModal(m.sku);
     });
@@ -342,7 +362,7 @@ function renderHub(){
 function openModal(sku){
   const m=MODULES.find(x=>x.sku===sku);
   const mount=document.getElementById('modal-mount');
-  const coverStyle = m.cover ? ("background-image:url('"+m.cover+"')") : "background:linear-gradient(135deg,#3b1a6b,#8b3ff0)";
+  const coverStyle = m.cover ? ("background-image:url('"+assetUrl(m.cover)+"')") : "background:linear-gradient(135deg,#3b1a6b,#8b3ff0)";
   mount.innerHTML=
    '<div class="modal-bg" id="modal-bg"><div class="modal">'+
      '<div class="m-cover" style="'+coverStyle+'"></div>'+
@@ -360,15 +380,65 @@ function closeModal(){document.getElementById('modal-mount').innerHTML='';}
 
 /* ---------- reader ---------- */
 function openReader(sku){
-  const m=MODULES.find(x=>x.sku===sku);
-  document.getElementById('reader-title').textContent=m.title;
-  const pages=document.getElementById('reader-pages');
-  pages.innerHTML = m.pages.length
-    ? m.pages.map((p,i)=>'<img loading="'+(i<2?'eager':'lazy')+'" src="'+p+'" alt="'+m.title+' — página '+(i+1)+'">').join('')
-    : '<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Conteúdo em produção ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Você já tem acesso liberado. Assim que este módulo for publicado, ele aparece aqui automaticamente — sem custo extra.</p></div>';
   location.hash='#ler/'+sku;
   route();
   window.scrollTo(0,0);
+}
+function renderReader(m){
+  const pages=document.getElementById('reader-pages');
+  if(pages.dataset.sku===m.sku && pages.childElementCount)return;
+  document.getElementById('reader-title').textContent=m.title;
+  pages.dataset.sku=m.sku;
+  pages.innerHTML='';
+  if(!m.pages.length){
+    pages.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Conteúdo em produção ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Você já tem acesso liberado. Assim que este módulo for publicado, ele aparece aqui automaticamente — sem custo extra.</p></div>';
+    return;
+  }
+  m.pages.forEach((path,i)=>{
+    const page=document.createElement('figure');
+    page.className='reader-page';
+    const img=document.createElement('img');
+    img.alt=m.title+' — página '+(i+1);
+    img.loading='eager';
+    img.decoding='async';
+    const status=document.createElement('figcaption');
+    status.className='page-status';
+    status.setAttribute('role','status');
+    const message=document.createElement('p');
+    message.textContent='Carregando página '+(i+1)+'…';
+    const retry=document.createElement('button');
+    retry.type='button';
+    retry.className='btn btn-ghost hidden';
+    retry.textContent='Tentar novamente';
+    const direct=document.createElement('a');
+    direct.href=assetUrl(path);
+    direct.target='_blank';
+    direct.rel='noopener';
+    direct.className='hidden';
+    direct.textContent='Abrir imagem diretamente';
+    img.onload=()=>{status.classList.add('hidden');};
+    img.onerror=()=>{
+      status.classList.remove('hidden');
+      message.textContent='Não foi possível carregar a página '+(i+1)+'. Verifique sua conexão e tente novamente.';
+      retry.classList.remove('hidden');
+      direct.classList.remove('hidden');
+    };
+    retry.addEventListener('click',()=>{
+      message.textContent='Carregando página '+(i+1)+'…';
+      retry.classList.add('hidden');
+      direct.classList.add('hidden');
+      img.src=assetUrl(path)+'&retry='+Date.now();
+    });
+    status.appendChild(message);
+    status.appendChild(retry);
+    status.appendChild(direct);
+    page.appendChild(img);
+    page.appendChild(status);
+    pages.appendChild(page);
+    // Assign src after listeners and DOM insertion; every page starts loading
+    // immediately, even below the fold or when restored from a reader URL.
+    img.src=assetUrl(path);
+  });
 }
 document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#hub';route();window.scrollTo(0,0);});
 
@@ -377,12 +447,16 @@ function show(id){['view-login','view-hub','view-reader'].forEach(v=>{document.g
 function route(){
   const email=getEmail();
   const h=location.hash;
-  if(!email){show('view-login');return;}
+  if(!email){
+    document.getElementById('reader-pages').innerHTML='';
+    closeModal();
+    show('view-login');return;
+  }
   if(h.startsWith('#ler/')){
     const sku=h.slice(5);
     const m=MODULES.find(x=>x.sku===sku);
     const owned=getOwned();
-    if(m && (m.unlocked||owned.includes(sku))){show('view-reader');return;}
+    if(m && (m.unlocked||owned.includes(sku))){show('view-reader');renderReader(m);return;}
     location.hash='#hub';
   }
   renderHub();
