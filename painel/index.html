@@ -247,7 +247,7 @@ function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 // Emails de teste com ownership fixo, independente do localStorage.
 const OWNED_BY_EMAIL = {
   'teste.default@leadgo.dev': ['principal'],
-  'teste.completo@leadgo.dev': ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo']
+  'teste.completo@leadgo.dev': ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo','guia-flash','perguntas-80','folha-consulta']
 };
 
 const MODULES = [
@@ -281,6 +281,27 @@ const MODULES = [
     cover:'capas/bonus-3.jpg',
     desc:'Como ativar, limpar a energia, proteger e guardar o seu baralho — com uma rotina de conexão diária.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','ativar-baralho','limpar-energia','proteger','guardar','conexao-diaria','o-que-evitar','rotina','exercicio'][i]+'.jpg')
+  },
+  {
+    sku:'guia-flash', unlocked:false, price:'R$ 21,91',
+    title:'Guia Flash · Arcanos Maiores', subtitle:'Os significados-chave para consultar na hora.',
+    cover:'capas/guia-flash.jpg',
+    desc:'Guia rápido e visual dos Arcanos Maiores: gravura da carta + essência, direito e invertido, para consultar durante a leitura sem travar.',
+    pages:Array.from({length:10},(_,i)=>'conteudo/guia-flash/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','louco','mago','sacerdotisa','imperatriz','imperador','hierofante','enamorados','carro','forca'][i]+'.jpg')
+  },
+  {
+    sku:'perguntas-80', unlocked:false, price:'R$ 21,91',
+    title:'80 Perguntas Poderosas', subtitle:'Perguntas que abrem a mensagem da carta.',
+    cover:'capas/perguntas-80.jpg',
+    desc:'Troque o “isso vai dar certo?” por perguntas que revelam respostas mais claras e profundas — organizadas por tema: amor, dinheiro, autoconhecimento, decisões e mais.',
+    pages:Array.from({length:10},(_,i)=>'conteudo/perguntas-80/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','amor','dinheiro','autoconhecimento','decisoes','familia','espiritualidade','saude','superacao','sombra'][i]+'.jpg')
+  },
+  {
+    sku:'folha-consulta', unlocked:false, price:'R$ 27,52',
+    title:'A Folha de Consulta do Tarot', subtitle:'Referência rápida, ao direito e invertida.',
+    cover:'capas/folha-consulta.jpg',
+    desc:'Tabelas de consulta rápida com o significado de cada carta ao direito e invertida, mais sim/não, tempo de resposta e elementos por naipe.',
+    pages:Array.from({length:10},(_,i)=>'conteudo/folha-consulta/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','arcanos-0-8','arcanos-9-21','copas','ouros','espadas','paus','sim-ou-nao','tempo-de-resposta','elementos'][i]+'.jpg')
   },
   {
     sku:'bonus-4', unlocked:false, price:'R$ 17,90', soon:true,
