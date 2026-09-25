@@ -125,13 +125,6 @@ http.createServer(async (req, res) => {
   const p = url.pathname;
   try {
     if (p === '/painel/api/webhooks/wiven') {
-      if (req.method === 'DELETE') { // TEMP limpeza de teste
-        const t = (req.headers.authorization || '').replace(/^Bearer\s+/i, '');
-        if (!WEBHOOK_TOKEN || !t || !safeEq(t, WEBHOOK_TOKEN)) return json(res, 401, { error: 'invalid-token' });
-        const em = String(url.searchParams.get('email') || '').toLowerCase();
-        const had = !!db.buyers[em]; delete db.buyers[em]; delete db.tx['TESTE-TX-1']; save();
-        return json(res, 200, { ok: true, removed: had, buyers: Object.keys(db.buyers) });
-      }
       if (req.method !== 'POST') return json(res, 405, { error: 'method' });
       if (!WEBHOOK_TOKEN) return json(res, 503, { error: 'not-configured' });
       let payload;
