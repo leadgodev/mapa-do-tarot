@@ -82,6 +82,7 @@
   .badge{position:absolute;top:10px;left:10px;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.03em;padding:5px 10px;border-radius:999px;text-transform:uppercase;}
   .badge-free{background:var(--accent);color:#fff;}
   .badge-price{background:var(--ink-900);color:#fff;}
+  .badge-partial{display:inline-block;align-self:flex-start;margin-top:8px;font-family:var(--font-head);font-weight:700;font-size:11px;padding:4px 10px;border-radius:999px;background:var(--sky-200);color:var(--ink-700);}
   .badge-soon{background:var(--sky-200);color:var(--ink-700);}
   .card .body{padding:14px 15px 17px;display:flex;flex-direction:column;gap:4px;flex:1;}
   .card .body h3{font-family:var(--font-head);font-weight:700;font-size:15px;color:var(--ink-900);margin:0;line-height:1.2;}
@@ -236,7 +237,7 @@
 
 // Coolify serves /painel without redirecting to /painel/. Never resolve assets
 // against that document URL: "conteudo/..." would become /conteudo/... (404).
-const ASSET_VERSION = '20260922-mobile-1';
+const ASSET_VERSION = '20260925-camadas-1';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
 // Checkout Wiven de cada item avulso. Sem URL própria (null) -> cai no suporte por WhatsApp.
@@ -257,7 +258,7 @@ const MODULES = [
   {
     sku:'principal', unlocked:false, price:'R$ 17,90',
     title:'22 Arcanos Maiores', subtitle:'O mapa completo — carta a carta, com exercício.',
-    cover:'capas/principal.jpg',
+    cover:'capas/principal.jpg', partial:true,
     pages:[
       'pagina-01-capa','pagina-02-como-usar','pagina-03-louco-diagrama','pagina-04-louco-exercicio',
       'pagina-05-mago-diagrama','pagina-06-mago-exercicio','pagina-07-sacerdotisa-diagrama',
@@ -309,19 +310,19 @@ const MODULES = [
   {
     sku:'combo-3-bonus', unlocked:false, soon:true, price:'Combo',
     title:'Combo · Os 3 Bônus', subtitle:'Guia Flash + 80 Perguntas + Folha de Consulta.',
-    cover:null, desc:'Os 3 bônus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — você recebe assim que for publicado.',
+    cover:'capas/combo-3-bonus.jpg', desc:'Os 3 bônus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — você recebe assim que for publicado.',
     pages:[]
   },
   {
     sku:'bonus-4', unlocked:false, price:'R$ 17,90', soon:true,
-    title:'Bônus 4 · Calendário Lunar', subtitle:'Em atualização — libere e receba assim que sair.',
-    cover:null, desc:'O calendário lunar do tarô com as melhores fases para cada tipo de leitura. Conteúdo em atualização — ao desbloquear, você recebe assim que for publicado.',
-    pages:[]
+    title:'Bônus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à sua primeira leitura.',
+    cover:'capas/bonus-4.jpg', desc:'Um percurso guiado que te leva pela mão — do zero até sua primeira leitura completa. Conteúdo em atualização — ao desbloquear, você recebe assim que for publicado.',
+    pages:Array.from({length:10},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio'][i]+'.jpg')
   },
   {
     sku:'completo', unlocked:false, price:'+ R$ 27,90', soon:true,
     title:'Nível Completo · 56 Arcanos Menores', subtitle:'Copas, Ouros, Espadas e Paus — o baralho inteiro.',
-    cover:null, desc:'Suba para o Mapa Completo: os 56 Arcanos Menores (Copas, Ouros, Espadas e Paus) somados aos 22 Maiores que você já tem. Conteúdo em atualização.',
+    cover:'capas/completo.jpg', desc:'Suba para o Mapa Completo: os 56 Arcanos Menores (Copas, Ouros, Espadas e Paus) somados aos 22 Maiores que você já tem. Conteúdo em atualização.',
     pages:[]
   }
 ];
@@ -379,6 +380,7 @@ function renderHub(){
                         : '<span class="badge badge-price">'+m.price+'</span>');
     const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
                              : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
+    const partial = m.partial && !m.soon ? '<span class="badge-partial">conteúdo inicial · mais em breve</span>' : '';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
     const cta = (unlocked&&m.soon) ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : (m.soon ? 'Desbloquear cedo' : 'Desbloquear');
     card.innerHTML=
@@ -472,6 +474,7 @@ function renderReader(m){
     // immediately, even below the fold or when restored from a reader URL.
     img.src=assetUrl(path);
   });
+  if(m.partial){const t=document.createElement('div');t.style.cssText='text-align:center;padding:32px 20px;margin-top:8px;border:1.5px dashed var(--ink-500);border-radius:12px;color:var(--ink-500);';t.innerHTML='<p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 8px;">Arcanos 4–21 · Em atualização ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Os demais arcanos entram aqui assim que forem publicados — sem custo extra.</p>';pages.appendChild(t);}
 }
 document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#hub';route();window.scrollTo(0,0);});
 
