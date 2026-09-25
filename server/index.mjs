@@ -20,7 +20,7 @@ const PRODUCT_SKUS = {
   cmubsge6l026s01pux12tog1s: ['guia-flash'],
   cmubsk2bd023001pqtloo3zrz: ['perguntas-80'],
   cmubsl72o023t01pq3y1awjpj: ['folha-consulta'],
-  cmubwg9a3052l01puaww8hmir: ['guia-flash', 'perguntas-80', 'folha-consulta'],
+  cmubwg9a3052l01puaww8hmir: ['combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta'],
 };
 // Ofertas do produto principal que incluem o Nível Completo.
 const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW']);

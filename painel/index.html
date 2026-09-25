@@ -243,7 +243,7 @@ function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 const W='https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=';
 const CHECKOUT_URL = {
   'completo': W+'I38JADD',
-  'guia-flash': null, 'perguntas-80': null, 'folha-consulta': null,
+  'combo-3-bonus': null, 'guia-flash': null, 'perguntas-80': null, 'folha-consulta': null,
   'bonus-1': null, 'bonus-2': null, 'bonus-3': null, 'bonus-4': null, 'principal': W+'Q2J6TBK'
 };
 function buyHref(m){
@@ -285,25 +285,31 @@ const MODULES = [
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','ativar-baralho','limpar-energia','proteger','guardar','conexao-diaria','o-que-evitar','rotina','exercicio'][i]+'.jpg')
   },
   {
-    sku:'guia-flash', unlocked:false, price:'R$ 21,91',
+    sku:'guia-flash', unlocked:false, soon:true, price:'R$ 21,91',
     title:'Guia Flash · Arcanos Maiores', subtitle:'Os significados-chave para consultar na hora.',
     cover:'capas/guia-flash.jpg',
     desc:'Guia rápido e visual dos Arcanos Maiores: gravura da carta + essência, direito e invertido, para consultar durante a leitura sem travar.',
     pages:Array.from({length:10},(_,i)=>'conteudo/guia-flash/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','louco','mago','sacerdotisa','imperatriz','imperador','hierofante','enamorados','carro','forca'][i]+'.jpg')
   },
   {
-    sku:'perguntas-80', unlocked:false, price:'R$ 21,91',
+    sku:'perguntas-80', unlocked:false, soon:true, price:'R$ 21,91',
     title:'80 Perguntas Poderosas', subtitle:'Perguntas que abrem a mensagem da carta.',
     cover:'capas/perguntas-80.jpg',
     desc:'Troque o “isso vai dar certo?” por perguntas que revelam respostas mais claras e profundas — organizadas por tema: amor, dinheiro, autoconhecimento, decisões e mais.',
     pages:Array.from({length:10},(_,i)=>'conteudo/perguntas-80/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','amor','dinheiro','autoconhecimento','decisoes','familia','espiritualidade','saude','superacao','sombra'][i]+'.jpg')
   },
   {
-    sku:'folha-consulta', unlocked:false, price:'R$ 27,52',
+    sku:'folha-consulta', unlocked:false, soon:true, price:'R$ 27,52',
     title:'A Folha de Consulta do Tarot', subtitle:'Referência rápida, ao direito e invertida.',
     cover:'capas/folha-consulta.jpg',
     desc:'Tabelas de consulta rápida com o significado de cada carta ao direito e invertida, mais sim/não, tempo de resposta e elementos por naipe.',
     pages:Array.from({length:10},(_,i)=>'conteudo/folha-consulta/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','arcanos-0-8','arcanos-9-21','copas','ouros','espadas','paus','sim-ou-nao','tempo-de-resposta','elementos'][i]+'.jpg')
+  },
+  {
+    sku:'combo-3-bonus', unlocked:false, soon:true, price:'Combo',
+    title:'Combo · Os 3 Bônus', subtitle:'Guia Flash + 80 Perguntas + Folha de Consulta.',
+    cover:null, desc:'Os 3 bônus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — você recebe assim que for publicado.',
+    pages:[]
   },
   {
     sku:'bonus-4', unlocked:false, price:'R$ 17,90', soon:true,
@@ -367,18 +373,18 @@ function renderHub(){
     card.type='button';
     card.dataset.sku=m.sku;
     card.className='card'+(unlocked?'':' locked');
-    let badge = unlocked ? '<span class="badge badge-free">Liberado</span>'
+    let badge = (unlocked&&m.soon) ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>'
               : (m.soon ? '<span class="badge badge-soon">Em atualização</span>'
                         : '<span class="badge badge-price">'+m.price+'</span>');
     const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
                              : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
-    const cta = unlocked ? 'Acessar →' : (m.soon ? 'Desbloquear cedo' : 'Desbloquear');
+    const cta = (unlocked&&m.soon) ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : (m.soon ? 'Desbloquear cedo' : 'Desbloquear');
     card.innerHTML=
       '<span class="cover">'+coverImg+badge+lockOv+'</span>'+
       '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
     card.addEventListener('click',()=>{
-      if(unlocked) openReader(m.sku); else openModal(m.sku);
+      if(unlocked&&m.soon) return; if(unlocked) openReader(m.sku); else openModal(m.sku);
     });
     grid.appendChild(card);
   });
@@ -482,7 +488,7 @@ function route(){
     const sku=h.slice(5);
     const m=MODULES.find(x=>x.sku===sku);
     const owned=getOwned();
-    if(m && (m.unlocked||owned.includes(sku))){show('view-reader');renderReader(m);return;}
+    if(m && !m.soon && (m.unlocked||owned.includes(sku))){show('view-reader');renderReader(m);return;}
     location.hash='#hub';
   }
   renderHub();
