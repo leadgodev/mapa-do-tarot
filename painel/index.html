@@ -385,7 +385,7 @@ function renderHub(){
     const cta = (unlocked&&m.soon) ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : (m.soon ? 'Desbloquear cedo' : 'Desbloquear');
     card.innerHTML=
       '<span class="cover">'+coverImg+badge+lockOv+'</span>'+
-      '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
+      '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span>'+partial+'<span class="cta">'+cta+'</span></span>';
     card.addEventListener('click',()=>{
       if(unlocked&&m.soon) return; if(unlocked) openReader(m.sku); else openModal(m.sku);
     });
