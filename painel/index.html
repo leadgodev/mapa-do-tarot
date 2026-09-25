@@ -232,27 +232,29 @@
    - Bônus/níveis bloqueados → modal de upsell.
    ====================================================== */
 
-// Lista de emails liberados. VAZIA = qualquer email válido entra (MVP).
-// Preencher aqui (ou validar via checkout depois) para travar de verdade.
-const ALLOWED_EMAILS = [];
-
-// SKUs que o comprador do produto principal já possui.
-const OWNED_DEFAULT = ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo'];
+// Acesso e ownership vêm do servidor (compras aprovadas na Wiven) — /painel/api/login e /painel/api/me.
 
 // Coolify serves /painel without redirecting to /painel/. Never resolve assets
 // against that document URL: "conteudo/..." would become /conteudo/... (404).
 const ASSET_VERSION = '20260922-mobile-1';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
-// Emails de teste com ownership fixo, independente do localStorage.
-const OWNED_BY_EMAIL = {
-  'teste.default@leadgo.dev': ['principal'],
-  'teste.completo@leadgo.dev': ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo','guia-flash','perguntas-80','folha-consulta']
+// Checkout Wiven de cada item avulso. Sem URL própria (null) -> cai no suporte por WhatsApp.
+const W='https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=';
+const CHECKOUT_URL = {
+  'completo': W+'I38JADD',
+  'guia-flash': null, 'perguntas-80': null, 'folha-consulta': null,
+  'bonus-1': null, 'bonus-2': null, 'bonus-3': null, 'bonus-4': null, 'principal': W+'Q2J6TBK'
 };
+function buyHref(m){
+  const u=CHECKOUT_URL[m.sku];
+  if(u)return u;
+  return 'https://wa.me/551151770499?text='+encodeURIComponent('Oi! Quero liberar "'+m.title+'" na minha área de membros (e-mail: '+(getEmail()||'')+').');
+}
 
 const MODULES = [
   {
-    sku:'principal', unlocked:true,
+    sku:'principal', unlocked:false, price:'R$ 17,90',
     title:'22 Arcanos Maiores', subtitle:'O mapa completo — carta a carta, com exercício.',
     cover:'capas/principal.jpg',
     pages:[
@@ -323,27 +325,30 @@ const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/20
 function getEmail(){try{return localStorage.getItem('mdt_email');}catch(e){return null;}}
 function setEmail(e){try{localStorage.setItem('mdt_email',e);}catch(e){}}
 function clearEmail(){try{localStorage.removeItem('mdt_email');}catch(e){}}
-function getOwned(){try{const email=getEmail();if(email){const hit=OWNED_BY_EMAIL[email.toLowerCase()];if(hit)return hit.slice();}const v=JSON.parse(localStorage.getItem('mdt_owned'));return Array.isArray(v)?v:OWNED_DEFAULT.slice();}catch(e){return OWNED_DEFAULT.slice();}}
+function getOwned(){try{const v=JSON.parse(localStorage.getItem('mdt_owned'));return Array.isArray(v)?v:[];}catch(e){return [];}}
+function setOwned(o){try{localStorage.setItem('mdt_owned',JSON.stringify(o));}catch(e){}}
+async function api(path,body){const r=await fetch('/painel/api/'+path,body?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{credentials:'same-origin'});let j={};try{j=await r.json();}catch(e){}return {status:r.status,data:j};}
 
 /* ---------- login ---------- */
 const loginForm=document.getElementById('login-form');
 const loginErr=document.getElementById('login-err');
-loginForm.addEventListener('submit',function(ev){
+loginForm.addEventListener('submit',async function(ev){
   ev.preventDefault();
   const val=document.getElementById('email').value.trim().toLowerCase();
   const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
   if(!ok){loginErr.textContent='Digite um e-mail válido.';return;}
-  if(ALLOWED_EMAILS.length && !ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(val)){
-    loginErr.textContent='E-mail não encontrado na lista de compras. Verifique ou fale com o suporte.';return;
-  }
+  loginErr.textContent='Verificando…';
+  let r;try{r=await api('login',{email:val});}catch(e){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
+  if(r.status===404){loginErr.textContent='E-mail não encontrado na lista de compras. Verifique ou fale com o suporte.';return;}
+  if(r.status!==200||!r.data.owned){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
   loginErr.textContent='';
-  setEmail(val);
+  setEmail(val);setOwned(r.data.owned);
   location.hash='#hub';
   route();
 });
 
 document.getElementById('btn-logout').addEventListener('click',function(){
-  clearEmail();location.hash='';route();
+  api('logout',{}).catch(function(){});clearEmail();setOwned([]);location.hash='';route();
 });
 
 /* ---------- hub ---------- */
@@ -391,7 +396,7 @@ function openModal(sku){
        '<h3>'+m.title+'</h3>'+
        '<p>'+(m.desc||m.subtitle)+'</p>'+
        '<div class="price">'+m.price+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
-       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" style="width:100%;" href="/#planos">Quero desbloquear</a></div>'+
+       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" style="width:100%;" href="'+buyHref(m)+'" target="_blank" rel="noopener">Quero desbloquear</a></div>'+
        '<div class="m-close" id="modal-close">Agora não</div>'+
      '</div></div></div>';
   document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
@@ -484,7 +489,13 @@ function route(){
   show('view-hub');
 }
 window.addEventListener('hashchange',route);
-route();
+// Sessão/ownership sempre revalidados no servidor antes de renderizar.
+(async function init(){
+  if(getEmail()){
+    try{const r=await api('me');if(r.status===200&&r.data.owned){setOwned(r.data.owned);}else if(r.status===401){clearEmail();setOwned([]);}}catch(e){}
+  }
+  route();
+})();
 </script>
 </body>
 </html>
