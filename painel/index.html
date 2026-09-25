@@ -240,10 +240,11 @@ const ASSET_VERSION = '20260922-mobile-1';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
 // Checkout Wiven de cada item avulso. Sem URL própria (null) -> cai no suporte por WhatsApp.
-const W='https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=';
+const C='https://checkout.wiven.com.br/checkout/';
+const W=C+'cmubqz6yy010p01pqilaiahqe?offer=';
 const CHECKOUT_URL = {
   'completo': W+'I38JADD',
-  'combo-3-bonus': null, 'guia-flash': null, 'perguntas-80': null, 'folha-consulta': null,
+  'combo-3-bonus': C+'cmubwg9ah052m01puqslkbogu?offer=8V0UQAB', 'guia-flash': C+'cmubsge70026t01pujoks75g2?offer=DLXG44A', 'perguntas-80': C+'cmubsk2bg023101pqxrvx8q4s?offer=V2KG5AG', 'folha-consulta': C+'cmubsl72s023u01pq0h7vf7a9?offer=7LH6994',
   'bonus-1': null, 'bonus-2': null, 'bonus-3': null, 'bonus-4': null, 'principal': W+'Q2J6TBK'
 };
 function buyHref(m){
