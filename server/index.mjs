@@ -111,6 +111,8 @@ function serveStatic(req, res, pathname) {
   if (rel.endsWith('/')) rel += 'index.html';
   if (rel === '/painel') rel = '/painel/index.html';
   if (rel === '/pt') rel = '/pt/index.html';
+  if (rel === '/termos' || rel === '/pt/termos') rel = '/termos.html';
+  if (rel === '/privacidade' || rel === '/pt/privacidade') rel = '/privacidade.html';
   if (rel === '/pt/painel' || rel === '/pt/painel/index.html') rel = '/painel/index-pt.html';
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
