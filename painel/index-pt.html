@@ -255,7 +255,7 @@ const CHECKOUT_URL = {
 function buyHref(m){
   const u=CHECKOUT_URL[m.sku];
   if(u)return u;
-  return 'https://wa.me/551151770499?text='+encodeURIComponent('Oi! Quero liberar "'+m.title+'" na minha área de membros (e-mail: '+(getEmail()||'')+').');
+  return 'https://wa.me/551151770499?text='+encodeURIComponent('Olá! Quero liberar "'+m.title+'" na minha área de membros (e-mail: '+(getEmail()||'')+').');
 }
 
 const MODULES = [
