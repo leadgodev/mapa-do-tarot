@@ -104,9 +104,10 @@ function serveStatic(req, res, pathname) {
   let rel = decodeURIComponent(pathname);
   if (rel.endsWith('/')) rel += 'index.html';
   if (rel === '/painel') rel = '/painel/index.html';
+  if (rel === '/pt') rel = '/pt/index.html';
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
-  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || top === 'assets' || top === 'painel')) return json(res, 404, { error: 'not-found' });
+  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || top === 'assets' || top === 'painel')) return json(res, 404, { error: 'not-found' });
   // conteúdo pago: exige sessão + ownership do SKU
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
   if (m) {
