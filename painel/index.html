@@ -177,6 +177,10 @@
         <label for="email">Seu e-mail de compra</label>
         <input type="email" id="email" name="email" placeholder="voce@exemplo.com" autocomplete="email" required>
       </div>
+      <div class="field">
+        <label for="password">Senha (só para contas de demonstração)</label>
+        <input type="password" id="password" name="password" autocomplete="current-password">
+      </div>
       <div class="login-err" id="login-err"></div>
       <button type="submit" class="btn btn-primary" style="width:100%;">Entrar</button>
     </form>
@@ -346,7 +350,8 @@ loginForm.addEventListener('submit',async function(ev){
   const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
   if(!ok){loginErr.textContent='Digite um e-mail válido.';return;}
   loginErr.textContent='Verificando…';
-  let r;try{r=await api('login',{email:val});}catch(e){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
+  let r;try{r=await api('login',{email:val,password:document.getElementById('password').value});}catch(e){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
+  if(r.status===401){loginErr.textContent='Senha incorreta.';return;}
   if(r.status===404){loginErr.textContent='E-mail não encontrado na lista de compras. Verifique ou fale com o suporte.';return;}
   if(r.status!==200||!r.data.owned){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
   loginErr.textContent='';

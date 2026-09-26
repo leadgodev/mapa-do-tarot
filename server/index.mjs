@@ -51,6 +51,12 @@ function cookieEmail(req) {
   if (!e || !exp || !sig || !safeEq(sig, sign(`${e}.${exp}`)) || Number(exp) < Date.now() / 1000) return null;
   return Buffer.from(e, 'base64url').toString();
 }
+// Conta de demonstração (análise Mundpay): acesso completo sem compra, exige senha.
+const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo', 'guia-flash', 'perguntas-80', 'folha-consulta', 'combo-3-bonus'];
+const DEMO_USERS = { 'teste-mundpay@leadgo.dev': '4a3b0f722b261541514f159a10cb54db025947da3eb1773d798c5f8f9ef8981d' };
+const DEMO_SALT = 'mdt-demo-salt';
+for (const e of Object.keys(DEMO_USERS)) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste Mundpay' };
+const demoOk = (email, pw) => DEMO_USERS[email] && safeEq(crypto.scryptSync(String(pw || ''), DEMO_SALT, 32).toString('hex'), DEMO_USERS[email]);
 const owned = (email) => (db.buyers[email] ? db.buyers[email].skus.slice() : null);
 
 // rate limit simples por IP
@@ -142,6 +148,7 @@ http.createServer(async (req, res) => {
       const email = String(b.email || '').trim().toLowerCase();
       const o = owned(email);
       if (!o) return json(res, 404, { error: 'not-found' });
+      if (DEMO_USERS[email] && !demoOk(email, b.password)) return json(res, 401, { error: 'bad-password' });
       return json(res, 200, { ok: true, owned: o }, { 'set-cookie': `mdt_s=${makeCookie(email)}; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=${SESSION_TTL}` });
     }
     if (p === '/painel/api/me') {
