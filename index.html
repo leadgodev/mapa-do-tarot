@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,7 +99,7 @@
 <script>
 /* Propaga utm_* + _tkid nos links de checkout, inclusive no redirect entre domínios. */
 (function () {
-  var MATCH = ["/checkout","mercadopago","mercadolibre","mpago","hotmart","mycheckoutt","cakto","ggcheckout","kirvano","pay.","checkout."];
+  var MATCH = ["/checkout","mycheckoutt","pay.","checkout."];
   var UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   /* O tracking id vem SEMPRE do pixel core (/api/pixel), nunca de uma leitura
      própria do cookie. Motivo: desde o pixel v7 a chave é namespeada por
@@ -497,7 +497,7 @@
   <footer style="background:var(--ink-900); color:var(--cream-200); padding:54px 24px; text-align:center;">
     <img src="assets/webp/logo-auramystica.webp" width="150" height="150" loading="lazy" decoding="async" alt="Aura Mystica" style="width:110px; height:auto; object-fit:contain; margin-bottom:16px; border-radius:12px;">
     <p style="max-width:620px; margin:0 auto; font-size:12.5px; line-height:1.6; opacity:.7;">© 2026 Mapa do Tarot — Todos os direitos reservados. Este produto tem caráter educativo e não garante resultados específicos. O Tarot é uma ferramenta de autoconhecimento e reflexão.</p>
-    <p style="max-width:620px; margin:14px auto 0; font-size:12.5px; line-height:1.6; opacity:.85;">Responsável pela venda: <strong>[RAZÃO SOCIAL — PREENCHER]</strong> · CNPJ 49.265.147/0001-00<br>Suporte: <a href="mailto:support@leadgo.dev" style="color:inherit;">support@leadgo.dev</a> · WhatsApp <a href="https://wa.me/551151770499" style="color:inherit;">(11) 5177-0499</a></p>
+    <p style="max-width:620px; margin:14px auto 0; font-size:12.5px; line-height:1.6; opacity:.85;">Responsável pela venda: <strong>49.265.147 NOELIA DE LIMA ASSIS</strong> · CNPJ 49.265.147/0001-00<br>Suporte: <a href="mailto:support@leadgo.dev" style="color:inherit;">support@leadgo.dev</a> · WhatsApp <a href="https://wa.me/551151770499" style="color:inherit;">(11) 5177-0499</a></p>
     <div style="display:flex; gap:22px; justify-content:center; margin-top:20px; font-size:12.5px; font-family:var(--font-heading); letter-spacing:.06em; text-transform:uppercase; opacity:.85;">
       <a href="termos.html" style="color:inherit;">Termos de Uso</a><a href="privacidade.html" style="color:inherit;">Política de Privacidade</a>
     </div>
