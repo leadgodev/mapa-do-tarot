@@ -18,6 +18,7 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '2042984746336241');
   fbq('track', 'PageView');
+  fbq('track', 'ViewContent', { content_name: 'Mapa do Tarot PT', content_ids: ['mapa-do-tarot-pt'], value: 9.90, currency: 'EUR' });
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=2042984746336241&ev=PageView&noscript=1"/></noscript>
@@ -518,6 +519,25 @@
       if (left <= 0) clearInterval(iv);
     }
     tick(); var iv = setInterval(tick, 1000);
+  })();
+
+  // Meta Pixel AddToCart + InitiateCheckout: só em clique que realmente navega pro checkout
+  (function () {
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest && ev.target.closest('a[href*="pay.mycheckoutt.com"]');
+      if (!a || ev.defaultPrevented) return;
+      if (a.dataset.pixelFired) return;
+      a.dataset.pixelFired = '1';
+      ev.preventDefault();
+      try {
+        if (typeof fbq === 'function') {
+          var payload = { value: 9.90, currency: 'EUR', content_name: 'Mapa do Tarot PT', content_ids: ['mapa-do-tarot-pt'] };
+          fbq('track', 'AddToCart', payload);
+          fbq('track', 'InitiateCheckout', payload);
+        }
+      } catch (e) {}
+      setTimeout(function () { location.href = a.href; }, 150);
+    });
   })();
 </script>
 </body>

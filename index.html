@@ -18,6 +18,7 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '2042984746336241');
   fbq('track', 'PageView');
+  fbq('track', 'ViewContent', { content_name: 'Mapa do Tarot', content_ids: ['I38JADD'], value: 27.90, currency: 'BRL' });
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=2042984746336241&ev=PageView&noscript=1"/></noscript>
@@ -564,20 +565,23 @@
     });
   })();
 
-  // Meta Pixel InitiateCheckout: só em clique que realmente navega pro checkout
+  // Meta Pixel AddToCart + InitiateCheckout: só em clique que realmente navega pro checkout
+  // (botão que só abre o modal de downsell já deu preventDefault e cai fora aqui)
   (function () {
-    var VALUES = { I38JADD: 27.90, IIUQ8EW: 22.90, Q2J6TBK: 17.90 }, fired = false;
+    var VALUES = { I38JADD: 27.90, IIUQ8EW: 22.90, Q2J6TBK: 17.90 };
     document.addEventListener('click', function (ev) {
       var a = ev.target.closest && ev.target.closest('a[href*="checkout.wiven.com.br"]');
       if (!a || ev.defaultPrevented) return; // openDownsell já deu preventDefault
+      if (a.dataset.pixelFired) return;
+      a.dataset.pixelFired = '1';
       var offer = '';
       try { offer = new URL(a.href).searchParams.get('offer') || ''; } catch (e) {}
       ev.preventDefault();
-      if (fired) return;
-      fired = true;
       try {
         if (typeof fbq === 'function') {
-          fbq('track', 'InitiateCheckout', { value: VALUES[offer] || 0, currency: 'BRL', content_name: 'Mapa do Tarot', content_ids: [offer] });
+          var payload = { value: VALUES[offer] || 0, currency: 'BRL', content_name: 'Mapa do Tarot', content_ids: [offer] };
+          fbq('track', 'AddToCart', payload);
+          fbq('track', 'InitiateCheckout', payload);
         }
       } catch (e) {}
       setTimeout(function () { location.href = a.href; }, 150);
