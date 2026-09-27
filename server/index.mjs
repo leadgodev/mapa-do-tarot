@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { sendAccessEmail } from './mail.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = Number(process.env.PORT || 80);
@@ -97,10 +98,12 @@ function handleWebhook(payload) {
   }
   if (!skus.size) return { code: 200, body: { ok: true, ignored: 'no-known-product' } };
   const b = db.buyers[email] || { skus: [], name: (payload.client || {}).name || '' };
+  const novos = [...skus].filter((s) => !b.skus.includes(s));
   b.skus = [...new Set([...b.skus, ...skus])];
   db.buyers[email] = b;
   db.tx[tx.id] = true;
   save();
+  if (novos.length) sendAccessEmail(email, b.name, [...skus]).then((id) => console.log('access-email sent', id), (e) => console.error('access-email failed', e.message));
   return { code: 200, body: { ok: true, granted: [...skus] } };
 }
 
