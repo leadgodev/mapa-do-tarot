@@ -90,7 +90,7 @@ function handleWebhook(payload) {
   if (!email || !tx.id) return { code: 400, body: { ok: false, error: 'missing-email-or-transaction' } };
   if (db.tx[tx.id]) return { code: 200, body: { ok: true, duplicate: true } };
   const skus = new Set();
-  for (const item of tx.orderItems || []) {
+  for (const item of (payload.orderItems || tx.orderItems || [])) {
     const pid = item && item.product && item.product.id;
     (PRODUCT_SKUS[pid] || []).forEach((s) => skus.add(s));
     if (pid === 'cmubqz6yu010o01pqgcgfw6j0' && COMPLETO_OFFERS.has(String(payload.offerCode || ''))) skus.add('completo');
