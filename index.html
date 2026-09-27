@@ -561,6 +561,26 @@
     });
   })();
 
+  // Meta Pixel InitiateCheckout: só em clique que realmente navega pro checkout
+  (function () {
+    var VALUES = { I38JADD: 27.90, IIUQ8EW: 22.90, Q2J6TBK: 17.90 }, fired = false;
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest && ev.target.closest('a[href*="checkout.wiven.com.br"]');
+      if (!a || ev.defaultPrevented) return; // openDownsell já deu preventDefault
+      var offer = '';
+      try { offer = new URL(a.href).searchParams.get('offer') || ''; } catch (e) {}
+      ev.preventDefault();
+      if (fired) return;
+      fired = true;
+      try {
+        if (typeof fbq === 'function') {
+          fbq('track', 'InitiateCheckout', { value: VALUES[offer] || 0, currency: 'BRL', content_name: 'Mapa do Tarot', content_ids: [offer] });
+        }
+      } catch (e) {}
+      setTimeout(function () { location.href = a.href; }, 150);
+    });
+  })();
+
   // Contagem regressiva de urgência (15 min por visitante, persiste no reload)
   (function () {
     var DUR = 15 * 60 * 1000, KEY = 'mdt_cd_end', now = Date.now(), end;
