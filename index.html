@@ -393,17 +393,25 @@
 
       <!-- PLANS -->
       <div style="display:flex; gap:22px; flex-wrap:wrap; align-items:stretch; justify-content:center; max-width:760px; margin:0 auto;">
-        <div class="plan-card" style="position:relative; flex:1; min-width:260px; background:var(--white); color:var(--ink-700); border:2px solid var(--border-soft); border-radius:18px; padding:30px 28px; display:flex; flex-direction:column;">
+        <div class="plan-card" onclick="openDownsell(event)" style="cursor:pointer; position:relative; flex:1; min-width:260px; background:var(--white); color:var(--ink-700); border:2px solid var(--border-soft); border-radius:18px; padding:30px 28px; display:flex; flex-direction:column;">
           <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%);"><span style="display:inline-block; background:var(--ink-900); color:var(--cream-100); font-family:var(--font-heading); font-weight:700; font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:5px 16px; border-radius:999px; box-shadow:var(--shadow-sm); white-space:nowrap;">Plano Básico</span></div>
           <div style="margin-bottom:20px; text-align:center;">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
             <img src="assets/webp/producto-basico.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Mapa do Tarot — guia visual" style="width:100%; max-width:320px; height:auto; display:block; margin:0 auto; filter:drop-shadow(0 10px 18px rgba(20,36,47,.22));">
           </div>
           <p style="margin:0 0 4px; font-family:var(--font-heading); font-weight:700; font-size:14px; color:var(--ink-900); line-height:1.35;">Materiais <span style="font-weight:600; color:var(--ink-500);">(Entrega Imediata)</span>:</p>
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px; font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent-press);"><span style="color:var(--accent);">✦</span> Mapa do Tarot</div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent-press);"><span style="color:var(--accent);">✦</span> Mapa do Tarot</div>
+          <ul style="list-style:none; padding:0; margin:0 0 14px; display:flex; flex-direction:column; gap:6px;">
+            <li style="display:flex; gap:8px; align-items:flex-start; font-size:13px; line-height:1.4; color:var(--ink-300); text-decoration:line-through;"><span style="color:#d93025; font-weight:700; flex:none; text-decoration:none;">✗</span> Sem os 150+ exemplos de combinações</li>
+            <li style="display:flex; gap:8px; align-items:flex-start; font-size:13px; line-height:1.4; color:var(--ink-300); text-decoration:line-through;"><span style="color:#d93025; font-weight:700; flex:none; text-decoration:none;">✗</span> Sem guia passo a passo para abrir e ler as cartas</li>
+            <li style="display:flex; gap:8px; align-items:flex-start; font-size:13px; line-height:1.4; color:var(--ink-300); text-decoration:line-through;"><span style="color:#d93025; font-weight:700; flex:none; text-decoration:none;">✗</span> Sem conselhos espirituais e interpretações práticas</li>
+            <li style="display:flex; gap:8px; align-items:flex-start; font-size:13px; line-height:1.4; color:var(--ink-300); text-decoration:line-through;"><span style="color:#d93025; font-weight:700; flex:none; text-decoration:none;">✗</span> Sem as tiragens prontas</li>
+            <li style="display:flex; gap:8px; align-items:flex-start; font-size:13px; line-height:1.4; color:var(--ink-300); text-decoration:line-through;"><span style="color:#d93025; font-weight:700; flex:none; text-decoration:none;">✗</span> Sem os modelos de leitura</li>
+            <li style="display:flex; gap:8px; align-items:flex-start; font-size:13px; line-height:1.4; color:var(--ink-300); text-decoration:line-through;"><span style="color:#d93025; font-weight:700; flex:none; text-decoration:none;">✗</span> Sem o mini e-book de interpretação intuitiva</li>
+          </ul>
           <div style="font-family:var(--font-heading); font-weight:800; font-size:46px; color:var(--ink-900); line-height:1; margin-bottom:10px;">R$17,90</div>
           <p style="margin:0 0 18px; display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-700);"><span style="color:var(--accent-press);">⏱</span> Acesso imediato logo após a compra!</p>
-          <a class="btn btn-md btn-secondary" href="https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=Q2J6TBK" onclick="return openDownsell(event)">Quero só o básico <span class="arr">→</span></a>
+          <a class="btn btn-md btn-secondary" href="https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=Q2J6TBK" onclick="event.stopPropagation(); return openDownsell(event)">Quero só o básico <span class="arr">→</span></a>
           <div style="text-align:center;">
             <p style="margin:0; font-family:var(--font-heading); font-weight:800; font-size:14px; color:var(--accent-press); line-height:1.4;">ATENÇÃO: temos uma oferta ainda melhor para você! Olha só abaixo</p>
             <div class="arrow-bounce" style="display:flex; justify-content:center; gap:10px; color:var(--accent); font-size:26px; line-height:1; margin-top:6px;"><span>↓</span><span>↓</span><span>↓</span></div>
@@ -535,10 +543,17 @@
     <button type="button" onclick="closeDownsell()" aria-label="Fechar" style="position:absolute; top:14px; right:16px; background:none; border:none; font-size:26px; line-height:1; color:var(--ink-300); cursor:pointer;">×</button>
     <div style="display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:6px 16px; border-radius:999px; margin-bottom:16px;">Espera — oferta especial</div>
     <h3 id="ds-title" style="font-family:var(--font-heading); font-weight:800; font-size:clamp(21px,4.6vw,26px); line-height:1.15; color:var(--ink-900); margin:0 0 10px;">Leve <span style="color:var(--accent-press);">tudo</span> por quase o mesmo preço</h3>
-    <p style="margin:0 0 18px; font-size:15px; line-height:1.55; color:var(--ink-700);">Antes de ficar com o básico, leve o <strong style="color:var(--ink-900);">Mapa Completo + os 4 bônus</strong> — o método completo — por muito pouco a mais.</p>
+    <p style="margin:0 0 14px; font-size:15px; line-height:1.55; color:var(--ink-700);">Antes de ficar com o básico, leve o <strong style="color:var(--ink-900);">Mapa Completo + os 4 bônus</strong> — o método completo — por muito pouco a mais.</p>
+    <ul style="list-style:none; padding:0; margin:0 0 16px; display:flex; flex-direction:column; gap:8px; text-align:left;">
+      <li style="display:flex; gap:8px; align-items:flex-start; font-size:13.5px; line-height:1.4; color:var(--ink-700);"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Mais de 150 exemplos reais de combinações</li>
+      <li style="display:flex; gap:8px; align-items:flex-start; font-size:13.5px; line-height:1.4; color:var(--ink-700);"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Guia passo a passo para abrir e ler as cartas</li>
+      <li style="display:flex; gap:8px; align-items:flex-start; font-size:13.5px; line-height:1.4; color:var(--ink-700);"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Conselhos espirituais e interpretações práticas</li>
+      <li style="display:flex; gap:8px; align-items:flex-start; font-size:13.5px; line-height:1.4; color:var(--ink-700);"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Bônus: tiragens prontas + modelos de leitura + mini e-book de interpretação intuitiva</li>
+    </ul>
     <div style="background:var(--white); border:2px solid var(--accent); border-radius:16px; padding:20px 18px; margin-bottom:16px;">
       <div style="display:flex; align-items:baseline; justify-content:center; gap:10px; margin-bottom:4px;"><span style="font-size:16px; color:var(--ink-300); text-decoration:line-through;">R$34</span><span style="font-family:var(--font-heading); font-weight:800; font-size:40px; color:var(--accent); line-height:1;">R$22,90</span></div>
-      <p style="margin:0 0 14px; font-size:12.5px; color:var(--ink-500);">Mapa Completo + Páginas de Prática + 4 Bônus</p>
+      <p style="margin:0 0 6px; font-size:12.5px; color:var(--ink-500);">Mapa Completo + Páginas de Prática + 4 Bônus</p>
+      <p style="margin:0 0 14px; font-family:var(--font-heading); font-weight:700; font-size:13px; color:var(--accent-press);">Tudo isso por só R$5 a mais</p>
       <a class="btn btn-md btn-primary" href="https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=IIUQ8EW" style="width:100%;">Sim! Melhorar para o completo — R$22,90 <span class="arr">→</span></a>
     </div>
     <a href="https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=Q2J6TBK" onclick="closeDownsell()" style="display:inline-block; font-size:13px; color:var(--ink-300); text-decoration:underline; font-family:var(--font-heading);">Não, obrigado, continuar com o básico (R$17,90)</a>
