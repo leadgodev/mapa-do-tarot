@@ -143,6 +143,7 @@
 <!-- trackeador:pixel:end -->
 </head>
 <body>
+<div id="urgency-bar" style="position:sticky; top:0; z-index:9000; background:#d93025; color:#fff; text-align:center; font-family:var(--font-heading); font-weight:800; font-size:14px; letter-spacing:.02em; padding:9px 12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">⚠ ESTA OFERTA TERMINA EM <span id="ub-m">15</span>:<span id="ub-s">00</span></div>
 <div style="background:var(--sky-300); font-family:var(--font-body); color:var(--ink-700); overflow-x:hidden; -webkit-font-smoothing:antialiased;">
 
   <!-- ============ HERO ============ -->
@@ -448,7 +449,14 @@
             <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Os naipes e seus elementos explicados</li>
             <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Conselhos espirituais e interpretações práticas</li>
             <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> Guia passo a passo para abrir e ler as cartas</li>
-            <li style="display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.4;"><span style="color:var(--accent); font-weight:700; flex:none;">✓</span> <span><strong>Bônus exclusivos:</strong> tiragens prontas + modelos de leitura + mini e-book de interpretação intuitiva</span></li>
+            <li style="font-size:14px; line-height:1.4;">
+              <p style="margin:0 0 4px; font-family:var(--font-heading); font-weight:700; font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-500);">Bônus exclusivos:</p>
+              <div style="display:flex; flex-direction:column; gap:4px;">
+                <span style="font-family:var(--font-heading); font-weight:700; font-size:15px; color:var(--accent-press);">🎁 Tiragens prontas</span>
+                <span style="font-family:var(--font-heading); font-weight:700; font-size:15px; color:var(--accent-press);">🎁 Modelos de leitura</span>
+                <span style="font-family:var(--font-heading); font-weight:700; font-size:15px; color:var(--accent-press);">🎁 Mini e-book de interpretação intuitiva</span>
+              </div>
+            </li>
           </ul>
           <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;"><span style="font-size:17px; color:var(--ink-300); text-decoration:line-through;">R$67</span><span style="font-family:var(--font-heading); font-weight:800; font-size:42px; color:var(--accent);">R$37,90</span></div>
           <p style="margin:0 0 16px; font-size:13px; color:var(--ink-500);">Acesso imediato — enviado direto para o seu e-mail.</p>
@@ -638,12 +646,15 @@
     try { end = parseInt(localStorage.getItem(KEY), 10); } catch (e) {}
     if (!end || isNaN(end) || end < now) { end = now + DUR; try { localStorage.setItem(KEY, end); } catch (e) {} }
     var em = document.getElementById('cd-m'), es = document.getElementById('cd-s');
+    var ubm = document.getElementById('ub-m'), ubs = document.getElementById('ub-s');
     function tick() {
       var left = end - Date.now();
       if (left <= 0) { left = 0; }
       var m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
       if (em) em.textContent = ('0' + m).slice(-2);
       if (es) es.textContent = ('0' + s).slice(-2);
+      if (ubm) ubm.textContent = ('0' + m).slice(-2);
+      if (ubs) ubs.textContent = ('0' + s).slice(-2);
       if (left <= 0) clearInterval(iv);
     }
     tick(); var iv = setInterval(tick, 1000);
