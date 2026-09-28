@@ -126,6 +126,14 @@ function serveStatic(req, res, pathname) {
     const o = owned(cookieEmail(req) || '');
     if (!o || !o.includes(m[1])) return json(res, 403, { error: 'forbidden' });
   }
+  // App de Treino: bônus exclusivo do Nível Completo (SKU 'completo').
+  if (rel === '/painel/treino' || rel.startsWith('/painel/treino/')) {
+    const o = owned(cookieEmail(req) || '');
+    if (!o || !o.includes('completo')) {
+      res.writeHead(302, { location: '/painel' });
+      return res.end();
+    }
+  }
   fs.stat(abs, (err, st) => {
     if (err || !st.isFile()) return json(res, 404, { error: 'not-found' });
     res.writeHead(200, { 'content-type': MIME[path.extname(abs)] || 'application/octet-stream', 'content-length': st.size, 'cache-control': m ? 'private, max-age=3600' : 'public, max-age=300' });
@@ -166,10 +174,11 @@ http.createServer(async (req, res) => {
     if (p === '/painel/api/treino/progresso') {
       const email = cookieEmail(req);
       if (!email) return json(res, 401, { error: 'no-session' });
+      const o = owned(email);
+      if (!o || !o.includes('completo')) return json(res, 403, { error: 'forbidden' });
       if (req.method === 'GET') return json(res, 200, { ok: true, progresso: (db.buyers[email] && db.buyers[email].treino) || null });
       if (req.method === 'POST') {
         let b; try { b = JSON.parse(await readBody(req, 64 * 1024)); } catch { return json(res, 400, { error: 'bad-json' }); }
-        if (!db.buyers[email]) return json(res, 403, { error: 'forbidden' });
         db.buyers[email].treino = b.progresso || {};
         save();
         return json(res, 200, { ok: true });
