@@ -619,8 +619,16 @@
     });
   })();
 
-  // Meta Pixel AddToCart + InitiateCheckout: só em clique que realmente navega pro checkout
-  // (botão que só abre o modal de downsell já deu preventDefault e cai fora aqui)
+  // Meta Pixel AddToCart: só em clique que realmente navega pro checkout
+  // (botão que só abre o modal de downsell já deu preventDefault e cai fora aqui).
+  // InitiateCheckout NÃO é mais disparado aqui — o Trackeador é o DONO do IC
+  // deste host (capi_ic_hosts): o pixel core já detecta este mesmo clique
+  // (link decorado cross-domain pro checkout Wiven) e dispara IC no browser
+  // (fbq com event_id canônico) + CAPI com o MESMO event_id, deduplicado pelo
+  // Meta. Um segundo emissor aqui (fbq com eventID aleatório + beacon direto
+  // a facebook.com/tr, que ignorava o wrap do fbq) causava dupla/tripla
+  // contagem de IC no Meta. Ver skill trackeador § "InitiateCheckout — dono
+  // em sites novos".
   (function () {
     var VALUES = { I38JADD: 37.90, IIUQ8EW: 32.90, Q2J6TBK: 27.90, '7FJCQSC': 17.90 };
     document.addEventListener('click', function (ev) {
@@ -633,24 +641,9 @@
       ev.preventDefault();
       try {
         var value = VALUES[offer] || 0;
-        // fbq() é assíncrono (fila até o script carregar) e pode ser cortado pela navegação
-        // logo abaixo. Beacon de imagem (mesmo formato do <noscript> desta página) é
-        // fire-and-forget e sobrevive à navegação — cobre o que o fbq perder.
-        ['AddToCart', 'InitiateCheckout'].forEach(function (ev2) {
-          var eid = ev2 + '.' + offer + '.' + Date.now() + '.' + Math.random().toString(36).slice(2);
-          if (typeof fbq === 'function') {
-            var payload = { value: value, currency: 'BRL', content_name: 'Mapa do Tarot', content_ids: [offer] };
-            fbq('track', ev2, payload, { eventID: eid });
-          }
-          try {
-            var beacon = 'https://www.facebook.com/tr?id=2042984746336241&ev=' + ev2
-              + '&cd[value]=' + encodeURIComponent(value)
-              + '&cd[currency]=BRL&cd[content_name]=' + encodeURIComponent('Mapa do Tarot')
-              + '&cd[content_ids][0]=' + encodeURIComponent(offer)
-              + '&eid=' + encodeURIComponent(eid) + '&noscript=1';
-            new Image().src = beacon;
-          } catch (e) {}
-        });
+        if (typeof fbq === 'function') {
+          fbq('track', 'AddToCart', { value: value, currency: 'BRL', content_name: 'Mapa do Tarot', content_ids: [offer] });
+        }
       } catch (e) {}
       setTimeout(function () { location.href = a.href; }, 300);
     });
