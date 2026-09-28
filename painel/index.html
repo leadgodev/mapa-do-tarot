@@ -315,7 +315,7 @@ const MODULES = [
     title:'Guia Flash · Arcanos Maiores', subtitle:'Os significados-chave para consultar na hora.',
     cover:'capas/guia-flash.jpg',
     desc:'Guia rápido e visual dos Arcanos Maiores: gravura da carta + essência, direito e invertido, para consultar durante a leitura sem travar.',
-    pages:['conteudo/guia-flash/pagina-01-capa.jpg','conteudo/guia-flash/pagina-02-louco.jpg','conteudo/guia-flash/pagina-03-mago.jpg','conteudo/guia-flash/pagina-04-sacerdotisa.jpg','conteudo/guia-flash/pagina-05-imperatriz.jpg','conteudo/guia-flash/pagina-06-imperador.jpg','conteudo/guia-flash/pagina-07-hierofante.jpg','conteudo/guia-flash/pagina-08-enamorados.jpg','conteudo/guia-flash/pagina-09-carro.jpg','conteudo/guia-flash/pagina-10-forca.jpg','conteudo/guia-flash/pagina-11-eremita.jpg','conteudo/guia-flash/pagina-12-roda-fortuna.jpg','conteudo/guia-flash/pagina-13-justica.jpg','conteudo/guia-flash/pagina-14-enforcado.jpg','conteudo/guia-flash/pagina-15-morte.jpg','conteudo/guia-flash/pagina-16-temperanca.jpg','conteudo/guia-flash/pagina-17-diabo.jpg','conteudo/guia-flash/pagina-18-torre.jpg','conteudo/guia-flash/pagina-19-estrela.jpg','conteudo/guia-flash/pagina-20-lua.jpg']
+    pages:Array.from({length:10},(_,i)=>'conteudo/guia-flash/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','louco','mago','sacerdotisa','imperatriz','imperador','hierofante','enamorados','carro','forca'][i]+'.jpg')
   },
   {
     sku:'perguntas-80', unlocked:false, soon:true, price:'R$ 21,91',
