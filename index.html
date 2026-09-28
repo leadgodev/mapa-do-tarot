@@ -583,6 +583,22 @@
   </div>
 </div>
 
+<!-- ============ EXIT-INTENT MODAL ============ -->
+<div id="exitpopup" role="dialog" aria-modal="true" aria-labelledby="ep-title" style="display:none; position:fixed; inset:0; z-index:9998; background:rgba(12,36,42,.72); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); padding:20px; overflow-y:auto;">
+  <div style="max-width:420px; margin:8vh auto; background:var(--cream-100); border-radius:22px; box-shadow:0 30px 70px rgba(0,0,0,.45); padding:30px 26px 28px; text-align:center; position:relative; font-family:var(--font-body);">
+    <button type="button" onclick="closeExitPopup()" aria-label="Fechar" style="position:absolute; top:14px; right:16px; background:none; border:none; font-size:26px; line-height:1; color:var(--ink-300); cursor:pointer;">×</button>
+    <div style="display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:6px 16px; border-radius:999px; margin-bottom:16px;">Espera</div>
+    <h3 id="ep-title" style="font-family:var(--font-heading); font-weight:800; font-size:clamp(20px,4.4vw,25px); line-height:1.2; color:var(--ink-900); margin:0 0 12px;">Espera! Antes de sair…</h3>
+    <p style="margin:0 0 16px; font-size:15px; line-height:1.55; color:var(--ink-700);">Leve o <strong style="color:var(--ink-900);">Mapa do Tarot</strong> com o preço mais baixo que já oferecemos.</p>
+    <div style="background:var(--white); border:2px solid var(--accent); border-radius:16px; padding:20px 18px; margin-bottom:16px;">
+      <div style="display:flex; align-items:baseline; justify-content:center; gap:10px; margin-bottom:8px;"><span style="font-size:16px; color:var(--ink-300); text-decoration:line-through;">R$27,90</span><span style="font-family:var(--font-heading); font-weight:800; font-size:40px; color:var(--accent); line-height:1;">R$17,90</span></div>
+      <p style="margin:0 0 14px; font-size:12.5px; color:var(--ink-500);">Mapa do Tarot — Plano Básico</p>
+      <a class="btn btn-md btn-primary" href="https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=7FJCQSC" style="width:100%;" onclick="closeExitPopup()">Quero o básico por R$17,90 <span class="arr">→</span></a>
+    </div>
+    <a href="javascript:void(0)" onclick="closeExitPopup()" style="display:inline-block; font-size:13px; color:var(--ink-300); text-decoration:underline; font-family:var(--font-heading);">Não, obrigado</a>
+  </div>
+</div>
+
 <script>
   function openDownsell(e){ if(e) e.preventDefault(); document.getElementById('downsell').style.display='block'; document.body.style.overflow='hidden'; return false; }
   function closeDownsell(){ document.getElementById('downsell').style.display='none'; document.body.style.overflow=''; }
@@ -606,7 +622,7 @@
   // Meta Pixel AddToCart + InitiateCheckout: só em clique que realmente navega pro checkout
   // (botão que só abre o modal de downsell já deu preventDefault e cai fora aqui)
   (function () {
-    var VALUES = { I38JADD: 37.90, IIUQ8EW: 32.90, Q2J6TBK: 27.90 };
+    var VALUES = { I38JADD: 37.90, IIUQ8EW: 32.90, Q2J6TBK: 27.90, '7FJCQSC': 17.90 };
     document.addEventListener('click', function (ev) {
       var a = ev.target.closest && ev.target.closest('a[href*="checkout.wiven.com.br"]');
       if (!a || ev.defaultPrevented) return; // openDownsell já deu preventDefault
@@ -658,6 +674,81 @@
       if (left <= 0) clearInterval(iv);
     }
     tick(); var iv = setInterval(tick, 1000);
+  })();
+
+  // Exit-intent popup (básico R$17,90) — 1x por sessão, desktop mouse no topo + mobile voltar/inatividade
+  (function () {
+    var KEY = 'mdt_exit_shown', START = Date.now(), MIN_DELAY = 8000, INACTIVITY_MS = 45000;
+    var checkoutClicked = false, scrolledToPlans = false, inactivityTimer = null;
+
+    function alreadyShown() { try { return sessionStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
+    function markShown() { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} }
+
+    function canShow() {
+      if (alreadyShown()) return false;
+      if (checkoutClicked) return false;
+      if (Date.now() - START < MIN_DELAY) return false;
+      var ds = document.getElementById('downsell');
+      if (ds && ds.style.display === 'block') return false;
+      return true;
+    }
+
+    window.openExitPopup = function (e) {
+      if (e) e.preventDefault();
+      if (!canShow()) return false;
+      markShown();
+      document.getElementById('exitpopup').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      return false;
+    };
+    window.closeExitPopup = function () {
+      document.getElementById('exitpopup').style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    document.getElementById('exitpopup').addEventListener('click', function (ev) { if (ev.target === this) closeExitPopup(); });
+
+    // nunca depois de clicar em qualquer link de checkout
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest && ev.target.closest('a[href*="checkout.wiven.com.br"]');
+      if (a) checkoutClicked = true;
+    }, true);
+
+    // desktop: mouse sai pelo topo
+    document.addEventListener('mouseleave', function (ev) {
+      if (ev.clientY <= 0) openExitPopup();
+    });
+
+    // mobile: botão voltar
+    try {
+      history.pushState({ mdtExit: true }, '');
+      window.addEventListener('popstate', function () {
+        openExitPopup();
+        try { history.pushState({ mdtExit: true }, ''); } catch (e) {}
+      });
+    } catch (e) {}
+
+    // mobile fallback: inatividade ~45s depois de rolar até os planos
+    var plansEl = document.querySelector('.plan-card');
+    if (plansEl && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            scrolledToPlans = true;
+            io.disconnect();
+            resetInactivityTimer();
+          }
+        });
+      }, { threshold: 0.3 });
+      io.observe(plansEl);
+    }
+    function resetInactivityTimer() {
+      if (!scrolledToPlans) return;
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(function () { openExitPopup(); }, INACTIVITY_MS);
+    }
+    ['touchstart', 'scroll', 'click'].forEach(function (evName) {
+      document.addEventListener(evName, resetInactivityTimer, { passive: true });
+    });
   })();
 </script>
 </body>
