@@ -713,19 +713,34 @@
       if (a) checkoutClicked = true;
     }, true);
 
-    // desktop: mouse sai pelo topo
-    document.addEventListener('mouseleave', function (ev) {
-      if (ev.clientY <= 0) openExitPopup();
-    });
-
-    // mobile: botão voltar
-    try {
-      history.pushState({ mdtExit: true }, '');
-      window.addEventListener('popstate', function () {
-        openExitPopup();
-        try { history.pushState({ mdtExit: true }, ''); } catch (e) {}
+    // desktop: mouse sai pelo topo (só em dispositivo com mouse de verdade —
+    // touch/rolagem no mobile gera mouseleave sintético com clientY 0)
+    var isRealMouse = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (isRealMouse) {
+      document.addEventListener('mouseleave', function (ev) {
+        if (ev.clientY <= 0) openExitPopup();
       });
-    } catch (e) {}
+    }
+
+    // mobile: botão voltar — só arma o guard depois de interação real,
+    // pra não pegar popstate espúrio de webview (Instagram/FB in-app, Safari)
+    // disparado no load ou na rolagem
+    var backGuardArmed = false;
+    function armBackGuard() {
+      if (backGuardArmed) return;
+      backGuardArmed = true;
+      try {
+        history.pushState({ mdtExit: true }, '');
+        window.addEventListener('popstate', function (ev) {
+          if (ev.state && ev.state.mdtExit) return; // entrou no nosso guard, não é o voltar da pessoa
+          openExitPopup();
+          try { history.pushState({ mdtExit: true }, ''); } catch (e) {}
+        });
+      } catch (e) {}
+    }
+    ['touchstart', 'click'].forEach(function (evName) {
+      document.addEventListener(evName, armBackGuard, { once: true, passive: true });
+    });
 
     // mobile fallback: inatividade ~45s depois de rolar até os planos
     var plansEl = document.querySelector('.plan-card');
