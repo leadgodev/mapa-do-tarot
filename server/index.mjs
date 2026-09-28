@@ -22,6 +22,8 @@ const PRODUCT_SKUS = {
   cmubsk2bd023001pqtloo3zrz: ['perguntas-80'],
   cmubsl72o023t01pq3y1awjpj: ['folha-consulta'],
   cmubwg9a3052l01puaww8hmir: ['combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta'],
+  // TODO: id do produto Wiven do 'Baralho Cigano' ainda não existe (checkout não criado). Trocar aqui quando existir.
+  // '<PRODUCT_ID_WIVEN_CIGANO_TODO>': ['cigano'],
 };
 // Ofertas do produto principal que incluem o Nível Completo.
 const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW']);
@@ -53,7 +55,7 @@ function cookieEmail(req) {
   return Buffer.from(e, 'base64url').toString();
 }
 // Conta de demonstração (análise Mundpay): acesso completo sem compra, exige senha.
-const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo', 'guia-flash', 'perguntas-80', 'folha-consulta', 'combo-3-bonus'];
+const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo', 'guia-flash', 'perguntas-80', 'folha-consulta', 'combo-3-bonus', 'cigano'];
 const DEMO_USERS = { 'teste-mundpay@leadgo.dev': '4a3b0f722b261541514f159a10cb54db025947da3eb1773d798c5f8f9ef8981d' };
 const DEMO_SALT = 'mdt-demo-salt';
 for (const e of Object.keys(DEMO_USERS)) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste Mundpay' };

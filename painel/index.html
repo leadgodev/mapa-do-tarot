@@ -135,6 +135,41 @@
   .page-status{padding:16px;text-align:center;font-size:14px;line-height:1.5;background:var(--paper);border-radius:12px;}
   .page-status p{margin:0 0 12px;}
   .page-status a{display:block;margin-top:12px;text-decoration:underline;}
+
+  /* ===== MARKET SECTIONS (separa Tarot × Baralho Cigano) ===== */
+  .market-section{margin-bottom:48px;}
+  .market-section:last-child{margin-bottom:0;}
+  .market-head{display:flex;align-items:center;gap:10px;margin:0 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border-soft);}
+  .market-head .m-ico{font-size:20px;}
+  .market-head h2{font-family:var(--font-head);font-weight:800;font-size:19px;color:var(--ink-900);margin:0;}
+  .market-head p{font-size:12.5px;color:var(--ink-300);margin:2px 0 0;}
+
+  /* ===== BARALHO CIGANO — tema terroso, escopado nesta seção ===== */
+  .cigano-section{
+    --accent:#c86a3f; --accent-press:#b5502a;
+    --paper:#f9f2e4; --white:#fff;
+    --sky-100:#f1e2c4; --sky-200:#ead2ab; --sky-300:#e0b98c;
+    --ink-300:#a3907a; --ink-500:#7a6650; --ink-700:#4a3a2c; --ink-900:#2b2018;
+    --border-soft:rgba(43,32,24,.12); --border-strong:rgba(43,32,24,.32);
+    background:var(--sand-bg,#f8eeda); border-radius:24px; padding:clamp(18px,3vw,30px);
+  }
+  .cigano-section .badge-price{background:var(--ink-900);}
+  .cigano-section .card.locked .cover img{filter:none;opacity:1;}
+  .cigano-section .lock-ov{background:rgba(74,46,31,.4);}
+  .cigano-section .treino-card.unlocked{box-shadow:0 0 0 4px rgba(200,106,63,.16),0 10px 30px rgba(200,106,63,.25);}
+  .cigano-section .treino-img-wrap{background:linear-gradient(135deg,#4a2e1f,#c86a3f 65%,#d98a63);}
+  .cigano-section .treino-lock{background:rgba(43,26,17,.4);}
+
+  .cg-banner{display:flex;flex-direction:column;gap:18px;margin-bottom:22px;background:linear-gradient(120deg,#4a2e1f,#b5502a 60%,#d98a63);border-radius:20px;overflow:hidden;position:relative;}
+  @media(min-width:760px){.cg-banner{flex-direction:row;align-items:stretch;}}
+  .cg-banner-img{flex:none;width:100%;aspect-ratio:16/9;background:rgba(255,255,255,.08);border:1.5px dashed rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85);font-family:var(--font-head);font-weight:600;font-size:13px;text-align:center;padding:16px;}
+  @media(min-width:760px){.cg-banner-img{width:42%;aspect-ratio:auto;}}
+  .cg-banner-text{padding:22px clamp(18px,3vw,30px) 26px;display:flex;flex-direction:column;gap:8px;justify-content:center;}
+  .cg-eyebrow{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#f1e2c4;margin:0;}
+  .cg-banner-text h2{font-family:var(--font-head);font-weight:800;font-size:clamp(22px,3vw,30px);color:#fff;margin:0;line-height:1.15;}
+  .cg-banner-text p{font-size:14px;line-height:1.5;color:rgba(255,255,255,.88);margin:0;max-width:44ch;}
+  .cg-banner-text .btn{align-self:flex-start;margin-top:8px;background:#fff;color:#4a2e1f;box-shadow:0 10px 24px rgba(0,0,0,.22);}
+  .cg-banner-text .btn:hover{background:#f1e2c4;}
 </style>
 <!-- trackeador:pixel:start (gerado por trackeador init — não edite à mão) -->
 <script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
@@ -223,11 +258,34 @@
   </div>
 
   <main class="wrap">
-    <div id="treino-card-mount"></div>
+    <section class="market-section" id="market-tarot">
+      <div class="market-head"><span class="m-ico">🔮</span><div><h2>Mapa do Tarot</h2><p>Seus módulos do Tarot — principal, bônus e itens extras.</p></div></div>
+      <div id="treino-card-mount"></div>
 
-    <p class="section-title">Seus Módulos</p>
-    <p class="section-sub">Continue de onde parou ou desbloqueie novos conteúdos.</p>
-    <div class="grid" id="grid"></div>
+      <p class="section-title">Seus Módulos</p>
+      <p class="section-sub">Continue de onde parou ou desbloqueie novos conteúdos.</p>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="market-section cigano-section" id="market-cigano">
+      <div class="market-head"><span class="m-ico">🃏</span><div><h2>Baralho Cigano</h2><p>Método Visual 3C — compreender, conectar e consultar.</p></div></div>
+
+      <div class="cg-banner">
+        <div class="cg-banner-img" id="cg-banner-img">Espaço da imagem</div>
+        <div class="cg-banner-text">
+          <p class="cg-eyebrow">Novo</p>
+          <h2>Mapa do Baralho Cigano</h2>
+          <p>Você está aprendendo o Tarot. Agora aprenda o Baralho Cigano do mesmo jeito: sem decorar, e sabendo juntar as cartas.</p>
+          <a class="btn btn-primary" id="cigano-cta" href="/upsell-cigano/">Quero o Baralho Cigano — R$ 27,90</a>
+        </div>
+      </div>
+
+      <div id="cigano-app-mount"></div>
+
+      <p class="section-title">Itens do Baralho Cigano</p>
+      <p class="section-sub">Plano único: 1 item principal + 6 bônus, incluindo o App de Treino.</p>
+      <div class="grid" id="cigano-grid"></div>
+    </section>
   </main>
 </div>
 
@@ -369,6 +427,17 @@ const MODULES = [
   }
 ];
 
+// Baralho Cigano — plano único (SKU 'cigano'), sem checkout próprio ainda: CTA vai pra /upsell-cigano/.
+const CIGANO_APP = {key:'cigano-app', title:'App de Treino do Baralho Cigano', subtitle:'Flashcards e treino de combinações no celular.'};
+const CIGANO_ITEMS = [
+  {key:'cigano-principal', title:'O Método Visual 3C', subtitle:'Antes de começar + As 36 Cartas + Dicionário de 200+ combinações.'},
+  {key:'cigano-tiragens', title:'Livro das Tiragens Ciganas', subtitle:'15 tiragens prontas, com exemplo preenchido e raciocínio.'},
+  {key:'cigano-primeira', title:'Minha Primeira Tiragem Cigana', subtitle:'Passo a passo em 10 etapas, 3 cartas até virar frase.'},
+  {key:'cigano-flash', title:'Guia Flash das 36 Cartas', subtitle:'1 card por carta pra consultar no celular durante a leitura.'},
+  {key:'cigano-perguntas', title:'Perguntas que Destravam a Leitura', subtitle:'Por área: amor, trabalho, dinheiro, família, decisões.'},
+  {key:'cigano-mesa-real', title:'Introdução à Mesa Real', subtitle:'Casas, linhas, colunas, diagonais — exemplo comentado.'}
+];
+
 const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10V7a6 6 0 1112 0v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="11" rx="2.5" fill="#fff"/><circle cx="12" cy="15" r="1.6" fill="#14242f"/><path d="M12 16.4V18" stroke="#14242f" stroke-width="1.8" stroke-linecap="round"/></svg>';
 
 /* ---------- estado ---------- */
@@ -431,6 +500,45 @@ function renderTreinoCard(owned){
     '</div>';
 }
 
+/* ---------- Baralho Cigano (plano único, SKU 'cigano') ---------- */
+function renderCiganoApp(unlocked){
+  const mount=document.getElementById('cigano-app-mount');
+  const cardTag='a';
+  const href=unlocked?'#':'/upsell-cigano/';
+  const target=unlocked?'':'';
+  mount.innerHTML=
+    '<div class="treino-card-wrap">'+
+      '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+'>'+
+        '<span class="treino-pill">🎁 Bônus Principal · App de Treino</span>'+
+        '<span class="treino-img-wrap"><span style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,.85);font-family:var(--font-head);font-weight:600;font-size:13px;text-align:center;padding:16px;">Espaço da imagem</span>'+
+          (unlocked?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Incluso no Baralho Cigano</span></span>')+
+        '</span>'+
+        '<span class="treino-text">'+
+          '<span class="treino-title">App de Treino do Baralho Cigano</span>'+
+          '<span class="treino-sub">'+(unlocked?'Em breve — flashcards e treino de combinações no celular.':'Toque para conhecer o plano completo')+'</span>'+
+        '</span>'+
+      '</'+cardTag+'>'+
+    '</div>';
+  if(unlocked){mount.querySelector('a').addEventListener('click',e=>e.preventDefault());}
+}
+function renderCiganoGrid(unlocked){
+  const grid=document.getElementById('cigano-grid');
+  grid.innerHTML='';
+  CIGANO_ITEMS.forEach(m=>{
+    const card=document.createElement('a');
+    card.href = unlocked ? '#' : '/upsell-cigano/';
+    card.className='card'+(unlocked?'':' locked');
+    const badge = unlocked ? '<span class="badge badge-soon">Em breve</span>' : '<span class="badge badge-price">Plano único</span>';
+    const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
+    const cta = unlocked ? 'Em breve — aguarde' : 'Desbloquear';
+    card.innerHTML=
+      '<span class="cover"><span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#4a2e1f,#c86a3f);"></span>'+badge+lockOv+'</span>'+
+      '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
+    if(unlocked) card.addEventListener('click',e=>e.preventDefault());
+    grid.appendChild(card);
+  });
+}
+
 /* ---------- hub ---------- */
 function renderHub(){
   const email=getEmail();
@@ -438,6 +546,10 @@ function renderHub(){
   document.getElementById('hero-eyebrow').textContent = name? ('Bem-vindo(a), '+name) : 'Bem-vindo(a)';
   const owned=getOwned();
   renderTreinoCard(owned);
+  const ciganoUnlocked=owned.includes('cigano');
+  renderCiganoApp(ciganoUnlocked);
+  renderCiganoGrid(ciganoUnlocked);
+  document.getElementById('cigano-cta').classList.toggle('hidden',ciganoUnlocked);
   const grid=document.getElementById('grid');
   grid.innerHTML='';
   MODULES.forEach(m=>{
