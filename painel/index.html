@@ -162,8 +162,11 @@
 
   .cg-banner{display:flex;flex-direction:column;gap:18px;margin-bottom:22px;background:linear-gradient(120deg,#4a2e1f,#b5502a 60%,#d98a63);border-radius:20px;overflow:hidden;position:relative;}
   @media(min-width:760px){.cg-banner{flex-direction:row;align-items:stretch;}}
-  .cg-banner-img{flex:none;width:100%;aspect-ratio:16/9;background:rgba(255,255,255,.08);border:1.5px dashed rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.85);font-family:var(--font-head);font-weight:600;font-size:13px;text-align:center;padding:16px;}
+  .cg-banner-img{flex:none;position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;padding:14px;}
   @media(min-width:760px){.cg-banner-img{width:42%;aspect-ratio:auto;}}
+  .cg-fan{position:relative;width:100%;height:100%;}
+  .cg-fan img{position:absolute;filter:drop-shadow(0 10px 18px rgba(20,10,4,.35));}
+  .cg-fan .cg-cavaleiro{left:50%;bottom:-6%;width:44%;transform:translateX(-50%) rotate(-1deg);border-radius:8px;box-shadow:0 14px 26px rgba(20,10,4,.4);border:1px solid rgba(255,255,255,.55);z-index:2;}
   .cg-banner-text{padding:22px clamp(18px,3vw,30px) 26px;display:flex;flex-direction:column;gap:8px;justify-content:center;}
   .cg-eyebrow{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#f1e2c4;margin:0;}
   .cg-banner-text h2{font-family:var(--font-head);font-weight:800;font-size:clamp(22px,3vw,30px);color:#fff;margin:0;line-height:1.15;}
@@ -271,7 +274,16 @@
       <div class="market-head"><span class="m-ico">🃏</span><div><h2>Baralho Cigano</h2><p>Método Visual 3C — compreender, conectar e consultar.</p></div></div>
 
       <div class="cg-banner">
-        <div class="cg-banner-img" id="cg-banner-img">Espaço da imagem</div>
+        <div class="cg-banner-img" id="cg-banner-img">
+          <div class="cg-fan">
+            <img src="assets/cigano/bonus-4-cut.webp" alt="" style="left:0%;top:22%;width:26%;transform:rotate(-14deg);">
+            <img src="assets/cigano/bonus-2-cut.webp" alt="" style="left:11%;top:9%;width:26%;transform:rotate(-7deg);">
+            <img src="assets/cigano/bonus-1-cut.webp" alt="Livro das Tiragens Ciganas" style="left:22%;top:2%;width:26%;transform:rotate(0deg);">
+            <img src="assets/cigano/bonus-5-cut.webp" alt="" style="right:11%;top:9%;width:26%;transform:rotate(7deg);">
+            <img src="assets/cigano/bonus-3-cut.webp" alt="" style="right:0%;top:22%;width:26%;transform:rotate(14deg);">
+            <img class="cg-cavaleiro" src="assets/cigano/carta-cavaleiro.webp" alt="Mapa do Baralho Cigano — carta Cavaleiro">
+          </div>
+        </div>
         <div class="cg-banner-text">
           <p class="cg-eyebrow">Novo</p>
           <h2>Mapa do Baralho Cigano</h2>
@@ -430,12 +442,14 @@ const MODULES = [
 // Baralho Cigano — plano único (SKU 'cigano'), sem checkout próprio ainda: CTA vai pra /upsell-cigano/.
 const CIGANO_APP = {key:'cigano-app', title:'App de Treino do Baralho Cigano', subtitle:'Flashcards e treino de combinações no celular.'};
 const CIGANO_ITEMS = [
-  {key:'cigano-principal', title:'O Método Visual 3C', subtitle:'Antes de começar + As 36 Cartas + Dicionário de 200+ combinações.'},
-  {key:'cigano-tiragens', title:'Livro das Tiragens Ciganas', subtitle:'15 tiragens prontas, com exemplo preenchido e raciocínio.'},
-  {key:'cigano-primeira', title:'Minha Primeira Tiragem Cigana', subtitle:'Passo a passo em 10 etapas, 3 cartas até virar frase.'},
-  {key:'cigano-flash', title:'Guia Flash das 36 Cartas', subtitle:'1 card por carta pra consultar no celular durante a leitura.'},
-  {key:'cigano-perguntas', title:'Perguntas que Destravam a Leitura', subtitle:'Por área: amor, trabalho, dinheiro, família, decisões.'},
-  {key:'cigano-mesa-real', title:'Introdução à Mesa Real', subtitle:'Casas, linhas, colunas, diagonais — exemplo comentado.'}
+  {key:'cigano-antes', title:'Antes de Começar', subtitle:'Embaralhar, cortar, escolher cartas, polaridade, ler cartas juntas.', cover:'assets/cigano/carta-coracao.webp'},
+  {key:'cigano-36cartas', title:'As 36 Cartas', subtitle:'Mapa visual completo carta a carta — igual ao Tarot.', cover:'assets/cigano/carta-raposa.webp'},
+  {key:'cigano-dicionario', title:'Dicionário Visual de Combinações', subtitle:'200+ combinações: leitura, no amor, como conselho.', cover:'assets/cigano/carta-sol.webp'},
+  {key:'cigano-tiragens', title:'Bônus 1 · Livro das Tiragens Ciganas', subtitle:'15 tiragens prontas, com exemplo preenchido e raciocínio.', cover:'assets/cigano/bonus-1-cut.webp'},
+  {key:'cigano-primeira', title:'Bônus 2 · Minha Primeira Tiragem Cigana', subtitle:'Passo a passo em 10 etapas, 3 cartas até virar frase.', cover:'assets/cigano/bonus-2-cut.webp'},
+  {key:'cigano-flash', title:'Bônus 3 · Guia Flash das 36 Cartas', subtitle:'1 card por carta pra consultar no celular durante a leitura.', cover:'assets/cigano/bonus-3-cut.webp'},
+  {key:'cigano-perguntas', title:'Bônus 4 · Perguntas que Destravam a Leitura', subtitle:'Por área: amor, trabalho, dinheiro, família, decisões.', cover:'assets/cigano/bonus-4-cut.webp'},
+  {key:'cigano-mesa-real', title:'Bônus 5 · Introdução à Mesa Real', subtitle:'Casas, linhas, colunas, diagonais — exemplo comentado.', cover:'assets/cigano/bonus-5-cut.webp'}
 ];
 
 const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10V7a6 6 0 1112 0v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="11" rx="2.5" fill="#fff"/><circle cx="12" cy="15" r="1.6" fill="#14242f"/><path d="M12 16.4V18" stroke="#14242f" stroke-width="1.8" stroke-linecap="round"/></svg>';
@@ -509,13 +523,14 @@ function renderCiganoApp(unlocked){
   mount.innerHTML=
     '<div class="treino-card-wrap">'+
       '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+'>'+
-        '<span class="treino-pill">🎁 Bônus Principal · App de Treino</span>'+
-        '<span class="treino-img-wrap"><span style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,.85);font-family:var(--font-head);font-weight:600;font-size:13px;text-align:center;padding:16px;">Espaço da imagem</span>'+
+        '<span class="treino-pill">🎁 Bônus Especial · App de Treino</span>'+
+        '<span class="treino-img-wrap">'+
+          '<img class="treino-img" src="'+assetUrl('assets/cigano/bonus-6-cut.webp')+'" alt="App de Treino do Baralho Cigano" loading="eager">'+
           (unlocked?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Incluso no Baralho Cigano</span></span>')+
         '</span>'+
         '<span class="treino-text">'+
           '<span class="treino-title">App de Treino do Baralho Cigano</span>'+
-          '<span class="treino-sub">'+(unlocked?'Em breve — flashcards e treino de combinações no celular.':'Toque para conhecer o plano completo')+'</span>'+
+          '<span class="treino-sub">'+(unlocked?'Em atualização — flashcards e treino de combinações no celular.':'Toque para conhecer o plano completo')+'</span>'+
         '</span>'+
       '</'+cardTag+'>'+
     '</div>';
@@ -528,11 +543,11 @@ function renderCiganoGrid(unlocked){
     const card=document.createElement('a');
     card.href = unlocked ? '#' : '/upsell-cigano/';
     card.className='card'+(unlocked?'':' locked');
-    const badge = unlocked ? '<span class="badge badge-soon">Em breve</span>' : '<span class="badge badge-price">Plano único</span>';
+    const badge = unlocked ? '<span class="badge badge-soon">Em atualização</span>' : '<span class="badge badge-price">Plano único</span>';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
-    const cta = unlocked ? 'Em breve — aguarde' : 'Desbloquear';
+    const cta = unlocked ? 'Em atualização — aguarde' : 'Desbloquear';
     card.innerHTML=
-      '<span class="cover"><span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#4a2e1f,#c86a3f);"></span>'+badge+lockOv+'</span>'+
+      '<span class="cover"><img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="lazy">'+badge+lockOv+'</span>'+
       '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
     if(unlocked) card.addEventListener('click',e=>e.preventDefault());
     grid.appendChild(card);
