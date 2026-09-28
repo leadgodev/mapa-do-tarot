@@ -163,6 +163,19 @@ http.createServer(async (req, res) => {
       return o ? json(res, 200, { ok: true, email, owned: o }) : json(res, 401, { error: 'no-session' });
     }
     if (p === '/painel/api/logout') return json(res, 200, { ok: true }, { 'set-cookie': 'mdt_s=; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=0' });
+    if (p === '/painel/api/treino/progresso') {
+      const email = cookieEmail(req);
+      if (!email) return json(res, 401, { error: 'no-session' });
+      if (req.method === 'GET') return json(res, 200, { ok: true, progresso: (db.buyers[email] && db.buyers[email].treino) || null });
+      if (req.method === 'POST') {
+        let b; try { b = JSON.parse(await readBody(req, 64 * 1024)); } catch { return json(res, 400, { error: 'bad-json' }); }
+        if (!db.buyers[email]) return json(res, 403, { error: 'forbidden' });
+        db.buyers[email].treino = b.progresso || {};
+        save();
+        return json(res, 200, { ok: true });
+      }
+      return json(res, 405, { error: 'method' });
+    }
     if (p.startsWith('/painel/api/')) return json(res, 404, { error: 'not-found' });
     if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { error: 'method' });
     serveStatic(req, res, p);
