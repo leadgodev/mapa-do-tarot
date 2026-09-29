@@ -345,10 +345,15 @@ function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 // produto — aguardando decisão da dona) -> null cai no suporte por WhatsApp.
 const MP_ESSENCIAL='https://pay.mycheckoutt.com/01a0e99b-822a-712e-9225-d30dd49a5fce?ref=';
 const MP_COMPLETO='https://pay.mycheckoutt.com/01a0d98a-e909-7239-b459-75d58aff0365?ref=';
+// Ofertas de membro (30% off, skill area-membros-netflix) ainda por criar na Mundpay
+// (login do perfil browser bloqueado nesta sessão) -> null cai no WhatsApp com o preço
+// certo já exibido; TROCAR por link real assim que a oferta existir no painel Mundpay.
 const CHECKOUT_URL = {
   'principal': MP_ESSENCIAL,
-  'completo': MP_COMPLETO,
-  'combo-3-bonus': null, 'guia-flash': null, 'perguntas-80': null, 'folha-consulta': null,
+  'completo': null, // TODO: oferta membro "Nível Completo - Área de Membros - PT" no produto Essencial-PT, € 9,90
+  'combo-3-bonus': null, // TODO: oferta "Leve os 3 com Desconto - Área de Membros - PT" no produto Extras-PT, € 15,90
+  'guia-flash': null, 'perguntas-80': null, // sem desconto (abaixo do piso € 4,90) -> reusar oferta pública já existente quando localizada
+  'folha-consulta': null, // TODO: oferta "Folha de Consulta - Área de Membros - PT" no produto Extras-PT, € 6,90
   'bonus-1': null, 'bonus-2': null, 'bonus-3': null, 'bonus-4': null
 };
 function buyHref(m){
@@ -357,9 +362,26 @@ function buyHref(m){
   return 'https://wa.me/551151770499?text='+encodeURIComponent('Olá! Quero liberar "'+m.title+'" na minha área de membros (e-mail: '+(getEmail()||'')+').');
 }
 
+/* ---------- preço de membro (regra da dona, 29/09/2026, skill area-membros-netflix) ----------
+   30% off do preço NORMAL em tudo que ela ainda não tem (upgrade, bónus, combo).
+   Arredonda pro final ,90 mais próximo ABAIXO. Piso € 4,90: se ficar abaixo, sem desconto.
+   Calculado sempre a partir do preço normal do config — nunca hardcode do valor final. */
+function memberPrice(normal){
+  const normalCents=Math.round(normal*100);
+  const offCents=Math.round(normalCents*0.7);
+  const v=Math.floor((offCents-90)/100)*100+90;
+  return v<490 ? normal : v/100;
+}
+function fmtR(n){return '€ '+n.toFixed(2).replace('.',',');}
+function priceBadgeHTML(normal){
+  const mp=memberPrice(normal);
+  if(mp>=normal) return fmtR(normal);
+  return '<span style="text-decoration:line-through;opacity:.62;font-weight:600;font-size:.82em;margin-right:5px;">'+fmtR(normal)+'</span>'+fmtR(mp);
+}
+
 const MODULES = [
   {
-    sku:'principal', unlocked:false, price:'€ 7,90',
+    sku:'principal', unlocked:false, normal:7.90,
     title:'22 Arcanos Maiores', subtitle:'O mapa completo — carta a carta, com exercício.',
     cover:'capas/principal.jpg', partial:true,
     pages:[
@@ -369,61 +391,61 @@ const MODULES = [
     ].map(n=>'conteudo/principal/'+n+'.jpg')
   },
   {
-    sku:'bonus-1', unlocked:false, price:'€ 6,90',
+    sku:'bonus-1', unlocked:false, normal:6.90,
     title:'Bónus 1 · Ler Qualquer Carta', subtitle:'O método dos 3 passos: olhar, sentir, traduzir.',
     cover:'capas/bonus-1.jpg',
     desc:'Aprende a interpretar qualquer carta sem decorar, com o método de 3 passos e 3 exemplos práticos (O Sol, A Torre, A Lua).',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-1/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','metodo-3-passos','passo-1-olhar','passo-2-sentir','passo-3-traduzir','exemplo-o-sol','exemplo-a-torre','exemplo-a-lua','exercicio'][i]+'.jpg')
   },
   {
-    sku:'bonus-2', unlocked:false, price:'€ 6,90',
+    sku:'bonus-2', unlocked:false, normal:6.90,
     title:'Bónus 2 · Tiragens Práticas', subtitle:'Amor, dinheiro e decisão — passo a passo.',
     cover:'capas/bonus-2.jpg',
     desc:'3 tiragens prontas para usar hoje: amor, dinheiro e decisão. Layout, leitura e dicas para cada uma.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-2/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','como-fazer','amor-layout','amor-leitura','dinheiro-layout','dinheiro-leitura','decisao-layout','decisao-leitura','dicas','exercicio'][i]+'.jpg')
   },
   {
-    sku:'bonus-3', unlocked:false, price:'€ 6,90',
+    sku:'bonus-3', unlocked:false, normal:6.90,
     title:'Bónus 3 · Cuidando do Baralho', subtitle:'Ativar, limpar, proteger e guardar.',
     cover:'capas/bonus-3.jpg',
     desc:'Como ativar, limpar a energia, proteger e guardar o teu baralho — com uma rotina de conexão diária.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','ativar-baralho','limpar-energia','proteger','guardar','conexao-diaria','o-que-evitar','rotina','exercicio'][i]+'.jpg')
   },
   {
-    sku:'guia-flash', unlocked:false, soon:true, price:'€ 6,90',
+    sku:'guia-flash', unlocked:false, soon:true, normal:6.90,
     title:'Guia Flash · Arcanos Maiores', subtitle:'Os significados-chave para consultar na hora.',
     cover:'capas/guia-flash.jpg',
     desc:'Guia rápido e visual dos Arcanos Maiores: gravura da carta + essência, direito e invertido, para consultar durante a leitura sem travar.',
     pages:Array.from({length:10},(_,i)=>'conteudo/guia-flash/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','louco','mago','sacerdotisa','imperatriz','imperador','hierofante','enamorados','carro','forca'][i]+'.jpg')
   },
   {
-    sku:'perguntas-80', unlocked:false, soon:true, price:'€ 6,90',
+    sku:'perguntas-80', unlocked:false, soon:true, normal:6.90,
     title:'80 Perguntas Poderosas', subtitle:'Perguntas que abrem a mensagem da carta.',
     cover:'capas/perguntas-80.jpg',
     desc:'Troca o “isso vai dar certo?” por perguntas que revelam respostas mais claras e profundas — organizadas por tema: amor, dinheiro, autoconhecimento, decisões e mais.',
     pages:Array.from({length:10},(_,i)=>'conteudo/perguntas-80/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','amor','dinheiro','autoconhecimento','decisoes','familia','espiritualidade','saude','superacao','sombra'][i]+'.jpg')
   },
   {
-    sku:'folha-consulta', unlocked:false, soon:true, price:'€ 9,90',
+    sku:'folha-consulta', unlocked:false, soon:true, normal:9.90,
     title:'A Folha de Consulta do Tarot', subtitle:'Referência rápida, ao direito e invertida.',
     cover:'capas/folha-consulta.jpg',
     desc:'Tabelas de consulta rápida com o significado de cada carta ao direito e invertida, mais sim/não, tempo de resposta e elementos por naipe.',
     pages:Array.from({length:10},(_,i)=>'conteudo/folha-consulta/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','arcanos-0-8','arcanos-9-21','copas','ouros','espadas','paus','sim-ou-nao','tempo-de-resposta','elementos'][i]+'.jpg')
   },
   {
-    sku:'combo-3-bonus', unlocked:false, soon:true, price:'Combo',
+    sku:'combo-3-bonus', unlocked:false, soon:true, normal:23.70,
     title:'Combo · Os 3 Bónus', subtitle:'Guia Flash + 80 Perguntas + Folha de Consulta.',
     cover:'capas/combo-3-bonus.jpg', desc:'Os 3 bónus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — recebes assim que for publicado.',
     pages:[]
   },
   {
-    sku:'bonus-4', unlocked:false, price:'€ 6,90', soon:true,
+    sku:'bonus-4', unlocked:false, normal:6.90, soon:true,
     title:'Bónus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à tua primeira leitura.',
     cover:'capas/bonus-4.jpg', desc:'Um percurso guiado que te leva pela mão — do zero até à tua primeira leitura completa. Conteúdo em atualização — ao desbloqueares, recebes assim que for publicado.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio'][i]+'.jpg')
   },
   {
-    sku:'completo', unlocked:false, price:'+ € 10,90', soon:true,
+    sku:'completo', unlocked:false, normal:14.90, soon:true,
     title:'Nível Completo · 56 Arcanos Menores', subtitle:'Copas, Ouros, Espadas e Paus — o baralho inteiro.',
     cover:'capas/completo.jpg', desc:'Suba para o Mapa Completo: os 56 Arcanos Menores (Copas, Ouros, Espadas e Paus) somados aos 22 Maiores que já tens. Conteúdo em atualização.',
     pages:[]
@@ -563,7 +585,7 @@ function renderHub(){
     card.className='card'+(unlocked?'':' locked');
     let badge = (unlocked&&m.soon) ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>'
               : (m.soon ? '<span class="badge badge-soon">Em atualização</span>'
-                        : '<span class="badge badge-price">'+m.price+'</span>');
+                        : '<span class="badge badge-price">'+priceBadgeHTML(m.normal)+'</span>');
     const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
                              : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
     const partial = m.partial && !m.soon ? '<span class="badge-partial">conteúdo inicial · mais em breve</span>' : '';
@@ -590,12 +612,15 @@ function openModal(sku){
      '<div class="m-body">'+
        '<h3>'+m.title+'</h3>'+
        '<p>'+(m.desc||m.subtitle)+'</p>'+
-       '<div class="price">'+m.price+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
-       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" style="width:100%;" href="'+buyHref(m)+'" target="_blank" rel="noopener">Quero desbloquear</a></div>'+
+       '<div class="price">'+priceBadgeHTML(m.normal)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
+       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'" target="_blank" rel="noopener">Quero desbloquear</a></div>'+
        '<div class="m-close" id="modal-close">Agora não</div>'+
      '</div></div></div>';
   document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
   document.getElementById('modal-close').addEventListener('click',closeModal);
+  document.getElementById('modal-buy').addEventListener('click',function(){
+    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:m.title,content_type:'product',value:memberPrice(m.normal),currency:'EUR'});}
+  });
 }
 function closeModal(){document.getElementById('modal-mount').innerHTML='';}
 
