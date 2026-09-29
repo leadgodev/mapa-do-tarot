@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" data-tk-currency="BRL">
 <head>
 <meta charset="UTF-8">
 <base href="/painel/">
@@ -565,7 +565,7 @@ function renderTreinoCard(owned){
   const target=unlocked?'':' target="_blank" rel="noopener"';
   mount.innerHTML=
     '<div class="treino-card-wrap">'+
-      '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+'>'+
+      '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+(unlocked?'':' data-tk-value="'+memberPrice(37.90,'completo').toFixed(2)+'"')+'>'+
         '<span class="treino-pill">🎁 Bônus Especial · App de Treino do Tarô</span>'+
         '<span class="treino-img-wrap">'+
           '<img class="treino-img" src="'+assetUrl('assets/webp/bonus5-app-treino.webp')+'" alt="App de Treino do Tarô" loading="eager">'+
@@ -666,6 +666,7 @@ function renderHub(){
   const ciganoCta=document.getElementById('cigano-cta');
   ciganoCta.classList.toggle('hidden',ciganoUnlocked);
   ciganoCta.href=CIGANO_URL;
+  ciganoCta.setAttribute('data-tk-value', memberPrice(CIGANO_NORMAL).toFixed(2));
   ciganoCta.target='_blank';
   ciganoCta.rel='noopener';
   ciganoCta.innerHTML='Quero o Baralho Cigano — '+priceBadgeHTML(CIGANO_NORMAL);
@@ -711,7 +712,7 @@ function openModal(sku){
        '<h3>'+m.title+'</h3>'+
        '<p>'+(m.desc||m.subtitle)+'</p>'+
        '<div class="price">'+priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
-       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'" target="_blank" rel="noopener">Quero desbloquear</a></div>'+
+       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'"'+(CHECKOUT_URL[m.sku]?' data-tk-value="'+memberPrice(m.normal,m.sku).toFixed(2)+'"':'')+' target="_blank" rel="noopener">Quero desbloquear</a></div>'+
        '<div class="m-close" id="modal-close">Agora não</div>'+
      '</div></div></div>';
   document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
