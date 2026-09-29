@@ -119,6 +119,61 @@
   .page-status{padding:16px;text-align:center;font-size:14px;line-height:1.5;background:var(--paper);border-radius:12px;}
   .page-status p{margin:0 0 12px;}
   .page-status a{display:block;margin-top:12px;text-decoration:underline;}
+
+  /* ===== MARKET SECTIONS (separa Tarot × Baralho Cigano) ===== */
+  .market-section{margin-bottom:48px;}
+  .market-section:last-child{margin-bottom:0;}
+  .market-head{display:flex;align-items:center;gap:10px;margin:0 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border-soft);}
+  .market-head .m-ico{font-size:20px;}
+  .market-head h2{font-family:var(--font-head);font-weight:800;font-size:19px;color:var(--ink-900);margin:0;}
+  .market-head p{font-size:12.5px;color:var(--ink-300);margin:2px 0 0;}
+
+  /* ===== BARALHO CIGANO — tema terroso, escopado nesta seção ===== */
+  .cigano-section{
+    --accent:#c86a3f; --accent-press:#b5502a;
+    --paper:#f9f2e4; --white:#fff;
+    --sky-100:#f1e2c4; --sky-200:#ead2ab; --sky-300:#e0b98c;
+    --ink-300:#a3907a; --ink-500:#7a6650; --ink-700:#4a3a2c; --ink-900:#2b2018;
+    --border-soft:rgba(43,32,24,.12); --border-strong:rgba(43,32,24,.32);
+    background:var(--sand-bg,#f8eeda); border-radius:24px; padding:clamp(18px,3vw,30px);
+  }
+  .cigano-section .badge-price{background:var(--ink-900);}
+  .cigano-section .card.locked .cover img{filter:none;opacity:1;}
+  .cigano-section .lock-ov{background:rgba(74,46,31,.4);}
+  .cigano-section .treino-card.unlocked{box-shadow:0 0 0 4px rgba(200,106,63,.16),0 10px 30px rgba(200,106,63,.25);}
+  .cigano-section .treino-img-wrap{background:linear-gradient(135deg,#4a2e1f,#c86a3f 65%,#d98a63);}
+  .cigano-section .treino-lock{background:rgba(43,26,17,.4);}
+
+  .cg-banner{display:flex;flex-direction:column;gap:18px;margin-bottom:22px;background:linear-gradient(120deg,#4a2e1f,#b5502a 60%,#d98a63);border-radius:20px;overflow:hidden;position:relative;}
+  @media(min-width:760px){.cg-banner{flex-direction:row;align-items:stretch;}}
+  .cg-banner-img{flex:none;position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;padding:14px;}
+  @media(min-width:760px){.cg-banner-img{width:42%;aspect-ratio:auto;}}
+  .cg-fan{position:relative;width:100%;height:100%;}
+  .cg-fan img{position:absolute;filter:drop-shadow(0 10px 18px rgba(20,10,4,.35));}
+  .cg-fan .cg-cavaleiro{left:50%;bottom:-6%;width:44%;transform:translateX(-50%) rotate(-1deg);border-radius:8px;box-shadow:0 14px 26px rgba(20,10,4,.4);border:1px solid rgba(255,255,255,.55);z-index:2;}
+  .cg-banner-text{padding:22px clamp(18px,3vw,30px) 26px;display:flex;flex-direction:column;gap:8px;justify-content:center;}
+  .cg-eyebrow{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#f1e2c4;margin:0;}
+  .cg-banner-text h2{font-family:var(--font-head);font-weight:800;font-size:clamp(22px,3vw,30px);color:#fff;margin:0;line-height:1.15;}
+  .cg-banner-text p{font-size:14px;line-height:1.5;color:rgba(255,255,255,.88);margin:0;max-width:44ch;}
+  .cg-banner-text .btn{align-self:flex-start;margin-top:8px;background:#fff;color:#4a2e1f;box-shadow:0 10px 24px rgba(0,0,0,.22);}
+  .cg-banner-text .btn:hover{background:#f1e2c4;}
+
+  /* ===== HOME — 2 cards de produto ===== */
+  .home-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:920px;margin:0 auto;}
+  @media(min-width:680px){.home-grid{grid-template-columns:1fr 1fr;}}
+  .home-card{position:relative;display:block;width:100%;border:none;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:var(--sky-200);box-shadow:var(--shadow-md);transition:transform .2s,box-shadow .2s;}
+  .home-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+  .home-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .home-card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,10,35,.85),rgba(20,10,35,.15) 58%,transparent);}
+  .home-card.locked img{filter:grayscale(.3) brightness(.62);}
+  .home-card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 22px 26px;color:#fff;}
+  .home-card-eyebrow{display:block;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.78);margin:0 0 6px;}
+  .home-card-body h3{font-family:var(--font-head);font-weight:800;font-size:clamp(20px,2.6vw,25px);margin:0 0 6px;color:#fff;}
+  .home-card-body p{font-size:13px;line-height:1.5;margin:0 0 12px;color:rgba(255,255,255,.85);max-width:32ch;}
+  .home-card-cta{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-head);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#fff;}
+  .home-lock{position:absolute;top:16px;right:16px;z-index:3;background:rgba(20,10,35,.6);color:#fff;font-family:var(--font-head);font-weight:700;font-size:11px;padding:6px 12px;border-radius:999px;}
+  .market-back{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink-500);background:none;border:none;cursor:pointer;padding:0 0 18px;touch-action:manipulation;}
+  .market-back:hover{color:var(--accent);}
 </style>
 <!-- trackeador:pixel:start (gerado por trackeador init — não edite à mão) -->
 <script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
@@ -207,9 +262,49 @@
   </div>
 
   <main class="wrap">
-    <p class="section-title">Seus Módulos</p>
-    <p class="section-sub">Continue de onde parou ou desbloqueie novos conteúdos.</p>
-    <div class="grid" id="grid"></div>
+    <div id="view-home">
+      <div class="home-grid" id="home-grid"></div>
+    </div>
+
+    <div id="view-market" class="hidden">
+    <button type="button" class="market-back" id="market-back">← Voltar</button>
+    <section class="market-section" id="market-tarot">
+      <div class="market-head"><span class="m-ico">🔮</span><div><h2>Mapa do Tarot</h2><p>Os seus módulos do Tarot — principal, bónus e itens extra.</p></div></div>
+
+      <p class="section-title">Seus Módulos</p>
+      <p class="section-sub">Continue de onde parou ou desbloqueie novos conteúdos.</p>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="market-section cigano-section" id="market-cigano">
+      <div class="market-head"><span class="m-ico">🃏</span><div><h2>Baralho Cigano</h2><p>Método Visual 3C — compreender, ligar as cartas e consultar.</p></div></div>
+
+      <div class="cg-banner">
+        <div class="cg-banner-img" id="cg-banner-img">
+          <div class="cg-fan">
+            <img src="assets/cigano/bonus-4-cut.webp" alt="" style="left:0%;top:22%;width:26%;transform:rotate(-14deg);">
+            <img src="assets/cigano/bonus-2-cut.webp" alt="" style="left:11%;top:9%;width:26%;transform:rotate(-7deg);">
+            <img src="assets/cigano/bonus-1-cut.webp" alt="Livro das Tiragens Ciganas" style="left:22%;top:2%;width:26%;transform:rotate(0deg);">
+            <img src="assets/cigano/bonus-5-cut.webp" alt="" style="right:11%;top:9%;width:26%;transform:rotate(7deg);">
+            <img src="assets/cigano/bonus-3-cut.webp" alt="" style="right:0%;top:22%;width:26%;transform:rotate(14deg);">
+            <img class="cg-cavaleiro" src="assets/cigano/carta-cavaleiro.webp" alt="Mapa do Baralho Cigano — carta Cavaleiro">
+          </div>
+        </div>
+        <div class="cg-banner-text">
+          <p class="cg-eyebrow">Brevemente</p>
+          <h2>Mapa do Baralho Cigano</h2>
+          <p>Está a aprender o Tarot. Em breve vai poder aprender o Baralho Cigano do mesmo jeito: sem decorar, e sabendo juntar as cartas.</p>
+          <a class="btn btn-primary" id="cigano-cta" href="#checkout-pendente-cigano-pt">Quero ser avisado(a) — Baralho Cigano</a>
+        </div>
+      </div>
+
+      <div id="cigano-app-mount"></div>
+
+      <p class="section-title">Itens do Baralho Cigano</p>
+      <p class="section-sub">Conteúdo em preparação para o mercado de Portugal — em breve disponível.</p>
+      <div class="grid" id="cigano-grid"></div>
+    </section>
+    </div>
   </main>
 </div>
 
@@ -333,6 +428,21 @@ const MODULES = [
   }
 ];
 
+// Baralho Cigano PT — mercado ainda sem produto/plano aprovado na Mundpay.
+// Sem preço definido: CTA e cards apontam para um placeholder claro
+// (#checkout-pendente-cigano-pt) em vez de inventar valor ou link.
+const CIGANO_APP = {key:'cigano-app', title:'App de Treino do Baralho Cigano', subtitle:'Flashcards e treino de combinações no telemóvel.'};
+const CIGANO_ITEMS = [
+  {key:'cigano-antes', title:'Antes de Começar', subtitle:'Baralhar, cortar, escolher cartas, polaridade, ler cartas em conjunto.', cover:'assets/cigano/carta-coracao.webp'},
+  {key:'cigano-36cartas', title:'As 36 Cartas', subtitle:'Mapa visual completo carta a carta — tal como no Tarot.', cover:'assets/cigano/carta-raposa.webp'},
+  {key:'cigano-dicionario', title:'Dicionário Visual de Combinações', subtitle:'200+ combinações: leitura, no amor, como conselho.', cover:'assets/cigano/carta-sol.webp'},
+  {key:'cigano-tiragens', title:'Bónus 1 · Livro das Tiragens Ciganas', subtitle:'15 tiragens prontas a usar, com exemplo preenchido e raciocínio.', cover:'assets/cigano/bonus-1-cut.webp'},
+  {key:'cigano-primeira', title:'Bónus 2 · A Minha Primeira Tiragem Cigana', subtitle:'Passo a passo em 10 etapas, 3 cartas até virar frase.', cover:'assets/cigano/bonus-2-cut.webp'},
+  {key:'cigano-flash', title:'Bónus 3 · Guia Flash das 36 Cartas', subtitle:'1 card por carta para consultar no telemóvel durante a leitura.', cover:'assets/cigano/bonus-3-cut.webp'},
+  {key:'cigano-perguntas', title:'Bónus 4 · Perguntas que Destravam a Leitura', subtitle:'Por área: amor, trabalho, dinheiro, família, decisões.', cover:'assets/cigano/bonus-4-cut.webp'},
+  {key:'cigano-mesa-real', title:'Bónus 5 · Introdução à Mesa Real', subtitle:'Casas, linhas, colunas, diagonais — exemplo comentado.', cover:'assets/cigano/bonus-5-cut.webp'}
+];
+
 const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10V7a6 6 0 1112 0v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="11" rx="2.5" fill="#fff"/><circle cx="12" cy="15" r="1.6" fill="#14242f"/><path d="M12 16.4V18" stroke="#14242f" stroke-width="1.8" stroke-linecap="round"/></svg>';
 
 /* ---------- estado ---------- */
@@ -366,12 +476,80 @@ document.getElementById('btn-logout').addEventListener('click',function(){
   api('logout',{}).catch(function(){});clearEmail();setOwned([]);location.hash='';route();
 });
 
+/* ---------- Baralho Cigano (mercado PT — ainda sem plano/preço aprovado) ---------- */
+function renderCiganoApp(unlocked){
+  const mount=document.getElementById('cigano-app-mount');
+  const href=unlocked?'#':'#checkout-pendente-cigano-pt';
+  mount.innerHTML=
+    '<div class="treino-card-wrap">'+
+      '<a class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'">'+
+        '<span class="treino-pill">🎁 Bónus Especial · App de Treino</span>'+
+        '<span class="treino-img-wrap">'+
+          '<img class="treino-img" src="'+assetUrl('assets/cigano/bonus-6-cut.webp')+'" alt="App de Treino do Baralho Cigano" loading="eager">'+
+          (unlocked?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Brevemente disponível</span></span>')+
+        '</span>'+
+        '<span class="treino-text">'+
+          '<span class="treino-title">App de Treino do Baralho Cigano</span>'+
+          '<span class="treino-sub">'+(unlocked?'Em preparação — flashcards e treino de combinações no telemóvel.':'Toque para saber mais assim que estiver disponível')+'</span>'+
+        '</span>'+
+      '</a>'+
+    '</div>';
+  if(unlocked){mount.querySelector('a').addEventListener('click',e=>e.preventDefault());}
+}
+function renderCiganoGrid(unlocked){
+  const grid=document.getElementById('cigano-grid');
+  grid.innerHTML='';
+  CIGANO_ITEMS.forEach(m=>{
+    const card=document.createElement('a');
+    card.href = unlocked ? '#' : '#checkout-pendente-cigano-pt';
+    card.className='card'+(unlocked?'':' locked');
+    const badge = unlocked ? '<span class="badge badge-soon">Em atualização</span>' : '<span class="badge badge-soon">Brevemente</span>';
+    const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
+    const cta = unlocked ? 'Em atualização — aguarde' : 'Saber mais em breve';
+    card.innerHTML=
+      '<span class="cover"><img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="lazy">'+badge+lockOv+'</span>'+
+      '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
+    card.addEventListener('click',e=>e.preventDefault());
+    grid.appendChild(card);
+  });
+}
+
+/* ---------- home (2 cards de produto) ---------- */
+function renderHomeCards(owned){
+  const ciganoUnlocked=owned.includes('cigano');
+  const grid=document.getElementById('home-grid');
+  grid.innerHTML=
+    '<button type="button" class="home-card" data-market="tarot">'+
+      '<img src="'+assetUrl('capas/principal.jpg')+'" alt="Mapa do Tarot">'+
+      '<span class="home-card-body"><span class="home-card-eyebrow">🔮 O seu produto</span><h3>Mapa do Tarot</h3><p>Módulos e bónus do Mapa do Tarot.</p><span class="home-card-cta">Aceder →</span></span>'+
+    '</button>'+
+    '<button type="button" class="home-card'+(ciganoUnlocked?'':' locked')+'" data-market="cigano">'+
+      '<img src="'+assetUrl('assets/cigano/carta-cavaleiro.webp')+'" alt="Baralho Cigano">'+
+      (ciganoUnlocked?'':'<span class="home-lock">🔒 Brevemente</span>')+
+      '<span class="home-card-body"><span class="home-card-eyebrow">🃏 '+(ciganoUnlocked?'O seu produto':'Em preparação')+'</span><h3>Baralho Cigano</h3><p>'+(ciganoUnlocked?'36 cartas, dicionário de combinações e bónus.':'Método Visual 3C — disponível em breve para Portugal.')+'</p><span class="home-card-cta">'+(ciganoUnlocked?'Aceder →':'Saber mais →')+'</span></span>'+
+    '</button>';
+  grid.querySelector('[data-market="tarot"]').addEventListener('click',()=>{location.hash='#tarot';});
+  grid.querySelector('[data-market="cigano"]').addEventListener('click',()=>{location.hash='#cigano';});
+}
+function showMarket(which){
+  document.getElementById('view-home').classList.toggle('hidden', !!which);
+  document.getElementById('view-market').classList.toggle('hidden', !which);
+  document.getElementById('market-tarot').classList.toggle('hidden', which!=='tarot');
+  document.getElementById('market-cigano').classList.toggle('hidden', which!=='cigano');
+}
+document.getElementById('market-back').addEventListener('click',()=>{location.hash='#hub';route();window.scrollTo(0,0);});
+
 /* ---------- hub ---------- */
 function renderHub(){
   const email=getEmail();
   const name=email? email.split('@')[0].replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : '';
   document.getElementById('hero-eyebrow').textContent = name? ('Bem-vindo(a), '+name) : 'Bem-vindo(a)';
   const owned=getOwned();
+  renderHomeCards(owned);
+  const ciganoUnlocked=owned.includes('cigano');
+  renderCiganoApp(ciganoUnlocked);
+  renderCiganoGrid(ciganoUnlocked);
+  document.getElementById('cigano-cta').classList.toggle('hidden',ciganoUnlocked);
   const grid=document.getElementById('grid');
   grid.innerHTML='';
   MODULES.forEach(m=>{
@@ -483,7 +661,7 @@ function renderReader(m){
   });
   if(m.partial){const t=document.createElement('div');t.style.cssText='text-align:center;padding:32px 20px;margin-top:8px;border:1.5px dashed var(--ink-500);border-radius:12px;color:var(--ink-500);';t.innerHTML='<p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 8px;">Arcanos 4–21 · Em atualização ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Os demais arcanos entram aqui assim que forem publicados — sem custo extra.</p>';pages.appendChild(t);}
 }
-document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#hub';route();window.scrollTo(0,0);});
+document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#tarot';route();window.scrollTo(0,0);});
 
 /* ---------- router ---------- */
 function show(id){['view-login','view-hub','view-reader'].forEach(v=>{document.getElementById(v).classList.toggle('hidden',v!==id);});}
@@ -500,10 +678,11 @@ function route(){
     const m=MODULES.find(x=>x.sku===sku);
     const owned=getOwned();
     if(m && !m.soon && (m.unlocked||owned.includes(sku))){show('view-reader');renderReader(m);return;}
-    location.hash='#hub';
+    location.hash='#tarot';
   }
   renderHub();
   show('view-hub');
+  showMarket(h==='#tarot'?'tarot':h==='#cigano'?'cigano':null);
 }
 window.addEventListener('hashchange',route);
 // Sessão/ownership sempre revalidados no servidor antes de renderizar.
