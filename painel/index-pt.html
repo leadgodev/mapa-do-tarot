@@ -226,11 +226,11 @@
   <div class="login-card">
     <div class="star">✦</div>
     <h1>Área de Membros</h1>
-    <p>Digite o <strong>e-mail que você usou na compra</strong> para acessar o seu Mapa do Tarot.</p>
+    <p>Introduza o <strong>e-mail que utilizou na compra</strong> para aceder ao seu Mapa do Tarot.</p>
     <form id="login-form">
       <div class="field">
-        <label for="email">Seu e-mail de compra</label>
-        <input type="email" id="email" name="email" placeholder="voce@exemplo.com" autocomplete="email" required>
+        <label for="email">O seu e-mail de compra</label>
+        <input type="email" id="email" name="email" placeholder="nome@exemplo.com" autocomplete="email" required>
       </div>
       <div class="field">
         <label for="password">Senha (só para contas de demonstração)</label>
@@ -257,7 +257,7 @@
     <div class="grad"></div>
     <div class="hero-inner">
       <p class="eyebrow" id="hero-eyebrow">Bem-vindo(a)</p>
-      <h2>Seu Mapa do Tarot está pronto ✨</h2>
+      <h2>Os teus materiais estão prontos ✨</h2>
     </div>
   </div>
 
@@ -329,7 +329,7 @@
      preencha ALLOWED_EMAILS (lista de emails liberados) OU
      ligue numa validação de checkout depois.
    - Ownership em localStorage: por padrão só 'principal' liberado.
-   - Bônus/níveis bloqueados → modal de upsell.
+   - Bónus/níveis bloqueados → modal de upsell.
    ====================================================== */
 
 // Acesso e ownership vêm do servidor (compras aprovadas na Wiven) — /painel/api/login e /painel/api/me.
@@ -339,13 +339,15 @@
 const ASSET_VERSION = '20260925-camadas-1';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
-// Checkout Mundpay de cada item avulso (mercado PT/€). O bundle principal já tem link
-// Mundpay ativo; os demais (upgrade completo, bónus avulsos, combo) ainda NÃO têm produto
-// criado na Mundpay -> null cai no suporte por WhatsApp até o link existir.
-const MP='https://pay.mycheckoutt.com/01a0d98a-e909-7239-b459-75d58aff0365?ref=';
+// Checkout Mundpay de cada item avulso (mercado PT/€). Essencial e Completo já têm
+// oferta+checkout ativos na Mundpay; order bumps/combo/bónus avulsos ainda não (a aba
+// Order Bumps da Mundpay só aceita vincular OUTRO produto, não uma oferta do mesmo
+// produto — aguardando decisão da dona) -> null cai no suporte por WhatsApp.
+const MP_ESSENCIAL='https://pay.mycheckoutt.com/01a0e99b-822a-712e-9225-d30dd49a5fce?ref=';
+const MP_COMPLETO='https://pay.mycheckoutt.com/01a0d98a-e909-7239-b459-75d58aff0365?ref=';
 const CHECKOUT_URL = {
-  'principal': MP,
-  'completo': null,
+  'principal': MP_ESSENCIAL,
+  'completo': MP_COMPLETO,
   'combo-3-bonus': null, 'guia-flash': null, 'perguntas-80': null, 'folha-consulta': null,
   'bonus-1': null, 'bonus-2': null, 'bonus-3': null, 'bonus-4': null
 };
@@ -368,21 +370,21 @@ const MODULES = [
   },
   {
     sku:'bonus-1', unlocked:false, price:'€ 6,90',
-    title:'Bônus 1 · Ler Qualquer Carta', subtitle:'O método dos 3 passos: olhar, sentir, traduzir.',
+    title:'Bónus 1 · Ler Qualquer Carta', subtitle:'O método dos 3 passos: olhar, sentir, traduzir.',
     cover:'capas/bonus-1.jpg',
     desc:'Aprenda a interpretar qualquer carta sem decorar, com o método de 3 passos e 3 exemplos práticos (O Sol, A Torre, A Lua).',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-1/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','metodo-3-passos','passo-1-olhar','passo-2-sentir','passo-3-traduzir','exemplo-o-sol','exemplo-a-torre','exemplo-a-lua','exercicio'][i]+'.jpg')
   },
   {
     sku:'bonus-2', unlocked:false, price:'€ 6,90',
-    title:'Bônus 2 · Tiragens Práticas', subtitle:'Amor, dinheiro e decisão — passo a passo.',
+    title:'Bónus 2 · Tiragens Práticas', subtitle:'Amor, dinheiro e decisão — passo a passo.',
     cover:'capas/bonus-2.jpg',
     desc:'3 tiragens prontas para usar hoje: amor, dinheiro e decisão. Layout, leitura e dicas para cada uma.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-2/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','como-fazer','amor-layout','amor-leitura','dinheiro-layout','dinheiro-leitura','decisao-layout','decisao-leitura','dicas','exercicio'][i]+'.jpg')
   },
   {
     sku:'bonus-3', unlocked:false, price:'€ 6,90',
-    title:'Bônus 3 · Cuidando do Baralho', subtitle:'Ativar, limpar, proteger e guardar.',
+    title:'Bónus 3 · Cuidando do Baralho', subtitle:'Ativar, limpar, proteger e guardar.',
     cover:'capas/bonus-3.jpg',
     desc:'Como ativar, limpar a energia, proteger e guardar o seu baralho — com uma rotina de conexão diária.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','ativar-baralho','limpar-energia','proteger','guardar','conexao-diaria','o-que-evitar','rotina','exercicio'][i]+'.jpg')
@@ -410,13 +412,13 @@ const MODULES = [
   },
   {
     sku:'combo-3-bonus', unlocked:false, soon:true, price:'Combo',
-    title:'Combo · Os 3 Bônus', subtitle:'Guia Flash + 80 Perguntas + Folha de Consulta.',
-    cover:'capas/combo-3-bonus.jpg', desc:'Os 3 bônus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — você recebe assim que for publicado.',
+    title:'Combo · Os 3 Bónus', subtitle:'Guia Flash + 80 Perguntas + Folha de Consulta.',
+    cover:'capas/combo-3-bonus.jpg', desc:'Os 3 bónus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — você recebe assim que for publicado.',
     pages:[]
   },
   {
     sku:'bonus-4', unlocked:false, price:'€ 6,90', soon:true,
-    title:'Bônus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à sua primeira leitura.',
+    title:'Bónus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à sua primeira leitura.',
     cover:'capas/bonus-4.jpg', desc:'Um percurso guiado que te leva pela mão — do zero até sua primeira leitura completa. Conteúdo em atualização — ao desbloquear, você recebe assim que for publicado.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio'][i]+'.jpg')
   },
@@ -523,7 +525,7 @@ function renderHomeCards(owned){
       '<span class="home-card-body"><span class="home-card-eyebrow">🔮 O seu produto</span><h3>Mapa do Tarot</h3><p>Módulos e bónus do Mapa do Tarot.</p><span class="home-card-cta">Aceder →</span></span>'+
     '</button>'+
     '<button type="button" class="home-card'+(ciganoUnlocked?'':' locked')+'" data-market="cigano">'+
-      '<img src="'+assetUrl('assets/cigano/carta-cavaleiro.webp')+'" alt="Baralho Cigano">'+
+      '<img src="'+assetUrl('assets/cigano/capa-cigano.jpg')+'" alt="Mapa do Baralho Cigano" style="object-fit:contain;background:#f1e2c4;">'+
       (ciganoUnlocked?'':'<span class="home-lock">🔒 Brevemente</span>')+
       '<span class="home-card-body"><span class="home-card-eyebrow">🃏 '+(ciganoUnlocked?'O seu produto':'Em preparação')+'</span><h3>Baralho Cigano</h3><p>'+(ciganoUnlocked?'36 cartas, dicionário de combinações e bónus.':'Método Visual 3C — disponível em breve para Portugal.')+'</p><span class="home-card-cta">'+(ciganoUnlocked?'Aceder →':'Saber mais →')+'</span></span>'+
     '</button>';
