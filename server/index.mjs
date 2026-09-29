@@ -59,6 +59,8 @@ const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'com
 const DEMO_USERS = { 'teste-mundpay@leadgo.dev': '4a3b0f722b261541514f159a10cb54db025947da3eb1773d798c5f8f9ef8981d' };
 const DEMO_SALT = 'mdt-demo-salt';
 for (const e of Object.keys(DEMO_USERS)) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste Mundpay' };
+// Conta de teste BR (login só por e-mail, sem senha): acesso completo na área de membros.
+db.buyers['teste-br-4423c38c@leadgo.dev'] = { skus: DEMO_SKUS.slice(), name: 'Teste BR' };
 const demoOk = (email, pw) => DEMO_USERS[email] && safeEq(crypto.scryptSync(String(pw || ''), DEMO_SALT, 32).toString('hex'), DEMO_USERS[email]);
 const owned = (email) => (db.buyers[email] ? db.buyers[email].skus.slice() : null);
 
