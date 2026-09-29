@@ -184,7 +184,7 @@
   var UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   /* O tracking id vem SEMPRE do pixel core (/api/pixel), nunca de uma leitura
      própria do cookie. Motivo: desde o pixel v7 a chave é namespeada por
-     oferta ("_tkid_<escopo>", escopo derivado do host) pra duas ofertas em
+     oferta ("_tkid_<escopo>", escopo derivado do host) para duas ofertas em
      subdomínios do mesmo domínio registrável não dividirem o mesmo id. Quem
      lê "_tkid" na mão pega a chave errada — ou, pior, a chave de OUTRA
      oferta que esteja no mesmo pote de cookie. Reimplementar a derivação
