@@ -226,10 +226,10 @@
   <div class="login-card">
     <div class="star">✦</div>
     <h1>Área de Membros</h1>
-    <p>Introduza o <strong>e-mail que utilizou na compra</strong> para aceder ao seu Mapa do Tarot.</p>
+    <p>Introduz o <strong>e-mail que utilizaste na compra</strong> para acederes ao teu Mapa do Tarot.</p>
     <form id="login-form">
       <div class="field">
-        <label for="email">O seu e-mail de compra</label>
+        <label for="email">O teu e-mail de compra</label>
         <input type="email" id="email" name="email" placeholder="nome@exemplo.com" autocomplete="email" required>
       </div>
       <div class="field">
@@ -239,7 +239,7 @@
       <div class="login-err" id="login-err"></div>
       <button type="submit" class="btn btn-primary" style="width:100%;">Entrar</button>
     </form>
-    <p class="login-note">Acesso liberado com o mesmo e-mail da compra. Problemas para entrar? Fale com o suporte: <a href="mailto:support@leadgo.dev" style="color:var(--accent);font-weight:600;">support@leadgo.dev</a></p>
+    <p class="login-note">Acesso disponibilizado com o mesmo e-mail da compra. Problemas para entrar? Fala com o suporte: <a href="mailto:support@leadgo.dev" style="color:var(--accent);font-weight:600;">support@leadgo.dev</a></p>
   </div>
 </div>
 
@@ -269,10 +269,10 @@
     <div id="view-market" class="hidden">
     <button type="button" class="market-back" id="market-back">← Voltar</button>
     <section class="market-section" id="market-tarot">
-      <div class="market-head"><span class="m-ico">🔮</span><div><h2>Mapa do Tarot</h2><p>Os seus módulos do Tarot — principal, bónus e itens extra.</p></div></div>
+      <div class="market-head"><span class="m-ico">🔮</span><div><h2>Mapa do Tarot</h2><p>Os teus módulos do Tarot — principal, bónus e itens extra.</p></div></div>
 
-      <p class="section-title">Seus Módulos</p>
-      <p class="section-sub">Continue de onde parou ou desbloqueie novos conteúdos.</p>
+      <p class="section-title">Os Teus Módulos</p>
+      <p class="section-sub">Continua de onde paraste ou desbloqueia novos conteúdos.</p>
       <div class="grid" id="grid"></div>
     </section>
 
@@ -293,7 +293,7 @@
         <div class="cg-banner-text">
           <p class="cg-eyebrow">Brevemente</p>
           <h2>Mapa do Baralho Cigano</h2>
-          <p>Está a aprender o Tarot. Em breve vai poder aprender o Baralho Cigano do mesmo jeito: sem decorar, e sabendo juntar as cartas.</p>
+          <p>Estás a aprender o Tarot. Em breve vais poder aprender o Baralho Cigano da mesma forma: sem decorar, e sabendo juntar as cartas.</p>
           <button class="btn btn-primary" id="cigano-cta" type="button" disabled aria-disabled="true" title="Brevemente disponível">Brevemente disponível</button>
         </div>
       </div>
@@ -372,7 +372,7 @@ const MODULES = [
     sku:'bonus-1', unlocked:false, price:'€ 6,90',
     title:'Bónus 1 · Ler Qualquer Carta', subtitle:'O método dos 3 passos: olhar, sentir, traduzir.',
     cover:'capas/bonus-1.jpg',
-    desc:'Aprenda a interpretar qualquer carta sem decorar, com o método de 3 passos e 3 exemplos práticos (O Sol, A Torre, A Lua).',
+    desc:'Aprende a interpretar qualquer carta sem decorar, com o método de 3 passos e 3 exemplos práticos (O Sol, A Torre, A Lua).',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-1/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','metodo-3-passos','passo-1-olhar','passo-2-sentir','passo-3-traduzir','exemplo-o-sol','exemplo-a-torre','exemplo-a-lua','exercicio'][i]+'.jpg')
   },
   {
@@ -386,7 +386,7 @@ const MODULES = [
     sku:'bonus-3', unlocked:false, price:'€ 6,90',
     title:'Bónus 3 · Cuidando do Baralho', subtitle:'Ativar, limpar, proteger e guardar.',
     cover:'capas/bonus-3.jpg',
-    desc:'Como ativar, limpar a energia, proteger e guardar o seu baralho — com uma rotina de conexão diária.',
+    desc:'Como ativar, limpar a energia, proteger e guardar o teu baralho — com uma rotina de conexão diária.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','ativar-baralho','limpar-energia','proteger','guardar','conexao-diaria','o-que-evitar','rotina','exercicio'][i]+'.jpg')
   },
   {
@@ -400,7 +400,7 @@ const MODULES = [
     sku:'perguntas-80', unlocked:false, soon:true, price:'€ 6,90',
     title:'80 Perguntas Poderosas', subtitle:'Perguntas que abrem a mensagem da carta.',
     cover:'capas/perguntas-80.jpg',
-    desc:'Troque o “isso vai dar certo?” por perguntas que revelam respostas mais claras e profundas — organizadas por tema: amor, dinheiro, autoconhecimento, decisões e mais.',
+    desc:'Troca o “isso vai dar certo?” por perguntas que revelam respostas mais claras e profundas — organizadas por tema: amor, dinheiro, autoconhecimento, decisões e mais.',
     pages:Array.from({length:10},(_,i)=>'conteudo/perguntas-80/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','amor','dinheiro','autoconhecimento','decisoes','familia','espiritualidade','saude','superacao','sombra'][i]+'.jpg')
   },
   {
@@ -413,19 +413,19 @@ const MODULES = [
   {
     sku:'combo-3-bonus', unlocked:false, soon:true, price:'Combo',
     title:'Combo · Os 3 Bónus', subtitle:'Guia Flash + 80 Perguntas + Folha de Consulta.',
-    cover:'capas/combo-3-bonus.jpg', desc:'Os 3 bónus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — você recebe assim que for publicado.',
+    cover:'capas/combo-3-bonus.jpg', desc:'Os 3 bónus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — recebes assim que for publicado.',
     pages:[]
   },
   {
     sku:'bonus-4', unlocked:false, price:'€ 6,90', soon:true,
-    title:'Bónus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à sua primeira leitura.',
-    cover:'capas/bonus-4.jpg', desc:'Um percurso guiado que te leva pela mão — do zero até sua primeira leitura completa. Conteúdo em atualização — ao desbloquear, você recebe assim que for publicado.',
+    title:'Bónus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à tua primeira leitura.',
+    cover:'capas/bonus-4.jpg', desc:'Um percurso guiado que te leva pela mão — do zero até à tua primeira leitura completa. Conteúdo em atualização — ao desbloqueares, recebes assim que for publicado.',
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio'][i]+'.jpg')
   },
   {
     sku:'completo', unlocked:false, price:'+ € 10,90', soon:true,
     title:'Nível Completo · 56 Arcanos Menores', subtitle:'Copas, Ouros, Espadas e Paus — o baralho inteiro.',
-    cover:'capas/completo.jpg', desc:'Suba para o Mapa Completo: os 56 Arcanos Menores (Copas, Ouros, Espadas e Paus) somados aos 22 Maiores que você já tem. Conteúdo em atualização.',
+    cover:'capas/completo.jpg', desc:'Suba para o Mapa Completo: os 56 Arcanos Menores (Copas, Ouros, Espadas e Paus) somados aos 22 Maiores que já tens. Conteúdo em atualização.',
     pages:[]
   }
 ];
@@ -462,12 +462,12 @@ loginForm.addEventListener('submit',async function(ev){
   ev.preventDefault();
   const val=document.getElementById('email').value.trim().toLowerCase();
   const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
-  if(!ok){loginErr.textContent='Digite um e-mail válido.';return;}
+  if(!ok){loginErr.textContent='Introduz um e-mail válido.';return;}
   loginErr.textContent='Verificando…';
-  let r;try{r=await api('login',{email:val,password:document.getElementById('password').value});}catch(e){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
+  let r;try{r=await api('login',{email:val,password:document.getElementById('password').value});}catch(e){loginErr.textContent='Não foi possível verificar agora. Tenta de novo ou fala com o suporte.';return;}
   if(r.status===401){loginErr.textContent='Senha incorreta.';return;}
-  if(r.status===404){loginErr.textContent='E-mail não encontrado na lista de compras. Verifique ou fale com o suporte.';return;}
-  if(r.status!==200||!r.data.owned){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
+  if(r.status===404){loginErr.textContent='E-mail não encontrado na lista de compras. Verifica ou fala com o suporte.';return;}
+  if(r.status!==200||!r.data.owned){loginErr.textContent='Não foi possível verificar agora. Tenta de novo ou fala com o suporte.';return;}
   loginErr.textContent='';
   setEmail(val);setOwned(r.data.owned);
   location.hash='#hub';
@@ -522,12 +522,12 @@ function renderHomeCards(owned){
   grid.innerHTML=
     '<button type="button" class="home-card" data-market="tarot">'+
       '<img src="'+assetUrl('capas/principal.jpg')+'" alt="Mapa do Tarot">'+
-      '<span class="home-card-body"><span class="home-card-eyebrow">🔮 O seu produto</span><h3>Mapa do Tarot</h3><p>Módulos e bónus do Mapa do Tarot.</p><span class="home-card-cta">Aceder →</span></span>'+
+      '<span class="home-card-body"><span class="home-card-eyebrow">🔮 O teu produto</span><h3>Mapa do Tarot</h3><p>Módulos e bónus do Mapa do Tarot.</p><span class="home-card-cta">Aceder →</span></span>'+
     '</button>'+
     '<button type="button" class="home-card'+(ciganoUnlocked?'':' locked')+'" data-market="cigano">'+
       '<img src="'+assetUrl('assets/cigano/capa-cigano.jpg')+'" alt="Mapa do Baralho Cigano" style="object-fit:contain;background:#f1e2c4;">'+
       (ciganoUnlocked?'':'<span class="home-lock">🔒 Brevemente</span>')+
-      '<span class="home-card-body"><span class="home-card-eyebrow">🃏 '+(ciganoUnlocked?'O seu produto':'Em preparação')+'</span><h3>Baralho Cigano</h3><p>'+(ciganoUnlocked?'36 cartas, dicionário de combinações e bónus.':'Método Visual 3C — disponível em breve para Portugal.')+'</p><span class="home-card-cta">'+(ciganoUnlocked?'Aceder →':'Saber mais →')+'</span></span>'+
+      '<span class="home-card-body"><span class="home-card-eyebrow">🃏 '+(ciganoUnlocked?'O teu produto':'Em preparação')+'</span><h3>Baralho Cigano</h3><p>'+(ciganoUnlocked?'36 cartas, dicionário de combinações e bónus.':'Método Visual 3C — disponível em breve para Portugal.')+'</p><span class="home-card-cta">'+(ciganoUnlocked?'Aceder →':'Saber mais →')+'</span></span>'+
     '</button>';
   grid.querySelector('[data-market="tarot"]').addEventListener('click',()=>{location.hash='#tarot';});
   grid.querySelector('[data-market="cigano"]').addEventListener('click',()=>{location.hash='#cigano';});
@@ -612,7 +612,7 @@ function renderReader(m){
   pages.dataset.sku=m.sku;
   pages.innerHTML='';
   if(!m.pages.length){
-    pages.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Conteúdo em atualização ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Você já tem acesso liberado. Assim que este módulo for publicado, ele aparece aqui automaticamente — sem custo extra.</p></div>';
+    pages.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Conteúdo em atualização ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Já tens acesso liberado. Assim que este módulo for publicado, ele aparece aqui automaticamente — sem custo extra.</p></div>';
     return;
   }
   m.pages.forEach((path,i)=>{
@@ -626,7 +626,7 @@ function renderReader(m){
     status.className='page-status';
     status.setAttribute('role','status');
     const message=document.createElement('p');
-    message.textContent='Carregando página '+(i+1)+'…';
+    message.textContent='A carregar a página '+(i+1)+'…';
     const retry=document.createElement('button');
     retry.type='button';
     retry.className='btn btn-ghost hidden';
@@ -640,12 +640,12 @@ function renderReader(m){
     img.onload=()=>{status.classList.add('hidden');};
     img.onerror=()=>{
       status.classList.remove('hidden');
-      message.textContent='Não foi possível carregar a página '+(i+1)+'. Verifique sua conexão e tente novamente.';
+      message.textContent='Não foi possível carregar a página '+(i+1)+'. Verifica a tua ligação e tenta novamente.';
       retry.classList.remove('hidden');
       direct.classList.remove('hidden');
     };
     retry.addEventListener('click',()=>{
-      message.textContent='Carregando página '+(i+1)+'…';
+      message.textContent='A carregar a página '+(i+1)+'…';
       retry.classList.add('hidden');
       direct.classList.add('hidden');
       img.src=assetUrl(path)+'&retry='+Date.now();
