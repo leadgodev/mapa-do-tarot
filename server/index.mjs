@@ -58,7 +58,7 @@ function cookieEmail(req) {
 // Contas de demonstração/teste: acesso completo sem compra. Login só por e-mail,
 // sem senha — a área de membros inteira é e-mail-only (regra da dona, 29/09/2026).
 const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo', 'guia-flash', 'perguntas-80', 'folha-consulta', 'combo-3-bonus', 'cigano'];
-for (const e of ['teste-mundpay@leadgo.dev', 'teste-br-4423c38c@leadgo.dev']) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste' };
+for (const e of ['teste-mundpay@leadgo.dev', 'teste-4423c38c@leadgo.dev']) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste' };
 const owned = (email) => (db.buyers[email] ? db.buyers[email].skus.slice() : null);
 
 // rate limit simples por IP
