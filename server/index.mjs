@@ -12,7 +12,8 @@ const PORT = Number(process.env.PORT || 80);
 const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, '.data');
 const DB_FILE = path.join(DATA_DIR, 'compras.json');
 const WEBHOOK_TOKEN = process.env.WIVEN_WEBHOOK_TOKEN || '';
-const SESSION_SECRET = process.env.SESSION_SECRET || WEBHOOK_TOKEN;
+const MUNDPAY_WEBHOOK_TOKEN = process.env.MUNDPAY_WEBHOOK_TOKEN || '';
+const SESSION_SECRET = process.env.SESSION_SECRET || WEBHOOK_TOKEN || MUNDPAY_WEBHOOK_TOKEN;
 const SESSION_TTL = 30 * 24 * 3600; // s
 
 // Produto Wiven -> SKUs do painel.
@@ -111,6 +112,48 @@ function handleWebhook(payload) {
   return { code: 200, body: { ok: true, granted: [...skus] } };
 }
 
+// Mercado PT (Mundpay). Payload confirmado via "Testar Webhook" do painel Mundpay em 2026-09-29
+// (não verificado ainda numa venda real): { id, event_type, customer:{email,name}, offers:[{id,name,type,sku}],
+// amount, currency, status }. status 'paid' = pago. Sem HMAC/assinatura visível no teste — segurança
+// via token na querystring da URL de postback (?token=...), igual ao padrão do webhook Wiven.
+// offers[].name é o nome de exibição da OFERTA específica comprada (ex.: "Mapa do Tarot Essencial - PT –
+// 80 Perguntas Poderosas - PT"), não do produto — por isso o SKU é resolvido casando por trecho do nome,
+// não por offers[].id (que no teste veio igual ao id do PRODUTO, não da oferta individual).
+const MUNDPAY_NAME_SKUS = [
+  [/leve os 3 com desconto/i, ['combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta']],
+  [/80 perguntas poderosas/i, ['perguntas-80']],
+  [/folha de consulta/i, ['folha-consulta']],
+  [/guia flash/i, ['guia-flash']],
+  [/oferta especial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
+  [/completo/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
+  [/essencial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
+];
+function handleMundpayWebhook(payload) {
+  const paid = String(payload.status || '').toLowerCase() === 'paid' || /\.paid$/i.test(String(payload.event_type || ''));
+  if (!paid) return { code: 200, body: { ok: true, ignored: 'not-paid-event' } };
+  const email = String((payload.customer || {}).email || '').trim().toLowerCase();
+  const txId = String(payload.id || '');
+  if (!email || !txId) return { code: 400, body: { ok: false, error: 'missing-email-or-transaction' } };
+  const txKey = 'mundpay:' + txId;
+  if (db.tx[txKey]) return { code: 200, body: { ok: true, duplicate: true } };
+  const skus = new Set();
+  for (const offer of (payload.offers || [])) {
+    const name = String(offer.name || (offer.product || {}).name || '');
+    for (const [re, mapped] of MUNDPAY_NAME_SKUS) {
+      if (re.test(name)) { mapped.forEach((s) => skus.add(s)); break; }
+    }
+  }
+  if (!skus.size) return { code: 200, body: { ok: true, ignored: 'no-known-offer' } };
+  const b = db.buyers[email] || { skus: [], name: (payload.customer || {}).name || '' };
+  const novos = [...skus].filter((s) => !b.skus.includes(s));
+  b.skus = [...new Set([...b.skus, ...skus])];
+  db.buyers[email] = b;
+  db.tx[txKey] = true;
+  save();
+  if (novos.length) sendAccessEmail(email, b.name, [...skus]).then((id) => console.log('access-email sent (mundpay)', id), (e) => console.error('access-email failed (mundpay)', e.message));
+  return { code: 200, body: { ok: true, granted: [...skus] } };
+}
+
 const MIME = { '.html': 'text/html; charset=utf-8', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.css': 'text/css', '.js': 'text/javascript', '.mp4': 'video/mp4', '.json': 'application/json', '.ico': 'image/x-icon', '.woff2': 'font/woff2' };
 
 function serveStatic(req, res, pathname) {
@@ -157,6 +200,16 @@ http.createServer(async (req, res) => {
       const t = payload.token || (req.headers.authorization || '').replace(/^Bearer\s+/i, '') || req.headers['x-webhook-token'];
       if (!t || !safeEq(t, WEBHOOK_TOKEN)) return json(res, 401, { error: 'invalid-token' });
       const r = handleWebhook(payload);
+      return json(res, r.code, r.body);
+    }
+    if (p === '/painel/api/webhooks/mundpay') {
+      if (req.method !== 'POST') return json(res, 405, { error: 'method' });
+      if (!MUNDPAY_WEBHOOK_TOKEN) return json(res, 503, { error: 'not-configured' });
+      const t = url.searchParams.get('token') || (req.headers.authorization || '').replace(/^Bearer\s+/i, '') || req.headers['x-webhook-token'];
+      if (!t || !safeEq(t, MUNDPAY_WEBHOOK_TOKEN)) return json(res, 401, { error: 'invalid-token' });
+      let payload;
+      try { payload = JSON.parse(await readBody(req)); } catch { return json(res, 400, { error: 'bad-json' }); }
+      const r = handleMundpayWebhook(payload);
       return json(res, r.code, r.body);
     }
     if (p === '/painel/api/login') {
