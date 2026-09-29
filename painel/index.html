@@ -272,10 +272,6 @@
         <label for="email">Seu e-mail de compra</label>
         <input type="email" id="email" name="email" placeholder="voce@exemplo.com" autocomplete="email" required>
       </div>
-      <div class="field hidden" id="password-field">
-        <label for="password">Senha</label>
-        <input type="password" id="password" name="password" autocomplete="off">
-      </div>
       <div class="login-err" id="login-err"></div>
       <button type="submit" class="btn btn-primary" style="width:100%;">Entrar</button>
     </form>
@@ -539,14 +535,7 @@ loginForm.addEventListener('submit',async function(ev){
   const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
   if(!ok){loginErr.textContent='Digite um e-mail válido.';return;}
   loginErr.textContent='Verificando…';
-  const pwField=document.getElementById('password-field');
-  let r;try{r=await api('login',{email:val,password:document.getElementById('password').value});}catch(e){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
-  if(r.status===401){
-    pwField.classList.remove('hidden');
-    document.getElementById('password').setAttribute('autocomplete','current-password');
-    loginErr.textContent='Senha incorreta.';
-    return;
-  }
+  let r;try{r=await api('login',{email:val});}catch(e){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
   if(r.status===404){loginErr.textContent='E-mail não encontrado. Use o mesmo e-mail da compra ou fale com o suporte: support@leadgo.dev / WhatsApp 11 5177-0499.';return;}
   if(r.status!==200||!r.data.owned){loginErr.textContent='Não foi possível verificar agora. Tente de novo ou fale com o suporte.';return;}
   loginErr.textContent='';

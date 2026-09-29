@@ -55,14 +55,10 @@ function cookieEmail(req) {
   if (!e || !exp || !sig || !safeEq(sig, sign(`${e}.${exp}`)) || Number(exp) < Date.now() / 1000) return null;
   return Buffer.from(e, 'base64url').toString();
 }
-// Conta de demonstração (análise Mundpay): acesso completo sem compra, exige senha.
+// Contas de demonstração/teste: acesso completo sem compra. Login só por e-mail,
+// sem senha — a área de membros inteira é e-mail-only (regra da dona, 29/09/2026).
 const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo', 'guia-flash', 'perguntas-80', 'folha-consulta', 'combo-3-bonus', 'cigano'];
-const DEMO_USERS = { 'teste-mundpay@leadgo.dev': '4a3b0f722b261541514f159a10cb54db025947da3eb1773d798c5f8f9ef8981d' };
-const DEMO_SALT = 'mdt-demo-salt';
-for (const e of Object.keys(DEMO_USERS)) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste Mundpay' };
-// Conta de teste BR (login só por e-mail, sem senha): acesso completo na área de membros.
-db.buyers['teste-br-4423c38c@leadgo.dev'] = { skus: DEMO_SKUS.slice(), name: 'Teste BR' };
-const demoOk = (email, pw) => DEMO_USERS[email] && safeEq(crypto.scryptSync(String(pw || ''), DEMO_SALT, 32).toString('hex'), DEMO_USERS[email]);
+for (const e of ['teste-mundpay@leadgo.dev', 'teste-br-4423c38c@leadgo.dev']) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste' };
 const owned = (email) => (db.buyers[email] ? db.buyers[email].skus.slice() : null);
 
 // rate limit simples por IP
@@ -219,7 +215,6 @@ http.createServer(async (req, res) => {
       const email = String(b.email || '').trim().toLowerCase();
       const o = owned(email);
       if (!o) return json(res, 404, { error: 'not-found' });
-      if (DEMO_USERS[email] && !demoOk(email, b.password)) return json(res, 401, { error: 'bad-password' });
       return json(res, 200, { ok: true, owned: o }, { 'set-cookie': `mdt_s=${makeCookie(email)}; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=${SESSION_TTL}` });
     }
     if (p === '/painel/api/me') {
