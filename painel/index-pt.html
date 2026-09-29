@@ -340,16 +340,20 @@ function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 // Order Bumps da Mundpay só aceita vincular OUTRO produto, não uma oferta do mesmo
 // produto — aguardando decisão da dona) -> null cai no suporte por WhatsApp.
 const MP_ESSENCIAL='https://pay.mycheckoutt.com/01a0e99b-822a-712e-9225-d30dd49a5fce?ref=';
-const MP_COMPLETO='https://pay.mycheckoutt.com/01a0d98a-e909-7239-b459-75d58aff0365?ref=';
-// Ofertas de membro (30% off, skill area-membros-netflix) ainda por criar na Mundpay
-// (login do perfil browser bloqueado nesta sessão) -> null cai no WhatsApp com o preço
-// certo já exibido; TROCAR por link real assim que a oferta existir no painel Mundpay.
+// Ofertas de membro (30% off, skill area-membros-netflix), criadas na Mundpay em 29/09/2026
+// dentro dos produtos já existentes (Essencial-PT / Extras-PT), nunca produto novo.
+const MP_COMPLETO_MEMBRO='https://pay.mycheckoutt.com/01a0ed88-0677-725e-acf9-b65d98675a20?ref='; // "Nível Completo - Área de Membros - PT", € 9,90
+const MP_COMBO_MEMBRO='https://pay.mycheckoutt.com/01a0ed89-8b5c-7275-8dab-7b9adba9387e?ref='; // "Leve os 3 com Desconto - Área de Membros - PT", € 7,90
+// Bumps avulsos: preço normal real na Mundpay já é menor que o estimado -> 30% off cai
+// abaixo do piso € 4,90, sem desconto. Reusam a oferta pública já ativa (mesmo preço).
+const MP_GUIA_FLASH='https://pay.mycheckoutt.com/01a0eb06-9eed-733b-a004-ebc814850aa6?ref='; // € 5,00
+const MP_PERGUNTAS_80='https://pay.mycheckoutt.com/01a0eaf0-f4ce-702b-841c-d37cac867a72?ref='; // € 5,90
+const MP_FOLHA_CONSULTA='https://pay.mycheckoutt.com/01a0eaf1-9e3c-725e-be03-7d1d2ccc1ffc?ref='; // € 6,90
 const CHECKOUT_URL = {
   'principal': MP_ESSENCIAL,
-  'completo': null, // TODO: oferta membro "Nível Completo - Área de Membros - PT" no produto Essencial-PT, € 9,90
-  'combo-3-bonus': null, // TODO: oferta "Leve os 3 com Desconto - Área de Membros - PT" no produto Extras-PT, € 15,90
-  'guia-flash': null, 'perguntas-80': null, // sem desconto (abaixo do piso € 4,90) -> reusar oferta pública já existente quando localizada
-  'folha-consulta': null, // TODO: oferta "Folha de Consulta - Área de Membros - PT" no produto Extras-PT, € 6,90
+  'completo': MP_COMPLETO_MEMBRO,
+  'combo-3-bonus': MP_COMBO_MEMBRO,
+  'guia-flash': MP_GUIA_FLASH, 'perguntas-80': MP_PERGUNTAS_80, 'folha-consulta': MP_FOLHA_CONSULTA,
   'bonus-1': null, 'bonus-2': null, 'bonus-3': null, 'bonus-4': null
 };
 function buyHref(m){
@@ -408,28 +412,28 @@ const MODULES = [
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','ativar-baralho','limpar-energia','proteger','guardar','conexao-diaria','o-que-evitar','rotina','exercicio'][i]+'.jpg')
   },
   {
-    sku:'guia-flash', unlocked:false, soon:true, normal:6.90,
+    sku:'guia-flash', unlocked:false, soon:true, normal:5.00,
     title:'Guia Flash · Arcanos Maiores', subtitle:'Os significados-chave para consultar na hora.',
     cover:'capas/guia-flash.jpg',
     desc:'Guia rápido e visual dos Arcanos Maiores: gravura da carta + essência, direito e invertido, para consultar durante a leitura sem travar.',
     pages:Array.from({length:10},(_,i)=>'conteudo/guia-flash/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','louco','mago','sacerdotisa','imperatriz','imperador','hierofante','enamorados','carro','forca'][i]+'.jpg')
   },
   {
-    sku:'perguntas-80', unlocked:false, soon:true, normal:6.90,
+    sku:'perguntas-80', unlocked:false, soon:true, normal:5.90,
     title:'80 Perguntas Poderosas', subtitle:'Perguntas que abrem a mensagem da carta.',
     cover:'capas/perguntas-80.jpg',
     desc:'Troca o “isso vai dar certo?” por perguntas que revelam respostas mais claras e profundas — organizadas por tema: amor, dinheiro, autoconhecimento, decisões e mais.',
     pages:Array.from({length:10},(_,i)=>'conteudo/perguntas-80/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','amor','dinheiro','autoconhecimento','decisoes','familia','espiritualidade','saude','superacao','sombra'][i]+'.jpg')
   },
   {
-    sku:'folha-consulta', unlocked:false, soon:true, normal:9.90,
+    sku:'folha-consulta', unlocked:false, soon:true, normal:6.90,
     title:'A Folha de Consulta do Tarot', subtitle:'Referência rápida, ao direito e invertida.',
     cover:'capas/folha-consulta.jpg',
     desc:'Tabelas de consulta rápida com o significado de cada carta ao direito e invertida, mais sim/não, tempo de resposta e elementos por naipe.',
     pages:Array.from({length:10},(_,i)=>'conteudo/folha-consulta/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','arcanos-0-8','arcanos-9-21','copas','ouros','espadas','paus','sim-ou-nao','tempo-de-resposta','elementos'][i]+'.jpg')
   },
   {
-    sku:'combo-3-bonus', unlocked:false, soon:true, normal:23.70,
+    sku:'combo-3-bonus', unlocked:false, soon:true, normal:11.90,
     title:'Combo · Os 3 Bónus', subtitle:'Guia Flash + 80 Perguntas + Folha de Consulta.',
     cover:'capas/combo-3-bonus.jpg', desc:'Os 3 bónus juntos: Guia Flash dos Arcanos Maiores, 80 Perguntas Poderosas e A Folha de Consulta do Tarot. Conteúdo em atualização — recebes assim que for publicado.',
     pages:[]
