@@ -342,7 +342,7 @@ function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 const MP_ESSENCIAL='https://pay.mycheckoutt.com/01a0e99b-822a-712e-9225-d30dd49a5fce?ref=';
 // Ofertas de membro (30% off, skill area-membros-netflix), criadas na Mundpay em 29/09/2026
 // dentro dos produtos já existentes (Essencial-PT / Extras-PT), nunca produto novo.
-const MP_COMPLETO_MEMBRO='https://pay.mycheckoutt.com/01a0ed88-0677-725e-acf9-b65d98675a20?ref='; // "Nível Completo - Área de Membros - PT", € 9,90
+const MP_COMPLETO_MEMBRO='https://pay.mycheckoutt.com/01a0ed88-0677-725e-acf9-b65d98675a20?ref='; // "Nível Completo - Área de Membros - PT" — upgrade = 50% off (regra à parte), preço na Mundpay ajustado pro pane-3230 pra € 6,90
 const MP_COMBO_MEMBRO='https://pay.mycheckoutt.com/01a0ed89-8b5c-7275-8dab-7b9adba9387e?ref='; // "Leve os 3 com Desconto - Área de Membros - PT", € 7,90
 // Bumps avulsos: preço normal real na Mundpay já é menor que o estimado -> 30% off cai
 // abaixo do piso € 4,90, sem desconto. Reusam a oferta pública já ativa (mesmo preço).
@@ -363,18 +363,20 @@ function buyHref(m){
 }
 
 /* ---------- preço de membro (regra da dona, 29/09/2026, skill area-membros-netflix) ----------
-   30% off do preço NORMAL em tudo que ela ainda não tem (upgrade, bónus, combo).
-   Arredonda pro final ,90 mais próximo ABAIXO. Piso € 4,90: se ficar abaixo, sem desconto.
-   Calculado sempre a partir do preço normal do config — nunca hardcode do valor final. */
-function memberPrice(normal){
+   30% off do preço NORMAL em tudo que ela ainda não tem (bónus, combo). Upgrade de
+   tier (completo) é 50% off — regra à parte da dona, 29/09/2026. Arredonda pro final
+   ,90 mais próximo ABAIXO. Piso € 4,90: se ficar abaixo, sem desconto. Calculado
+   sempre a partir do preço normal do config — nunca hardcode do valor final. */
+function memberPrice(normal,sku){
+  const rate=sku==='completo'?0.5:0.7;
   const normalCents=Math.round(normal*100);
-  const offCents=Math.round(normalCents*0.7);
+  const offCents=Math.round(normalCents*rate);
   const v=Math.floor((offCents-90)/100)*100+90;
   return v<490 ? normal : v/100;
 }
 function fmtR(n){return '€ '+n.toFixed(2).replace('.',',');}
-function priceBadgeHTML(normal){
-  const mp=memberPrice(normal);
+function priceBadgeHTML(normal,sku){
+  const mp=memberPrice(normal,sku);
   if(mp>=normal) return fmtR(normal);
   return '<span style="text-decoration:line-through;opacity:.62;font-weight:600;font-size:.82em;margin-right:5px;">'+fmtR(normal)+'</span>'+fmtR(mp);
 }
@@ -583,8 +585,7 @@ function renderHub(){
     card.dataset.sku=m.sku;
     card.className='card'+(unlocked?'':' locked');
     let badge = (unlocked&&m.soon) ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>'
-              : (m.soon ? '<span class="badge badge-soon">Em atualização</span>'
-                        : '<span class="badge badge-price">'+priceBadgeHTML(m.normal)+'</span>');
+              : '<span class="badge badge-price">'+priceBadgeHTML(m.normal,m.sku)+'</span>';
     const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
                              : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
     const partial = m.partial && !m.soon ? '<span class="badge-partial">conteúdo inicial · mais em breve</span>' : '';
@@ -611,14 +612,14 @@ function openModal(sku){
      '<div class="m-body">'+
        '<h3>'+m.title+'</h3>'+
        '<p>'+(m.desc||m.subtitle)+'</p>'+
-       '<div class="price">'+priceBadgeHTML(m.normal)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
+       '<div class="price">'+priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
        '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'" target="_blank" rel="noopener">Quero desbloquear</a></div>'+
        '<div class="m-close" id="modal-close">Agora não</div>'+
      '</div></div></div>';
   document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
   document.getElementById('modal-close').addEventListener('click',closeModal);
   document.getElementById('modal-buy').addEventListener('click',function(){
-    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:m.title,content_type:'product',value:memberPrice(m.normal),currency:'EUR'});}
+    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:m.title,content_type:'product',value:memberPrice(m.normal,m.sku),currency:'EUR'});}
   });
 }
 function closeModal(){document.getElementById('modal-mount').innerHTML='';}
