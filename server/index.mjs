@@ -97,6 +97,11 @@ function handleWebhook(payload) {
     (PRODUCT_SKUS[pid] || []).forEach((s) => skus.add(s));
     if (pid === 'cmubqz6yu010o01pqgcgfw6j0' && COMPLETO_OFFERS.has(String(payload.offerCode || ''))) skus.add('completo');
   }
+  // Baralho Cigano ("- Área de Membros", 29/09/2026): produto novo, sem o id interno
+  // do webhook confirmado ainda (só temos o id da URL de checkout, que a Wiven usa
+  // diferente do product.id do payload). Casa pelo offerCode, que é único por oferta
+  // -- não depende do product id.
+  if (String(payload.offerCode || '') === 'JXE3KNA') skus.add('cigano');
   if (!skus.size) return { code: 200, body: { ok: true, ignored: 'no-known-product' } };
   const b = db.buyers[email] || { skus: [], name: (payload.client || {}).name || '' };
   const novos = [...skus].filter((s) => !b.skus.includes(s));
