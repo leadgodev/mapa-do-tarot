@@ -294,7 +294,7 @@
           <p class="cg-eyebrow">Brevemente</p>
           <h2>Mapa do Baralho Cigano</h2>
           <p>Está a aprender o Tarot. Em breve vai poder aprender o Baralho Cigano do mesmo jeito: sem decorar, e sabendo juntar as cartas.</p>
-          <a class="btn btn-primary" id="cigano-cta" href="#checkout-pendente-cigano-pt">Quero ser avisado(a) — Baralho Cigano</a>
+          <button class="btn btn-primary" id="cigano-cta" type="button" disabled aria-disabled="true" title="Brevemente disponível">Brevemente disponível</button>
         </div>
       </div>
 
@@ -479,10 +479,9 @@ document.getElementById('btn-logout').addEventListener('click',function(){
 /* ---------- Baralho Cigano (mercado PT — ainda sem plano/preço aprovado) ---------- */
 function renderCiganoApp(unlocked){
   const mount=document.getElementById('cigano-app-mount');
-  const href=unlocked?'#':'#checkout-pendente-cigano-pt';
   mount.innerHTML=
     '<div class="treino-card-wrap">'+
-      '<a class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'">'+
+      '<a class="treino-card '+(unlocked?'unlocked':'locked')+'" href="#">'+
         '<span class="treino-pill">🎁 Bónus Especial · App de Treino</span>'+
         '<span class="treino-img-wrap">'+
           '<img class="treino-img" src="'+assetUrl('assets/cigano/bonus-6-cut.webp')+'" alt="App de Treino do Baralho Cigano" loading="eager">'+
@@ -494,14 +493,14 @@ function renderCiganoApp(unlocked){
         '</span>'+
       '</a>'+
     '</div>';
-  if(unlocked){mount.querySelector('a').addEventListener('click',e=>e.preventDefault());}
+  mount.querySelector('a').addEventListener('click',e=>e.preventDefault());
 }
 function renderCiganoGrid(unlocked){
   const grid=document.getElementById('cigano-grid');
   grid.innerHTML='';
   CIGANO_ITEMS.forEach(m=>{
     const card=document.createElement('a');
-    card.href = unlocked ? '#' : '#checkout-pendente-cigano-pt';
+    card.href = '#';
     card.className='card'+(unlocked?'':' locked');
     const badge = unlocked ? '<span class="badge badge-soon">Em atualização</span>' : '<span class="badge badge-soon">Brevemente</span>';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
