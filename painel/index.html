@@ -397,15 +397,18 @@ function buyHref(m){
    30% off do preço NORMAL em tudo que ela não tem (upgrade, bump, combo, produto irmão).
    Arredonda pro final ,90 mais próximo ABAIXO. Piso R$9,90: se ficar abaixo, sem desconto.
    Calculado sempre a partir do preço normal do config — nunca hardcode do valor final. */
-function memberPrice(normal){
+// Override: preço real confirmado ao vivo na Wiven (não cai na fórmula de 30%).
+const MEMBER_PRICE_OVERRIDE = {'completo': 18.90};
+function memberPrice(normal,sku){
+  if(sku && MEMBER_PRICE_OVERRIDE[sku]!==undefined) return MEMBER_PRICE_OVERRIDE[sku];
   const normalCents=Math.round(normal*100);
   const offCents=Math.round(normalCents*0.7);
   const v=Math.floor((offCents-90)/100)*100+90;
   return v<990 ? normal : v/100;
 }
 function fmtR(n){return 'R$'+n.toFixed(2).replace('.',',');}
-function priceBadgeHTML(normal){
-  const mp=memberPrice(normal);
+function priceBadgeHTML(normal,sku){
+  const mp=memberPrice(normal,sku);
   if(mp>=normal) return fmtR(normal);
   return '<span style="text-decoration:line-through;opacity:.62;font-weight:600;font-size:.82em;margin-right:5px;">'+fmtR(normal)+'</span>'+fmtR(mp);
 }
@@ -570,13 +573,13 @@ function renderTreinoCard(owned){
         '</span>'+
         '<span class="treino-text">'+
           '<span class="treino-title">App de Treino do Tarô</span>'+
-          '<span class="treino-sub">'+(unlocked?'Estude e pratique as 78 cartas — quiz, flashcards e progresso.':'Toque para desbloquear no Plano Completo · '+priceBadgeHTML(37.90))+'</span>'+
+          '<span class="treino-sub">'+(unlocked?'Estude e pratique as 78 cartas — quiz, flashcards e progresso.':'Toque para desbloquear no Plano Completo · '+priceBadgeHTML(37.90,'completo'))+'</span>'+
         '</span>'+
       '</'+cardTag+'>'+
     '</div>';
   if(!unlocked){
     mount.querySelector('a').addEventListener('click',function(){
-      if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Nível Completo · 56 Arcanos Menores',content_type:'product',value:memberPrice(37.90),currency:'BRL'});}
+      if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Nível Completo · 56 Arcanos Menores',content_type:'product',value:memberPrice(37.90,'completo'),currency:'BRL'});}
     });
   }
 }
@@ -680,7 +683,7 @@ function renderHub(){
     card.dataset.sku=m.sku;
     card.className='card'+(unlocked?'':' locked');
     let badge = (unlocked&&m.soon) ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>'
-              : '<span class="badge badge-price">'+priceBadgeHTML(m.normal)+'</span>';
+              : '<span class="badge badge-price">'+priceBadgeHTML(m.normal,m.sku)+'</span>';
     const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
                              : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
     const partial = m.partial && !m.soon ? '<span class="badge-partial">conteúdo inicial · mais em breve</span>' : '';
@@ -707,14 +710,14 @@ function openModal(sku){
      '<div class="m-body">'+
        '<h3>'+m.title+'</h3>'+
        '<p>'+(m.desc||m.subtitle)+'</p>'+
-       '<div class="price">'+priceBadgeHTML(m.normal)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
+       '<div class="price">'+priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small></div>'+
        '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'" target="_blank" rel="noopener">Quero desbloquear</a></div>'+
        '<div class="m-close" id="modal-close">Agora não</div>'+
      '</div></div></div>';
   document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
   document.getElementById('modal-close').addEventListener('click',closeModal);
   document.getElementById('modal-buy').addEventListener('click',function(){
-    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:m.title,content_type:'product',value:memberPrice(m.normal),currency:'BRL'});}
+    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:m.title,content_type:'product',value:memberPrice(m.normal,m.sku),currency:'BRL'});}
   });
 }
 function closeModal(){document.getElementById('modal-mount').innerHTML='';}
