@@ -27,7 +27,7 @@ const PRODUCT_SKUS = {
   // '<PRODUCT_ID_WIVEN_CIGANO_TODO>': ['cigano'],
 };
 // Ofertas do produto principal que incluem o Nível Completo.
-const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW']);
+const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW', 'G8MYTZF']);
 const NOT_PAID_EVENT = /CREATED|CANCEL|REFUND|CHARGEBACK|CONTEST|MED|ABANDON|SESSION|TRANSFER|UPDATED/i;
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
