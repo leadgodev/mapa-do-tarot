@@ -37,7 +37,7 @@
       title: '22 Arcanos Maiores',
       normal: 17.90,
       member: null,                  // 30% off: R$ 12,90 (calculado)
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: 'https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=G8MYTZF',
       text: 'Quero os 22 Arcanos Maiores',
       currency: 'BRL'
     },
@@ -45,7 +45,7 @@
       title: 'Bônus 1 · Ler Qualquer Carta',
       normal: 17.90,
       member: null,                  // R$ 12,90
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → painel cai em fallback WhatsApp
       text: 'Quero o Bônus 1',
       currency: 'BRL'
     },
@@ -53,7 +53,7 @@
       title: 'Bônus 2 · Tiragens Práticas',
       normal: 17.90,
       member: null,
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → fallback WhatsApp
       text: 'Quero o Bônus 2',
       currency: 'BRL'
     },
@@ -61,7 +61,7 @@
       title: 'Bônus 3 · Cuidando do Baralho',
       normal: 17.90,
       member: null,
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → fallback WhatsApp
       text: 'Quero o Bônus 3',
       currency: 'BRL'
     },
@@ -69,7 +69,7 @@
       title: 'Bônus 4 · Minha Primeira Tiragem',
       normal: 17.90,
       member: null,
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → fallback WhatsApp
       text: 'Quero o Bônus 4',
       currency: 'BRL'
     },
@@ -85,7 +85,7 @@
       title: '80 Perguntas Poderosas',
       normal: 15.00,
       member: null,                  // R$ 10,50 → floor R$ 9,90
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: 'https://checkout.wiven.com.br/checkout/cmubsk2bg023101pqxrvx8q4s?offer=ZWWA35E',
       text: 'Quero 80 Perguntas Poderosas',
       currency: 'BRL'
     },
@@ -93,7 +93,7 @@
       title: 'A Folha de Consulta do Tarot',
       normal: 22.00,
       member: null,                  // R$ 15,40 → floor R$ 14,90
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: 'https://checkout.wiven.com.br/checkout/cmubsl72s023u01pq0h7vf7a9?offer=N6J40YD',
       text: 'Quero a Folha de Consulta',
       currency: 'BRL'
     },
@@ -101,7 +101,7 @@
       title: 'Combo · Os 3 Bônus',
       normal: 30.00,
       member: null,                  // R$ 21,00 → floor R$ 20,90
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: 'https://checkout.wiven.com.br/checkout/cmubwg9ah052m01puqslkbogu?offer=CFJDIOJ',
       text: 'Quero o Combo dos 3 Bônus',
       currency: 'BRL'
     },
@@ -109,7 +109,7 @@
       title: 'Nível Completo · 56 Arcanos Menores',
       normal: 27.90,
       member: 13.90,                 // OVERRIDE: 50% off confirmado ao vivo (R$ 27,90 × 0,50 ≈ R$ 13,90)
-      url: '',                       // PREENCHER COM URL DO PANE WIVEN
+      url: 'https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=G8MYTZF',
       text: 'Quero o Nível Completo',
       currency: 'BRL'
     },
