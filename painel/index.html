@@ -398,7 +398,7 @@ function buyHref(m){
    Arredonda pro final ,90 mais próximo ABAIXO. Piso R$9,90: se ficar abaixo, sem desconto.
    Calculado sempre a partir do preço normal do config — nunca hardcode do valor final. */
 // Override: preço real confirmado ao vivo na Wiven (não cai na fórmula de 30%).
-const MEMBER_PRICE_OVERRIDE = {'completo': 18.90};
+const MEMBER_PRICE_OVERRIDE = {'completo': 13.90};
 function memberPrice(normal,sku){
   if(sku && MEMBER_PRICE_OVERRIDE[sku]!==undefined) return MEMBER_PRICE_OVERRIDE[sku];
   const normalCents=Math.round(normal*100);
@@ -504,7 +504,7 @@ const MODULES = [
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio'][i]+'.jpg')
   },
   {
-    sku:'completo', unlocked:false, normal:37.90, partial:true,
+    sku:'completo', unlocked:false, normal:27.90, partial:true,
     title:'Nível Completo · 56 Arcanos Menores', subtitle:'Copas, Ouros, Espadas e Paus — o baralho inteiro.',
     cover:'capas/completo.jpg', desc:'Suba para o Mapa Completo: os 56 Arcanos Menores. Paus e Copas já disponíveis; Espadas e Ouros chegam em atualização.',
     pages:['conteudo/completo/pagina-01-abertura.jpg','conteudo/completo/pagina-02-naipe-paus.jpg','conteudo/completo/pagina-03-paus-as.jpg','conteudo/completo/pagina-04-paus-02.jpg','conteudo/completo/pagina-05-paus-03.jpg','conteudo/completo/pagina-06-paus-04.jpg','conteudo/completo/pagina-07-paus-05.jpg','conteudo/completo/pagina-08-paus-06.jpg','conteudo/completo/pagina-09-paus-07.jpg','conteudo/completo/pagina-10-paus-08.jpg','conteudo/completo/pagina-11-paus-09.jpg','conteudo/completo/pagina-12-paus-10.jpg','conteudo/completo/pagina-13-paus-pajem.jpg','conteudo/completo/pagina-14-paus-cavaleiro.jpg','conteudo/completo/pagina-15-paus-rainha.jpg','conteudo/completo/pagina-16-paus-rei.jpg','conteudo/completo/pagina-17-naipe-copas.jpg','conteudo/completo/pagina-18-copas-as.jpg','conteudo/completo/pagina-19-copas-02.jpg','conteudo/completo/pagina-20-copas-03.jpg','conteudo/completo/pagina-21-copas-04.jpg','conteudo/completo/pagina-22-copas-05.jpg','conteudo/completo/pagina-23-copas-06.jpg','conteudo/completo/pagina-24-copas-07.jpg','conteudo/completo/pagina-25-copas-08.jpg','conteudo/completo/pagina-26-copas-09.jpg','conteudo/completo/pagina-27-copas-10.jpg','conteudo/completo/pagina-28-copas-pajem.jpg','conteudo/completo/pagina-29-copas-cavaleiro.jpg','conteudo/completo/pagina-30-copas-rainha.jpg','conteudo/completo/pagina-31-copas-rei.jpg','conteudo/completo/pagina-33-espadas-as.jpg','conteudo/completo/pagina-34-espadas-02.jpg','conteudo/completo/pagina-35-espadas-03.jpg','conteudo/completo/pagina-36-espadas-04.jpg','conteudo/completo/pagina-47-ouros-intro.jpg','conteudo/completo/pagina-48-ouros-as.jpg','conteudo/completo/pagina-49-ouros-02.jpg','conteudo/completo/pagina-50-ouros-03.jpg','conteudo/completo/pagina-51-ouros-04.jpg','conteudo/completo/pagina-52-ouros-05.jpg']
@@ -565,7 +565,7 @@ function renderTreinoCard(owned){
   const target=unlocked?'':' target="_blank" rel="noopener"';
   mount.innerHTML=
     '<div class="treino-card-wrap">'+
-      '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+(unlocked?'':' data-tk-value="'+memberPrice(37.90,'completo').toFixed(2)+'"')+'>'+
+      '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+(unlocked?'':' data-tk-value="'+memberPrice(27.90,'completo').toFixed(2)+'"')+'>'+
         '<span class="treino-pill">🎁 Bônus Especial · App de Treino do Tarô</span>'+
         '<span class="treino-img-wrap">'+
           '<img class="treino-img" src="'+assetUrl('assets/webp/bonus5-app-treino.webp')+'" alt="App de Treino do Tarô" loading="eager">'+
@@ -573,13 +573,13 @@ function renderTreinoCard(owned){
         '</span>'+
         '<span class="treino-text">'+
           '<span class="treino-title">App de Treino do Tarô</span>'+
-          '<span class="treino-sub">'+(unlocked?'Estude e pratique as 78 cartas — quiz, flashcards e progresso.':'Toque para desbloquear no Plano Completo · '+priceBadgeHTML(37.90,'completo'))+'</span>'+
+          '<span class="treino-sub">'+(unlocked?'Estude e pratique as 78 cartas — quiz, flashcards e progresso.':'Toque para desbloquear no Plano Completo · '+priceBadgeHTML(27.90,'completo'))+'</span>'+
         '</span>'+
       '</'+cardTag+'>'+
     '</div>';
   if(!unlocked){
     mount.querySelector('a').addEventListener('click',function(){
-      if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Nível Completo · 56 Arcanos Menores',content_type:'product',value:memberPrice(37.90,'completo'),currency:'BRL'});}
+      if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Nível Completo · 56 Arcanos Menores',content_type:'product',value:memberPrice(27.90,'completo'),currency:'BRL'});}
     });
   }
 }
