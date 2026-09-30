@@ -45,7 +45,7 @@
       title: 'Bônus 1 · Ler Qualquer Carta',
       normal: 17.90,
       member: null,                  // R$ 12,90
-      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → painel cai em fallback WhatsApp
+      url: 'https://checkout.wiven.com.br/checkout/cmuociynb03d101oh0vnkho2v?offer=9NJJEEC',
       text: 'Quero o Bônus 1',
       currency: 'BRL'
     },
@@ -53,7 +53,7 @@
       title: 'Bônus 2 · Tiragens Práticas',
       normal: 17.90,
       member: null,
-      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → fallback WhatsApp
+      url: 'https://checkout.wiven.com.br/checkout/cmuocnmzp037f01onm5g97xol?offer=QVQHVIX',
       text: 'Quero o Bônus 2',
       currency: 'BRL'
     },
@@ -61,7 +61,7 @@
       title: 'Bônus 3 · Cuidando do Baralho',
       normal: 17.90,
       member: null,
-      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → fallback WhatsApp
+      url: 'https://checkout.wiven.com.br/checkout/cmuocoq23038p01onqt1dxt2r?offer=ISRJ3UY',
       text: 'Quero o Bônus 3',
       currency: 'BRL'
     },
@@ -69,7 +69,7 @@
       title: 'Bônus 4 · Minha Primeira Tiragem',
       normal: 17.90,
       member: null,
-      url: '',                       // SEM oferta-membro Wiven (30/09/2026) → fallback WhatsApp
+      url: 'https://checkout.wiven.com.br/checkout/cmuocpyna03k401ohk7gzb8x1?offer=R635KZC',
       text: 'Quero o Bônus 4',
       currency: 'BRL'
     },
