@@ -167,7 +167,7 @@ function serveStatic(req, res, pathname) {
   if (rel === '/pt/painel' || rel === '/pt/painel/index.html') rel = '/painel/index-pt.html';
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
-  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || top === 'assets' || top === 'painel' || top === 'upsell-cigano')) return json(res, 404, { error: 'not-found' });
+  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || top === 'assets' || top === 'painel' || top === 'upsell-cigano' || top === 'js')) return json(res, 404, { error: 'not-found' });
   // conteúdo pago: exige sessão + ownership do SKU
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
   if (m) {
