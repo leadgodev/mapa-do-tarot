@@ -5,6 +5,7 @@ COPY pt ./pt
 COPY assets ./assets
 COPY painel ./painel
 COPY upsell-cigano ./upsell-cigano
+COPY js ./js
 COPY server ./server
 ENV PORT=80 DATA_DIR=/data
 EXPOSE 80
