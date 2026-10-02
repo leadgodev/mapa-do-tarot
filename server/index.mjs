@@ -190,8 +190,10 @@ function serveStatic(req, res, pathname) {
   if (rel === '/privacidade' || rel === '/pt/privacidade') rel = '/privacidade.html';
   if (rel === '/pt/painel' || rel === '/pt/painel/index.html') rel = '/painel/index-pt.html';
   if (rel === '/es/painel' || rel === '/es/painel/index.html') rel = '/painel/index-es.html';
+  if (rel.startsWith('/es/assets/') && !fs.existsSync(path.join(ROOT, rel))) rel = rel.slice(3);
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
+  if (top === 'es' && !rel.startsWith('/es/assets/') && !rel.endsWith('.html')) return json(res, 404, { error: 'not-found' });
   if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || top === 'upsell-cigano' || top === 'js')) return json(res, 404, { error: 'not-found' });
   // conteúdo pago: exige sessão + ownership do SKU
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
@@ -215,19 +217,7 @@ function serveStatic(req, res, pathname) {
     }
   }
   fs.stat(abs, (err, st) => {
-    if (err || !st.isFile()) {
-      // fallback para imagens ES de conteudo-es que podem estar em assets/ da raiz
-      if (rel.startsWith('/painel/conteudo-es/')) {
-        const fallbackRel = rel.replace(/^\/painel\/conteudo-es\/[^/]+\//, '/assets/');
-        const fallbackAbs = path.join(ROOT, fallbackRel);
-        if (fallbackAbs.startsWith(ROOT + path.sep) && fs.existsSync(fallbackAbs)) {
-          const fst = fs.statSync(fallbackAbs);
-          res.writeHead(200, { 'content-type': MIME[path.extname(fallbackAbs)] || 'application/octet-stream', 'content-length': fst.size, 'cache-control': 'private, max-age=3600' });
-          return fs.createReadStream(fallbackAbs).pipe(res);
-        }
-      }
-      return json(res, 404, { error: 'not-found' });
-    }
+    if (err || !st.isFile()) return json(res, 404, { error: 'not-found' });
     res.writeHead(200, { 'content-type': MIME[path.extname(abs)] || 'application/octet-stream', 'content-length': st.size, 'cache-control': (m || mEs) ? 'private, max-age=3600' : 'public, max-age=300' });
     fs.createReadStream(abs).pipe(res);
   });
@@ -297,12 +287,12 @@ http.createServer(async (req, res) => {
       const sku = m[1];
       const skuToCheck = sku.startsWith('cigano-') || sku === 'cigano' ? 'cigano' : sku;
       if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
-      const pdfPath = path.join(ROOT, 'painel', 'conteudo', sku, sku + '.pdf');
+      const pdfPath = path.join(ROOT, 'painel', url.searchParams.get('lang') === 'es' ? 'conteudo-es' : 'conteudo', sku, sku + '.pdf');
       if (fs.existsSync(pdfPath)) {
         const st = fs.statSync(pdfPath);
         return res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' }), fs.createReadStream(pdfPath).pipe(res);
       }
-      if (sku.startsWith('cigano-')) {
+      if (sku.startsWith('cigano-') && url.searchParams.get('lang') !== 'es') {
         generatePDF(sku, pdfPath, (err) => {
           if (err) return json(res, 500, { error: 'pdf-generation-failed' });
           const st = fs.statSync(pdfPath);
@@ -343,11 +333,12 @@ http.createServer(async (req, res) => {
     if (p.startsWith('/painel/api/')) return json(res, 404, { error: 'not-found' });
     if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { error: 'method' });
     // Language selection for panel: query lang > cookie mdt_lang > buyer's lang > Accept-Language > /es/painel -> es > pt
-    if (p === '/painel' || p === '/painel/index.html' || p === '/pt/painel' || p === '/pt/painel/index.html' || p === '/es/painel' || p === '/es/painel/index.html') {
+    if (p === '/pt/painel' || p === '/pt/painel/index.html' || p === '/es/painel' || p === '/es/painel/index.html') {
       const urlLang = url.searchParams.get('lang');
-      let lang = urlLang || null;
+      const okLang = (v) => (v === 'es' || v === 'pt' ? v : null);
+      let lang = okLang(urlLang);
       const m_lang = /(?:^|;\s*)mdt_lang=([^;]+)/.exec(req.headers.cookie || '');
-      if (!lang && m_lang) lang = m_lang[1];
+      if (!lang && m_lang) lang = okLang(m_lang[1]);
       const email = cookieEmail(req);
       if (!lang && email && db.buyers[email]) lang = db.buyers[email].lang;
       if (!lang) {
@@ -355,7 +346,7 @@ http.createServer(async (req, res) => {
         if (alang.startsWith('es')) lang = 'es';
       }
       if (!lang) lang = (p.startsWith('/es') ? 'es' : 'pt');
-      if (urlLang) {
+      if (okLang(urlLang)) {
         res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'set-cookie': `mdt_lang=${lang}; Path=/; Max-Age=31536000` });
       } else {
         res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
