@@ -18,45 +18,92 @@ const MAX_PDF_SIZE = 25 * 1024 * 1024; // 25 MB
 function extractModules() {
   const html = fs.readFileSync(path.join(PAINEL_DIR, 'index.html'), 'utf8');
   const modules = [];
-  // Encontrar cada { sku: '...', pages: [...] } (com ou sem .map())
-  const regex = /sku:'([^']+)'[\s\S]*?pages:\s*(\[[\s\S]*?\](?:\.map\([^)]+\))?)/;
-  const skuRegex = /sku:'([^']+)'/g;
-  let skuMatch;
-  const seen = new Set();
-  while ((skuMatch = skuRegex.exec(html)) !== null) {
-    const sku = skuMatch[1];
-    if (seen.has(sku)) continue;
-    seen.add(sku);
-    const afterSku = html.substring(skuMatch.index);
-    // Tentar padrão com .map() primeiro
+
+  // Encontrar const MODULES = [ ... ];
+  const modulesMatch = /const\s+MODULES\s*=\s*\[([\s\S]*?)\n\s*\];/m.exec(html);
+  if (!modulesMatch) {
+    console.error('❌ MODULES array não encontrado no index.html');
+    return [];
+  }
+
+  const modulesStr = modulesMatch[1];
+  // Dividir por objetos de nível superior (cada { sku: '...' })
+  // Encontrar cada objeto: {sku:'...',... (até o próximo ou fim)
+  const objRegex = /\{\s*sku:'([^']+)'[\s\S]*?(?=\s*\},\s*\{|$)/g;
+  let objMatch;
+
+  while ((objMatch = objRegex.exec(modulesStr)) !== null) {
+    const sku = objMatch[1];
+    const objStr = objMatch[0];
+
     let pages = [];
-    let match = /pages:\s*\[([\s\S]*?)\]\.map\(n=>'([^']+)'\+n\+'([^']+)'\)/m.exec(afterSku);
+
+    // Tentar padrão 1: pages:Array.from({length:N},(_,i)=>...)
+    let match = /pages:\s*Array\.from\(\{length:(\d+)\},[^=>]*=>\s*'([^']+)'\+String\(i\+1\)\.padStart\(2,'0'\)\+'-'\+\[([^\]]+)\]\[i\]\+'\.jpg'\)/m.exec(objStr);
     if (match) {
-      const pagesContent = match[1];
+      const length = parseInt(match[1]);
       const prefix = match[2];
-      const suffix = match[3];
-      const nameRegex = /'([^']+)'/g;
-      let nameMatch;
-      while ((nameMatch = nameRegex.exec(pagesContent)) !== null) {
-        pages.push(prefix + nameMatch[1] + suffix);
+      const namesStr = match[3];
+      const names = namesStr.split(',').map(n => n.trim().replace(/^'|'$/g, ''));
+      for (let i = 0; i < length; i++) {
+        pages.push(prefix + String(i + 1).padStart(2, '0') + '-' + names[i] + '.jpg');
       }
     } else {
-      // Padrão direto: ['path1','path2',...]
-      match = /pages:\s*\[([\s\S]*?)\]/m.exec(afterSku);
+      // Tentar padrão 2: pages:[...].map(n=>'prefix'+n+'suffix')
+      match = /pages:\s*\[([^\]]*)\]\.map\(n=>'([^']+)'\+n\+'([^']+)'\)/m.exec(objStr);
       if (match) {
-        const pagesStr = '[' + match[1] + ']';
-        try {
-          pages = eval(pagesStr);
-          if (!Array.isArray(pages)) pages = [];
-        } catch (e) {
-          pages = [];
+        const pagesContent = match[1];
+        const prefix = match[2];
+        const suffix = match[3];
+        const nameRegex = /'([^']+)'/g;
+        let nameMatch;
+        while ((nameMatch = nameRegex.exec(pagesContent)) !== null) {
+          pages.push(prefix + nameMatch[1] + suffix);
+        }
+      } else {
+        // Tentar padrão 3: pages:[...].concat(...)
+        match = /pages:\s*\[\]\.concat\(([\s\S]*?)\s*\)/m.exec(objStr);
+        if (match) {
+          const concatContent = match[1];
+          // Extrair cada Array.from() dentro
+          const arrayMatches = [...concatContent.matchAll(/Array\.from\(\{length:(\d+)\},[^=>]*=>\s*'([^']+)'\+String\(i\+1\)\.padStart\(2,'0'\)\+'-'\+\[([^\]]+)\]\[i\]\+'\.jpg'\)/g)];
+          for (const am of arrayMatches) {
+            const length = parseInt(am[1]);
+            const prefix = am[2];
+            const namesStr = am[3];
+            const names = namesStr.split(',').map(n => n.trim().replace(/^'|'$/g, ''));
+            for (let i = 0; i < length; i++) {
+              pages.push(prefix + String(i + 1).padStart(2, '0') + '-' + names[i] + '.jpg');
+            }
+          }
+        } else {
+          // Padrão 4: pages:['path1','path2',...]
+          match = /pages:\s*\[([^\]]*)\]/m.exec(objStr);
+          if (match) {
+            const pagesStr = '[' + match[1] + ']';
+            try {
+              pages = eval(pagesStr);
+              if (!Array.isArray(pages)) pages = [];
+            } catch (e) {
+              pages = [];
+            }
+          }
         }
       }
     }
+
     if (pages.length > 0) {
-      modules.push({ sku, pages });
+      // Só há PDF para módulos que têm conteúdo próprio. Ofertas agregadas
+      // (como combo-3-bonus) apontam para os PDFs dos módulos incluídos.
+      const ownPrefix = `conteudo/${sku}/`;
+      if (pages.every((page) => page.startsWith(ownPrefix))) {
+        modules.push({ sku, pages });
+      } else {
+        console.log(`  ↷ ${sku}: usa conteúdo de outros módulos (sem PDF próprio)`);
+      }
     }
   }
+
   return modules;
 }
 
