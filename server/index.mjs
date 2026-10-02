@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { execFile } from 'node:child_process';
 import { sendAccessEmail } from './mail.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -15,6 +16,20 @@ const WEBHOOK_TOKEN = process.env.WIVEN_WEBHOOK_TOKEN || '';
 const MUNDPAY_WEBHOOK_TOKEN = process.env.MUNDPAY_WEBHOOK_TOKEN || '';
 const SESSION_SECRET = process.env.SESSION_SECRET || WEBHOOK_TOKEN || MUNDPAY_WEBHOOK_TOKEN;
 const SESSION_TTL = 30 * 24 * 3600; // s
+
+// Gerador de PDF para módulos Cigano via Chromium headless
+function generatePDF(moduleKey, outputPath, callback) {
+  const htmlPath = path.join(ROOT, 'painel', 'conteudo', moduleKey, 'index.html');
+  if (!fs.existsSync(htmlPath)) return callback(new Error('html-not-found'));
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  const args = ['--headless', '--disable-gpu', `--print-to-pdf=${outputPath}`, `file://${htmlPath}`];
+  execFile('chromium', args, { timeout: 30000 }, (err) => {
+    if (err && err.code === 'ENOENT') {
+      return execFile('chromium-browser', args, { timeout: 30000 }, callback);
+    }
+    callback(err);
+  });
+}
 
 // Produto Wiven -> SKUs do painel.
 const PRODUCT_SKUS = {
@@ -172,7 +187,8 @@ function serveStatic(req, res, pathname) {
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
   if (m) {
     const o = owned(cookieEmail(req) || '');
-    if (!o || !o.includes(m[1])) return json(res, 403, { error: 'forbidden' });
+    const skuToCheck = m[1].startsWith('cigano-') || m[1] === 'cigano' ? 'cigano' : m[1];
+    if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
   }
   // App de Treino: bônus exclusivo do Nível Completo (SKU 'completo').
   if (rel === '/painel/treino' || rel.startsWith('/painel/treino/')) {
@@ -241,6 +257,28 @@ http.createServer(async (req, res) => {
         return json(res, 200, { ok: true });
       }
       return json(res, 405, { error: 'method' });
+    }
+    if (p.startsWith('/painel/api/cigano-pdf/')) {
+      const m = /^\/painel\/api\/cigano-pdf\/([^/]+)$/.exec(p);
+      if (!m) return json(res, 404, { error: 'not-found' });
+      const email = cookieEmail(req);
+      const o = email && owned(email);
+      if (!o || !o.includes('cigano')) return json(res, 403, { error: 'forbidden' });
+      const moduleKey = m[1];
+      const pdfPath = path.join(ROOT, 'painel', 'conteudo', moduleKey, moduleKey + '.pdf');
+      // Se PDF já existe, serve
+      if (fs.existsSync(pdfPath)) {
+        const st = fs.statSync(pdfPath);
+        return res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' }), fs.createReadStream(pdfPath).pipe(res);
+      }
+      // Caso contrário, gera on-demand
+      generatePDF(moduleKey, pdfPath, (err) => {
+        if (err) return json(res, 500, { error: 'pdf-generation-failed' });
+        const st = fs.statSync(pdfPath);
+        res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' });
+        fs.createReadStream(pdfPath).pipe(res);
+      });
+      return;
     }
     if (p.startsWith('/painel/api/')) return json(res, 404, { error: 'not-found' });
     if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { error: 'method' });

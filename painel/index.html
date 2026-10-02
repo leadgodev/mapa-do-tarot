@@ -354,6 +354,16 @@
   <div class="reader-pages" id="reader-pages"></div>
 </div>
 
+<!-- ===================== CIGANO VIEW ===================== -->
+<div id="view-cigano" class="hidden">
+  <div class="reader-bar">
+    <button type="button" class="back" id="cigano-back" style="border:0;background:none;padding:8px 0;touch-action:manipulation;">← Voltar</button>
+    <h2 id="cigano-title"></h2>
+    <button type="button" id="cigano-pdf-btn" style="margin-left:auto;border:0;background:none;cursor:pointer;color:var(--accent);font-weight:600;font-size:13px;padding:8px 16px;touch-action:manipulation;display:none;">📥 Baixar PDF</button>
+  </div>
+  <div id="cigano-mount" style="max-width:820px;margin:0 auto;padding:26px clamp(12px,3vw,24px) 80px;"></div>
+</div>
+
 <!-- ===================== MODAL MOUNT ===================== -->
 <div id="modal-mount"></div>
 
@@ -613,17 +623,33 @@ function renderCiganoApp(unlocked){
 function renderCiganoGrid(unlocked){
   const grid=document.getElementById('cigano-grid');
   grid.innerHTML='';
+  const contentMap={
+    'cigano-36cartas':'cigano-36cartas',
+    'cigano-dicionario':'cigano-dicionario',
+    'cigano-tiragens':'cigano-bonus-1',
+    'cigano-primeira':'cigano-bonus-2',
+    'cigano-flash':'cigano-bonus-3',
+    'cigano-perguntas':'cigano-bonus-4',
+    'cigano-mesa-real':'cigano-bonus-5'
+  };
   CIGANO_ITEMS.forEach(m=>{
-    const card=document.createElement('a');
-    card.href = unlocked ? '#' : '/upsell-cigano/';
+    const card=document.createElement('button');
+    card.type='button';
+    const hasContent=contentMap[m.key];
     card.className='card'+(unlocked?'':' locked');
-    const badge = unlocked ? '<span class="badge badge-soon">Em atualização</span>' : '<span class="badge badge-price">Plano único</span>';
+    const badge = unlocked && !hasContent ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>' : '<span class="badge badge-price">Plano único</span>';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
-    const cta = unlocked ? 'Em atualização — aguarde' : 'Desbloquear';
+    const cta = unlocked && !hasContent ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : 'Desbloquear';
     card.innerHTML=
       '<span class="cover"><img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="lazy">'+badge+lockOv+'</span>'+
       '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
-    if(unlocked) card.addEventListener('click',e=>e.preventDefault());
+    if(unlocked && !hasContent) {
+      card.addEventListener('click',e=>e.preventDefault());
+    } else if(unlocked && hasContent) {
+      card.addEventListener('click',()=>{location.hash='#cigano-ler/'+hasContent;route();});
+    } else {
+      card.addEventListener('click',()=>{window.open('/upsell-cigano/','_blank','noopener');});
+    }
     grid.appendChild(card);
   });
 }
@@ -792,8 +818,71 @@ function renderReader(m){
 }
 document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#tarot';route();window.scrollTo(0,0);});
 
+/* ---------- cigano view ---------- */
+async function renderCigano(moduleKey){
+  const title=CIGANO_ITEMS.find(m=>m.key===moduleKey)?.title||moduleKey;
+  const mapKey={'cigano-36cartas':'cigano-36cartas','cigano-dicionario':'cigano-dicionario','cigano-tiragens':'cigano-bonus-1','cigano-primeira':'cigano-bonus-2','cigano-flash':'cigano-bonus-3','cigano-perguntas':'cigano-bonus-4','cigano-mesa-real':'cigano-bonus-5'}[moduleKey];
+  if(!mapKey)return;
+  document.getElementById('cigano-title').textContent=title;
+  const mount=document.getElementById('cigano-mount');
+  mount.innerHTML='<p style="text-align:center;color:var(--ink-500);">Carregando…</p>';
+  try{
+    const r=await fetch('/painel/conteudo/'+mapKey+'/',{credentials:'same-origin'});
+    if(r.status===403){mount.innerHTML='<p style="text-align:center;color:var(--ink-500);">Acesso bloqueado. Verifique sua compra.</p>';return;}
+    if(!r.ok){mount.innerHTML='<p style="text-align:center;color:var(--ink-500);">Não foi possível carregar.</p>';return;}
+    let html=await r.text();
+    const parser=new DOMParser();
+    const doc=parser.parseFromString(html,'text/html');
+    const container=doc.querySelector('.container');
+    if(container){
+      const styles=doc.querySelectorAll('style');
+      let allStyles='';
+      styles.forEach(s=>{allStyles+=s.textContent;});
+      mount.innerHTML='<style scoped>'+allStyles+'</style>';
+      mount.appendChild(container.cloneNode(true));
+      const backLink=mount.querySelector('.back');
+      if(backLink)backLink.remove();
+    }else{
+      mount.innerHTML=html;
+    }
+  }catch(e){
+    mount.innerHTML='<p style="text-align:center;color:var(--ink-500);">Erro ao carregar módulo.</p>';
+    console.error(e);
+  }
+  document.getElementById('cigano-pdf-btn').style.display='block';
+}
+document.getElementById('cigano-back').addEventListener('click',()=>{location.hash='#cigano';route();window.scrollTo(0,0);});
+document.getElementById('cigano-pdf-btn').addEventListener('click',async function(){
+  const title=document.getElementById('cigano-title').textContent;
+  const moduleKey=location.hash.slice(12);
+  const mapKey={'cigano-36cartas':'cigano-36cartas','cigano-dicionario':'cigano-dicionario','cigano-tiragens':'cigano-bonus-1','cigano-primeira':'cigano-bonus-2','cigano-flash':'cigano-bonus-3','cigano-perguntas':'cigano-bonus-4','cigano-mesa-real':'cigano-bonus-5'}[moduleKey];
+  if(!mapKey)return;
+  this.disabled=true;
+  this.textContent='Gerando…';
+  try{
+    const r=await fetch('/painel/api/cigano-pdf/'+mapKey,{credentials:'same-origin'});
+    if(r.ok){
+      const blob=await r.blob();
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=mapKey+'.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+    }else{
+      alert('Erro ao gerar PDF');
+    }
+  }catch(e){
+    console.error(e);
+    alert('Erro ao gerar PDF');
+  }finally{
+    this.disabled=false;
+    this.textContent='📥 Baixar PDF';
+  }
+});
+
 /* ---------- router ---------- */
-function show(id){['view-login','view-hub','view-reader'].forEach(v=>{document.getElementById(v).classList.toggle('hidden',v!==id);});}
+function show(id){['view-login','view-hub','view-reader','view-cigano'].forEach(v=>{document.getElementById(v).classList.toggle('hidden',v!==id);});}
 function route(){
   const email=getEmail();
   const h=location.hash;
@@ -808,6 +897,12 @@ function route(){
     const owned=getOwned();
     if(m && !m.soon && (m.unlocked||owned.includes(sku))){show('view-reader');renderReader(m);return;}
     location.hash='#tarot';
+  }
+  if(h.startsWith('#cigano-ler/')){
+    const moduleKey=h.slice(11);
+    const owned=getOwned();
+    if(owned.includes('cigano')){show('view-cigano');renderCigano(moduleKey);return;}
+    location.hash='#hub';
   }
   renderHub();
   show('view-hub');
