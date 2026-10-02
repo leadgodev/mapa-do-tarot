@@ -38,8 +38,10 @@ const PRODUCT_SKUS = {
   cmubsk2bd023001pqtloo3zrz: ['perguntas-80'],
   cmubsl72o023t01pq3y1awjpj: ['folha-consulta'],
   cmubwg9a3052l01puaww8hmir: ['combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta'],
-  // TODO: id do produto Wiven do 'Baralho Cigano' ainda não existe (checkout não criado). Trocar aqui quando existir.
-  // '<PRODUCT_ID_WIVEN_CIGANO_TODO>': ['cigano'],
+  // Mapa do Baralho Cigano: principal e order bumps da página pública.
+  cmulz3f9a020701oo4fstsegf: ['cigano'],
+  cmurhf87201cu01q2wh0whdz0: ['cigano'], // Guia Flash 36 Cartas
+  cmurhgvnj01ff01q2jkkz4xx7: ['cigano'], // Perguntas que Destravam a Leitura
 };
 // Ofertas do produto principal que incluem o Nível Completo.
 const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW', 'G8MYTZF']);
