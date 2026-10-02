@@ -1,0 +1,86 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/lua/.overclock-app/soft-status.mjs",
+            "timeout": 5,
+            "statusMessage": "Overclock soft status"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/lua/.overclock-app/soft-status.mjs",
+            "timeout": 5,
+            "statusMessage": "Overclock soft status"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/lua/.overclock-app/soft-status.mjs",
+            "timeout": 5,
+            "statusMessage": "Overclock soft status"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/lua/.overclock-app/soft-status.mjs",
+            "timeout": 5,
+            "statusMessage": "Overclock soft status"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/lua/.overclock-app/soft-status.mjs",
+            "timeout": 5,
+            "statusMessage": "Overclock soft status"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/lua/.overclock-app/soft-status.mjs",
+            "timeout": 5,
+            "statusMessage": "Overclock soft status"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/lua/.overclock-app/handoff-deliver.mjs",
+            "timeout": 5,
+            "statusMessage": "Overclock handoff delivery"
+          }
+        ]
+      }
+    ]
+  }
+}

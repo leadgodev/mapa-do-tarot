@@ -1,0 +1,19 @@
+=== IC Gate (InitiateCheckout) — audit estático ===
+Origem: data-tk-value (Trackeador IC) + fbq('track','InitiateCheckout', ...) no painel
+
+index.html: 6 botões com data-tk-value
+pt/index.html: 6 botões com data-tk-value
+upsell-cigano/index.html: 8 botões com data-tk-value
+painel/index.html: 3 botões com data-tk-value
+
+--- fbq InitiateCheckout (painel dispara evento direto) ---
+painel/index.html:586:      if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Nível Completo · 56 Arcanos Menores',content_type:'product',value:memberPrice(27.90,'completo'),currency:'BRL'});}
+painel/index.html:678:    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Mapa do Baralho Cigano',content_type:'product',value:memberPrice(CIGANO_NORMAL),currency:'BRL'});}
+painel/index.html:725:    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:m.title,content_type:'product',value:memberPrice(m.normal,m.sku),currency:'BRL'});}
+painel/index-pt.html:626:    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:m.title,content_type:'product',value:memberPrice(m.normal,m.sku),currency:'EUR'});}
+
+--- html root data-tk-currency ---
+index.html: data-tk-currency="BRL"
+pt/index.html: data-tk-currency="EUR"
+upsell-cigano/index.html: data-tk-currency="BRL"
+painel/index.html: data-tk-currency="BRL"

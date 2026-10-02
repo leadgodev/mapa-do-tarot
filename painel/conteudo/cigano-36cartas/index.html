@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As 36 Cartas do Baralho Cigano — Mapa Visual</title>
+<style>
+:root {
+  --accent: #c86a3f;
+  --accent-press: #b5502a;
+  --paper: #f9f2e4;
+  --white: #fff;
+  --sky-100: #f1e2c4;
+  --sky-200: #ead2ab;
+  --sky-300: #e0b98c;
+  --ink-300: #a3907a;
+  --ink-500: #7a6650;
+  --ink-700: #4a3a2c;
+  --ink-900: #2b2018;
+  --border-soft: rgba(43, 32, 24, 0.12);
+  --border-strong: rgba(43, 32, 24, 0.32);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-head: 'Poppins', system-ui, sans-serif;
+  --font-body: 'Poppins', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--sky-300);
+  font-family: var(--font-body);
+  color: var(--ink-700);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(16px, 4vw, 40px);
+  background: rgba(250, 244, 234, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--ink-900);
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink-500);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.back-link:hover { color: var(--accent); }
+
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(26px, 4vw, 44px) clamp(16px, 4vw, 40px) 70px;
+}
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.hero h1 {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 36px);
+  color: var(--ink-900);
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+.hero p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-500);
+  margin: 0;
+}
+
+.cartas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+.carta-item {
+  background: var(--paper);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 22px;
+  transition: all 0.2s;
+}
+.carta-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(20, 36, 47, 0.14);
+  border-color: var(--accent);
+}
+.carta-numero {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+.carta-nome {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink-900);
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+.carta-nucleo {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.carta-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-500);
+  margin: 0 0 12px;
+}
+.carta-ajuda {
+  background: rgba(200, 106, 63, 0.08);
+  border-left: 3px solid var(--accent);
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-700);
+  margin: 12px 0 0;
+}
+.carta-ajuda strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.search-wrap {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.search-input {
+  width: 100%;
+  max-width: 380px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-900);
+  background: var(--paper);
+}
+.search-input::placeholder {
+  color: var(--ink-300);
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200, 106, 63, 0.18);
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">🃏 As 36 Cartas do Cigano</div>
+  <button class="back-link" onclick="window.history.back()">← Voltar</button>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Mapa Visual das 36 Cartas</h1>
+    <p>Estude carta a carta — tema central, quando ajuda, pontos de atenção e perguntas de estudo.</p>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search-input" placeholder="Buscar por nome ou número da carta…">
+  </div>
+
+  <div class="cartas-grid" id="cartas-grid"></div>
+</div>
+
+<script>
+const CARTAS = [
+  {num: 1, nome: 'Cavaleiro', nucleo: 'chegada, notícia, visita, movimento', desc: 'Chegada, notícia, visita, movimento.', ajuda: 'Algo começa a se aproximar; uma informação põe o assunto em movimento.', atencao: 'Rapidez não significa permanência nem confirmação.', pergunta: 'O que está chegando e como posso responder com presença?'},
+  {num: 2, nome: 'Trevo', nucleo: 'oportunidade pequena, acaso favorável, alívio breve', desc: 'Oportunidade pequena, acaso favorável, alívio breve.', ajuda: 'Surge uma abertura simples que vale aproveitar com leveza.', atencao: 'Oportunidade passageira pode exigir decisão prática.', pergunta: 'Qual pequena chance está disponível agora?'},
+  {num: 3, nome: 'Navio', nucleo: 'viagem, distância, expansão, comércio, mudança', desc: 'Viagem, distância, expansão, comércio, mudança de horizonte.', ajuda: 'O tema pede deslocamento, exploração ou visão de longo prazo.', atencao: 'Avanço pode ser gradual e envolver distância real ou emocional.', pergunta: 'Para onde quero levar esta situação?'},
+  {num: 4, nome: 'Casa', nucleo: 'lar, família, base, intimidade, segurança', desc: 'Lar, família, base, intimidade, segurança.', ajuda: 'Aponta para raízes, rotina e aquilo que sustenta.', atencao: 'Proteção pode virar fechamento ou repetição.', pergunta: 'Que base precisa de cuidado ou ajuste?'},
+  {num: 5, nome: 'Árvore', nucleo: 'crescimento lento, raízes, vitalidade, continuidade', desc: 'Crescimento lento, raízes, vitalidade, continuidade.', ajuda: 'Algo amadurece com tempo, constância e atenção ao contexto.', atencao: 'Não transforma esta carta em diagnóstico de saúde.', pergunta: 'O que precisa de tempo para criar raízes?'},
+  {num: 6, nome: 'Nuvens', nucleo: 'dúvida, confusão, oscilação, informação incompleta', desc: 'Dúvida, confusão, oscilação, informação incompleta.', ajuda: 'Reconhece que o cenário ainda não está claro.', atencao: 'Não conclua antes de obter fatos e conversar.', pergunta: 'Que informação falta para eu enxergar melhor?'},
+  {num: 7, nome: 'Cobra', nucleo: 'caminho sinuoso, estratégia, desejo, complicação', desc: 'Caminho sinuoso, estratégia, desejo, complicação.', ajuda: 'Pede inteligência, paciência e atenção às motivações envolvidas.', atencao: 'Não significa automaticamente traição ou maldade.', pergunta: 'Onde preciso agir com estratégia e limites?'},
+  {num: 8, nome: 'Caixão', nucleo: 'encerramento, pausa, conclusão, transformação', desc: 'Encerramento, pausa, conclusão, transformação.', ajuda: 'Algo chega ao fim ou precisa de repouso para mudar de forma.', atencao: 'Não anuncia morte física.', pergunta: 'O que já cumpriu seu ciclo?'},
+  {num: 9, nome: 'Buquê', nucleo: 'gentileza, convite, presente, prazer, reconhecimento', desc: 'Gentileza, convite, presente, prazer, reconhecimento.', ajuda: 'Há espaço para receber, agradecer e cultivar o que traz alegria.', atencao: 'Um gesto agradável não garante compromisso duradouro.', pergunta: 'Que gesto pode tornar esta situação mais leve?'},
+  {num: 10, nome: 'Foice', nucleo: 'corte, decisão rápida, colheita, separação', desc: 'Corte, decisão rápida, colheita, separação.', ajuda: 'Indica a necessidade de agir com precisão ou encerrar algo.', atencao: 'Considere consequências antes de agir por impulso.', pergunta: 'O que precisa ser cortado ou resolvido sem adiamento?'},
+  {num: 11, nome: 'Chicote', nucleo: 'repetição, debate, tensão, treino, confronto', desc: 'Repetição, debate, tensão, treino, confronto.', ajuda: 'Revela um padrão que retorna e pode ser trabalhado com disciplina.', atencao: 'Discussão recorrente não é prova de destino; observe limites e segurança.', pergunta: 'Qual ciclo de conflito está pedindo outra resposta?'},
+  {num: 12, nome: 'Pássaros', nucleo: 'conversa, troca rápida, nervosismo, duas vozes', desc: 'Conversa, troca rápida, nervosismo, duas vozes.', ajuda: 'Destaca diálogo, mensagens e a necessidade de organizar pensamentos.', atencao: 'Ruído e ansiedade podem distorcer o que foi dito.', pergunta: 'Qual conversa precisa de escuta e clareza?'},
+  {num: 13, nome: 'Criança', nucleo: 'começo, curiosidade, simplicidade, algo pequeno ou novo', desc: 'Começo, curiosidade, simplicidade, algo pequeno ou novo.', ajuda: 'Convida a experimentar e aprender sem exigir perfeição imediata.', atencao: 'Novidade ainda precisa de cuidado e desenvolvimento.', pergunta: 'Qual primeiro passo cabe no meu momento atual?'},
+  {num: 14, nome: 'Raposa', nucleo: 'trabalho, observação, cautela, estratégia prática', desc: 'Trabalho, observação, cautela, estratégia prática.', ajuda: 'Recomenda verificar detalhes, proteger recursos e agir com inteligência.', atencao: 'Cautela não equivale a acusar alguém sem evidência.', pergunta: 'Que detalhe concreto devo conferir antes de avançar?'},
+  {num: 15, nome: 'Urso', nucleo: 'força, proteção, autoridade, recursos, influência', desc: 'Força, proteção, autoridade, recursos, influência.', ajuda: 'Aponta para poder de sustentação, liderança ou gestão material.', atencao: 'Proteção pode se tornar controle.', pergunta: 'Como usar minha força sem sufocar o espaço alheio?'},
+  {num: 16, nome: 'Estrelas', nucleo: 'orientação, inspiração, esperança, visão ampla', desc: 'Orientação, inspiração, esperança, visão ampla.', ajuda: 'Ajuda a reencontrar direção e alinhar ações a um objetivo.', atencao: 'Inspiração precisa de passos concretos.', pergunta: 'Qual direção faz sentido para mim?'},
+  {num: 17, nome: 'Cegonha', nucleo: 'mudança, transição, melhoria, deslocamento de fase', desc: 'Mudança, transição, melhoria, deslocamento de fase.', ajuda: 'Mostra movimento de uma condição para outra.', atencao: 'Mudança pede adaptação e não garante que tudo melhore sozinho.', pergunta: 'O que está mudando e como posso acompanhar essa mudança?'},
+  {num: 18, nome: 'Cão', nucleo: 'amizade, lealdade, apoio, confiança construída', desc: 'Amizade, lealdade, apoio, confiança construída.', ajuda: 'Destaca parceria confiável ou a importância de pedir ajuda.', atencao: 'Confiança saudável se apoia em atitudes observáveis.', pergunta: 'Quem tem demonstrado presença de forma consistente?'},
+  {num: 19, nome: 'Torre', nucleo: 'instituição, autonomia, distância, estrutura formal', desc: 'Instituição, autonomia, distância, estrutura formal.', ajuda: 'Pede perspectiva, limites ou contato com regras e organizações.', atencao: 'Autonomia pode virar isolamento.', pergunta: 'Qual limite ou estrutura preciso compreender?'},
+  {num: 20, nome: 'Jardim', nucleo: 'grupo, vida pública, encontro, rede, comunidade', desc: 'Grupo, vida pública, encontro, rede, comunidade.', ajuda: 'O assunto passa por circulação social, evento ou exposição.', atencao: 'Opinião pública não define o valor de uma escolha íntima.', pergunta: 'Que rede ou espaço coletivo influencia esta questão?'},
+  {num: 21, nome: 'Montanha', nucleo: 'obstáculo, demora, resistência, distância', desc: 'Obstáculo, demora, resistência, distância.', ajuda: 'Reconhece a barreira e convida a planejar com persistência.', atencao: 'Insistir sem estratégia pode aumentar o desgaste.', pergunta: 'Qual obstáculo é real e qual rota alternativa existe?'},
+  {num: 22, nome: 'Caminhos', nucleo: 'escolha, bifurcação, alternativas, decisão', desc: 'Escolha, bifurcação, alternativas, decisão.', ajuda: 'Mostra que mais de uma direção está disponível.', atencao: 'Adiar também é uma escolha e tem efeitos.', pergunta: 'Quais critérios importam para escolher?'},
+  {num: 23, nome: 'Ratos', nucleo: 'desgaste, perda gradual, preocupação, consumido aos poucos', desc: 'Desgaste, perda gradual, preocupação, consumido aos poucos.', ajuda: 'Localiza um vazamento de tempo, energia ou recursos.', atencao: 'Não alimente medo; procure sinais concretos e cuide do que é possível.', pergunta: 'O que está me desgastando e pode ser reduzido?'},
+  {num: 24, nome: 'Coração', nucleo: 'afeto, vínculo, prazer, interesse sincero', desc: 'Afeto, vínculo, prazer, interesse sincero.', ajuda: 'Ilumina aquilo que importa emocionalmente.', atencao: 'Sentimento não substitui reciprocidade, consentimento ou compatibilidade.', pergunta: 'O que sinto e que atitude respeita a mim e à outra pessoa?'},
+  {num: 25, nome: 'Anel', nucleo: 'acordo, compromisso, vínculo, repetição, contrato', desc: 'Acordo, compromisso, vínculo, repetição, contrato.', ajuda: 'Chama atenção para combinados e ciclos que se renovam.', atencao: 'Confirme termos e responsabilidades no mundo concreto.', pergunta: 'Que compromisso está sendo assumido ou repetido?'},
+  {num: 26, nome: 'Livro', nucleo: 'estudo, conhecimento reservado, informação desconhecida', desc: 'Estudo, conhecimento reservado, informação desconhecida.', ajuda: 'Aponta para pesquisa, aprendizado ou assunto que pede discrição.', atencao: 'Desconhecido não significa segredo prejudicial.', pergunta: 'O que preciso aprender ou verificar primeiro?'},
+  {num: 27, nome: 'Carta', nucleo: 'documento, mensagem escrita, registro, comunicação formal', desc: 'Documento, mensagem escrita, registro, comunicação formal.', ajuda: 'Recomenda consultar mensagens, papéis e dados objetivos.', atencao: 'Leia o conteúdo inteiro antes de tirar conclusões.', pergunta: 'Que informação registrada esclarece este assunto?'},
+  {num: 28, nome: 'Homem', nucleo: 'pessoa significadora, figura masculina ou papel ativo', desc: 'Pessoa significadora, figura masculina ou papel ativo definido pela pergunta.', ajuda: 'Representa o consulente ou alguém relevante conforme o contexto.', atencao: 'Gênero da carta não determina identidade, caráter ou intenção.', pergunta: 'Quem ocupa este papel na pergunta e por quê?'},
+  {num: 29, nome: 'Mulher', nucleo: 'pessoa significadora, figura feminina ou papel receptivo', desc: 'Pessoa significadora, figura feminina ou papel receptivo definido pela pergunta.', ajuda: 'Representa o consulente ou alguém relevante conforme o contexto.', atencao: 'Gênero da carta não determina identidade, caráter ou intenção.', pergunta: 'Quem ocupa este papel na pergunta e por quê?'},
+  {num: 30, nome: 'Lírios', nucleo: 'serenidade, maturidade, harmonia, experiência, intimidade', desc: 'Serenidade, maturidade, harmonia, experiência, intimidade.', ajuda: 'Convida a agir com calma, ética e visão madura.', atencao: 'Paz aparente não deve esconder assunto que precisa ser conversado.', pergunta: 'Como responder com maturidade e respeito?'},
+  {num: 31, nome: 'Sol', nucleo: 'clareza, vitalidade, êxito, visibilidade, confiança', desc: 'Clareza, vitalidade, êxito, visibilidade, confiança.', ajuda: 'Evidencia recursos e condições favoráveis para avançar.', atencao: 'Confiança funciona melhor junto de preparo.', pergunta: 'O que já está claro e pode ser colocado em prática?'},
+  {num: 32, nome: 'Lua', nucleo: 'emoções, imaginação, reconhecimento, ciclos, sensibilidade', desc: 'Emoções, imaginação, reconhecimento, ciclos, sensibilidade.', ajuda: 'Torna visíveis sentimentos e necessidades de reconhecimento.', atencao: 'Emoção é informação, mas não é prova de fato externo.', pergunta: 'Que sentimento precisa ser reconhecido e nomeado?'},
+  {num: 33, nome: 'Chave', nucleo: 'solução, acesso, importância, abertura, resposta decisiva', desc: 'Solução, acesso, importância, abertura, resposta decisiva.', ajuda: 'Sinaliza um ponto que pode destravar a questão.', atencao: 'A solução pode depender de uma atitude prática.', pergunta: 'Qual ação abre a próxima porta?'},
+  {num: 34, nome: 'Peixes', nucleo: 'dinheiro, fluxo, negócios, autonomia material, abundância', desc: 'Dinheiro, fluxo, negócios, autonomia material, abundância.', ajuda: 'Direciona a atenção a trocas, renda e circulação de recursos.', atencao: 'Não use a carta como recomendação de investimento.', pergunta: 'Como está o fluxo de recursos nesta situação?'},
+  {num: 35, nome: 'Âncora', nucleo: 'estabilidade, persistência, trabalho, segurança, permanência', desc: 'Estabilidade, persistência, trabalho, segurança, permanência.', ajuda: 'Mostra o que sustenta e o que pode ser consolidado.', atencao: 'Estabilidade pode virar apego ao que já não funciona.', pergunta: 'O que vale manter e o que virou imobilidade?'},
+  {num: 36, nome: 'Cruz', nucleo: 'responsabilidade, peso, prova, sentido, algo difícil de carregar', desc: 'Responsabilidade, peso, prova, sentido, algo difícil de carregar.', ajuda: 'Reconhece uma carga importante e convida a buscar apoio e significado.', atencao: 'Não significa punição ou sofrimento inevitável.', pergunta: 'Que responsabilidade é minha e que apoio posso procurar?'}
+];
+
+const grid = document.getElementById('cartas-grid');
+const searchInput = document.getElementById('search-input');
+
+function renderCartas(cartas) {
+  grid.innerHTML = '';
+  cartas.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'carta-item';
+    div.innerHTML = `
+      <div class="carta-numero">${c.num}</div>
+      <div class="carta-nome">${c.nome}</div>
+      <div class="carta-nucleo">${c.nucleo}</div>
+      <div class="carta-desc">${c.desc}</div>
+      <div class="carta-ajuda">
+        <strong>Quando ajuda:</strong> ${c.ajuda}
+      </div>
+      <div class="carta-ajuda" style="margin-top: 8px; border-left-color: #a3907a; background: rgba(163, 144, 122, 0.06);">
+        <strong style="color: #7a6650;">Atenção:</strong> ${c.atencao}
+      </div>
+      <div class="carta-ajuda" style="margin-top: 8px; border-left-color: #7a6650; background: rgba(122, 102, 80, 0.06);">
+        <strong style="color: #4a3a2c;">Pergunta de estudo:</strong> ${c.pergunta}
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+searchInput.addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  const filtered = CARTAS.filter(c =>
+    c.nome.toLowerCase().includes(q) ||
+    c.nucleo.toLowerCase().includes(q) ||
+    c.num.toString().includes(q)
+  );
+  renderCartas(filtered);
+});
+
+renderCartas(CARTAS);
+</script>
+</body>
+</html>

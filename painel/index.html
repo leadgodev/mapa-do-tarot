@@ -350,6 +350,7 @@
   <div class="reader-bar">
     <button type="button" class="back" id="reader-back" style="border:0;background:none;padding:8px 0;touch-action:manipulation;">← Voltar</button>
     <h2 id="reader-title"></h2>
+    <button type="button" id="reader-pdf-btn" style="margin-left:auto;border:0;background:none;cursor:pointer;color:var(--accent);font-weight:600;font-size:13px;padding:8px 16px;touch-action:manipulation;">📥 Baixar PDF / Imprimir</button>
   </div>
   <div class="reader-pages" id="reader-pages"></div>
 </div>
@@ -754,6 +755,24 @@ function openModal(sku){
 function closeModal(){document.getElementById('modal-mount').innerHTML='';}
 
 /* ---------- reader ---------- */
+function downloadPDF(sku){
+  const title=(MODULES.find(m=>m.sku===sku)||{}).title||sku;
+  fetch(`/painel/api/modulo-pdf/${sku}`).then(r=>{
+    if(!r.ok)throw new Error('pdf-fetch-failed');
+    return r.blob().then(blob=>{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=`Mapa do Tarot - ${title}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }).catch(()=>{
+    window.print();
+  });
+}
 function openReader(sku){
   location.hash='#ler/'+sku;
   route();
@@ -785,28 +804,19 @@ function renderReader(m){
     retry.type='button';
     retry.className='btn btn-ghost hidden';
     retry.textContent='Tentar novamente';
-    const direct=document.createElement('a');
-    direct.href=assetUrl(path);
-    direct.target='_blank';
-    direct.rel='noopener';
-    direct.className='hidden';
-    direct.textContent='Abrir imagem diretamente';
     img.onload=()=>{status.classList.add('hidden');};
     img.onerror=()=>{
       status.classList.remove('hidden');
       message.textContent='Não foi possível carregar a página '+(i+1)+'. Verifique sua conexão e tente novamente.';
       retry.classList.remove('hidden');
-      direct.classList.remove('hidden');
     };
     retry.addEventListener('click',()=>{
       message.textContent='Carregando página '+(i+1)+'…';
       retry.classList.add('hidden');
-      direct.classList.add('hidden');
       img.src=assetUrl(path)+'&retry='+Date.now();
     });
     status.appendChild(message);
     status.appendChild(retry);
-    status.appendChild(direct);
     page.appendChild(img);
     page.appendChild(status);
     pages.appendChild(page);
@@ -817,6 +827,10 @@ function renderReader(m){
   if(m.partial){const title=m.partialTitle||'Arcanos 4–21 · Em atualização ✨';const t=document.createElement('div');t.style.cssText='text-align:center;padding:32px 20px;margin-top:8px;border:1.5px dashed var(--ink-500);border-radius:12px;color:var(--ink-500);';t.innerHTML='<p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 8px;">'+title+'</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Os demais arcanos entram aqui assim que forem publicados — sem custo extra.</p>';pages.appendChild(t);}
 }
 document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#tarot';route();window.scrollTo(0,0);});
+document.getElementById('reader-pdf-btn').addEventListener('click',function(){
+  const sku=document.getElementById('reader-pages').dataset.sku;
+  if(sku)downloadPDF(sku);
+});
 
 /* ---------- cigano view ---------- */
 async function renderCigano(moduleKey){

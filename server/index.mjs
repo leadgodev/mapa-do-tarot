@@ -258,27 +258,36 @@ http.createServer(async (req, res) => {
       }
       return json(res, 405, { error: 'method' });
     }
-    if (p.startsWith('/painel/api/cigano-pdf/')) {
-      const m = /^\/painel\/api\/cigano-pdf\/([^/]+)$/.exec(p);
+    if (p.startsWith('/painel/api/modulo-pdf/')) {
+      const m = /^\/painel\/api\/modulo-pdf\/([^/]+)$/.exec(p);
       if (!m) return json(res, 404, { error: 'not-found' });
       const email = cookieEmail(req);
       const o = email && owned(email);
-      if (!o || !o.includes('cigano')) return json(res, 403, { error: 'forbidden' });
-      const moduleKey = m[1];
-      const pdfPath = path.join(ROOT, 'painel', 'conteudo', moduleKey, moduleKey + '.pdf');
-      // Se PDF já existe, serve
+      const sku = m[1];
+      const skuToCheck = sku.startsWith('cigano-') || sku === 'cigano' ? 'cigano' : sku;
+      if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
+      const pdfPath = path.join(ROOT, 'painel', 'conteudo', sku, sku + '.pdf');
       if (fs.existsSync(pdfPath)) {
         const st = fs.statSync(pdfPath);
         return res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' }), fs.createReadStream(pdfPath).pipe(res);
       }
-      // Caso contrário, gera on-demand
-      generatePDF(moduleKey, pdfPath, (err) => {
-        if (err) return json(res, 500, { error: 'pdf-generation-failed' });
-        const st = fs.statSync(pdfPath);
-        res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' });
-        fs.createReadStream(pdfPath).pipe(res);
-      });
-      return;
+      if (sku.startsWith('cigano-')) {
+        generatePDF(sku, pdfPath, (err) => {
+          if (err) return json(res, 500, { error: 'pdf-generation-failed' });
+          const st = fs.statSync(pdfPath);
+          res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' });
+          fs.createReadStream(pdfPath).pipe(res);
+        });
+        return;
+      }
+      return json(res, 404, { error: 'pdf-not-found' });
+    }
+    // Compatibilidade: /painel/api/cigano-pdf/* redireciona para /painel/api/modulo-pdf/*
+    if (p.startsWith('/painel/api/cigano-pdf/')) {
+      const m = /^\/painel\/api\/cigano-pdf\/(.+)$/.exec(p);
+      if (!m) return json(res, 404, { error: 'not-found' });
+      res.writeHead(301, { location: '/painel/api/modulo-pdf/' + m[1] });
+      return res.end();
     }
     if (p.startsWith('/painel/api/')) return json(res, 404, { error: 'not-found' });
     if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { error: 'method' });

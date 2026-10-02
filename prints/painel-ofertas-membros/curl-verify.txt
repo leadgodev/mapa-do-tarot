@@ -1,0 +1,34 @@
+=== Painel ofertas-membro — verificação no ar ===
+Data: 2026-09-30T15:38:01Z
+URL base: https://mapadotarot.leadgo.dev
+
+--- Commits deployados ---
+b74e5fd Dockerfile: copia /js/* pro container (shim checkout-membros.js)
+5070bc1 serveStatic: libera /js/* (shim checkout-membros.js)
+bd6dd8d Painel ofertas-membro: shim CHECKOUT_MEMBROS (URLs do pane Wiven)
+613b980 Corrige Bônus 1 PT: pages[] travava na pág.10 (arquivo inexistente)
+ffc6442 Painel: publica bônus 1 completo, bônus 4, 80 perguntas, folha de consulta e guia flash (20 páginas) + combo 3 bônus
+
+--- GET /painel/ ---
+HTTP/2 200 
+alt-svc: h3=":443"; ma=2592000
+cache-control: public, max-age=300
+
+--- GET /js/checkout-membros.js ---
+code=200 size=7458 ct=text/javascript
+
+--- POST /painel/api/login (teste-4423c38c@leadgo.dev) ---
+{"ok":true,"owned":["principal","bonus-1","bonus-2","bonus-3","bonus-4","completo","guia-flash","perguntas-80","folha-consulta","combo-3-bonus","cigano"]}
+
+--- GET /painel/api/me ---
+{"ok":true,"email":"teste-4423c38c@leadgo.dev","owned":["principal","bonus-1","bonus-2","bonus-3","bonus-4","completo","guia-flash","perguntas-80","folha-consulta","combo-3-bonus","cigano"]}
+
+--- GET /pt/ ---
+HTTP/2 200 
+alt-svc: h3=":443"; ma=2592000
+cache-control: public, max-age=300
+
+--- GET /upsell-cigano/ ---
+HTTP/2 200 
+alt-svc: h3=":443"; ma=2592000
+cache-control: public, max-age=300
