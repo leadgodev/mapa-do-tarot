@@ -143,6 +143,7 @@ const MUNDPAY_NAME_SKUS = [
   [/oferta especial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
   [/completo/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
   [/essencial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
+  [/b[aá]sico.*(es|spanish|español)?/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
 ];
 function handleMundpayWebhook(payload) {
   const paid = String(payload.status || '').toLowerCase() === 'paid' || /\.paid$/i.test(String(payload.event_type || ''));
@@ -153,20 +154,25 @@ function handleMundpayWebhook(payload) {
   const txKey = 'mundpay:' + txId;
   if (db.tx[txKey]) return { code: 200, body: { ok: true, duplicate: true } };
   const skus = new Set();
+  let lang = null;
   for (const offer of (payload.offers || [])) {
     const name = String(offer.name || (offer.product || {}).name || '');
+    if (/\s-\s(ES|es|Spanish|spanish|Español|español)$/i.test(name)) lang = 'es';
     for (const [re, mapped] of MUNDPAY_NAME_SKUS) {
       if (re.test(name)) { mapped.forEach((s) => skus.add(s)); break; }
     }
   }
+  if (String(payload.currency || '').toUpperCase() === 'USD') lang = 'es';
   if (!skus.size) return { code: 200, body: { ok: true, ignored: 'no-known-offer' } };
   const b = db.buyers[email] || { skus: [], name: (payload.customer || {}).name || '' };
+  if (lang) b.lang = lang;
+  else if (!b.lang) b.lang = 'pt';
   const novos = [...skus].filter((s) => !b.skus.includes(s));
   b.skus = [...new Set([...b.skus, ...skus])];
   db.buyers[email] = b;
   db.tx[txKey] = true;
   save();
-  if (novos.length) sendAccessEmail(email, b.name, [...skus]).then((id) => console.log('access-email sent (mundpay)', id), (e) => console.error('access-email failed (mundpay)', e.message));
+  if (novos.length) sendAccessEmail(email, b.name, [...skus], b.lang).then((id) => console.log('access-email sent (mundpay)', id), (e) => console.error('access-email failed (mundpay)', e.message));
   return { code: 200, body: { ok: true, granted: [...skus] } };
 }
 
@@ -175,19 +181,29 @@ const MIME = { '.html': 'text/html; charset=utf-8', '.jpg': 'image/jpeg', '.jpeg
 function serveStatic(req, res, pathname) {
   let rel = decodeURIComponent(pathname);
   if (rel.endsWith('/')) rel += 'index.html';
-  if (rel === '/painel') rel = '/painel/index.html';
-  if (rel === '/pt') rel = '/pt/index.html';
+  if (rel === '/es' || rel === '/es/') rel = '/es/index.html';
+  if (rel === '/es/termos') rel = '/es/termos.html';
+  if (rel === '/es/privacidade') rel = '/es/privacidade.html';
+  if (rel === '/painel' || rel === '/painel/index.html') rel = '/painel/index.html';
+  if (rel === '/pt' || rel === '/pt/') rel = '/pt/index.html';
   if (rel === '/termos' || rel === '/pt/termos') rel = '/termos.html';
   if (rel === '/privacidade' || rel === '/pt/privacidade') rel = '/privacidade.html';
   if (rel === '/pt/painel' || rel === '/pt/painel/index.html') rel = '/painel/index-pt.html';
+  if (rel === '/es/painel' || rel === '/es/painel/index.html') rel = '/painel/index-es.html';
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
-  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || top === 'assets' || top === 'painel' || top === 'upsell-cigano' || top === 'js')) return json(res, 404, { error: 'not-found' });
+  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || top === 'upsell-cigano' || top === 'js')) return json(res, 404, { error: 'not-found' });
   // conteúdo pago: exige sessão + ownership do SKU
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
+  const mEs = /^\/painel\/conteudo-es\/([^/]+)\//.exec(rel);
   if (m) {
     const o = owned(cookieEmail(req) || '');
     const skuToCheck = m[1].startsWith('cigano-') || m[1] === 'cigano' ? 'cigano' : m[1];
+    if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
+  }
+  if (mEs) {
+    const o = owned(cookieEmail(req) || '');
+    const skuToCheck = mEs[1].startsWith('cigano-') || mEs[1] === 'cigano' ? 'cigano' : mEs[1];
     if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
   }
   // App de Treino: bônus exclusivo do Nível Completo (SKU 'completo').
@@ -199,8 +215,20 @@ function serveStatic(req, res, pathname) {
     }
   }
   fs.stat(abs, (err, st) => {
-    if (err || !st.isFile()) return json(res, 404, { error: 'not-found' });
-    res.writeHead(200, { 'content-type': MIME[path.extname(abs)] || 'application/octet-stream', 'content-length': st.size, 'cache-control': m ? 'private, max-age=3600' : 'public, max-age=300' });
+    if (err || !st.isFile()) {
+      // fallback para imagens ES de conteudo-es que podem estar em assets/ da raiz
+      if (rel.startsWith('/painel/conteudo-es/')) {
+        const fallbackRel = rel.replace(/^\/painel\/conteudo-es\/[^/]+\//, '/assets/');
+        const fallbackAbs = path.join(ROOT, fallbackRel);
+        if (fallbackAbs.startsWith(ROOT + path.sep) && fs.existsSync(fallbackAbs)) {
+          const fst = fs.statSync(fallbackAbs);
+          res.writeHead(200, { 'content-type': MIME[path.extname(fallbackAbs)] || 'application/octet-stream', 'content-length': fst.size, 'cache-control': 'private, max-age=3600' });
+          return fs.createReadStream(fallbackAbs).pipe(res);
+        }
+      }
+      return json(res, 404, { error: 'not-found' });
+    }
+    res.writeHead(200, { 'content-type': MIME[path.extname(abs)] || 'application/octet-stream', 'content-length': st.size, 'cache-control': (m || mEs) ? 'private, max-age=3600' : 'public, max-age=300' });
     fs.createReadStream(abs).pipe(res);
   });
 }
@@ -236,12 +264,15 @@ http.createServer(async (req, res) => {
       const email = String(b.email || '').trim().toLowerCase();
       const o = owned(email);
       if (!o) return json(res, 404, { error: 'not-found' });
-      return json(res, 200, { ok: true, owned: o }, { 'set-cookie': `mdt_s=${makeCookie(email)}; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=${SESSION_TTL}` });
+      const lang = db.buyers[email]?.lang || 'pt';
+      return json(res, 200, { ok: true, owned: o, lang }, { 'set-cookie': `mdt_s=${makeCookie(email)}; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=${SESSION_TTL}` });
     }
     if (p === '/painel/api/me') {
       const email = cookieEmail(req);
       const o = email && owned(email);
-      return o ? json(res, 200, { ok: true, email, owned: o }) : json(res, 401, { error: 'no-session' });
+      if (!o) return json(res, 401, { error: 'no-session' });
+      const lang = db.buyers[email]?.lang || 'pt';
+      return json(res, 200, { ok: true, email, owned: o, lang });
     }
     if (p === '/painel/api/logout') return json(res, 200, { ok: true }, { 'set-cookie': 'mdt_s=; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=0' });
     if (p === '/painel/api/treino/progresso') {
@@ -289,8 +320,49 @@ http.createServer(async (req, res) => {
       res.writeHead(301, { location: '/painel/api/modulo-pdf/' + m[1] });
       return res.end();
     }
+    if (p === '/painel/api/conteudo-es/manifest') {
+      const email = cookieEmail(req);
+      if (!email) return json(res, 401, { error: 'no-session' });
+      const owned_skus = owned(email);
+      if (!owned_skus) return json(res, 403, { error: 'forbidden' });
+      const manifest = {};
+      for (const sku of owned_skus) {
+        const dir = path.join(ROOT, 'painel', 'conteudo-es', sku);
+        try {
+          if (fs.existsSync(dir)) {
+            manifest[sku] = fs.readdirSync(dir).filter((f) => f.endsWith('.jpg')).sort();
+          } else {
+            manifest[sku] = [];
+          }
+        } catch {
+          manifest[sku] = [];
+        }
+      }
+      return json(res, 200, { ok: true, manifest });
+    }
     if (p.startsWith('/painel/api/')) return json(res, 404, { error: 'not-found' });
     if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { error: 'method' });
+    // Language selection for panel: query lang > cookie mdt_lang > buyer's lang > Accept-Language > /es/painel -> es > pt
+    if (p === '/painel' || p === '/painel/index.html' || p === '/pt/painel' || p === '/pt/painel/index.html' || p === '/es/painel' || p === '/es/painel/index.html') {
+      const urlLang = url.searchParams.get('lang');
+      let lang = urlLang || null;
+      const m_lang = /(?:^|;\s*)mdt_lang=([^;]+)/.exec(req.headers.cookie || '');
+      if (!lang && m_lang) lang = m_lang[1];
+      const email = cookieEmail(req);
+      if (!lang && email && db.buyers[email]) lang = db.buyers[email].lang;
+      if (!lang) {
+        const alang = (req.headers['accept-language'] || '').split(',')[0];
+        if (alang.startsWith('es')) lang = 'es';
+      }
+      if (!lang) lang = (p.startsWith('/es') ? 'es' : 'pt');
+      if (urlLang) {
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'set-cookie': `mdt_lang=${lang}; Path=/; Max-Age=31536000` });
+      } else {
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
+      }
+      const file = lang === 'es' ? 'painel/index-es.html' : 'painel/index-pt.html';
+      return fs.createReadStream(path.join(ROOT, file)).pipe(res);
+    }
     serveStatic(req, res, p);
   } catch (e) {
     console.error('erro', e.message);

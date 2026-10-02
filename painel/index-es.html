@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es" data-tk-currency="USD">
+<head>
+<meta charset="UTF-8">
+<base href="/painel/">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, max-age=0, must-revalidate">
+<title>Mapa del Tarot — Área de Miembros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream-100:#f7efe2; --cream-200:#f0e5d3; --paper:#faf4ea; --white:#fff;
+    --violet-200:#d9c2ff; --violet-400:#a668ff; --violet-500:#8b3ff0; --violet-600:#6d28d9;
+    --sky-100:#e7ddf3; --sky-200:#d4c4e8; --sky-300:#bda6db;
+    --ink-300:#6a8089; --ink-500:#34505d; --ink-700:#1b3340; --ink-900:#14242f;
+    --accent:var(--violet-500); --accent-press:var(--violet-600);
+    --border-soft:rgba(20,36,47,.12); --border-strong:rgba(20,36,47,.28);
+    --shadow-sm:0 2px 10px rgba(20,36,47,.08);
+    --shadow-md:0 10px 26px rgba(20,36,47,.14);
+    --shadow-lg:0 20px 50px rgba(20,36,47,.20);
+    --font-display:'Cormorant Garamond',Georgia,serif;
+    --font-head:'Poppins',system-ui,sans-serif;
+    --font-body:'Poppins',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--sky-300); font-family:var(--font-body); color:var(--ink-700); -webkit-font-smoothing:antialiased; min-height:100vh;}
+  a{text-decoration:none;color:inherit;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-radius:999px;cursor:pointer;transition:transform .18s,background .18s,box-shadow .18s;border:none;line-height:1.1;padding:15px 30px;font-size:14px;}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 10px 24px rgba(139,63,240,.32);}
+  .btn-primary:hover{background:var(--accent-press);transform:translateY(-2px);}
+  .btn-ghost{background:transparent;color:var(--ink-500);border:2px solid var(--border-strong);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .hidden{display:none !important;}
+
+  /* ===== TOPBAR ===== */
+  .topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,40px);background:rgba(250,244,234,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-soft);}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:17px;color:var(--ink-900);}
+  .brand .star{color:var(--accent);font-size:19px;}
+  .topbar-right{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--ink-500);}
+  .topbar-right a.support{font-weight:600;}
+  .logout{font-family:var(--font-head);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-500);cursor:pointer;border:1px solid var(--border-strong);border-radius:999px;padding:8px 16px;background:transparent;}
+  .logout:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* ===== LOGIN ===== */
+  #view-login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .login-card{width:100%;max-width:430px;background:var(--paper);border-radius:20px;box-shadow:var(--shadow-lg);padding:clamp(30px,5vw,46px);text-align:center;border:1px solid var(--border-soft);}
+  .login-card .star{font-size:30px;color:var(--accent);}
+  .login-card h1{font-family:var(--font-head);font-weight:800;font-size:26px;color:var(--ink-900);margin:14px 0 6px;}
+  .login-card p{font-size:15px;line-height:1.55;color:var(--ink-500);margin:0 0 26px;}
+  .field{text-align:left;margin-bottom:18px;}
+  .field label{display:block;font-family:var(--font-head);font-weight:600;font-size:13px;color:var(--ink-700);margin-bottom:7px;}
+  .field input{width:100%;padding:15px 16px;border-radius:12px;border:1.5px solid var(--border-strong);font-family:var(--font-body);font-size:15px;background:var(--white);color:var(--ink-900);}
+  .field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,63,240,.18);}
+  .login-err{color:#b3261e;font-size:13px;font-weight:600;margin:-8px 0 14px;min-height:18px;}
+  .login-note{margin-top:20px;font-size:12.5px;color:var(--ink-300);line-height:1.5;}
+
+  /* ===== HERO ===== */
+  .hero{position:relative;height:15rem;background:linear-gradient(120deg,#3b1a6b,#8b3ff0 60%,#a668ff);overflow:hidden;display:flex;align-items:flex-end;}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 20%,rgba(255,255,255,.35),transparent 45%);pointer-events:none;}
+  .hero .grad{position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(to top,var(--sky-300),transparent);}
+  .hero-inner{position:relative;z-index:2;padding:0 clamp(16px,4vw,40px) 22px;max-width:1180px;margin:0 auto;width:100%;}
+  .hero-inner .eyebrow{font-family:var(--font-head);font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.85);margin:0 0 6px;}
+  .hero-inner h2{font-family:var(--font-head);font-weight:800;font-size:clamp(24px,3.4vw,36px);color:#fff;margin:0;line-height:1.1;text-shadow:0 2px 20px rgba(0,0,0,.25);}
+
+  /* ===== GRID ===== */
+  .wrap{max-width:1180px;margin:0 auto;padding:clamp(26px,4vw,44px) clamp(16px,4vw,40px) 70px;}
+  .section-title{font-family:var(--font-head);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-500);margin:0 0 4px;}
+  .section-sub{font-size:14px;color:var(--ink-300);margin:0 0 20px;}
+  .grid{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:18px;padding-bottom:10px;scroll-snap-type:x mandatory;justify-content:flex-start;}
+  @media(min-width:820px){.grid{flex-wrap:wrap;overflow:visible;justify-content:flex-start;scroll-snap-type:none;}}
+  .card{width:210px;flex:none;scroll-snap-align:start;background:var(--paper);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--border-soft);cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+  .card .cover{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:var(--sky-200);}
+  .card .cover img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card.locked .cover img{filter:grayscale(1) brightness(.82);opacity:.72;}
+  .card .lock-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(20,36,47,.28);}
+  .card .lock-ov svg{width:38px;height:38px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));}
+  .badge{position:absolute;top:10px;left:10px;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.03em;padding:5px 10px;border-radius:999px;text-transform:uppercase;}
+  .badge-free{background:var(--accent);color:#fff;}
+  .badge-price{background:var(--ink-900);color:#fff;}
+  .badge-partial{display:inline-block;align-self:flex-start;margin-top:8px;font-family:var(--font-head);font-weight:700;font-size:11px;padding:4px 10px;border-radius:999px;background:var(--sky-200);color:var(--ink-700);}
+  .badge-soon{background:var(--sky-200);color:var(--ink-700);}
+  .card .body{padding:14px 15px 17px;display:flex;flex-direction:column;gap:4px;flex:1;}
+  .card .body h3{font-family:var(--font-head);font-weight:700;font-size:15px;color:var(--ink-900);margin:0;line-height:1.2;}
+  .card .body p{font-size:12.5px;color:var(--ink-300);margin:0;line-height:1.4;}
+  .card .body .cta{margin-top:auto;padding-top:10px;font-family:var(--font-head);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);}
+  .card.locked .body .cta{color:var(--ink-500);}
+  button.card{padding:0;text-align:left;font:inherit;color:inherit;touch-action:manipulation;}
+  .card:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  .card .body .card-title{font-family:var(--font-head);font-weight:700;font-size:15px;color:var(--ink-900);line-height:1.2;}
+  .card .body .card-subtitle{font-size:12.5px;color:var(--ink-300);line-height:1.4;}
+
+  /* ===== MODAL ===== */
+  .modal-bg{position:fixed;inset:0;z-index:100;background:rgba(20,36,47,.55);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;}
+  .modal{width:100%;max-width:440px;background:var(--paper);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;}
+  .modal .m-cover{height:150px;background-size:cover;background-position:center;position:relative;}
+  .modal .m-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--paper),transparent 70%);}
+  .modal .m-body{padding:8px 26px 28px;text-align:center;}
+  .modal h3{font-family:var(--font-head);font-weight:800;font-size:22px;color:var(--ink-900);margin:0 0 10px;}
+  .modal p{font-size:14.5px;line-height:1.55;color:var(--ink-500);margin:0 0 18px;}
+  .modal .price{font-family:var(--font-head);font-weight:800;font-size:30px;color:var(--accent);margin:0 0 4px;}
+  .modal .price small{font-size:14px;color:var(--ink-300);font-weight:600;}
+  .modal .m-close{margin-top:14px;font-size:13px;color:var(--ink-300);cursor:pointer;}
+  .modal .m-close:hover{color:var(--ink-700);}
+
+  /* ===== READER ===== */
+  #view-reader{min-height:100vh;}
+  .reader-bar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;padding:12px clamp(16px,4vw,40px);background:rgba(250,244,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border-soft);}
+  .reader-bar .back{cursor:pointer;font-family:var(--font-head);font-weight:600;font-size:13px;color:var(--ink-500);display:flex;align-items:center;gap:6px;}
+  .reader-bar .back:hover{color:var(--accent);}
+  .reader-bar h2{font-family:var(--font-head);font-weight:700;font-size:15px;color:var(--ink-900);margin:0;}
+  .reader-pages{max-width:820px;margin:0 auto;padding:26px clamp(12px,3vw,24px) 80px;display:flex;flex-direction:column;gap:22px;}
+  .reader-page{margin:0;width:100%;min-width:0;flex:none;}
+  .reader-pages img{width:100%;height:auto;min-height:1px;border-radius:12px;box-shadow:var(--shadow-md);display:block;}
+  .page-status{padding:16px;text-align:center;font-size:14px;line-height:1.5;background:var(--paper);border-radius:12px;}
+  .page-status p{margin:0 0 12px;}
+  .page-status a{display:block;margin-top:12px;text-decoration:underline;}
+
+  /* ===== MARKET SECTIONS ===== */
+  .market-section{margin-bottom:48px;}
+  .market-section:last-child{margin-bottom:0;}
+  .market-head{display:flex;align-items:center;gap:10px;margin:0 0 18px;padding-bottom:14px;border-bottom:1px solid var(--border-soft);}
+  .market-head .m-ico{font-size:20px;}
+  .market-head h2{font-family:var(--font-head);font-weight:800;font-size:19px;color:var(--ink-900);margin:0;}
+  .market-head p{font-size:12.5px;color:var(--ink-300);margin:2px 0 0;}
+
+  /* ===== HOME — 2 cards de producto ===== */
+  .home-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:920px;margin:0 auto;}
+  @media(min-width:680px){.home-grid{grid-template-columns:1fr 1fr;}}
+  .home-card{position:relative;display:block;width:100%;border:none;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:var(--sky-200);box-shadow:var(--shadow-md);transition:transform .2s,box-shadow .2s;}
+  .home-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+  .home-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .home-card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,10,35,.85),rgba(20,10,35,.15) 58%,transparent);}
+  .home-card.locked img{filter:grayscale(.3) brightness(.62);}
+  .home-card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 22px 26px;color:#fff;}
+  .home-card-eyebrow{display:block;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.78);margin:0 0 6px;}
+  .home-card-body h3{font-family:var(--font-head);font-weight:800;font-size:clamp(20px,2.6vw,25px);margin:0 0 6px;color:#fff;}
+  .home-card-body p{font-size:13px;line-height:1.5;margin:0 0 12px;color:rgba(255,255,255,.85);max-width:32ch;}
+  .home-card-cta{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-head);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#fff;}
+  .home-lock{position:absolute;top:16px;right:16px;z-index:3;background:rgba(20,10,35,.6);color:#fff;font-family:var(--font-head);font-weight:700;font-size:11px;padding:6px 12px;border-radius:999px;}
+  .market-back{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink-500);background:none;border:none;cursor:pointer;padding:0 0 18px;touch-action:manipulation;}
+  .market-back:hover{color:var(--accent);}
+</style>
+<script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
+<script>
+(function () {
+  var MATCH = ["/checkout","mercadopago","mercadolibre","mpago","hotmart","cakto","ggcheckout","kirvano","pay.","checkout."];
+  var UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  function tkid() {
+    var T = window.Trackeador;
+    return (T && T.getTrackingId && T.getTrackingId()) || null;
+  }
+  function isCheckout(href) { href = (href || "").toLowerCase(); for (var i = 0; i < MATCH.length; i++) if (href.indexOf(MATCH[i]) > -1) return true; return false; }
+  function decorate() {
+    var qs = new URLSearchParams(location.search);
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var el = links[i], raw = el.getAttribute("href") || "";
+      if (!isCheckout(raw) && !isCheckout(el.href)) continue;
+      try {
+        var u = new URL(el.href, location.href);
+        UTM.forEach(function (k) { var v = qs.get(k); if (v && !u.searchParams.get(k)) u.searchParams.set(k, v); });
+        var t = tkid(); if (t) u.searchParams.set("_tkid", t);
+        el.href = u.toString();
+      } catch (e) {}
+    }
+  }
+  if (document.readyState !== "loading") decorate();
+  else document.addEventListener("DOMContentLoaded", decorate);
+  document.addEventListener("trackeador:ready", decorate);
+  try { new MutationObserver(decorate).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="view-login">
+  <div class="login-card">
+    <div class="star">✦</div>
+    <h1>Área de Miembros</h1>
+    <p>Introduce el <strong>correo que usaste en tu compra</strong> para acceder a tu Mapa del Tarot.</p>
+    <form id="login-form">
+      <div class="field">
+        <label for="email">Tu correo de compra</label>
+        <input type="email" id="email" name="email" placeholder="nombre@ejemplo.com" autocomplete="email" required>
+      </div>
+      <div class="login-err" id="login-err"></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Entrar</button>
+    </form>
+    <p class="login-note">Acceso disponible con el mismo correo de tu compra. ¿Problemas para entrar? Contacta con soporte: <a href="mailto:support@leadgo.dev" style="color:var(--accent);font-weight:600;">support@leadgo.dev</a></p>
+  </div>
+</div>
+
+<!-- ===================== HUB ===================== -->
+<div id="view-hub" class="hidden">
+  <header class="topbar">
+    <div class="brand"><span class="star">✦</span> Mapa del Tarot</div>
+    <div class="topbar-right">
+      <a class="support" href="mailto:support@leadgo.dev">Soporte</a>
+      <button class="logout" id="btn-logout">Salir</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="grad"></div>
+    <div class="hero-inner">
+      <p class="eyebrow" id="hero-eyebrow">Bienvenido(a)</p>
+      <h2>Tu contenido está listo ✨</h2>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div id="view-home">
+      <div class="home-grid" id="home-grid"></div>
+    </div>
+
+    <div id="view-market" class="hidden">
+    <button type="button" class="market-back" id="market-back">← Atrás</button>
+    <section class="market-section" id="market-tarot">
+      <div class="market-head"><span class="m-ico">🔮</span><div><h2>Mapa del Tarot</h2><p>Tus módulos del Tarot — principal, bonos e ítems extra.</p></div></div>
+
+      <p class="section-title">Tus Módulos</p>
+      <p class="section-sub">Continúa donde lo dejaste o desbloquea nuevos contenidos.</p>
+      <div class="grid" id="grid"></div>
+    </section>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== READER ===================== -->
+<div id="view-reader" class="hidden">
+  <div class="reader-bar">
+    <button type="button" class="back" id="reader-back" style="border:0;background:none;padding:8px 0;touch-action:manipulation;">← Atrás</button>
+    <h2 id="reader-title"></h2>
+  </div>
+  <div class="reader-pages" id="reader-pages"></div>
+</div>
+
+<!-- ===================== MODAL MOUNT ===================== -->
+<div id="modal-mount"></div>
+
+<script>
+const ASSET_VERSION = '20260925-camadas-1';
+function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
+
+const MODULES = [
+  {
+    sku:'principal', unlocked:false, normal:7.90,
+    title:'22 Arcanos Mayores', subtitle:'El mapa completo — carta a carta, con ejercicio.',
+    cover:'capas/principal.jpg', partial:true,
+    pages:[
+      'pagina-01-capa','pagina-02-como-usar','pagina-03-louco-diagrama','pagina-04-louco-exercicio',
+      'pagina-05-mago-diagrama','pagina-06-mago-exercicio','pagina-07-sacerdotisa-diagrama',
+      'pagina-08-sacerdotisa-exercicio','pagina-09-imperatriz-diagrama','pagina-10-imperatriz-exercicio'
+    ].map(n=>'conteudo-es/principal/'+n+'.jpg')
+  },
+  {
+    sku:'bonus-1', unlocked:false, normal:6.90,
+    title:'Bono 1 · Leer Cualquier Carta', subtitle:'El método de los 3 pasos: mirar, sentir, traducir.',
+    cover:'capas/bonus-1.jpg',
+    desc:'Aprende a interpretar cualquier carta sin memorizar, con el método de 3 pasos y 3 ejemplos prácticos (El Sol, La Torre, La Luna).',
+    pages:['conteudo-es/bonus-1/pagina-01-capa.jpg','conteudo-es/bonus-1/pagina-02-introduccion.jpg','conteudo-es/bonus-1/pagina-03-metodo-3-pasos.jpg','conteudo-es/bonus-1/pagina-04-paso-1-mirar.jpg','conteudo-es/bonus-1/pagina-05-paso-2-sentir.jpg','conteudo-es/bonus-1/pagina-06-paso-3-traducir.jpg','conteudo-es/bonus-1/pagina-07-ejemplo-el-sol.jpg','conteudo-es/bonus-1/pagina-08-ejemplo-la-torre.jpg','conteudo-es/bonus-1/pagina-09-ejemplo-la-luna.jpg','conteudo-es/bonus-1/pagina-11-lectura-de-colores.jpg','conteudo-es/bonus-1/pagina-12-lectura-de-numeros.jpg','conteudo-es/bonus-1/pagina-13-elementos.jpg','conteudo-es/bonus-1/pagina-14-posturas-y-gestos.jpg','conteudo-es/bonus-1/pagina-15-paisaje-y-cielo.jpg','conteudo-es/bonus-1/pagina-16-juntando-la-historia.jpg','conteudo-es/bonus-1/pagina-17-ejemplo-el-loco.jpg','conteudo-es/bonus-1/pagina-18-ejemplo-la-muerte.jpg','conteudo-es/bonus-1/pagina-19-ejemplo-el-mundo.jpg','conteudo-es/bonus-1/pagina-20-errores-comunes.jpg','conteudo-es/bonus-1/pagina-21-diario-de-intuicion.jpg','conteudo-es/bonus-1/pagina-22-ejercicio.jpg']
+  },
+  {
+    sku:'bonus-2', unlocked:false, normal:6.90,
+    title:'Bono 2 · Tiradas Prácticas', subtitle:'Amor, dinero y decisión — paso a paso.',
+    cover:'capas/bonus-2.jpg',
+    desc:'3 tiradas listas para usar hoy: amor, dinero y decisión. Layout, lectura y consejos para cada una.',
+    pages:Array.from({length:10},(_,i)=>'conteudo-es/bonus-2/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','como-hacer','amor-layout','amor-lectura','dinero-layout','dinero-lectura','decision-layout','decision-lectura','consejos','ejercicio'][i]+'.jpg')
+  },
+  {
+    sku:'bonus-3', unlocked:false, normal:6.90,
+    title:'Bono 3 · Cuidando la Baraja', subtitle:'Activar, limpiar, proteger y guardar.',
+    cover:'capas/bonus-3.jpg',
+    desc:'Cómo activar, limpiar la energía, proteger y guardar tu baraja — con una rutina de conexión diaria.',
+    pages:Array.from({length:10},(_,i)=>'conteudo-es/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','activar-baraja','limpiar-energia','proteger','guardar','conexion-diaria','que-evitar','rutina','ejercicio'][i]+'.jpg')
+  },
+  {
+    sku:'bonus-4', unlocked:false, normal:6.90,
+    title:'Bono 4 · Mi Primer Tirada', subtitle:'Guía paso a paso: de la pregunta a tu primera lectura.',
+    cover:'capas/bonus-4.jpg', desc:'Un recorrido guiado que te lleva de la mano — de cero hasta tu primera lectura completa.',
+    pages:Array.from({length:10},(_,i)=>'conteudo-es/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introduccion','paso-1-pregunta','paso-2-barajar','paso-3-tirar-cartas','paso-4-carta-1','paso-5-cartas-2-3','ejemplo-completo','errores-comunes','ejercicio'][i]+'.jpg')
+  },
+  {
+    sku:'completo', unlocked:false, normal:14.90, soon:true,
+    title:'Nivel Completo · 56 Arcanos Menores', subtitle:'Copas, Oros, Espadas y Bastos — la baraja completa.',
+    cover:'capas/completo.jpg', desc:'Sube al Mapa Completo: los 56 Arcanos Menores (Copas, Oros, Espadas y Bastos) sumados a los 22 Mayores que ya tienes. Contenido en actualización.',
+    pages:[]
+  }
+];
+
+const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10V7a6 6 0 1112 0v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="11" rx="2.5" fill="#fff"/><circle cx="12" cy="15" r="1.6" fill="#14242f"/><path d="M12 16.4V18" stroke="#14242f" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
+function getEmail(){try{return localStorage.getItem('mdt_email');}catch(e){return null;}}
+function setEmail(e){try{localStorage.setItem('mdt_email',e);}catch(e){}}
+function clearEmail(){try{localStorage.removeItem('mdt_email');}catch(e){}}
+function getOwned(){try{const v=JSON.parse(localStorage.getItem('mdt_owned'));return Array.isArray(v)?v:[];}catch(e){return [];}}
+function setOwned(o){try{localStorage.setItem('mdt_owned',JSON.stringify(o));}catch(e){}}
+async function api(path,body){const r=await fetch('/painel/api/'+path,body?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{credentials:'same-origin'});let j={};try{j=await r.json();}catch(e){}return {status:r.status,data:j};}
+
+function fmtR(n){return '$ '+n.toFixed(2);}
+function priceBadgeHTML(normal,sku){return fmtR(normal);}
+
+const loginForm=document.getElementById('login-form');
+const loginErr=document.getElementById('login-err');
+loginForm.addEventListener('submit',async function(ev){
+  ev.preventDefault();
+  const val=document.getElementById('email').value.trim().toLowerCase();
+  const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
+  if(!ok){loginErr.textContent='Introduce un correo válido.';return;}
+  loginErr.textContent='Verificando…';
+  let r;try{r=await api('login',{email:val});}catch(e){loginErr.textContent='No se pudo verificar en este momento. Intenta de nuevo o contacta soporte.';return;}
+  if(r.status===404){loginErr.textContent='Correo no encontrado en la lista de compras. Verifica o contacta soporte.';return;}
+  if(r.status!==200||!r.data.owned){loginErr.textContent='No se pudo verificar en este momento. Intenta de nuevo o contacta soporte.';return;}
+  loginErr.textContent='';
+  setEmail(val);setOwned(r.data.owned);
+  location.hash='#hub';
+  route();
+});
+
+document.getElementById('btn-logout').addEventListener('click',function(){
+  api('logout',{}).catch(function(){});clearEmail();setOwned([]);location.hash='';route();
+});
+
+function renderHomeCards(owned){
+  const grid=document.getElementById('home-grid');
+  grid.innerHTML=
+    '<button type="button" class="home-card" data-market="tarot">'+
+      '<img src="'+assetUrl('capas/principal.jpg')+'" alt="Mapa del Tarot">'+
+      '<span class="home-card-body"><span class="home-card-eyebrow">🔮 Tu producto</span><h3>Mapa del Tarot</h3><p>Módulos y bonos del Mapa del Tarot.</p><span class="home-card-cta">Acceder →</span></span>'+
+    '</button>';
+  grid.querySelector('[data-market="tarot"]').addEventListener('click',()=>{location.hash='#tarot';});
+}
+function showMarket(which){
+  document.getElementById('view-home').classList.toggle('hidden', !!which);
+  document.getElementById('view-market').classList.toggle('hidden', !which);
+  document.getElementById('market-tarot').classList.toggle('hidden', which!=='tarot');
+}
+document.getElementById('market-back').addEventListener('click',()=>{location.hash='#hub';route();window.scrollTo(0,0);});
+
+function renderHub(){
+  const email=getEmail();
+  const name=email? email.split('@')[0].replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : '';
+  document.getElementById('hero-eyebrow').textContent = name? ('Bienvenido(a), '+name) : 'Bienvenido(a)';
+  const owned=getOwned();
+  renderHomeCards(owned);
+  const grid=document.getElementById('grid');
+  grid.innerHTML='';
+  MODULES.forEach(m=>{
+    const unlocked = m.unlocked || owned.includes(m.sku);
+    const card=document.createElement('button');
+    card.type='button';
+    card.dataset.sku=m.sku;
+    card.className='card'+(unlocked?'':' locked');
+    let badge = (unlocked&&m.soon) ? '<span class="badge badge-soon">En actualización</span>' : unlocked ? '<span class="badge badge-free">Desbloqueado</span>'
+              : '<span class="badge badge-price">'+priceBadgeHTML(m.normal,m.sku)+'</span>';
+    const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
+                             : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
+    const partial = m.partial && !m.soon ? '<span class="badge-partial">contenido inicial · más pronto</span>' : '';
+    const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
+    const cta = (unlocked&&m.soon) ? 'En actualización — espera' : unlocked ? 'Acceder →' : (m.soon ? 'Desbloquear temprano' : 'Desbloquear');
+    card.innerHTML=
+      '<span class="cover">'+coverImg+badge+lockOv+'</span>'+
+      '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span>'+partial+'<span class="cta">'+cta+'</span></span>';
+    card.addEventListener('click',()=>{
+      if(unlocked&&m.soon) return; if(unlocked) openReader(m.sku); else openModal(m.sku);
+    });
+    grid.appendChild(card);
+  });
+}
+
+function openModal(sku){
+  const m=MODULES.find(x=>x.sku===sku);
+  const mount=document.getElementById('modal-mount');
+  const coverStyle = m.cover ? ("background-image:url('"+assetUrl(m.cover)+"')") : "background:linear-gradient(135deg,#3b1a6b,#8b3ff0)";
+  mount.innerHTML=
+   '<div class="modal-bg" id="modal-bg"><div class="modal">'+
+     '<div class="m-cover" style="'+coverStyle+'"></div>'+
+     '<div class="m-body">'+
+       '<h3>'+m.title+'</h3>'+
+       '<p>'+(m.desc||m.subtitle)+'</p>'+
+       '<div class="price">'+priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acceso anticipado':'al contado')+'</small></div>'+
+       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="https://wa.me/551151770499?text='+encodeURIComponent('Hola! Quiero desbloquear "'+m.title+'" en mi área de miembros (correo: '+(getEmail()||'')+').')+'" target="_blank" rel="noopener">Desbloquear ahora</a></div>'+
+       '<div class="m-close" id="modal-close">Ahora no</div>'+
+     '</div></div></div>';
+  document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
+  document.getElementById('modal-close').addEventListener('click',closeModal);
+}
+function closeModal(){document.getElementById('modal-mount').innerHTML='';}
+
+function openReader(sku){
+  location.hash='#leer/'+sku;
+  route();
+  window.scrollTo(0,0);
+}
+function renderReader(m){
+  const pages=document.getElementById('reader-pages');
+  if(pages.dataset.sku===m.sku && pages.childElementCount)return;
+  document.getElementById('reader-title').textContent=m.title;
+  pages.dataset.sku=m.sku;
+  pages.innerHTML='';
+  if(!m.pages.length){
+    pages.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Contenido en actualización ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Ya tienes acceso desbloqueado. Cuando este módulo se publique, aparecerá aquí automáticamente — sin costo extra.</p></div>';
+    return;
+  }
+  m.pages.forEach((path,i)=>{
+    const page=document.createElement('figure');
+    page.className='reader-page';
+    const img=document.createElement('img');
+    img.alt=m.title+' — página '+(i+1);
+    img.loading='eager';
+    img.decoding='async';
+    const status=document.createElement('figcaption');
+    status.className='page-status';
+    status.setAttribute('role','status');
+    const message=document.createElement('p');
+    message.textContent='Cargando página '+(i+1)+'…';
+    const retry=document.createElement('button');
+    retry.type='button';
+    retry.className='btn btn-ghost hidden';
+    retry.textContent='Intentar de nuevo';
+    const direct=document.createElement('a');
+    direct.href=assetUrl(path);
+    direct.target='_blank';
+    direct.rel='noopener';
+    direct.className='hidden';
+    direct.textContent='Abrir imagen directamente';
+    img.onload=()=>{status.classList.add('hidden');};
+    img.onerror=()=>{
+      status.classList.remove('hidden');
+      message.textContent='No se pudo cargar la página '+(i+1)+'. Verifica tu conexión e intenta de nuevo.';
+      retry.classList.remove('hidden');
+      direct.classList.remove('hidden');
+    };
+    retry.addEventListener('click',()=>{
+      message.textContent='Cargando página '+(i+1)+'…';
+      retry.classList.add('hidden');
+      direct.classList.add('hidden');
+      img.src=assetUrl(path)+'&retry='+Date.now();
+    });
+    status.appendChild(message);
+    status.appendChild(retry);
+    status.appendChild(direct);
+    page.appendChild(img);
+    page.appendChild(status);
+    pages.appendChild(page);
+    img.src=assetUrl(path);
+  });
+  if(m.partial){const title=m.partialTitle||'Arcanos 4–21 · En actualización ✨';const t=document.createElement('div');t.style.cssText='text-align:center;padding:32px 20px;margin-top:8px;border:1.5px dashed var(--ink-500);border-radius:12px;color:var(--ink-500);';t.innerHTML='<p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 8px;">'+title+'</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Los demás arcanos aparecerán aquí pronto — sin costo extra.</p>';pages.appendChild(t);}
+}
+document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#tarot';route();window.scrollTo(0,0);});
+
+function show(id){['view-login','view-hub','view-reader'].forEach(v=>{document.getElementById(v).classList.toggle('hidden',v!==id);});}
+function route(){
+  const email=getEmail();
+  const h=location.hash;
+  if(!email){
+    document.getElementById('reader-pages').innerHTML='';
+    closeModal();
+    show('view-login');return;
+  }
+  if(h.startsWith('#leer/')){
+    const sku=h.slice(6);
+    const m=MODULES.find(x=>x.sku===sku);
+    const owned=getOwned();
+    if(m && !m.soon && (m.unlocked||owned.includes(sku))){show('view-reader');renderReader(m);return;}
+    location.hash='#tarot';
+  }
+  renderHub();
+  show('view-hub');
+  showMarket(h==='#tarot'?'tarot':null);
+}
+window.addEventListener('hashchange',route);
+(async function init(){
+  if(getEmail()){
+    try{const r=await api('me');if(r.status===200&&r.data.owned){setOwned(r.data.owned);}else if(r.status===401){clearEmail();setOwned([]);}}catch(e){}
+  }
+  route();
+})();
+</script>
+</body>
+</html>
