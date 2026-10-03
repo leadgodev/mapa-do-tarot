@@ -403,7 +403,7 @@
 
 // Coolify serves /painel without redirecting to /painel/. Never resolve assets
 // against that document URL: "conteudo/..." would become /conteudo/... (404).
-const ASSET_VERSION = '20261003-menores-117';
+const ASSET_VERSION = '20261003-bonus4-12';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
 // Checkout Wiven de cada item avulso. Ofertas "- Área de Membros" (preço de membro,
@@ -536,7 +536,7 @@ const MODULES = [
     sku:'bonus-4', unlocked:false, normal:17.90,
     title:'Bônus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à sua primeira leitura.',
     cover:'capas/bonus-4.jpg', desc:'Um percurso guiado que te leva pela mão — do zero até sua primeira leitura completa.',
-    pages:Array.from({length:10},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio'][i]+'.jpg')
+    pages:Array.from({length:12},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio','exemplo-leitura-integrada','fechamento-da-tiragem'][i]+'.jpg')
   },
   {
     sku:'completo', unlocked:false, normal:27.90,
