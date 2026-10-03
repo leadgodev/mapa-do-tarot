@@ -220,7 +220,9 @@ function serveStatic(req, res, pathname) {
   }
   fs.stat(abs, (err, st) => {
     if (err || !st.isFile()) return json(res, 404, { error: 'not-found' });
-    res.writeHead(200, { 'content-type': MIME[path.extname(abs)] || 'application/octet-stream', 'content-length': st.size, 'cache-control': (m || mEs) ? 'private, max-age=3600' : 'public, max-age=300' });
+    const ext = path.extname(abs).toLowerCase();
+    const cacheControl = (m || mEs) ? 'private, max-age=3600' : (ext === '.html' ? 'public, max-age=300, must-revalidate' : 'public, max-age=31536000, immutable');
+    res.writeHead(200, { 'content-type': MIME[ext] || 'application/octet-stream', 'content-length': st.size, 'cache-control': cacheControl });
     fs.createReadStream(abs).pipe(res);
   });
 }
