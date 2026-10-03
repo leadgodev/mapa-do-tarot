@@ -86,8 +86,10 @@
   .wrap{max-width:1180px;margin:0 auto;padding:clamp(26px,4vw,44px) clamp(16px,4vw,40px) 70px;}
   .section-title{font-family:var(--font-head);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-500);margin:0 0 4px;}
   .section-sub{font-size:14px;color:var(--ink-300);margin:0 0 20px;}
-  .grid{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:18px;padding-bottom:10px;scroll-snap-type:x mandatory;justify-content:flex-start;}
-  @media(min-width:820px){.grid{flex-wrap:wrap;overflow:visible;justify-content:flex-start;scroll-snap-type:none;}}
+  /* Celular: grade de 2 colunas, tudo à vista, sem arrastar pro lado. Desktop: cards de 210px em linha. */
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-bottom:10px;}
+  .grid .card{width:auto;min-width:0;}
+  @media(min-width:820px){.grid{display:flex;flex-wrap:wrap;gap:18px;justify-content:flex-start;}.grid .card{width:210px;}}
   .card{width:210px;flex:none;scroll-snap-align:start;background:var(--paper);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--border-soft);cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;}
   .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
   .card .cover{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:var(--sky-200);}
@@ -321,8 +323,12 @@
       <div id="treino-card-mount"></div>
 
       <p class="section-title">Seus Módulos</p>
-      <p class="section-sub">Continue de onde parou ou desbloqueie novos conteúdos.</p>
+      <p class="section-sub">Mapa do Tarot Básico e, em seguida, o Nível Completo.</p>
       <div class="grid" id="grid"></div>
+
+      <p class="section-title" style="margin-top:34px">Ofertas especiais</p>
+      <p class="section-sub">Materiais extras para turbinar suas leituras.</p>
+      <div class="grid" id="grid-ofertas"></div>
     </section>
 
     <section class="market-section cigano-section" id="market-cigano">
@@ -422,6 +428,7 @@ function buyHref(m){
    Arredonda pro final ,90 mais próximo ABAIXO. Piso R$9,90: se ficar abaixo, sem desconto.
    Calculado sempre a partir do preço normal do config — nunca hardcode do valor final. */
 // Override: preço real confirmado ao vivo na Wiven (não cai na fórmula de 30%).
+const PRODUTO_SKUS = ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo'];
 const MEMBER_PRICE_OVERRIDE = {'completo': 13.90};
 function memberPrice(normal,sku){
   if(sku && MEMBER_PRICE_OVERRIDE[sku]!==undefined) return MEMBER_PRICE_OVERRIDE[sku];
@@ -717,9 +724,15 @@ function renderHub(){
   ciganoCta.onclick=function(){
     if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Mapa do Baralho Cigano',content_type:'product',value:memberPrice(CIGANO_NORMAL),currency:'BRL'});}
   };
+  // Linha 1: o que vem no produto — Básico (principal + bônus 1-4) e depois o Completo.
+  // Linha 2: "Ofertas especiais" (itens vendidos à parte no checkout). Nunca escrever "order bump" na área.
   const grid=document.getElementById('grid');
+  const gridOfertas=document.getElementById('grid-ofertas');
   grid.innerHTML='';
-  MODULES.forEach(m=>{
+  gridOfertas.innerHTML='';
+  const byOrder=(list)=>list.map(sku=>MODULES.find(m=>m.sku===sku)).filter(Boolean);
+  const rows=[[grid,byOrder(PRODUTO_SKUS)],[gridOfertas,MODULES.filter(m=>!PRODUTO_SKUS.includes(m.sku))]];
+  rows.forEach(([target,list])=>list.forEach(m=>{
     const unlocked = m.unlocked || owned.includes(m.sku);
     // A native button activates with touch, mouse and keyboard without a
     // touchend listener that would also fire while swiping the module carousel.
@@ -740,8 +753,8 @@ function renderHub(){
     card.addEventListener('click',()=>{
       if(unlocked&&m.soon) return; if(unlocked) openReader(m.sku); else openModal(m.sku);
     });
-    grid.appendChild(card);
-  });
+    target.appendChild(card);
+  }));
 }
 
 /* ---------- modal upsell ---------- */
