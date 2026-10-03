@@ -149,6 +149,8 @@
 
   /* ===== READER ===== */
   #view-reader{min-height:100vh;}
+  .pdf-bottom{display:flex;justify-content:center;padding:28px 16px 8px;}
+  .pdf-bottom .btn{width:100%;max-width:420px;}
   .reader-bar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;padding:12px clamp(16px,4vw,40px);background:rgba(250,244,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border-soft);}
   .reader-bar .back{cursor:pointer;font-family:var(--font-head);font-weight:600;font-size:13px;color:var(--ink-500);display:flex;align-items:center;gap:6px;}
   .reader-bar .back:hover{color:var(--accent);}
@@ -784,6 +786,18 @@ function downloadPDF(sku){
     window.print();
   });
 }
+// Botão "Baixar PDF" no fim do módulo: o PDF é do módulo inteiro, nunca imagem por imagem.
+function pdfBottomButton(onClick){
+  const wrap=document.createElement('div');
+  wrap.className='pdf-bottom';
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='btn btn-primary';
+  b.textContent='📥 Baixar PDF do módulo inteiro';
+  b.addEventListener('click',onClick);
+  wrap.appendChild(b);
+  return wrap;
+}
 function openReader(sku){
   location.hash='#ler/'+sku;
   route();
@@ -794,6 +808,7 @@ function renderReader(m){
   if(pages.dataset.sku===m.sku && pages.childElementCount)return;
   document.getElementById('reader-title').textContent=m.title;
   pages.dataset.sku=m.sku;
+  delete pages.dataset.ratio;
   pages.innerHTML='';
   if(!m.pages.length){
     pages.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Conteúdo em atualização ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Você já tem acesso liberado. Assim que este módulo for publicado, ele aparece aqui automaticamente — sem custo extra.</p></div>';
@@ -804,8 +819,12 @@ function renderReader(m){
     page.className='reader-page';
     const img=document.createElement('img');
     img.alt=m.title+' — página '+(i+1);
-    img.loading='eager';
+    // Só as 2 primeiras páginas carregam na hora; o resto carrega perto da rolagem.
+    // aspect-ratio reserva a altura da página, senão todas cabem na tela vazias e o lazy não segura nada.
+    img.loading=i<2?'eager':'lazy';
+    if(i===0)img.fetchPriority='high';
     img.decoding='async';
+    img.style.aspectRatio=pages.dataset.ratio||'3/4';
     const status=document.createElement('figcaption');
     status.className='page-status';
     status.setAttribute('role','status');
@@ -815,7 +834,15 @@ function renderReader(m){
     retry.type='button';
     retry.className='btn btn-ghost hidden';
     retry.textContent='Tentar novamente';
-    img.onload=()=>{status.classList.add('hidden');};
+    img.onload=()=>{
+      status.classList.add('hidden');
+      img.style.aspectRatio='';
+      if(i===0&&img.naturalWidth){
+        const r=img.naturalWidth+'/'+img.naturalHeight;
+        pages.dataset.ratio=r;
+        pages.querySelectorAll('.reader-page img').forEach(o=>{if(o.style.aspectRatio)o.style.aspectRatio=r;});
+      }
+    };
     img.onerror=()=>{
       status.classList.remove('hidden');
       message.textContent='Não foi possível carregar a página '+(i+1)+'. Verifique sua conexão e tente novamente.';
@@ -831,10 +858,10 @@ function renderReader(m){
     page.appendChild(img);
     page.appendChild(status);
     pages.appendChild(page);
-    // Assign src after listeners and DOM insertion; every page starts loading
-    // immediately, even below the fold or when restored from a reader URL.
+    // Assign src after listeners and DOM insertion.
     img.src=assetUrl(path);
   });
+  pages.appendChild(pdfBottomButton(()=>downloadPDF(m.sku)));
   if(m.partial){const title=m.partialTitle||'Arcanos 4–21 · Em atualização ✨';const t=document.createElement('div');t.style.cssText='text-align:center;padding:32px 20px;margin-top:8px;border:1.5px dashed var(--ink-500);border-radius:12px;color:var(--ink-500);';t.innerHTML='<p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 8px;">'+title+'</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Os demais arcanos entram aqui assim que forem publicados — sem custo extra.</p>';pages.appendChild(t);}
 }
 document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#tarot';route();window.scrollTo(0,0);});
@@ -875,6 +902,7 @@ async function renderCigano(moduleKey){
     console.error(e);
   }
   document.getElementById('cigano-pdf-btn').style.display='block';
+  mount.appendChild(pdfBottomButton(()=>document.getElementById('cigano-pdf-btn').click()));
 }
 document.getElementById('cigano-back').addEventListener('click',()=>{location.hash='#cigano';route();window.scrollTo(0,0);});
 document.getElementById('cigano-pdf-btn').addEventListener('click',async function(){

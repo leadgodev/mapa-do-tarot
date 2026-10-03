@@ -4,6 +4,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { execFile } from 'node:child_process';
 import { sendAccessEmail } from './mail.mjs';
@@ -218,12 +219,32 @@ function serveStatic(req, res, pathname) {
       return res.end();
     }
   }
-  fs.stat(abs, (err, st) => {
+  // Painel: serve a versão .webp (gerada por scripts/otimiza-painel-webp.sh) quando existir e o browser aceitar.
+  let file = abs;
+  const reqExt = path.extname(abs).toLowerCase();
+  const negotiable = top === 'painel' && (reqExt === '.jpg' || reqExt === '.jpeg' || reqExt === '.png');
+  if (negotiable && /image\/webp/.test(req.headers.accept || '')) {
+    const w = abs.slice(0, -reqExt.length) + '.webp';
+    if (fs.existsSync(w)) file = w;
+  }
+  fs.stat(file, (err, st) => {
     if (err || !st.isFile()) return json(res, 404, { error: 'not-found' });
-    const ext = path.extname(abs).toLowerCase();
-    const cacheControl = (m || mEs) ? 'private, max-age=3600' : (ext === '.html' ? 'public, max-age=300, must-revalidate' : 'public, max-age=31536000, immutable');
-    res.writeHead(200, { 'content-type': MIME[ext] || 'application/octet-stream', 'content-length': st.size, 'cache-control': cacheControl });
-    fs.createReadStream(abs).pipe(res);
+    const ext = path.extname(file).toLowerCase();
+    const cacheControl = (m || mEs) ? 'private, max-age=604800' : (ext === '.html' ? 'public, max-age=300, must-revalidate' : 'public, max-age=31536000, immutable');
+    const etag = `W/"${st.size.toString(36)}-${Math.floor(st.mtimeMs).toString(36)}"`;
+    const headers = { 'content-type': MIME[ext] || 'application/octet-stream', 'cache-control': cacheControl, etag };
+    if (negotiable) headers.vary = 'Accept';
+    if (req.headers['if-none-match'] === etag) { res.writeHead(304, headers); return res.end(); }
+    const compressible = /^(text\/|application\/(json|javascript)|image\/svg)/.test(headers['content-type']) && st.size > 1024;
+    if (compressible && /\bgzip\b/.test(req.headers['accept-encoding'] || '')) {
+      headers['content-encoding'] = 'gzip';
+      headers.vary = 'Accept-Encoding';
+      res.writeHead(200, headers);
+      return fs.createReadStream(file).pipe(zlib.createGzip()).pipe(res);
+    }
+    headers['content-length'] = st.size;
+    res.writeHead(200, headers);
+    fs.createReadStream(file).pipe(res);
   });
 }
 
