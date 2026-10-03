@@ -34,3 +34,13 @@ bash scripts/install-hooks.sh
 
 Cria `.git/hooks/pre-commit` executavel que chama `scripts/gate-identidade.sh`.
 Rodar de novo apos clone/checkout novo — o hook some no clone.
+
+# PDF dos módulos
+
+- Módulo de imagens: o servidor monta o PDF na hora (`server/modulo-pdf.mjs`) com
+  o MESMO array `pages` do leitor em `painel/index.html`. Nome do arquivo = título
+  do módulo. Não existe PDF separado para atualizar: mexeu em `pages`, o PDF segue.
+- Módulo HTML (`cigano-*`): PDF estático gerado do `index.html` do módulo com
+  Chromium. O pre-commit bloqueia se o PDF estiver mais velho que o HTML.
+- Cache: tudo em `/painel` sai `no-cache` (revalida por ETag). Ao adicionar páginas,
+  subir `ASSET_VERSION` e rodar `otimiza-painel-webp.sh`.

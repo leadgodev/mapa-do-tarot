@@ -13,6 +13,8 @@ import { execSync, exec } from 'node:child_process';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAINEL_DIR = path.join(ROOT, 'painel');
 const MAX_PDF_SIZE = 25 * 1024 * 1024; // 25 MB
+// --check: só confere se cada PDF bate com o módulo (usado no pre-commit), não gera.
+const CHECK_ONLY = process.argv.includes('--check');
 
 // Extrair MODULES do index.html: parser que lida com .map() e arrays diretos
 function extractModules() {
@@ -211,6 +213,29 @@ async function recompressPDF(pdfPath) {
   }
 }
 
+function pdfPageCount(pdfPath) {
+  try {
+    const out = execSync(`pdfinfo '${pdfPath}'`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    const m = /^Pages:\s+(\d+)/m.exec(out);
+    return m ? parseInt(m[1]) : null;
+  } catch {
+    return null;
+  }
+}
+
+function pdfStaleReason(sku, pages, outputPath) {
+  if (!fs.existsSync(outputPath)) return 'não existe';
+  const count = pdfPageCount(outputPath);
+  if (count !== null && count !== pages.length) return `tem ${count} páginas, módulo tem ${pages.length}`;
+  const pdfTime = fs.statSync(outputPath).mtimeMs;
+  const newer = pages.find((p) => {
+    const f = path.join(PAINEL_DIR, p.replace(/^painel\//, ''));
+    return fs.existsSync(f) && fs.statSync(f).mtimeMs > pdfTime;
+  });
+  if (newer) return `imagem mais nova que o PDF (${path.basename(newer)})`;
+  return null;
+}
+
 async function generatePDFForModule(sku, pages) {
   const contentDir = path.join(PAINEL_DIR, 'conteudo', sku);
   const outputPath = path.join(contentDir, `${sku}.pdf`);
@@ -218,11 +243,21 @@ async function generatePDFForModule(sku, pages) {
     console.log(`  ✗ Pasta ${sku} não existe (pulando)`);
     return false;
   }
-  if (fs.existsSync(outputPath)) {
+  // PDF só vale se tiver o mesmo número de páginas do array pages e for mais novo
+  // que todas as imagens. Senão é refeito (antes pulava quando existia e o PDF
+  // ficava velho depois de adicionar páginas).
+  const stale = pdfStaleReason(sku, pages, outputPath);
+  if (!stale) {
     const stat = fs.statSync(outputPath);
-    console.log(`  ✓ ${sku}.pdf já existe (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
+    console.log(`  ✓ ${sku}.pdf atualizado (${pages.length} pág., ${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
     return true;
   }
+  if (CHECK_ONLY) {
+    console.log(`  ✗ ${sku}.pdf desatualizado: ${stale}`);
+    return false;
+  }
+  console.log(`  ↻ ${sku}.pdf: ${stale}`);
+  if (fs.existsSync(outputPath)) fs.unlinkSync(outputPath);
   // Verificar que todas as imagens existem
   const missing = pages.filter((p) => {
     const p2 = p.startsWith('painel/') ? p : 'painel/' + p;

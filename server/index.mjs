@@ -8,6 +8,7 @@ import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { execFile } from 'node:child_process';
 import { sendAccessEmail } from './mail.mjs';
+import { modulePdf } from './modulo-pdf.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = Number(process.env.PORT || 80);
@@ -230,7 +231,9 @@ function serveStatic(req, res, pathname) {
   fs.stat(file, (err, st) => {
     if (err || !st.isFile()) return json(res, 404, { error: 'not-found' });
     const ext = path.extname(file).toLowerCase();
-    const cacheControl = (m || mEs) ? 'private, max-age=604800' : (ext === '.html' ? 'public, max-age=300, must-revalidate' : 'public, max-age=31536000, immutable');
+    // Área de membros nunca serve cópia velha: tudo em /painel (e todo HTML) revalida
+    // sempre por ETag (304 barato). Imutável só para asset do site fora do painel.
+    const cacheControl = (m || mEs) ? 'private, no-cache' : (top === 'painel' || ext === '.html') ? 'no-cache' : 'public, max-age=31536000, immutable';
     const etag = `W/"${st.size.toString(36)}-${Math.floor(st.mtimeMs).toString(36)}"`;
     const headers = { 'content-type': MIME[ext] || 'application/octet-stream', 'cache-control': cacheControl, etag };
     if (negotiable) headers.vary = 'Accept';
@@ -312,16 +315,27 @@ http.createServer(async (req, res) => {
       const sku = m[1];
       const skuToCheck = sku.startsWith('cigano-') || sku === 'cigano' ? 'cigano' : sku;
       if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
-      const pdfPath = path.join(ROOT, 'painel', url.searchParams.get('lang') === 'es' ? 'conteudo-es' : 'conteudo', sku, sku + '.pdf');
+      const lang = url.searchParams.get('lang') === 'es' ? 'es' : null;
+      // PDF montado na hora com as mesmas páginas do leitor; nome do arquivo = nome do módulo.
+      const built = modulePdf(ROOT, sku, lang);
+      if (built) {
+        const fname = built.title.replace(/[\\/:*?"<>|]+/g, '-') + '.pdf';
+        const hdr = { etag: built.etag, 'cache-control': 'private, no-cache', 'content-disposition': `attachment; filename="${fname.replace(/[^\x20-\x7e]/g, '_')}"; filename*=UTF-8''${encodeURIComponent(fname)}` };
+        if (req.headers['if-none-match'] === built.etag) return res.writeHead(304, hdr), res.end();
+        return res.writeHead(200, { ...hdr, 'content-type': 'application/pdf', 'content-length': built.buf.length }), res.end(built.buf);
+      }
+      const pdfPath = path.join(ROOT, 'painel', lang === 'es' ? 'conteudo-es' : 'conteudo', sku, sku + '.pdf');
       if (fs.existsSync(pdfPath)) {
         const st = fs.statSync(pdfPath);
-        return res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' }), fs.createReadStream(pdfPath).pipe(res);
+        const etag = `"${st.size.toString(16)}-${Math.floor(st.mtimeMs).toString(16)}"`;
+        if (req.headers['if-none-match'] === etag) return res.writeHead(304, { etag, 'cache-control': 'private, no-cache' }), res.end();
+        return res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, etag, 'cache-control': 'private, no-cache' }), fs.createReadStream(pdfPath).pipe(res);
       }
       if (sku.startsWith('cigano-') && url.searchParams.get('lang') !== 'es') {
         generatePDF(sku, pdfPath, (err) => {
           if (err) return json(res, 500, { error: 'pdf-generation-failed' });
           const st = fs.statSync(pdfPath);
-          res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'public, max-age=86400' });
+          res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'private, no-cache' });
           fs.createReadStream(pdfPath).pipe(res);
         });
         return;
