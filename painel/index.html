@@ -183,6 +183,7 @@
   }
   .cigano-section .badge-price{background:var(--ink-900);}
   .cigano-section .card.locked .cover img{filter:none;opacity:1;}
+  .cigano-section .card.cigano-principal .cover img{object-fit:contain;background:#f1e2c4;}
   .cigano-section .lock-ov{background:rgba(74,46,31,.4);}
   .cigano-section .treino-card.unlocked{box-shadow:0 0 0 4px rgba(200,106,63,.16),0 10px 30px rgba(200,106,63,.25);}
   .cigano-section .treino-img-wrap{background:linear-gradient(135deg,#4a2e1f,#c86a3f 65%,#d98a63);}
@@ -267,7 +268,6 @@
 .aviso-update .au-ico{font-size:34px;line-height:1}
 .aviso-update strong.au-t{display:block;font-size:clamp(18px,4.6vw,24px);font-weight:800;letter-spacing:.2px;margin-bottom:6px;color:#3a2606}
 .aviso-update p{margin:0;font-size:clamp(15px,3.8vw,17px);line-height:1.5}
-.aviso-update.au-hub{max-width:900px;margin:18px auto 0}
 </style>
 </head>
 <body>
@@ -308,8 +308,6 @@
     </div>
   </div>
 
-  <div class="wrap"><div class="aviso-update au-hub" role="status"><span class="au-ico">✨</span><div><strong class="au-t">MATERIAL EM ATUALIZAÇÃO — será liberado AINDA HOJE</strong><p>Estamos fazendo refinamentos para deixar seu material ainda melhor; por isso o conteúdo final e alguns módulos podem ainda não aparecer pra você. Aguarde: assim que liberarmos, ele aparece aqui automaticamente. Obrigado pela confiança 💛</p></div></div>
-</div>
   <main class="wrap">
     <div id="view-home">
       <div class="home-grid" id="home-grid"></div>
@@ -318,7 +316,6 @@
     <div id="view-market" class="hidden">
     <button type="button" class="market-back" id="market-back">← Voltar</button>
     <section class="market-section" id="market-tarot">
-<div class="aviso-update" role="status"><span class="au-ico">✨</span><div><strong class="au-t">MATERIAL EM ATUALIZAÇÃO — será liberado AINDA HOJE</strong><p>Estamos fazendo refinamentos para deixar seu material ainda melhor; por isso o conteúdo final e alguns módulos podem ainda não aparecer pra você. Aguarde: assim que liberarmos, ele aparece aqui automaticamente. Obrigado pela confiança 💛</p></div></div>
       <div class="market-head"><span class="m-ico">🔮</span><div><h2>Mapa do Tarot</h2><p>Seus módulos do Tarot — principal, bônus e itens extras.</p></div></div>
       <div id="treino-card-mount"></div>
 
@@ -550,7 +547,7 @@ const MODULES = [
 const CIGANO_APP = {key:'cigano-app', title:'App de Treino do Baralho Cigano', subtitle:'Flashcards e treino de combinações no celular.'};
 const CIGANO_ITEMS = [
   {key:'cigano-antes', title:'Antes de Começar', subtitle:'Embaralhar, cortar, escolher cartas, polaridade, ler cartas juntas.', cover:'assets/cigano/carta-coracao.webp'},
-  {key:'cigano-36cartas', title:'As 36 Cartas', subtitle:'Mapa visual completo carta a carta — igual ao Tarot.', cover:'assets/cigano/carta-raposa.webp'},
+  {key:'cigano-36cartas', title:'As 36 Cartas', subtitle:'Mapa visual completo carta a carta — igual ao Tarot.', cover:'assets/cigano/capa-cigano.webp'},
   {key:'cigano-dicionario', title:'Dicionário Visual de Combinações', subtitle:'200+ combinações: leitura, no amor, como conselho.', cover:'assets/cigano/carta-sol.webp'},
   {key:'cigano-tiragens', title:'Bônus 1 · Livro das Tiragens Ciganas', subtitle:'15 tiragens prontas, com exemplo preenchido e raciocínio.', cover:'assets/cigano/bonus-1-cut.webp'},
   {key:'cigano-primeira', title:'Bônus 2 · Minha Primeira Tiragem Cigana', subtitle:'Passo a passo em 10 etapas, 3 cartas até virar frase.', cover:'assets/cigano/bonus-2-cut.webp'},
@@ -657,7 +654,7 @@ function renderCiganoGrid(unlocked){
     const card=document.createElement('button');
     card.type='button';
     const hasContent=contentMap[m.key];
-    card.className='card'+(unlocked?'':' locked');
+    card.className='card'+(unlocked?'':' locked')+(m.key==='cigano-36cartas'?' cigano-principal':'');
     const badge = unlocked && !hasContent ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>' : '<span class="badge badge-price">Plano único</span>';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
     const cta = unlocked && !hasContent ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : 'Desbloquear';
