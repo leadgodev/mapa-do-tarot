@@ -114,6 +114,8 @@
   .reader-bar .back:hover{color:var(--accent);}
   .reader-bar h2{font-family:var(--font-head);font-weight:700;font-size:15px;color:var(--ink-900);margin:0;}
   .reader-pages{max-width:820px;margin:0 auto;padding:26px clamp(12px,3vw,24px) 80px;display:flex;flex-direction:column;gap:22px;}
+  .pdf-bottom{display:flex;justify-content:center;padding:28px 16px 8px;}
+  .pdf-bottom .btn{width:100%;max-width:420px;}
   .reader-page{margin:0;width:100%;min-width:0;flex:none;}
   .reader-pages img{width:100%;height:auto;min-height:1px;border-radius:12px;box-shadow:var(--shadow-md);display:block;}
   .page-status{padding:16px;text-align:center;font-size:14px;line-height:1.5;background:var(--paper);border-radius:12px;}
@@ -309,6 +311,7 @@
   <div class="reader-bar">
     <button type="button" class="back" id="reader-back" style="border:0;background:none;padding:8px 0;touch-action:manipulation;">← Voltar</button>
     <h2 id="reader-title"></h2>
+    <button type="button" id="reader-pdf-btn" style="margin-left:auto;border:0;background:none;cursor:pointer;color:var(--accent);font-weight:600;font-size:13px;padding:8px 16px;touch-action:manipulation;">📥 Baixar PDF / Imprimir</button>
   </div>
   <div class="reader-pages" id="reader-pages"></div>
 </div>
@@ -332,7 +335,7 @@
 
 // Coolify serves /painel without redirecting to /painel/. Never resolve assets
 // against that document URL: "conteudo/..." would become /conteudo/... (404).
-const ASSET_VERSION = '20260925-camadas-1';
+const ASSET_VERSION = '20261003-pt-painel-117';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
 // Checkout Mundpay de cada item avulso (mercado PT/€). Essencial e Completo já têm
@@ -385,11 +388,31 @@ const MODULES = [
   {
     sku:'principal', unlocked:false, normal:7.90,
     title:'22 Arcanos Maiores', subtitle:'O mapa completo — carta a carta, com exercício.',
-    cover:'capas/principal.jpg', partial:true,
+    cover:'capas/principal.jpg',
     pages:[
-      'pagina-01-capa','pagina-02-como-usar','pagina-03-louco-diagrama','pagina-04-louco-exercicio',
-      'pagina-05-mago-diagrama','pagina-06-mago-exercicio','pagina-07-sacerdotisa-diagrama',
-      'pagina-08-sacerdotisa-exercicio','pagina-09-imperatriz-diagrama','pagina-10-imperatriz-exercicio'
+      'pagina-01-capa','pagina-02-como-usar',
+      'pagina-03-louco-diagrama','pagina-04-louco-exercicio',
+      'pagina-05-mago-diagrama','pagina-06-mago-exercicio',
+      'pagina-07-sacerdotisa-diagrama','pagina-08-sacerdotisa-exercicio',
+      'pagina-09-imperatriz-diagrama','pagina-10-imperatriz-exercicio',
+      'pagina-11-imperador-diagrama','pagina-12-imperador-exercicio',
+      'pagina-13-hierofante-diagrama','pagina-14-hierofante-exercicio',
+      'pagina-15-enamorados-diagrama','pagina-16-enamorados-exercicio',
+      'pagina-17-carro-diagrama','pagina-18-carro-exercicio',
+      'pagina-19-forca-diagrama','pagina-20-forca-exercicio',
+      'pagina-21-eremita-diagrama','pagina-22-eremita-exercicio',
+      'pagina-23-roda-da-fortuna-diagrama','pagina-24-roda-da-fortuna-exercicio',
+      'pagina-25-justica-diagrama','pagina-26-justica-exercicio',
+      'pagina-27-enforcado-diagrama','pagina-28-enforcado-exercicio',
+      'pagina-29-morte-diagrama','pagina-30-morte-exercicio',
+      'pagina-31-temperanca-diagrama','pagina-32-temperanca-exercicio',
+      'pagina-33-diabo-diagrama','pagina-34-diabo-exercicio',
+      'pagina-35-torre-diagrama','pagina-36-torre-exercicio',
+      'pagina-37-estrela-diagrama','pagina-38-estrela-exercicio',
+      'pagina-39-lua-diagrama','pagina-40-lua-exercicio',
+      'pagina-41-sol-diagrama','pagina-42-sol-exercicio',
+      'pagina-43-julgamento-diagrama','pagina-44-julgamento-exercicio',
+      'pagina-45-mundo-diagrama','pagina-46-mundo-exercicio'
     ].map(n=>'conteudo/principal/'+n+'.jpg')
   },
   {
@@ -404,7 +427,7 @@ const MODULES = [
     title:'Bónus 2 · Tiragens Práticas', subtitle:'Amor, dinheiro e decisão — passo a passo.',
     cover:'capas/bonus-2.jpg',
     desc:'3 tiragens prontas para usar hoje: amor, dinheiro e decisão. Layout, leitura e dicas para cada uma.',
-    pages:Array.from({length:10},(_,i)=>'conteudo/bonus-2/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','como-fazer','amor-layout','amor-leitura','dinheiro-layout','dinheiro-leitura','decisao-layout','decisao-leitura','dicas','exercicio'][i]+'.jpg')
+    pages:['conteudo/bonus-2/pagina-01-capa.jpg','conteudo/bonus-2/pagina-02-como-fazer.jpg','conteudo/bonus-2/pagina-03-amor-layout.jpg','conteudo/bonus-2/pagina-04-amor-leitura.jpg','conteudo/bonus-2/pagina-05-dinheiro-layout.jpg','conteudo/bonus-2/pagina-06-dinheiro-leitura.jpg','conteudo/bonus-2/pagina-07-decisao-layout.jpg','conteudo/bonus-2/pagina-08-decisao-leitura.jpg','conteudo/bonus-2/pagina-09-dicas.jpg','conteudo/bonus-2/pagina-10-sim-nao-layout.jpg','conteudo/bonus-2/pagina-11-sim-nao-leitura.jpg','conteudo/bonus-2/pagina-12-cruz-celta-layout.jpg','conteudo/bonus-2/pagina-13-cruz-celta-leitura.jpg','conteudo/bonus-2/pagina-14-ferradura-layout.jpg','conteudo/bonus-2/pagina-15-ferradura-leitura.jpg','conteudo/bonus-2/pagina-16-relacionamento-layout.jpg','conteudo/bonus-2/pagina-17-relacionamento-leitura.jpg','conteudo/bonus-2/pagina-18-autoconhecimento-layout.jpg','conteudo/bonus-2/pagina-19-tiragem-do-ano-layout.jpg','conteudo/bonus-2/pagina-20-tiragem-do-ano-leitura.jpg','conteudo/bonus-2/pagina-21-exercicio.jpg']
   },
   {
     sku:'bonus-3', unlocked:false, normal:6.90,
@@ -414,11 +437,11 @@ const MODULES = [
     pages:Array.from({length:10},(_,i)=>'conteudo/bonus-3/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','por-que-cuidar','ativar-baralho','limpar-energia','proteger','guardar','conexao-diaria','o-que-evitar','rotina','exercicio'][i]+'.jpg')
   },
   {
-    sku:'guia-flash', unlocked:false, partial:true, partialTitle:'Sol, Julgamento e Mundo · Em atualização ✨', normal:5.00,
+    sku:'guia-flash', unlocked:false, normal:5.00,
     title:'Guia Flash · Arcanos Maiores', subtitle:'Os significados-chave para consultar na hora.',
     cover:'capas/guia-flash.jpg',
     desc:'Guia rápido e visual dos Arcanos Maiores: gravura da carta + essência, direito e invertido, para consultar durante a leitura sem travar.',
-    pages:Array.from({length:20},(_,i)=>'conteudo/guia-flash/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','louco','mago','sacerdotisa','imperatriz','imperador','hierofante','enamorados','carro','forca','eremita','roda-fortuna','justica','enforcado','morte','temperanca','diabo','torre','estrela','lua'][i]+'.jpg')
+    pages:Array.from({length:23},(_,i)=>'conteudo/guia-flash/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','louco','mago','sacerdotisa','imperatriz','imperador','hierofante','enamorados','carro','forca','eremita','roda-fortuna','justica','enforcado','morte','temperanca','diabo','torre','estrela','lua','sol','julgamento','mundo'][i]+'.jpg')
   },
   {
     sku:'perguntas-80', unlocked:false, normal:5.90,
@@ -448,13 +471,13 @@ const MODULES = [
     sku:'bonus-4', unlocked:false, normal:6.90,
     title:'Bónus 4 · Minha Primeira Tiragem', subtitle:'Guia passo a passo: da pergunta à tua primeira leitura.',
     cover:'capas/bonus-4.jpg', desc:'Um percurso guiado que te leva pela mão — do zero até à tua primeira leitura completa.',
-    pages:Array.from({length:10},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio'][i]+'.jpg')
+    pages:Array.from({length:12},(_,i)=>'conteudo/bonus-4/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','introducao','passo-1-pergunta','passo-2-embaralhar','passo-3-tirar-cartas','passo-4-carta-1','passo-5-cartas-2-3','exemplo-completo','erros-comuns','exercicio','exemplo-leitura-integrada','fechamento-da-tiragem'][i]+'.jpg')
   },
   {
-    sku:'completo', unlocked:false, normal:14.90, soon:true,
+    sku:'completo', unlocked:false, normal:14.90,
     title:'Nível Completo · 56 Arcanos Menores', subtitle:'Copas, Ouros, Espadas e Paus — o baralho inteiro.',
-    cover:'capas/completo.jpg', desc:'Suba para o Mapa Completo: os 56 Arcanos Menores (Copas, Ouros, Espadas e Paus) somados aos 22 Maiores que já tens. Conteúdo em atualização.',
-    pages:[]
+    cover:'capas/completo.jpg', desc:'Suba para o Mapa Completo: os 56 Arcanos Menores (Copas, Ouros, Espadas e Paus) somados aos 22 Maiores que já tens.',
+    pages:['conteudo/completo/pagina-01-abertura.jpg','conteudo/completo/pagina-02-naipe-paus.jpg','conteudo/completo/pagina-03-paus-as.jpg','conteudo/completo/pagina-04-paus-02.jpg','conteudo/completo/pagina-05-paus-03.jpg','conteudo/completo/pagina-06-paus-04.jpg','conteudo/completo/pagina-07-paus-05.jpg','conteudo/completo/pagina-08-paus-06.jpg','conteudo/completo/pagina-09-paus-07.jpg','conteudo/completo/pagina-10-paus-08.jpg','conteudo/completo/pagina-11-paus-09.jpg','conteudo/completo/pagina-12-paus-10.jpg','conteudo/completo/pagina-13-paus-pajem.jpg','conteudo/completo/pagina-14-paus-cavaleiro.jpg','conteudo/completo/pagina-15-paus-rainha.jpg','conteudo/completo/pagina-16-paus-rei.jpg','conteudo/completo/pagina-17-naipe-copas.jpg','conteudo/completo/pagina-18-copas-as.jpg','conteudo/completo/pagina-19-copas-02.jpg','conteudo/completo/pagina-20-copas-03.jpg','conteudo/completo/pagina-21-copas-04.jpg','conteudo/completo/pagina-22-copas-05.jpg','conteudo/completo/pagina-23-copas-06.jpg','conteudo/completo/pagina-24-copas-07.jpg','conteudo/completo/pagina-25-copas-08.jpg','conteudo/completo/pagina-26-copas-09.jpg','conteudo/completo/pagina-27-copas-10.jpg','conteudo/completo/pagina-28-copas-pajem.jpg','conteudo/completo/pagina-29-copas-cavaleiro.jpg','conteudo/completo/pagina-30-copas-rainha.jpg','conteudo/completo/pagina-31-copas-rei.jpg','conteudo/completo/pagina-32-naipe-espadas.jpg','conteudo/completo/pagina-33-espadas-as.jpg','conteudo/completo/pagina-34-espadas-02.jpg','conteudo/completo/pagina-35-espadas-03.jpg','conteudo/completo/pagina-36-espadas-04.jpg','conteudo/completo/pagina-37-espadas-05.jpg','conteudo/completo/pagina-38-espadas-06.jpg','conteudo/completo/pagina-39-espadas-07.jpg','conteudo/completo/pagina-40-espadas-08.jpg','conteudo/completo/pagina-41-espadas-09.jpg','conteudo/completo/pagina-42-espadas-10.jpg','conteudo/completo/pagina-43-espadas-pajem.jpg','conteudo/completo/pagina-44-espadas-cavaleiro.jpg','conteudo/completo/pagina-45-espadas-rainha.jpg','conteudo/completo/pagina-46-espadas-rei.jpg','conteudo/completo/pagina-47-ouros-intro.jpg','conteudo/completo/pagina-48-ouros-as.jpg','conteudo/completo/pagina-49-ouros-02.jpg','conteudo/completo/pagina-50-ouros-03.jpg','conteudo/completo/pagina-51-ouros-04.jpg','conteudo/completo/pagina-52-ouros-05.jpg','conteudo/completo/pagina-53-ouros-06.jpg','conteudo/completo/pagina-54-ouros-07.jpg','conteudo/completo/pagina-55-ouros-08.jpg','conteudo/completo/pagina-56-ouros-09.jpg','conteudo/completo/pagina-57-ouros-10.jpg','conteudo/completo/pagina-58-ouros-pajem.jpg','conteudo/completo/pagina-59-ouros-cavaleiro.jpg','conteudo/completo/pagina-60-ouros-rainha.jpg','conteudo/completo/pagina-61-ouros-rei.jpg','conteudo/completo/pagina-62-paus-as-exercicio.jpg','conteudo/completo/pagina-63-paus-02-exercicio.jpg','conteudo/completo/pagina-64-paus-03-exercicio.jpg','conteudo/completo/pagina-65-paus-04-exercicio.jpg','conteudo/completo/pagina-66-paus-05-exercicio.jpg','conteudo/completo/pagina-67-paus-06-exercicio.jpg','conteudo/completo/pagina-68-paus-07-exercicio.jpg','conteudo/completo/pagina-69-paus-08-exercicio.jpg','conteudo/completo/pagina-70-paus-09-exercicio.jpg','conteudo/completo/pagina-71-paus-10-exercicio.jpg','conteudo/completo/pagina-72-paus-pajem-exercicio.jpg','conteudo/completo/pagina-73-paus-cavaleiro-exercicio.jpg','conteudo/completo/pagina-74-paus-rainha-exercicio.jpg','conteudo/completo/pagina-75-paus-rei-exercicio.jpg','conteudo/completo/pagina-76-copas-as-exercicio.jpg','conteudo/completo/pagina-77-copas-02-exercicio.jpg','conteudo/completo/pagina-78-copas-03-exercicio.jpg','conteudo/completo/pagina-79-copas-04-exercicio.jpg','conteudo/completo/pagina-80-copas-05-exercicio.jpg','conteudo/completo/pagina-81-copas-06-exercicio.jpg','conteudo/completo/pagina-82-copas-07-exercicio.jpg','conteudo/completo/pagina-83-copas-08-exercicio.jpg','conteudo/completo/pagina-84-copas-09-exercicio.jpg','conteudo/completo/pagina-85-copas-10-exercicio.jpg','conteudo/completo/pagina-86-copas-pajem-exercicio.jpg','conteudo/completo/pagina-87-copas-cavaleiro-exercicio.jpg','conteudo/completo/pagina-88-copas-rainha-exercicio.jpg','conteudo/completo/pagina-89-copas-rei-exercicio.jpg','conteudo/completo/pagina-90-espadas-as-exercicio.jpg','conteudo/completo/pagina-91-espadas-02-exercicio.jpg','conteudo/completo/pagina-92-espadas-03-exercicio.jpg','conteudo/completo/pagina-93-espadas-04-exercicio.jpg','conteudo/completo/pagina-94-espadas-05-exercicio.jpg','conteudo/completo/pagina-95-espadas-06-exercicio.jpg','conteudo/completo/pagina-96-espadas-07-exercicio.jpg','conteudo/completo/pagina-97-espadas-08-exercicio.jpg','conteudo/completo/pagina-98-espadas-09-exercicio.jpg','conteudo/completo/pagina-99-espadas-10-exercicio.jpg','conteudo/completo/pagina-100-espadas-pajem-exercicio.jpg','conteudo/completo/pagina-101-espadas-cavaleiro-exercicio.jpg','conteudo/completo/pagina-102-espadas-rainha-exercicio.jpg','conteudo/completo/pagina-103-espadas-rei-exercicio.jpg','conteudo/completo/pagina-104-ouros-as-exercicio.jpg','conteudo/completo/pagina-105-ouros-02-exercicio.jpg','conteudo/completo/pagina-106-ouros-03-exercicio.jpg','conteudo/completo/pagina-107-ouros-04-exercicio.jpg','conteudo/completo/pagina-108-ouros-05-exercicio.jpg','conteudo/completo/pagina-109-ouros-06-exercicio.jpg','conteudo/completo/pagina-110-ouros-07-exercicio.jpg','conteudo/completo/pagina-111-ouros-08-exercicio.jpg','conteudo/completo/pagina-112-ouros-09-exercicio.jpg','conteudo/completo/pagina-113-ouros-10-exercicio.jpg','conteudo/completo/pagina-114-ouros-pajem-exercicio.jpg','conteudo/completo/pagina-115-ouros-cavaleiro-exercicio.jpg','conteudo/completo/pagina-116-ouros-rainha-exercicio.jpg','conteudo/completo/pagina-117-ouros-rei-exercicio.jpg']
   }
 ];
 
@@ -629,6 +652,35 @@ function openModal(sku){
 function closeModal(){document.getElementById('modal-mount').innerHTML='';}
 
 /* ---------- reader ---------- */
+function downloadPDF(sku){
+  const title=(MODULES.find(m=>m.sku===sku)||{}).title||sku;
+  fetch(`/painel/api/modulo-pdf/${sku}?v=${ASSET_VERSION}`,{cache:'no-store'}).then(r=>{
+    if(!r.ok)throw new Error('pdf-fetch-failed');
+    return r.blob().then(blob=>{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=`${title}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }).catch(()=>{
+    window.print();
+  });
+}
+function pdfBottomButton(onClick){
+  const wrap=document.createElement('div');
+  wrap.className='pdf-bottom';
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='btn btn-primary';
+  b.textContent='📥 Baixar PDF do módulo inteiro';
+  b.addEventListener('click',onClick);
+  wrap.appendChild(b);
+  return wrap;
+}
 function openReader(sku){
   location.hash='#ler/'+sku;
   route();
@@ -689,9 +741,14 @@ function renderReader(m){
     // immediately, even below the fold or when restored from a reader URL.
     img.src=assetUrl(path);
   });
+  pages.appendChild(pdfBottomButton(()=>downloadPDF(m.sku)));
   if(m.partial){const title=m.partialTitle||'Arcanos 4–21 · Em atualização ✨';const t=document.createElement('div');t.style.cssText='text-align:center;padding:32px 20px;margin-top:8px;border:1.5px dashed var(--ink-500);border-radius:12px;color:var(--ink-500);';t.innerHTML='<p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 8px;">'+title+'</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Os demais arcanos entram aqui assim que forem publicados — sem custo extra.</p>';pages.appendChild(t);}
 }
 document.getElementById('reader-back').addEventListener('click',()=>{location.hash='#tarot';route();window.scrollTo(0,0);});
+document.getElementById('reader-pdf-btn').addEventListener('click',function(){
+  const sku=document.getElementById('reader-pages').dataset.sku;
+  if(sku)downloadPDF(sku);
+});
 
 /* ---------- router ---------- */
 function show(id){['view-login','view-hub','view-reader'].forEach(v=>{document.getElementById(v).classList.toggle('hidden',v!==id);});}
