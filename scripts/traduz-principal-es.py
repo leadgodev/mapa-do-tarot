@@ -258,6 +258,168 @@ DIAG = {
     ],
 }
 
+# ---------------------------------------------------------------- diagramas 19..45 (medidos página a página)
+GEO.update({
+    "forca": dict(header=(685, 18, 965, 76), title=(570, 88, 1105, 190), strip=(690, 784, 980, 814), boxes=[
+        ((100, 240, 556, 402), "center"), ((100, 470, 556, 656), "center"), ((100, 715, 556, 870), "center"),
+        ((1116, 240, 1572, 402), "center"), ((1116, 470, 1572, 626), "center"), ((1116, 700, 1572, 870), "center")]),
+    "eremita": dict(header=(685, 20, 965, 75), title=(565, 88, 1120, 182), strip=(690, 742, 982, 776), boxes=[
+        ((102, 240, 578, 418), "center"), ((102, 462, 578, 656), "center"), ((102, 705, 578, 852), "center"),
+        ((1108, 240, 1572, 406), "center"), ((1108, 462, 1572, 612), "center"), ((1108, 676, 1572, 856), "center")]),
+    "roda-da-fortuna": dict(header=(695, 20, 960, 75), title=(465, 90, 1235, 165), strip=(672, 768, 1002, 806), boxes=[
+        ((145, 212, 546, 384), "center"), ((145, 440, 546, 664), "center"), ((145, 716, 546, 866), "center"),
+        ((1126, 212, 1526, 378), "center"), ((1126, 440, 1526, 608), "center"), ((1126, 676, 1526, 866), "center")]),
+    "justica": dict(header=(680, 18, 965, 78), title=(585, 92, 1095, 185), strip=(692, 745, 980, 781), boxes=[
+        ((80, 250, 572, 418), "center"), ((80, 478, 572, 642), "center"), ((80, 698, 572, 858), "center"),
+        ((1102, 250, 1596, 412), "center"), ((1102, 478, 1596, 632), "center"), ((1102, 698, 1596, 858), "center")]),
+    "enforcado": dict(header=(695, 18, 965, 76), title=(520, 90, 1160, 176), strip=(690, 745, 982, 777), boxes=[
+        ((105, 236, 576, 402), "center"), ((105, 458, 576, 636), "center"), ((105, 690, 576, 852), "center"),
+        ((1098, 236, 1570, 402), "center"), ((1098, 458, 1570, 618), "center"), ((1098, 686, 1570, 852), "center")]),
+    "morte": dict(header=(700, 18, 965, 76), title=(545, 90, 1132, 186), strip=(690, 766, 980, 798), boxes=[
+        ((88, 252, 562, 426), "center"), ((88, 486, 562, 676), "center"), ((88, 728, 562, 870), "center"),
+        ((1116, 252, 1590, 426), "center"), ((1116, 486, 1590, 650), "center"), ((1116, 712, 1590, 872), "center")]),
+    "temperanca": dict(header=(695, 16, 965, 76), title=(475, 86, 1200, 176), strip=(690, 752, 982, 786), boxes=[
+        ((104, 238, 564, 404), "center"), ((104, 456, 564, 684), "center"), ((104, 736, 564, 868), "center"),
+        ((1108, 238, 1570, 400), "center"), ((1108, 466, 1570, 628), "center"), ((1108, 696, 1570, 868), "center")]),
+    "diabo": dict(header=(685, 16, 965, 76), title=(555, 96, 1115, 190), strip=(695, 760, 980, 788), boxes=[
+        ((92, 252, 552, 406), "center"), ((92, 466, 552, 652), "center"), ((92, 706, 552, 866), "center"),
+        ((1120, 252, 1582, 406), "center"), ((1120, 466, 1582, 634), "center"), ((1120, 692, 1582, 862), "center")]),
+    "torre": dict(header=(685, 16, 965, 78), title=(560, 100, 1120, 192), strip=(692, 762, 980, 796), boxes=[
+        ((96, 262, 572, 410), "center"), ((96, 474, 572, 632), "center"), ((96, 696, 572, 852), "center"),
+        ((1104, 262, 1582, 410), "center"), ((1104, 476, 1582, 624), "center"), ((1104, 688, 1582, 852), "center")]),
+    "estrela": dict(header=(615, 30, 1060, 92), title=(580, 118, 1095, 190), strip=(690, 808, 980, 836), boxes=[
+        ((125, 195, 495, 362), "center"), ((100, 425, 520, 625), "center"), ((130, 690, 490, 840), "center"),
+        ((1190, 190, 1545, 360), "center"), ((1150, 425, 1575, 625), "center"), ((1185, 690, 1550, 840), "center")]),
+    "lua": dict(header=(695, 10, 970, 58), title=(610, 60, 1060, 134), strip=(690, 792, 985, 828), boxes=[
+        ((105, 175, 520, 340), "left"), ((102, 420, 528, 606), "left"), ((102, 676, 528, 812), "left"),
+        ((1160, 180, 1582, 320), "left"), ((1160, 420, 1582, 590), "left"), ((1160, 676, 1582, 822), "left")]),
+    "sol": dict(header=(680, 18, 970, 78), title=(600, 105, 1070, 190), strip=(686, 800, 984, 834), boxes=[
+        ((88, 256, 568, 438), "center"), ((88, 490, 568, 688), "center"), ((88, 736, 568, 878), "center"),
+        ((1104, 256, 1586, 410), "center"), ((1104, 486, 1586, 644), "center"), ((1104, 710, 1586, 878), "center")]),
+    "julgamento": dict(header=(685, 20, 980, 78), title=(470, 96, 1206, 196), strip=(692, 770, 982, 808), boxes=[
+        ((106, 250, 570, 406), "center"), ((108, 466, 570, 652), "center"), ((108, 708, 570, 874), "center"),
+        ((1104, 250, 1570, 406), "center"), ((1104, 466, 1570, 640), "center"), ((1104, 704, 1570, 874), "center")]),
+    "mundo": dict(header=(680, 18, 975, 82), title=(526, 100, 1140, 190), strip=(690, 766, 982, 800), boxes=[
+        ((80, 256, 544, 436), "center"), ((80, 484, 544, 676), "center"), ((80, 726, 544, 884), "center"),
+        ((1126, 256, 1590, 412), "center"), ((1126, 484, 1590, 644), "center"), ((1126, 706, 1590, 884), "center")]),
+})
+
+DIAG.update({
+    "forca": [
+        ("**Significado general:**", "fuerza interior, coraje sereno, dominio de los instintos con gentileza. Poder que no es bruto: es paciencia y amor."),
+        ("**Símbolos y elementos:**", "la mujer cerrando la boca del león sin violencia (dominio suave), el infinito sobre la cabeza (poder infinito), las flores (delicadeza), el león (instinto/pasión). **Elemento:** Fuego/Leo."),
+        ("**Luz × Sombra:**", "Luz = dominar el impulso con serenidad. Sombra = ceder a la ira o sentirse sin fuerza."),
+        ("**Palabras clave** (derecha):", "coraje, fuerza interior, paciencia, compasión, autocontrol."),
+        ("**Palabras clave** (invertida):", "inseguridad, ira reprimida, duda, fuerza bruta."),
+        ("**Combinaciones comunes:**", "con El Carro = dominio interno + externo; con El Diablo = lucha contra el vicio; con El Sol = confianza irradiando."),
+    ],
+    "eremita": [
+        ("**Significado general:**", "búsqueda interior, sabiduría en la soledad, retiro para encontrar respuestas. La luz que se lleva para iluminar el propio camino."),
+        ("**Símbolos y elementos:**", "el farol con la estrella de 6 puntas (verdad interior), el bastón (apoyo/experiencia), el manto (recogimiento), la montaña (elevación conquistada). **Elemento:** Tierra/Virgo."),
+        ("**Luz × Sombra:**", "Luz = recogerse para encontrarse. Sombra = aislarse por miedo, dar la espalda al mundo."),
+        ("**Palabras clave** — derecha:", "introspección, sabiduría, búsqueda, soledad fértil, orientación."),
+        ("**Palabras clave** — invertida:", "aislamiento, soledad dolorosa, huida, negarse a escuchar."),
+        ("**Combinaciones comunes:**", "con La Sacerdotisa = búsqueda interior profunda; con El Loco = comienzo tras la reflexión; con La Estrella = fe encontrada en la soledad."),
+    ],
+    "roda-da-fortuna": [
+        ("**Significado general:**", "ciclos, cambio, destino, suerte que gira. Lo que sube baja y lo que baja sube. Momento de cambio que escapa al control."),
+        ("**Símbolos y elementos:**", "la rueda con letras TARO/ROTA (el girar del destino), las criaturas de las 4 esquinas (los elementos fijos), la esfinge y la serpiente (subida y bajada), Anubis. **Elemento:** Fuego/Júpiter."),
+        ("**Luz × Sombra:**", "Luz = fluir con el cambio, aprovechar el buen giro. Sombra = luchar contra lo inevitable, aferrarse a lo que pasa."),
+        ("**Palabras clave** — derecha:", "ciclos, cambio, suerte, destino, oportunidad."),
+        ("**Palabras clave** — invertida:", "mala suerte aparente, resistencia al cambio, ciclo trabado, mala racha."),
+        ("**Combinaciones comunes:**", "con La Rueda + El Mundo = ciclo completo; con La Torre = cambio brusco; con La Justicia = cosecha de lo sembrado."),
+    ],
+    "justica": [
+        ("**Significado general:**", "equilibrio, verdad, causa y consecuencia. Cada acción tiene su retorno. Decisión justa, responsabilidad, claridad."),
+        ("**Símbolos y elementos:**", "la balanza (peso de las acciones), la espada erguida (verdad que corta), la corona (autoridad de la ley), las columnas (estructura). **Elemento:** Aire/Libra."),
+        ("**Luz × Sombra:**", "Luz = actuar con honestidad y asumir consecuencias. Sombra = engañar, culpar a otros, negar la propia parte."),
+        ("**Palabras clave** (derecha):", "justicia, verdad, equilibrio, responsabilidad, claridad."),
+        ("**Palabras clave** (invertida):", "injusticia, desequilibrio, huir de la responsabilidad, decisión parcial."),
+        ("**Combinaciones comunes:**", "con Los Enamorados = decisión con peso; con La Rueda = cosecha del karma; con El Emperador = ley y orden."),
+    ],
+    "enforcado": [
+        ("**Significado general:**", "pausa, entrega, cambio de perspectiva. Ver el mundo al revés. Sacrificio voluntario que trae sabiduría."),
+        ("**Símbolos y elementos:**", "la figura suspendida por el pie (rendición), el halo (iluminación por la pausa), las manos atrás (aceptación), el árbol vivo en T (vida en espera). **Elemento:** Agua/Neptuno."),
+        ("**Luz × Sombra:**", "Luz = soltar el control y ver desde otro ángulo. Sombra = quedarse atrapado, hacerse víctima sin crecer."),
+        ("**Palabras clave** (derecha):", "pausa, entrega, nueva perspectiva, sacrificio, aceptación."),
+        ("**Palabras clave** (invertida):", "resistencia, estancamiento, martirio inútil, apego."),
+        ("**Combinaciones comunes:**", "con La Muerte = entrega antes de transformar; con La Sacerdotisa = sabiduría en la quietud; con El Loco = pausa antes del salto."),
+    ],
+    "morte": [
+        ("**Significado general:**", "fin y transformación. No es muerte literal: es el cierre que abre espacio para lo nuevo. Dejar ir lo que ya cumplió su ciclo."),
+        ("**Símbolos y elementos:**", "el esqueleto con armadura (lo que es inevitable), la rosa blanca en la bandera (pureza del comienzo), el sol naciendo al fondo (renacimiento), el río (flujo). **Elemento:** Agua/Escorpio."),
+        ("**Luz × Sombra:**", "Luz = aceptar el fin como puerta a lo nuevo. Sombra = aferrarse a lo que ya murió, postergar lo inevitable."),
+        ("**Palabras clave** — derecha:", "fin, transformación, renovación, transición, soltar."),
+        ("**Palabras clave** — invertida:", "resistencia al fin, apego, miedo al cambio, estancamiento."),
+        ("**Combinaciones comunes:**", "con La Torre = fin súbito y radical; con El Sol = renacimiento luminoso; con El Colgado = soltar antes de transformar."),
+    ],
+    "temperanca": [
+        ("**Significado general:**", "equilibrio, moderación, síntesis. Mezclar en la medida justa. Paciencia que armoniza opuestos y sana."),
+        ("**Símbolos y elementos:**", "el ángel vertiendo agua entre dos cálices (flujo equilibrado), un pie en el agua y otro en la tierra (consciente/inconsciente), el camino al sol (el término medio), el arcoíris (alianza). **Elemento:** Fuego/Sagitario."),
+        ("**Luz × Sombra:**", "Luz = encontrar la medida y la calma. Sombra = exagerar, oscilar entre extremos."),
+        ("**Palabras clave** (derecha):", "equilibrio, moderación, paciencia, sanación, armonía."),
+        ("**Palabras clave** (invertida):", "exceso, desequilibrio, impaciencia, extremos."),
+        ("**Combinaciones comunes:**", "con La Estrella = sanación y esperanza; con El Diablo = tentación × moderación; con La Fuerza = autocontrol sereno."),
+    ],
+    "diabo": [
+        ("**Significado general:**", "apego, prisión, sombra, vicio. Las cadenas que uno acepta usar. Materialismo, dependencia, lo que atrapa por deseo."),
+        ("**Símbolos y elementos:**", "las figuras encadenadas (pero las cadenas son flojas: se puede salir), la figura central de la carta (ilusión del poder), la antorcha invertida (energía mal usada), los cuernos. **Elemento:** Tierra/Capricornio."),
+        ("**Luz × Sombra:**", "Luz = reconocer lo que aprisiona y poder soltar. Sombra = negar el vicio, alimentar la dependencia."),
+        ("**Palabras clave** (derecha):", "apego, vicio, tentación, prisión, materialismo."),
+        ("**Palabras clave** (invertida):", "liberación, romper cadenas, enfrentar la sombra, recuperar el poder."),
+        ("**Combinaciones comunes:**", "con Los Enamorados = vínculo tóxico; con La Torre = caída que libera; con La Fuerza = lucha contra el impulso."),
+    ],
+    "torre": [
+        ("**Significado general:**", "ruptura súbita, colapso de lo que era falso, revelación. La estructura frágil se derrumba para que aparezca la verdad. Choque que libera."),
+        ("**Símbolos y elementos:**", "el rayo (verdad que golpea), la corona cayendo (fin del falso poder), las figuras que caen (caída inevitable), las llamas (purificación). **Elemento:** Fuego/Marte."),
+        ("**Luz × Sombra:**", "Luz = dejar caer lo que era falso y empezar de nuevo, más verdadero. Sombra = aferrarse a las ruinas, negar lo que cayó."),
+        ("**Palabras clave** — derecha:", "ruptura, colapso, revelación, choque, liberación abrupta."),
+        ("**Palabras clave** — invertida:", "desastre evitado, resistir al colapso, cambio postergado, miedo al fin."),
+        ("**Combinaciones comunes:**", "con La Muerte = fin total y radical; con La Estrella = curación después del choque; con El Loco = salto forzado por la ruptura."),
+    ],
+    "estrela": [
+        ("**Significado general:**", "esperanza, fe, renovación, inspiración. Después de la tormenta, la luz guía. Sanación, serenidad y conexión con algo mayor."),
+        ("**Símbolos y elementos:**", "la estrella grande y las 7 menores (guía y chakras), la mujer vertiendo agua en la tierra y en el lago (renovar consciente e inconsciente), la desnudez (verdad sin máscaras), el pájaro/ibis. **Elemento:** Aire/Acuario."),
+        ("**Palabras clave** — derecha:", "esperanza, fe, sanación, inspiración, serenidad."),
+        ("**Palabras clave** — invertida:", "desánimo, falta de fe, desconexión, pesimismo."),
+        ("**Luz × Sombra:**", "Luz = confiar de nuevo, renovarse. Sombra = perder la esperanza, cerrarse a la luz."),
+        ("**Combinaciones comunes:**", "con La Torre = curación después del colapso; con La Luna = fe atravesando la neblina; con El Sol = esperanza realizada."),
+    ],
+    "lua": [
+        ("**Significado general:**", "ilusión, miedo, inconsciente, intuición en la oscuridad. Lo que no está claro. Sueños, sombras y la verdad escondida tras la niebla."),
+        ("**Símbolos y elementos:**", "la luna con rostro (el inconsciente), el perro y el lobo (domesticado y salvaje), el cangrejo saliendo del agua (miedos emergiendo), las dos torres (el portal de lo desconocido). **Elemento:** Agua/Piscis."),
+        ("**Palabras clave** — derecha:", "ilusión, intuición, miedo, sueños, confusión."),
+        ("**Palabras clave** — invertida:", "claridad que regresa, miedo superado, verdad revelada, niebla que se disipa."),
+        ("**Luz × Sombra:**", "Luz = navegar lo incierto por la intuición. Sombra = perderse en el miedo y la ilusión, confundir imaginación con realidad."),
+        ("**Combinaciones comunes:**", "con La Sacerdotisa = misterio profundo; con La Estrella = fe en la oscuridad; con El Sol = la niebla se disipa."),
+    ],
+    "sol": [
+        ("**Significado general:**", "alegría, éxito, claridad, vitalidad. La luz plena después de la noche. Realización, verdad a la vista, energía que florece."),
+        ("**Símbolos y elementos:**", "el sol radiante (conciencia plena), el niño en el caballo blanco (pureza y alegría), los girasoles (vida que sigue la luz), la bandera (celebración). **Elemento:** Fuego/Sol."),
+        ("**Luz × Sombra:**", "Luz = vivir la plenitud con verdad. Sombra = disfrazar problemas con un brillo falso."),
+        ("**Palabras clave** — derecha:", "alegría, éxito, claridad, vitalidad, realización."),
+        ("**Palabras clave** — invertida:", "optimismo forzado, brillo opacado, demora en la alegría, ego inflado."),
+        ("**Combinaciones comunes:**", "con La Luna = de la niebla a la claridad; con El Mundo = éxito completo; con La Muerte = renacimiento luminoso."),
+    ],
+    "julgamento": [
+        ("**Significado general:**", "despertar, llamado, renacimiento, balance. Un nuevo nivel de conciencia. Responder al llamado, perdonar, levantarse renovado."),
+        ("**Símbolos y elementos:**", "el ángel con la trompeta (el llamado), las figuras que se levantan de los sepulcros (renacer), la bandera de la cruz (síntesis), las montañas heladas (lo que estaba adormecido). **Elemento:** Fuego/Plutón."),
+        ("**Luz × Sombra:**", "Luz = escuchar el llamado y levantarse renovado. Sombra = ahogarse en la culpa, ignorar el cambio que pide paso."),
+        ("**Palabras clave** (derecha):", "despertar, llamado, renacimiento, perdón, evaluación."),
+        ("**Palabras clave** (invertida):", "autocrítica dura, ignorar el llamado, culpa atrapada, arrepentimiento."),
+        ("**Combinaciones comunes:**", "con La Muerte = fin y renacimiento; con El Mundo = ciclo cumplido; con El Eremita = despertar tras la reflexión."),
+    ],
+    "mundo": [
+        ("**Significado general:**", "conclusión, integración, realización plena. El ciclo que se completa. Sentirse entero, en el lugar justo, listo para comenzar en un nuevo nivel."),
+        ("**Símbolos y elementos:**", "la figura bailando en la corona de laureles (realización), los 4 seres de las esquinas (los elementos integrados), las dos varitas (equilibrio de fuerzas), el círculo (plenitud). **Elemento:** Tierra/Saturno."),
+        ("**Luz × Sombra:**", "Luz = celebrar lo que se completó e integrar todo. Sombra = no cerrar el ciclo, postergar la conclusión."),
+        ("**Palabras clave** — derecha:", "conclusión, realización, integración, plenitud, éxito."),
+        ("**Palabras clave** — invertida:", "ciclo incompleto, falta de cierre, retraso, meta no alcanzada."),
+        ("**Combinaciones comunes:**", "con El Loco = fin que se vuelve comienzo; con El Sol = éxito pleno; con La Rueda = ciclo que se completa y vuelve a girar."),
+    ],
+})
+
+
 # ---------------------------------------------------------------- inpaint
 
 
@@ -435,13 +597,16 @@ def process_diagram(img, slug):
     inpaint(img, g["header"])
     sh, pos = shear_text(DIAG_HEAD_ES, g["header"], lambda s: cg(s, "Medium"), ink_h, 60)
     img.paste(sh, pos, sh)
-    ink_t = ink_color(img, g["title"])
-    inpaint(img, g["title"])
+    t0 = g["title"]
+    t_erase = (t0[0] - 10, t0[1] - 18, t0[2] + 10, t0[3] + 18)
+    ink_t = ink_color(img, t0)
+    inpaint(img, t_erase)
     d = ImageDraw.Draw(img)
     t_rect = g["title"]
     center_text(d, t_rect, title_diag, fit_single(title_diag, tf, t_rect[2] - t_rect[0] - 20, t_rect[3] - t_rect[1] - 6, 96), ink_t)
     for (area, align), (head, body) in zip(g["boxes"], DIAG[slug]):
-        rect = (area[0] - 4, area[1] - 4, area[2] + 4, area[3] + 4)
+        # apaga além da área de escrita: o PT original costuma ser mais alto que o ES
+        rect = (area[0] - 6, area[1] - 14, area[2] + 6, area[3] + 14)
         ink = ink_color(img, rect)
         inpaint(img, rect)
         bw, bh = area[2] - area[0], area[3] - area[1]
@@ -450,6 +615,7 @@ def process_diagram(img, slug):
         draw_layout(d, area, align, layout, ink, total)
     s = g["strip"]
     ink_s = ink_color(img, s)
+    _ = s
     inpaint(img, s)
     d = ImageDraw.Draw(img)
     center_text(d, s, strip_es, fit_single(strip_es, lambda z: cg(z, "Bold"), s[2] - s[0] - 18, s[3] - s[1] - 4, 30), ink_s)
@@ -532,7 +698,12 @@ def process_exercise(img, num, slug):
 
     s_rect = tuple(g["strip"])
     ink_s = ink_color(img, s_rect)
-    inpaint(img, s_rect)
+    if g.get("strip_solid"):
+        # faixa com fundo de papel liso: preenche com a cor do papel (amostrada no canto)
+        from PIL import ImageDraw as _D
+        _D.Draw(img).rectangle(s_rect, fill=img.getpixel((s_rect[0] + 3, s_rect[3] - 3)))
+    else:
+        inpaint(img, s_rect)
     d = ImageDraw.Draw(img)
     f = fit_single(strip_es, lambda z: cg(z, "Bold"), s_rect[2] - s_rect[0] - 18, s_rect[3] - s_rect[1] - 4, 30)
     bb = f.getbbox(strip_es, features=LN)
