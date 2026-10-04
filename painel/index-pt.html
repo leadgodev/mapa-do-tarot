@@ -142,6 +142,29 @@
   .cigano-section .badge-price{background:var(--ink-900);}
   .cigano-section .card.locked .cover img{filter:none;opacity:1;}
   .cigano-section .lock-ov{background:rgba(74,46,31,.4);}
+  /* ===== TREINO CARD (bônus especial · Nível Completo) ===== */
+  .treino-card{display:block;width:100%;padding:0;margin-bottom:24px;background:var(--paper);border-radius:18px;text-align:left;font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;overflow:hidden;position:relative;}
+  .treino-card.unlocked{border:2.5px solid var(--accent);box-shadow:0 0 0 4px rgba(139,63,240,.12),0 10px 30px rgba(139,63,240,.22);}
+  .treino-card.locked{border:1px solid var(--border-soft);opacity:.95;}
+  .treino-pill{position:absolute;top:14px;left:14px;z-index:2;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.03em;padding:5px 12px;border-radius:999px;background:var(--accent);color:#fff;text-transform:uppercase;}
+  .treino-card-wrap{position:relative;}
+  .treino-img-wrap{position:relative;width:100%;aspect-ratio:16/10;max-height:230px;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);overflow:hidden;}
+  .treino-img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block;}
+  .treino-card.locked .treino-img{filter:grayscale(.35) brightness(.55);}
+  .treino-lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(20,10,35,.35);color:#fff;}
+  .treino-lock-ico{font-size:28px;line-height:1;}
+  .treino-lock-text{font-family:var(--font-head);font-weight:700;font-size:13px;letter-spacing:.02em;}
+  .treino-text{display:flex;flex-direction:column;gap:2px;padding:14px 18px 18px;}
+  .treino-title{font-family:var(--font-head);font-weight:800;font-size:16px;color:var(--ink-900);}
+  .treino-sub{font-size:12.5px;color:var(--ink-300);line-height:1.4;}
+  @media(min-width:820px){
+    .treino-card-wrap{display:flex;}
+    .treino-card{display:flex;}
+    .treino-img-wrap{width:340px;max-height:none;aspect-ratio:auto;flex:none;align-self:stretch;}
+    .treino-text{flex:1;justify-content:center;padding:20px 28px;gap:6px;}
+    .treino-title{font-size:19px;}
+    .treino-sub{font-size:13.5px;}
+  }
   .cigano-section .treino-card.unlocked{box-shadow:0 0 0 4px rgba(200,106,63,.16),0 10px 30px rgba(200,106,63,.25);}
   .cigano-section .treino-img-wrap{background:linear-gradient(135deg,#4a2e1f,#c86a3f 65%,#d98a63);}
   .cigano-section .treino-lock{background:rgba(43,26,17,.4);}
@@ -268,6 +291,8 @@
     <button type="button" class="market-back" id="market-back">← Voltar</button>
     <section class="market-section" id="market-tarot">
       <div class="market-head"><span class="m-ico">🔮</span><div><h2>Mapa do Tarot</h2><p>Os teus módulos do Tarot — principal, bónus e itens extra.</p></div></div>
+
+      <div id="treino-card-mount"></div>
 
       <p class="section-title">Os Teus Módulos</p>
       <p class="section-sub">Continua de onde paraste ou desbloqueia novos conteúdos.</p>
@@ -528,6 +553,33 @@ document.getElementById('btn-logout').addEventListener('click',function(){
   api('logout',{}).catch(function(){});clearEmail();setOwned([]);location.hash='';route();
 });
 
+/* ---------- card do App de Treino do Tarot (bónus exclusivo do Nível Completo) ---------- */
+function renderTreinoCard(owned){
+  const mount=document.getElementById('treino-card-mount');
+  const unlocked=owned.includes('completo');
+  const href=unlocked?'treino/':CHECKOUT_URL['completo'];
+  const target=unlocked?'':' target="_blank" rel="noopener"';
+  mount.innerHTML=
+    '<div class="treino-card-wrap">'+
+      '<a class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+(unlocked?'':' data-tk-value="'+memberPrice(14.90,'completo').toFixed(2)+'"')+'>'+
+        '<span class="treino-pill">🎁 Bónus Especial · App de Treino do Tarot</span>'+
+        '<span class="treino-img-wrap">'+
+          '<img class="treino-img" src="'+assetUrl('assets/webp/bonus5-app-treino.webp')+'" alt="App de Treino do Tarot" loading="eager">'+
+          (unlocked?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Disponível no Plano Completo</span></span>')+
+        '</span>'+
+        '<span class="treino-text">'+
+          '<span class="treino-title">App de Treino do Tarot</span>'+
+          '<span class="treino-sub">'+(unlocked?'Estuda e pratica as 78 cartas — quiz, flashcards e progresso.':'Toca para desbloquear no Plano Completo · '+priceBadgeHTML(14.90,'completo'))+'</span>'+
+        '</span>'+
+      '</a>'+
+    '</div>';
+  if(!unlocked){
+    mount.querySelector('a').addEventListener('click',function(){
+      if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Nível Completo · 56 Arcanos Menores',content_type:'product',value:memberPrice(14.90,'completo'),currency:'EUR'});}
+    });
+  }
+}
+
 /* ---------- Baralho Cigano (mercado PT — ainda sem plano/preço aprovado) ---------- */
 function renderCiganoApp(unlocked){
   const mount=document.getElementById('cigano-app-mount');
@@ -597,6 +649,7 @@ function renderHub(){
   document.getElementById('hero-eyebrow').textContent = name? ('Bem-vindo(a), '+name) : 'Bem-vindo(a)';
   const owned=getOwned();
   renderHomeCards(owned);
+  renderTreinoCard(owned);
   const ciganoUnlocked=owned.includes('cigano');
   renderCiganoApp(ciganoUnlocked);
   renderCiganoGrid(ciganoUnlocked);
