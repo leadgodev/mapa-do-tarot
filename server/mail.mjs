@@ -9,9 +9,10 @@ const SKU_NAMES_ES = {
 };
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const LINK = 'https://mapadotarot.leadgo.dev/painel';
-const LINK_ES = 'https://mapadotarot.leadgo.dev/es/painel';
+const LINK_PT = 'https://pt.mapadotarot.leadgo.dev/painel';
+const LINK_ES = 'https://mapadeltarot.leadgo.dev/painel';
 
-export function accessEmail(email, name, skus, lang = 'pt') {
+export function accessEmail(email, name, skus, lang = 'br') {
   if (lang === 'es') {
     const items = skus.map((s) => SKU_NAMES_ES[s] || s);
     const first = String(name || '').trim().split(/\s+/)[0];
@@ -26,17 +27,18 @@ export function accessEmail(email, name, skus, lang = 'pt') {
     const text = `Tu acceso al Mapa del Tarot\n\nTu pago ha sido confirmado y el acceso ya está disponible.\nAccede: ${LINK_ES}\nInicia sesión con: ${email}\n\nCompraste: ${items.join(', ')}\n\nSoporte: support@leadgo.dev`;
     return { subject: 'Tu acceso al Mapa del Tarot', html, text };
   }
+  const link = lang === 'pt' ? LINK_PT : LINK;
   const items = skus.map((s) => SKU_NAMES[s] || s);
   const first = String(name || '').trim().split(/\s+/)[0];
   const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;color:#222;line-height:1.5">
 <h2>Seu acesso ao Mapa do Tarot</h2>
 <p>Olá${first ? ', ' + esc(first) : ''}! Seu pagamento foi confirmado e o acesso já está liberado.</p>
-<p><a href="${LINK}" style="display:inline-block;background:#6b21a8;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none">Acessar meu Mapa do Tarot</a></p>
-<p>Ou copie este link: ${LINK}</p>
+<p><a href="${link}" style="display:inline-block;background:#6b21a8;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none">Acessar meu Mapa do Tarot</a></p>
+<p>Ou copie este link: ${link}</p>
 <p><b>Entre com este e-mail:</b> ${esc(email)}</p>
 <p><b>Você comprou:</b></p><ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
 <p>Precisa de ajuda? Escreva para support@leadgo.dev ou chame no WhatsApp (11) 5177-0499.</p></div>`;
-  const text = `Seu acesso ao Mapa do Tarot\n\nSeu pagamento foi confirmado e o acesso já está liberado.\nAcesse: ${LINK}\nEntre com este e-mail: ${email}\n\nVocê comprou: ${items.join(', ')}\n\nSuporte: support@leadgo.dev / WhatsApp (11) 5177-0499`;
+  const text = `Seu acesso ao Mapa do Tarot\n\nSeu pagamento foi confirmado e o acesso já está liberado.\nAcesse: ${link}\nEntre com este e-mail: ${email}\n\nVocê comprou: ${items.join(', ')}\n\nSuporte: support@leadgo.dev / WhatsApp (11) 5177-0499`;
   return { subject: 'Seu acesso ao Mapa do Tarot', html, text };
 }
 

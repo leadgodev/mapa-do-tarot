@@ -128,7 +128,7 @@ function handleWebhook(payload) {
   db.buyers[email] = b;
   db.tx[tx.id] = true;
   save();
-  if (novos.length) sendAccessEmail(email, b.name, [...skus]).then((id) => console.log('access-email sent', id), (e) => console.error('access-email failed', e.message));
+  if (novos.length) sendAccessEmail(email, b.name, [...skus], 'br').then((id) => console.log('access-email sent', id), (e) => console.error('access-email failed', e.message));
   return { code: 200, body: { ok: true, granted: [...skus] } };
 }
 
@@ -251,10 +251,37 @@ function serveStatic(req, res, pathname) {
   });
 }
 
+// Domínios próprios por idioma (26b1a... Coolify): host decide o idioma, não mais
+// só o prefixo /pt /es. BR continua em mapadotarot.leadgo.dev sem prefixo.
+const HOST_PT = 'pt.mapadotarot.leadgo.dev';
+const HOST_ES = 'mapadeltarot.leadgo.dev';
+const HOST_BR = 'mapadotarot.leadgo.dev';
+
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
-  const p = url.pathname;
+  let p = url.pathname;
+  const host = String(req.headers.host || '').split(':')[0].toLowerCase();
   try {
+    // mapadotarot.leadgo.dev/pt(/*) e /es(/*) -> domínio próprio, 301, path+query intactos.
+    if (host === HOST_BR && (p === '/pt' || p.startsWith('/pt/') || p === '/es' || p.startsWith('/es/'))) {
+      const lang = p.startsWith('/pt') ? 'pt' : 'es';
+      const newHost = lang === 'pt' ? HOST_PT : HOST_ES;
+      const rest = p.slice(3) || '/';
+      res.writeHead(301, { location: `https://${newHost}${rest}${url.search}` });
+      return res.end();
+    }
+    // Domínio PT/ES: reescreve pathname para o prefixo interno já existente,
+    // menos webhook (global) e /painel/api/* (compartilhado, sem prefixo).
+    if ((host === HOST_PT || host === HOST_ES) && !p.startsWith('/painel/api/')) {
+      const lang = host === HOST_PT ? 'pt' : 'es';
+      // /painel/* fora da raiz (treino, conteudo, conteudo-es, assets do painel) é
+      // pasta física compartilhada — não leva prefixo. Só a raiz do painel escolhe idioma.
+      if (p === '/') p = `/${lang}`;
+      else if (p === '/painel' || p === '/painel/' || p === '/painel/index.html') p = `/${lang}/painel`;
+      else if (p === '/termos' || p === '/privacidade') p = `/${lang}${p}`;
+      else if (p.startsWith('/painel/')) { /* mantém: treino, conteudo, conteudo-es, api já fora */ }
+      else if (!p.startsWith(`/${lang}/`) && !p.startsWith('/assets/') && !p.startsWith('/js/')) p = `/${lang}${p}`;
+    }
     if (p === '/painel/api/webhooks/wiven') {
       if (req.method !== 'POST') return json(res, 405, { error: 'method' });
       if (!WEBHOOK_TOKEN) return json(res, 503, { error: 'not-configured' });
