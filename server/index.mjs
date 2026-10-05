@@ -279,6 +279,14 @@ http.createServer(async (req, res) => {
   const host = String(req.headers.host || '').split(':')[0].toLowerCase();
   try {
     // mapadotarot.leadgo.dev/pt(/*) e /es(/*) -> domínio próprio, 301, path+query intactos.
+    // URL de agradecimento e de entrega cadastradas na Mundpay (produto único PT+ES) = /pt/painel
+    // no domínio BR. Não mexemos na Mundpay (edição volta o produto pra análise): aqui ela cai na
+    // página de obrigado em modo automático, que manda pro painel PT ou ES pelo fuso/idioma.
+    if (host === HOST_BR && (p === '/pt/painel' || p === '/pt/painel/')) {
+      const q = new URLSearchParams(url.search); q.set('go', '1');
+      res.writeHead(302, { location: `https://${HOST_PT}/obrigado?${q}`, 'cache-control': 'no-store' });
+      return res.end();
+    }
     if (host === HOST_BR && (p === '/pt' || p.startsWith('/pt/') || p === '/es' || p.startsWith('/es/'))) {
       const lang = p.startsWith('/pt') ? 'pt' : 'es';
       const newHost = lang === 'pt' ? HOST_PT : HOST_ES;

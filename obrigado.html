@@ -59,6 +59,8 @@
     var btn = document.getElementById('btn-' + lang);
     btn.classList.add('main');
     btn.parentNode.insertBefore(btn, document.getElementById('btn-' + (lang === 'es' ? 'pt' : 'es')));
+    // ?go=1 = veio da URL da Mundpay: vai direto, sem contagem.
+    if (/[?&]go=1/.test(location.search)) { location.replace(btn.href); return; }
     var left = 5, auto = document.getElementById('auto'), timer;
     var msg = lang === 'es' ? function (s) { return 'Te llevamos a tu panel en ' + s + 's… '; } : function (s) { return 'A abrir a sua área em ' + s + 's… '; };
     function cancel() { clearInterval(timer); auto.textContent = ''; }
