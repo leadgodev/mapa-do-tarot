@@ -40,11 +40,30 @@ const PRODUCT_SKUS = {
   cmubsk2bd023001pqtloo3zrz: ['perguntas-80'],
   cmubsl72o023t01pq3y1awjpj: ['folha-consulta'],
   cmubwg9a3052l01puaww8hmir: ['combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta'],
-  // Mapa do Baralho Cigano: principal e order bumps da página pública.
-  cmulz3f9a020701oo4fstsegf: ['cigano'],
-  cmurhf87201cu01q2wh0whdz0: ['cigano'], // Guia Flash 36 Cartas
-  cmurhgvnj01ff01q2jkkz4xx7: ['cigano'], // Perguntas que Destravam a Leitura
+  // Order bumps do Baralho Cigano: liberam só o próprio módulo (não o pacote).
+  // O produto principal Cigano (cmulz3f9…) NÃO entra aqui: o plano sai do offerCode (CIGANO_OFFERS).
+  cmurhf87201cu01q2wh0whdz0: ['cigano-flash'], // Guia Flash 36 Cartas
+  cmurhgvnj01ff01q2jkkz4xx7: ['cigano-perguntas'], // Perguntas que Destravam a Leitura
 };
+// Baralho Cigano (produto único cmulz3f9…, 2 planos). O plano vem do offerCode da compra,
+// conferido na Wiven em 05/10/2026 (produto > Ofertas): Plano Básico R$17,90, Popup Básico R$16,90,
+// Plano Completo/Upsell R$27,90, Popup Completo R$22,90 e "Área de Membros" R$18,90 (preço de membro).
+const CIGANO_PRODUCT = 'cmulz3f9a020701oo4fstsegf';
+const CIGANO_OFFERS = {
+  E6JPHKE: ['cigano-basico'], K9XTAHE: ['cigano-basico'],
+  AQNS7ED: ['cigano-completo'], UTK2YWV: ['cigano-completo'], JXE3KNA: ['cigano-completo'],
+};
+// Módulo do Cigano (nome da pasta em painel/conteudo) -> SKUs que liberam. Mapa do Básico é só
+// as 36 cartas (página: "Plano Básico" tem ✦ Mapa e ✗ o resto). Completo libera tudo + app.
+const CIGANO_ACCESS = {
+  'cigano-36cartas': ['cigano-basico', 'cigano-completo'],
+  'cigano-antes': ['cigano-completo'], 'cigano-dicionario': ['cigano-completo'],
+  'cigano-bonus-1': ['cigano-completo'], 'cigano-bonus-2': ['cigano-completo'],
+  'cigano-bonus-3': ['cigano-completo', 'cigano-flash'], 'cigano-bonus-4': ['cigano-completo', 'cigano-perguntas'],
+  'cigano-bonus-5': ['cigano-completo'], 'cigano-app': ['cigano-completo'],
+};
+// SKU antigo 'cigano' (um pacote só, antes da separação em planos) = Completo. Expande na leitura.
+const CIGANO_EXPAND = { cigano: ['cigano-basico', 'cigano-completo'], 'cigano-completo': ['cigano-basico'] };
 // Ofertas do produto principal que incluem o Nível Completo.
 const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW', 'G8MYTZF']);
 const NOT_PAID_EVENT = /CREATED|CANCEL|REFUND|CHARGEBACK|CONTEST|MED|ABANDON|SESSION|TRANSFER|UPDATED/i;
@@ -76,9 +95,23 @@ function cookieEmail(req) {
 }
 // Contas de demonstração/teste: acesso completo sem compra. Login só por e-mail,
 // sem senha — a área de membros inteira é e-mail-only (regra da dona, 29/09/2026).
-const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo', 'guia-flash', 'perguntas-80', 'folha-consulta', 'combo-3-bonus', 'cigano'];
+const DEMO_SKUS = ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo', 'guia-flash', 'perguntas-80', 'folha-consulta', 'combo-3-bonus', 'cigano-completo'];
 for (const e of ['teste-mundpay@leadgo.dev', 'teste-4423c38c@leadgo.dev']) db.buyers[e] = { skus: DEMO_SKUS.slice(), name: 'Teste' };
-const owned = (email) => (db.buyers[email] ? db.buyers[email].skus.slice() : null);
+// Conta de teste só do plano Básico do Cigano (prova de cadeado: Mapa liberado, resto bloqueado).
+db.buyers['teste-cigano-basico@leadgo.dev'] = { skus: ['cigano-basico'], name: 'Teste Básico' };
+// Acesso efetivo: SKU do plano expande (Completo inclui Básico; 'cigano' antigo = Completo).
+const owned = (email) => {
+  if (!db.buyers[email]) return null;
+  const s = new Set(db.buyers[email].skus);
+  for (const k of [...s]) (CIGANO_EXPAND[k] || []).forEach((x) => s.add(x));
+  return [...s];
+};
+// Pasta de conteúdo liberada? Cigano por módulo (CIGANO_ACCESS); Tarot = SKU com o mesmo nome da pasta.
+const canOpenFolder = (o, folder) => {
+  if (!o) return false;
+  if (CIGANO_ACCESS[folder]) return CIGANO_ACCESS[folder].some((s) => o.includes(s));
+  return o.includes(folder);
+};
 
 // rate limit simples por IP
 const hits = new Map();
@@ -111,17 +144,15 @@ function handleWebhook(payload) {
   if (!email || !tx.id) return { code: 400, body: { ok: false, error: 'missing-email-or-transaction' } };
   if (db.tx[tx.id]) return { code: 200, body: { ok: true, duplicate: true } };
   const skus = new Set();
+  const offerCode = String(payload.offerCode || '');
   for (const item of (payload.orderItems || tx.orderItems || [])) {
     const pid = item && item.product && item.product.id;
     (PRODUCT_SKUS[pid] || []).forEach((s) => skus.add(s));
-    if (pid === 'cmubqz6yu010o01pqgcgfw6j0' && COMPLETO_OFFERS.has(String(payload.offerCode || ''))) skus.add('completo');
+    if (pid === 'cmubqz6yu010o01pqgcgfw6j0' && COMPLETO_OFFERS.has(offerCode)) skus.add('completo');
+    // Baralho Cigano: produto único, o plano sai da oferta. Oferta desconhecida = nada liberado (log "ignored").
+    if (pid === CIGANO_PRODUCT) (CIGANO_OFFERS[offerCode] || []).forEach((s) => skus.add(s));
   }
-  // Baralho Cigano ("- Área de Membros", 29/09/2026): produto novo, sem o id interno
-  // do webhook confirmado ainda (só temos o id da URL de checkout, que a Wiven usa
-  // diferente do product.id do payload). Casa pelo offerCode, que é único por oferta
-  // -- não depende do product id.
-  if (['JXE3KNA', 'AQNS7ED'].includes(String(payload.offerCode || ''))) skus.add('cigano');
-  if (!skus.size) return { code: 200, body: { ok: true, ignored: 'no-known-product' } };
+  if (!skus.size) return { code: 200, body: { ok: true, ignored: 'no-known-product', offerCode } };
   const b = db.buyers[email] || { skus: [], name: (payload.client || {}).name || '' };
   const novos = [...skus].filter((s) => !b.skus.includes(s));
   b.skus = [...new Set([...b.skus, ...skus])];
@@ -220,19 +251,24 @@ function serveStatic(req, res, pathname) {
   const mEs = /^\/painel\/conteudo-es\/([^/]+)\//.exec(rel);
   if (m) {
     const o = owned(cookieEmail(req) || '');
-    const skuToCheck = m[1].startsWith('cigano-') || m[1] === 'cigano' ? 'cigano' : m[1];
-    if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
+    if (!canOpenFolder(o, m[1])) return json(res, 403, { error: 'forbidden' });
   }
   if (mEs) {
     const o = owned(cookieEmail(req) || '');
-    const skuToCheck = mEs[1].startsWith('cigano-') || mEs[1] === 'cigano' ? 'cigano' : mEs[1];
-    if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
+    if (!canOpenFolder(o, mEs[1])) return json(res, 403, { error: 'forbidden' });
   }
   // App de Treino (PT e ES): bônus exclusivo do Nível Completo (SKU 'completo').
   if (rel === '/painel/treino' || rel.startsWith('/painel/treino/') || rel === '/painel/treino-es' || rel.startsWith('/painel/treino-es/')) {
     const o = owned(cookieEmail(req) || '');
     if (!o || !o.includes('completo')) {
       res.writeHead(302, { location: '/painel' });
+      return res.end();
+    }
+  }
+  // App de Treino do Baralho Cigano: só Completo do Cigano.
+  if (rel === '/painel/treino-cigano' || rel.startsWith('/painel/treino-cigano/')) {
+    if (!canOpenFolder(owned(cookieEmail(req) || ''), 'cigano-app')) {
+      res.writeHead(302, { location: '/painel#cigano' });
       return res.end();
     }
   }
@@ -381,8 +417,7 @@ http.createServer(async (req, res) => {
       const email = cookieEmail(req);
       const o = email && owned(email);
       const sku = m[1];
-      const skuToCheck = sku.startsWith('cigano-') || sku === 'cigano' ? 'cigano' : sku;
-      if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
+      if (!canOpenFolder(o, sku)) return json(res, 403, { error: 'forbidden' });
       const lang = url.searchParams.get('lang') === 'es' ? 'es' : null;
       // PDF montado na hora com as mesmas páginas do leitor; nome do arquivo = nome do módulo.
       const built = modulePdf(ROOT, sku, lang);

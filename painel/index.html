@@ -400,7 +400,7 @@
 
 // Coolify serves /painel without redirecting to /painel/. Never resolve assets
 // against that document URL: "conteudo/..." would become /conteudo/... (404).
-const ASSET_VERSION = '20261005-cigano-img';
+const ASSET_VERSION = '20261005-cigano-tiers';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
 // Checkout Wiven de cada item avulso. Ofertas "- Área de Membros" (preço de membro,
@@ -620,49 +620,65 @@ function renderTreinoCard(owned){
   }
 }
 
-/* ---------- Baralho Cigano (plano único, SKU 'cigano') ---------- */
-function renderCiganoApp(unlocked){
+/* ---------- Baralho Cigano: 2 planos (Básico = 36 cartas; Completo = tudo + app) + bumps (1 módulo) ---------- */
+// Espelho de CIGANO_ACCESS (server/index.mjs): pasta do módulo -> SKUs que liberam. owned já vem expandido do servidor.
+const CIGANO_ACCESS = {
+  'cigano-36cartas': ['cigano-basico','cigano-completo'],
+  'cigano-antes': ['cigano-completo'], 'cigano-dicionario': ['cigano-completo'],
+  'cigano-bonus-1': ['cigano-completo'], 'cigano-bonus-2': ['cigano-completo'],
+  'cigano-bonus-3': ['cigano-completo','cigano-flash'], 'cigano-bonus-4': ['cigano-completo','cigano-perguntas'],
+  'cigano-bonus-5': ['cigano-completo'], 'cigano-app': ['cigano-completo'],
+};
+const ciganoOwns=(owned,folder)=>(CIGANO_ACCESS[folder]||[]).some(s=>owned.includes(s));
+const ciganoAny=(owned)=>owned.some(s=>s.startsWith('cigano'));
+// Locked: Básico com Mapa comprado faz upgrade pro Completo (checkout de membro); quem não tem nada vai pro upsell.
+const ciganoLockHref=(owned)=>owned.includes('cigano-basico')?CIGANO_URL:'/upsell-cigano/';
+const ciganoTk=(owned)=>owned.includes('cigano-basico')&&!owned.includes('cigano-completo')?' data-tk-value="'+memberPrice(CIGANO_NORMAL).toFixed(2)+'" data-tk-currency="BRL"':'';
+
+function renderCiganoApp(owned){
   const mount=document.getElementById('cigano-app-mount');
-  const cardTag='a';
-  const href=unlocked?'#':'/upsell-cigano/';
-  const target=unlocked?'':'';
+  const full=owned.includes('cigano-completo');
+  const href=full?'#':ciganoLockHref(owned);
+  const target=full?'':' target="_blank" rel="noopener"';
   mount.innerHTML=
     '<div class="treino-card-wrap">'+
-      '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+'>'+
+      '<a class="treino-card '+(full?'unlocked':'locked')+'" href="'+href+'"'+target+(full?'':ciganoTk(owned))+'>'+
         '<span class="treino-pill">🎁 Bônus Especial · App de Treino</span>'+
         '<span class="treino-img-wrap">'+
           '<img class="treino-img" src="'+assetUrl('assets/cigano/bonus-6-cut.webp')+'" alt="App de Treino do Baralho Cigano" loading="eager">'+
-          (unlocked?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Incluso no Baralho Cigano</span></span>')+
+          (full?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Incluso no Plano Completo</span></span>')+
         '</span>'+
         '<span class="treino-text">'+
           '<span class="treino-title">App de Treino do Baralho Cigano</span>'+
-          '<span class="treino-sub">'+(unlocked?'Em atualização — flashcards e treino de combinações no celular.':'Toque para conhecer o plano completo')+'</span>'+
+          '<span class="treino-sub">'+(full?'Em atualização — flashcards e treino de combinações no celular.':'Toque para desbloquear no Plano Completo')+'</span>'+
         '</span>'+
-      '</'+cardTag+'>'+
+      '</a>'+
     '</div>';
-  if(unlocked){mount.querySelector('a').addEventListener('click',e=>e.preventDefault());}
+  if(full){mount.querySelector('a').addEventListener('click',e=>e.preventDefault());}
 }
-function renderCiganoGrid(unlocked){
+function renderCiganoGrid(owned){
   const grid=document.getElementById('cigano-grid');
   grid.innerHTML='';
-  const contentMap=CIGANO_KEY;
   CIGANO_ITEMS.forEach(m=>{
     const card=document.createElement('button');
     card.type='button';
-    const hasContent=contentMap[m.key];
+    const folder=CIGANO_KEY[m.key];
+    const unlocked=ciganoOwns(owned,folder);
+    const basicoOnly=(CIGANO_ACCESS[folder]||[]).includes('cigano-basico');
+    const rd=folder&&CIGANO_READER[folder];
     card.className='card'+(unlocked?'':' locked')+(m.key==='cigano-36cartas'?' cigano-principal':'');
-    const rd=hasContent&&CIGANO_READER[hasContent];const badge = unlocked && !hasContent ? '<span class="badge badge-soon">Em atualização</span>' : unlocked && rd && rd.pages.length<rd.total ? '<span class="badge badge-free">Liberado · '+rd.pages.length+'/'+rd.total+' pág.</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>' : '<span class="badge badge-price">Plano único</span>';
+    const badge = unlocked && !rd ? '<span class="badge badge-soon">Em atualização</span>' : unlocked && rd && rd.pages.length<rd.total ? '<span class="badge badge-free">Liberado · '+rd.pages.length+'/'+rd.total+' pág.</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>' : '<span class="badge badge-price">'+(basicoOnly?'Plano Básico':'Plano Completo')+'</span>';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
-    const cta = unlocked && !hasContent ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : 'Desbloquear';
+    const cta = unlocked && !rd ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : 'Desbloquear';
     card.innerHTML=
       '<span class="cover"><img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="lazy">'+badge+lockOv+'</span>'+
       '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
-    if(unlocked && !hasContent) {
+    if(unlocked && !rd) {
       card.addEventListener('click',e=>e.preventDefault());
-    } else if(unlocked && hasContent) {
-      card.addEventListener('click',()=>{location.hash='#cigano-ler/'+hasContent;route();});
+    } else if(unlocked) {
+      card.addEventListener('click',()=>{location.hash='#cigano-ler/'+folder;route();});
     } else {
-      card.addEventListener('click',()=>{window.open('/upsell-cigano/','_blank','noopener');});
+      card.addEventListener('click',()=>{window.open(ciganoLockHref(owned),'_blank','noopener');});
     }
     grid.appendChild(card);
   });
@@ -670,7 +686,7 @@ function renderCiganoGrid(unlocked){
 
 /* ---------- home (2 cards de produto) ---------- */
 function renderHomeCards(owned){
-  const ciganoUnlocked=owned.includes('cigano');
+  const ciganoUnlocked=ciganoAny(owned);
   const grid=document.getElementById('home-grid');
   grid.innerHTML=
     '<button type="button" class="home-card" data-market="tarot">'+
@@ -704,16 +720,15 @@ function renderHub(){
   const owned=getOwned();
   renderHomeCards(owned);
   renderTreinoCard(owned);
-  const ciganoUnlocked=owned.includes('cigano');
-  renderCiganoApp(ciganoUnlocked);
-  renderCiganoGrid(ciganoUnlocked);
+  renderCiganoApp(owned);
+  renderCiganoGrid(owned);
   const ciganoCta=document.getElementById('cigano-cta');
-  ciganoCta.classList.toggle('hidden',ciganoUnlocked);
+  ciganoCta.classList.toggle('hidden',owned.includes('cigano-completo'));
   ciganoCta.href=CIGANO_URL;
   ciganoCta.setAttribute('data-tk-value', memberPrice(CIGANO_NORMAL).toFixed(2));
   ciganoCta.target='_blank';
   ciganoCta.rel='noopener';
-  ciganoCta.innerHTML='Quero o Baralho Cigano — '+priceBadgeHTML(CIGANO_NORMAL);
+  ciganoCta.innerHTML=(owned.includes('cigano-basico')?'Fazer upgrade para o Completo — ':'Quero o Baralho Cigano — ')+priceBadgeHTML(CIGANO_NORMAL);
   ciganoCta.onclick=function(){
     if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Mapa do Baralho Cigano',content_type:'product',value:memberPrice(CIGANO_NORMAL),currency:'BRL'});}
   };
@@ -962,7 +977,7 @@ function route(){
   if(h.startsWith('#cigano-ler/')){
     const mapKey=h.slice(12);
     const owned=getOwned();
-    if(owned.includes('cigano')&&CIGANO_READER[mapKey]){show('view-cigano');renderCigano(mapKey);return;}
+    if(CIGANO_READER[mapKey]&&ciganoOwns(owned,mapKey)){show('view-cigano');renderCigano(mapKey);return;}
     location.hash='#hub';
   }
   renderHub();
