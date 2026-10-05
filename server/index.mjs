@@ -44,6 +44,8 @@ const PRODUCT_SKUS = {
   // O produto principal Cigano (cmulz3f9…) NÃO entra aqui: o plano sai do offerCode (CIGANO_OFFERS).
   cmurhf87201cu01q2wh0whdz0: ['cigano-flash'], // Guia Flash 36 Cartas
   cmurhgvnj01ff01q2jkkz4xx7: ['cigano-perguntas'], // Perguntas que Destravam a Leitura
+  cmuvsdyya006l01pret3q6em9: ['cigano-folha'], // Folha de Consulta Cigana (criada 05/10/2026)
+  cmuvsiah400qe01oeqwtu33pe: ['cigano-combo', 'cigano-flash', 'cigano-perguntas', 'cigano-folha'], // Combo dos 3 (Guia Flash + Perguntas + Folha)
 };
 // Baralho Cigano (produto único cmulz3f9…, 2 planos). O plano vem do offerCode da compra,
 // conferido na Wiven em 05/10/2026 (produto > Ofertas): Plano Básico R$17,90, Popup Básico R$16,90,
@@ -55,12 +57,15 @@ const CIGANO_OFFERS = {
 };
 // Módulo do Cigano (nome da pasta em painel/conteudo) -> SKUs que liberam. Mapa do Básico é só
 // as 36 cartas (página: "Plano Básico" tem ✦ Mapa e ✗ o resto). Completo libera tudo + app.
+// Guia Flash (bonus-3) e Perguntas (bonus-4) são order bumps: NÃO entram no Completo. Combo libera os 3.
 const CIGANO_ACCESS = {
   'cigano-36cartas': ['cigano-basico', 'cigano-completo'],
   'cigano-antes': ['cigano-completo'], 'cigano-dicionario': ['cigano-completo'],
   'cigano-bonus-1': ['cigano-completo'], 'cigano-bonus-2': ['cigano-completo'],
-  'cigano-bonus-3': ['cigano-completo', 'cigano-flash'], 'cigano-bonus-4': ['cigano-completo', 'cigano-perguntas'],
+  'cigano-intuitiva': ['cigano-completo'], 'cigano-cuidado': ['cigano-completo'],
   'cigano-bonus-5': ['cigano-completo'], 'cigano-app': ['cigano-completo'],
+  'cigano-bonus-3': ['cigano-flash', 'cigano-combo'], 'cigano-bonus-4': ['cigano-perguntas', 'cigano-combo'],
+  'cigano-folha': ['cigano-folha', 'cigano-combo'], 'cigano-combo': ['cigano-combo'],
 };
 // SKU antigo 'cigano' (um pacote só, antes da separação em planos) = Completo. Expande na leitura.
 const CIGANO_EXPAND = { cigano: ['cigano-basico', 'cigano-completo'], 'cigano-completo': ['cigano-basico'] };

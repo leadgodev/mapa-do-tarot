@@ -185,6 +185,7 @@
   .cigano-section .card.locked .cover img{filter:none;opacity:1;}
   .cigano-section .card.cigano-principal .cover img{object-fit:contain;background:#f1e2c4;}
   .cigano-section .lock-ov{background:rgba(74,46,31,.4);}
+  .cigano-section .cig-ph{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:44px;background:linear-gradient(135deg,#4a2e1f,#c86a3f 65%,#d98a63);}
   .cigano-section .treino-card.unlocked{box-shadow:0 0 0 4px rgba(200,106,63,.16),0 10px 30px rgba(200,106,63,.25);}
   .cigano-section .treino-img-wrap{background:linear-gradient(135deg,#4a2e1f,#c86a3f 65%,#d98a63);}
   .cigano-section .treino-lock{background:rgba(43,26,17,.4);}
@@ -353,9 +354,13 @@
 
       <div id="cigano-app-mount"></div>
 
-      <p class="section-title">Itens do Baralho Cigano</p>
-      <p class="section-sub">Plano único: 1 item principal + 6 bônus, incluindo o App de Treino.</p>
+      <p class="section-title">Baralho Cigano · Plano Básico e Completo</p>
+      <p class="section-sub">Básico = as 36 cartas. Completo = tudo acima + bônus + App de Treino.</p>
       <div class="grid" id="cigano-grid"></div>
+
+      <p class="section-title">Ofertas especiais do Baralho Cigano</p>
+      <p class="section-sub">Vendidas à parte. Cada uma libera só o próprio módulo; o Combo libera os três.</p>
+      <div class="grid" id="cigano-grid-bumps"></div>
     </section>
     </div>
   </main>
@@ -545,20 +550,29 @@ const MODULES = [
 
 // Baralho Cigano — plano único (SKU 'cigano'), sem checkout próprio ainda: CTA vai pra /upsell-cigano/.
 const CIGANO_APP = {key:'cigano-app', title:'App de Treino do Baralho Cigano', subtitle:'Flashcards e treino de combinações no celular.'};
+// Ordem: Básico (36 cartas) → Completo (Antes, Dicionário, bônus, App) → bumps (grade própria).
+// cover null = mockup Cigano ainda não entregue: card 'Em breve' com placeholder terroso (sem arte do Tarot).
 const CIGANO_ITEMS = [
-  {key:'cigano-antes', title:'Antes de Começar', subtitle:'Embaralhar, cortar, escolher cartas, polaridade, ler cartas juntas.', cover:'assets/cigano/carta-coracao.webp'},
   {key:'cigano-36cartas', title:'As 36 Cartas', subtitle:'Mapa visual completo carta a carta — igual ao Tarot.', cover:'assets/cigano/capa-cigano.webp'},
+  {key:'cigano-antes', title:'Antes de Começar', subtitle:'Embaralhar, cortar, escolher cartas, polaridade, ler cartas juntas.', cover:'assets/cigano/carta-coracao.webp'},
   {key:'cigano-dicionario', title:'Dicionário Visual de Combinações', subtitle:'200+ combinações: leitura, no amor, como conselho.', cover:'assets/cigano/carta-sol.webp'},
   {key:'cigano-tiragens', title:'Bônus 1 · Livro das Tiragens Ciganas', subtitle:'15 tiragens prontas, com exemplo preenchido e raciocínio.', cover:'assets/cigano/bonus-1-cut.webp'},
   {key:'cigano-primeira', title:'Bônus 2 · Minha Primeira Tiragem Cigana', subtitle:'Passo a passo em 10 etapas, 3 cartas até virar frase.', cover:'assets/cigano/bonus-2-cut.webp'},
-  {key:'cigano-flash', title:'Bônus 3 · Guia Flash das 36 Cartas', subtitle:'1 card por carta pra consultar no celular durante a leitura.', cover:'assets/cigano/bonus-3-cut.webp'},
-  {key:'cigano-perguntas', title:'Bônus 4 · Perguntas que Destravam a Leitura', subtitle:'Por área: amor, trabalho, dinheiro, família, decisões.', cover:'assets/cigano/bonus-4-cut.webp'},
+  {key:'cigano-intuitiva', title:'Bônus 3 · Interpretação Intuitiva', subtitle:'Ler as cartas pelo que elas despertam, passo a passo.', cover:null},
+  {key:'cigano-cuidado', title:'Bônus 4 · Cuidando do Baralho', subtitle:'Guardar, limpar e reconhecer quando o baralho pede descanso.', cover:null},
   {key:'cigano-mesa-real', title:'Bônus 5 · Introdução à Mesa Real', subtitle:'Casas, linhas, colunas, diagonais — exemplo comentado.', cover:'assets/cigano/bonus-5-cut.webp'}
+];
+// Order bumps do Cigano (espelho do Tarot, adaptados). Checkout = Wiven, produto cadastrado no Básico e no Completo.
+const CIGANO_BUMPS = [
+  {key:'cigano-flash', title:'Guia Flash das 36 Cartas', subtitle:'1 card por carta pra consultar no celular durante a leitura.', cover:'assets/cigano/bonus-3-cut.webp'},
+  {key:'cigano-perguntas', title:'Perguntas que Destravam a Leitura', subtitle:'Por área: amor, trabalho, dinheiro, família, decisões.', cover:'assets/cigano/bonus-4-cut.webp'},
+  {key:'cigano-folha', title:'Folha de Consulta Cigana', subtitle:'Uma folha para consultar as 36 cartas e as combinações mais usadas.', cover:null},
+  {key:'cigano-combo', title:'Combo dos 3', subtitle:'Guia Flash + Perguntas + Folha de Consulta, com desconto.', cover:null}
 ];
 
 // Módulos do Cigano = páginas-imagem (JPG 900w) + PDF por módulo. Gerado por scripts/build-cigano-modulos.py; total = páginas do módulo completo.
 const CIGANO_READER = {"cigano-antes": {"pages": ["conteudo/cigano-antes/pagina-002-seu-caminho-pelo-metodo-3c.jpg", "conteudo/cigano-antes/pagina-003-conheca-as-36-cartas.jpg", "conteudo/cigano-antes/pagina-004-faca-uma-pergunta-que-ajude.jpg", "conteudo/cigano-antes/pagina-005-embaralhe-e-corte.jpg", "conteudo/cigano-antes/pagina-006-escolha-as-cartas-e-as-posicoes.jpg", "conteudo/cigano-antes/pagina-010-registre-e-revise.jpg"], "total": 10}, "cigano-36cartas": {"pages": ["conteudo/cigano-36cartas/pagina-002-01-o-cavaleiro.jpg", "conteudo/cigano-36cartas/pagina-015-14-a-raposa.jpg", "conteudo/cigano-36cartas/pagina-025-24-o-coracao.jpg", "conteudo/cigano-36cartas/pagina-032-31-o-sol.jpg"], "total": 38}, "cigano-dicionario": {"pages": ["conteudo/cigano-dicionario/pagina-002-como-consultar-o-dicionario.jpg", "conteudo/cigano-dicionario/pagina-075-treine-uma-combinacao.jpg"], "total": 75}, "cigano-bonus-1": {"pages": ["conteudo/cigano-bonus-1/pagina-002-escolha-e-prepare-a-tiragem.jpg", "conteudo/cigano-bonus-1/pagina-003-mensagem-do-dia-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-005-amor-e-aproximacao-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-007-cuidando-do-relacionamento-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-009-trabalho-e-proximo-passo-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-011-organizando-o-dinheiro-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-013-decisao-consciente-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-015-comparando-dois-caminhos-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-017-familia-e-convivencia-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-019-projeto-em-andamento-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-021-recomeco-com-cuidado-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-023-autoconhecimento-pratico-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-025-uma-semana-de-pratica-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-027-cruz-de-cinco-cartas-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-029-quadro-de-nove-cartas-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-031-planejamento-de-doze-meses-disposicao.jpg", "conteudo/cigano-bonus-1/pagina-033-minha-leitura-registrada.jpg"], "total": 33}, "cigano-bonus-2": {"pages": ["conteudo/cigano-bonus-2/pagina-002-etapa-01-escolha-um-tema.jpg", "conteudo/cigano-bonus-2/pagina-003-etapa-02-escreva-a-pergunta.jpg", "conteudo/cigano-bonus-2/pagina-004-etapa-03-prepare-o-baralho.jpg", "conteudo/cigano-bonus-2/pagina-010-etapa-09-escolha-uma-atitude-possivel.jpg", "conteudo/cigano-bonus-2/pagina-011-etapa-10-registre-e-encerre.jpg", "conteudo/cigano-bonus-2/pagina-012-minha-primeira-frase.jpg"], "total": 12}, "cigano-bonus-3": {"pages": ["conteudo/cigano-bonus-3/pagina-002-card-01-o-cavaleiro.jpg", "conteudo/cigano-bonus-3/pagina-015-card-14-a-raposa.jpg", "conteudo/cigano-bonus-3/pagina-025-card-24-o-coracao.jpg", "conteudo/cigano-bonus-3/pagina-032-card-31-o-sol.jpg"], "total": 37}, "cigano-bonus-4": {"pages": ["conteudo/cigano-bonus-4/pagina-001-perguntas-que-destravam-a-leitura.jpg", "conteudo/cigano-bonus-4/pagina-002-como-escolher-e-adaptar.jpg", "conteudo/cigano-bonus-4/pagina-003-amor-e-aproximacao.jpg", "conteudo/cigano-bonus-4/pagina-004-relacionamento-e-convivencia.jpg", "conteudo/cigano-bonus-4/pagina-005-trabalho-e-carreira.jpg", "conteudo/cigano-bonus-4/pagina-006-dinheiro-e-organizacao.jpg", "conteudo/cigano-bonus-4/pagina-007-familia-e-vinculos.jpg", "conteudo/cigano-bonus-4/pagina-008-decisoes-e-caminhos.jpg", "conteudo/cigano-bonus-4/pagina-009-projetos-e-mudancas.jpg", "conteudo/cigano-bonus-4/pagina-010-autoconhecimento-e-rotina.jpg", "conteudo/cigano-bonus-4/pagina-011-minha-pergunta-bem-definida.jpg"], "total": 11}, "cigano-bonus-5": {"pages": ["conteudo/cigano-bonus-5/pagina-002-o-que-e-a-mesa-real.jpg", "conteudo/cigano-bonus-5/pagina-003-como-montar-as-36-posicoes.jpg", "conteudo/cigano-bonus-5/pagina-005-as-casas-1-a-18.jpg", "conteudo/cigano-bonus-5/pagina-006-as-casas-19-a-36.jpg", "conteudo/cigano-bonus-5/pagina-007-lendo-linhas-e-colunas.jpg", "conteudo/cigano-bonus-5/pagina-008-vizinhancas-e-diagonais.jpg", "conteudo/cigano-bonus-5/pagina-011-do-quadro-para-uma-resposta.jpg", "conteudo/cigano-bonus-5/pagina-012-minha-primeira-mesa-real.jpg"], "total": 12}};
-const CIGANO_KEY = {'cigano-antes':'cigano-antes','cigano-36cartas':'cigano-36cartas','cigano-dicionario':'cigano-dicionario','cigano-tiragens':'cigano-bonus-1','cigano-primeira':'cigano-bonus-2','cigano-flash':'cigano-bonus-3','cigano-perguntas':'cigano-bonus-4','cigano-mesa-real':'cigano-bonus-5'};
+const CIGANO_KEY = {'cigano-antes':'cigano-antes','cigano-36cartas':'cigano-36cartas','cigano-dicionario':'cigano-dicionario','cigano-tiragens':'cigano-bonus-1','cigano-primeira':'cigano-bonus-2','cigano-intuitiva':'cigano-intuitiva','cigano-cuidado':'cigano-cuidado','cigano-flash':'cigano-bonus-3','cigano-perguntas':'cigano-bonus-4','cigano-folha':'cigano-folha','cigano-combo':'cigano-combo','cigano-mesa-real':'cigano-bonus-5'};
 
 const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10V7a6 6 0 1112 0v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="11" rx="2.5" fill="#fff"/><circle cx="12" cy="15" r="1.6" fill="#14242f"/><path d="M12 16.4V18" stroke="#14242f" stroke-width="1.8" stroke-linecap="round"/></svg>';
 
@@ -626,8 +640,10 @@ const CIGANO_ACCESS = {
   'cigano-36cartas': ['cigano-basico','cigano-completo'],
   'cigano-antes': ['cigano-completo'], 'cigano-dicionario': ['cigano-completo'],
   'cigano-bonus-1': ['cigano-completo'], 'cigano-bonus-2': ['cigano-completo'],
-  'cigano-bonus-3': ['cigano-completo','cigano-flash'], 'cigano-bonus-4': ['cigano-completo','cigano-perguntas'],
+  'cigano-intuitiva': ['cigano-completo'], 'cigano-cuidado': ['cigano-completo'],
   'cigano-bonus-5': ['cigano-completo'], 'cigano-app': ['cigano-completo'],
+  'cigano-bonus-3': ['cigano-flash','cigano-combo'], 'cigano-bonus-4': ['cigano-perguntas','cigano-combo'],
+  'cigano-folha': ['cigano-folha','cigano-combo'], 'cigano-combo': ['cigano-combo'],
 };
 const ciganoOwns=(owned,folder)=>(CIGANO_ACCESS[folder]||[]).some(s=>owned.includes(s));
 const ciganoAny=(owned)=>owned.some(s=>s.startsWith('cigano'));
@@ -656,10 +672,14 @@ function renderCiganoApp(owned){
     '</div>';
   if(full){mount.querySelector('a').addEventListener('click',e=>e.preventDefault());}
 }
+// Bumps: cadeado + compra via a página do Cigano até o checkout de cada bump existir na Wiven.
+const CIGANO_BUMP_HREF=null;
 function renderCiganoGrid(owned){
   const grid=document.getElementById('cigano-grid');
+  const bumps=document.getElementById('cigano-grid-bumps');
   grid.innerHTML='';
-  CIGANO_ITEMS.forEach(m=>{
+  bumps.innerHTML='';
+  const paint=(target,list,isBump)=>list.forEach(m=>{
     const card=document.createElement('button');
     card.type='button';
     const folder=CIGANO_KEY[m.key];
@@ -667,21 +687,25 @@ function renderCiganoGrid(owned){
     const basicoOnly=(CIGANO_ACCESS[folder]||[]).includes('cigano-basico');
     const rd=folder&&CIGANO_READER[folder];
     card.className='card'+(unlocked?'':' locked')+(m.key==='cigano-36cartas'?' cigano-principal':'');
-    const badge = unlocked && !rd ? '<span class="badge badge-soon">Em atualização</span>' : unlocked && rd && rd.pages.length<rd.total ? '<span class="badge badge-free">Liberado · '+rd.pages.length+'/'+rd.total+' pág.</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>' : '<span class="badge badge-price">'+(basicoOnly?'Plano Básico':'Plano Completo')+'</span>';
+    const priceLabel = isBump ? 'Oferta especial' : (basicoOnly?'Plano Básico':'Plano Completo');
+    const badge = unlocked && !rd ? '<span class="badge badge-soon">Em atualização</span>' : unlocked && rd && rd.pages.length<rd.total ? '<span class="badge badge-free">Liberado · '+rd.pages.length+'/'+rd.total+' pág.</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>' : '<span class="badge badge-price">'+priceLabel+'</span>';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
-    const cta = unlocked && !rd ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : 'Desbloquear';
+    const cta = unlocked && !rd ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : (isBump ? 'Comprar oferta' : 'Desbloquear');
+    const coverHTML = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="lazy">' : '<span class="cig-ph" aria-hidden="true">🃏</span>';
     card.innerHTML=
-      '<span class="cover"><img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="lazy">'+badge+lockOv+'</span>'+
+      '<span class="cover">'+coverHTML+badge+lockOv+'</span>'+
       '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
     if(unlocked && !rd) {
       card.addEventListener('click',e=>e.preventDefault());
     } else if(unlocked) {
       card.addEventListener('click',()=>{location.hash='#cigano-ler/'+folder;route();});
     } else {
-      card.addEventListener('click',()=>{window.open(ciganoLockHref(owned),'_blank','noopener');});
+      card.addEventListener('click',()=>{window.open(CIGANO_BUMP_HREF||ciganoLockHref(owned),'_blank','noopener');});
     }
-    grid.appendChild(card);
+    target.appendChild(card);
   });
+  paint(grid,CIGANO_ITEMS,false);
+  paint(bumps,CIGANO_BUMPS,true);
 }
 
 /* ---------- home (2 cards de produto) ---------- */
