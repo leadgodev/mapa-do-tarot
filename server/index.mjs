@@ -272,6 +272,8 @@ function serveStatic(req, res, pathname) {
 const HOST_PT = 'pt.mapadotarot.leadgo.dev';
 const HOST_ES = 'mapadeltarot.leadgo.dev';
 const HOST_BR = 'mapadotarot.leadgo.dev';
+// Domínio decide o idioma nos hosts novos (PT e ES); o BR legado segue o lang do comprador.
+const hostLang = (req) => { const h = String(req.headers.host || '').split(':')[0].toLowerCase(); return h === HOST_PT ? 'pt' : h === HOST_ES ? 'es' : null; };
 
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
@@ -348,14 +350,14 @@ http.createServer(async (req, res) => {
       const email = String(b.email || '').trim().toLowerCase();
       const o = owned(email);
       if (!o) return json(res, 404, { error: 'not-found' });
-      const lang = db.buyers[email]?.lang || 'pt';
+      const lang = hostLang(req) || db.buyers[email]?.lang || 'pt';
       return json(res, 200, { ok: true, owned: o, lang }, { 'set-cookie': `mdt_s=${makeCookie(email)}; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=${SESSION_TTL}` });
     }
     if (p === '/painel/api/me') {
       const email = cookieEmail(req);
       const o = email && owned(email);
       if (!o) return json(res, 401, { error: 'no-session' });
-      const lang = db.buyers[email]?.lang || 'pt';
+      const lang = hostLang(req) || db.buyers[email]?.lang || 'pt';
       return json(res, 200, { ok: true, email, owned: o, lang });
     }
     if (p === '/painel/api/logout') return json(res, 200, { ok: true }, { 'set-cookie': 'mdt_s=; Path=/painel; HttpOnly; Secure; SameSite=Lax; Max-Age=0' });
@@ -441,7 +443,7 @@ http.createServer(async (req, res) => {
     if (p === '/pt/painel' || p === '/pt/painel/index.html' || p === '/es/painel' || p === '/es/painel/index.html') {
       const urlLang = url.searchParams.get('lang');
       const okLang = (v) => (v === 'es' || v === 'pt' ? v : null);
-      let lang = okLang(urlLang);
+      let lang = hostLang(req) || okLang(urlLang);
       const m_lang = /(?:^|;\s*)mdt_lang=([^;]+)/.exec(req.headers.cookie || '');
       if (!lang && m_lang) lang = okLang(m_lang[1]);
       const email = cookieEmail(req);
