@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mapa del Tarot — Acceso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Poppins:wght@400;500;700;800&display=swap">
+<style>
+  :root{
+    --teal-900:#1b1035; --cream-100:#f7efe2; --cream-200:#f0e5d3; --paper:#faf4ea;
+    --accent:#8b3ff0; --accent-press:#6d28d9; --accent-soft:#d9c2ff;
+    --ink-900:#14242f; --ink-700:#1b3340; --ink-500:#34505d;
+    --font-display:'Cormorant Garamond',Georgia,serif; --font-body:'Poppins',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px; background:var(--teal-900); font-family:var(--font-body); color:var(--ink-700);}
+  .card{width:100%; max-width:460px; background:var(--paper); border-radius:20px; padding:32px 24px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.35);}
+  .check{width:64px; height:64px; margin:0 auto 16px; border-radius:999px; background:var(--accent-soft); color:var(--accent-press); display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:800;}
+  h1{font-family:var(--font-display); font-size:32px; line-height:1.1; color:var(--ink-900); margin:0 0 6px;}
+  h1 + p.sub{margin:0 0 4px; font-family:var(--font-display); font-size:22px; color:var(--ink-500);}
+  .note{font-size:14px; line-height:1.5; margin:18px 0 22px;}
+  .btn{display:block; width:100%; padding:16px 18px; margin:0 0 12px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px; letter-spacing:.02em; border:2px solid var(--accent); background:var(--cream-200); color:var(--ink-900); transition:background .2s, color .2s;}
+  .btn small{display:block; font-weight:500; font-size:12px; opacity:.8; margin-top:2px;}
+  .btn:hover,.btn.main{background:var(--accent); color:#fff;}
+  .auto{font-size:13px; color:var(--ink-500); margin:6px 0 0; min-height:20px;}
+  .auto button{background:none; border:none; padding:0; color:var(--accent-press); text-decoration:underline; font:inherit; cursor:pointer;}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="check" aria-hidden="true">✓</div>
+  <h1>¡Gracias por tu compra!</h1>
+  <p class="sub">Obrigado pela sua compra!</p>
+  <p class="note">Entra con el <strong>mismo correo que usaste en la compra</strong>.<br>Entre com o <strong>mesmo e-mail da compra</strong>.</p>
+  <a class="btn" id="btn-es" href="https://mapadeltarot.leadgo.dev/painel?lang=es">Acceder a mi panel<small>Español</small></a>
+  <a class="btn" id="btn-pt" href="https://pt.mapadotarot.leadgo.dev/painel?lang=pt">Aceder à minha área<small>Português (Portugal)</small></a>
+  <p class="auto" id="auto"></p>
+</main>
+<script>
+  // Escolhe o idioma provável (fuso + idioma do aparelho), destaca o botão e
+  // redireciona em 5s. Qualquer clique ou "quedarme aquí" cancela.
+  (function () {
+    var lang = null;
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (/^(Europe\/Lisbon|Atlantic\/(Azores|Madeira))$/.test(tz)) lang = 'pt';
+      else if (/^(Europe\/Madrid|Africa\/Ceuta|Atlantic\/Canary)$/.test(tz)) lang = 'es';
+      else if (tz.indexOf('America/') === 0 && !/Sao_Paulo|Bahia|Fortaleza|Recife|Belem|Manaus|Cuiaba|Campo_Grande|Porto_Velho|Boa_Vista|Rio_Branco|Maceio|Araguaina|Santarem|Noronha/.test(tz)) lang = 'es';
+    } catch (e) {}
+    if (!lang) {
+      var nl = (navigator.language || '').toLowerCase();
+      if (nl.indexOf('es') === 0) lang = 'es';
+      else if (nl.indexOf('pt') === 0) lang = 'pt';
+    }
+    if (!lang) return;
+    var btn = document.getElementById('btn-' + lang);
+    btn.classList.add('main');
+    btn.parentNode.insertBefore(btn, document.getElementById('btn-' + (lang === 'es' ? 'pt' : 'es')));
+    var left = 5, auto = document.getElementById('auto'), timer;
+    var msg = lang === 'es' ? function (s) { return 'Te llevamos a tu panel en ' + s + 's… '; } : function (s) { return 'A abrir a sua área em ' + s + 's… '; };
+    function cancel() { clearInterval(timer); auto.textContent = ''; }
+    function tick() {
+      if (left <= 0) { clearInterval(timer); location.href = btn.href; return; }
+      auto.innerHTML = msg(left) + '<button type="button" id="stay">' + (lang === 'es' ? 'quedarme aquí' : 'ficar aqui') + '</button>';
+      document.getElementById('stay').onclick = cancel;
+      left--;
+    }
+    tick(); timer = setInterval(tick, 1000);
+  })();
+</script>
+</body>
+</html>

@@ -246,7 +246,7 @@
   <header class="topbar">
     <div class="brand"><span class="star">✦</span> Mapa del Tarot</div>
     <div class="topbar-right">
-      <a class="lang-switch" href="/pt/painel?lang=pt">Ver en portugués</a>
+      <a class="lang-switch" href="https://pt.mapadotarot.leadgo.dev/painel?lang=pt">Ver en portugués</a>
       <a class="support" href="mailto:support@leadgo.dev">Soporte</a>
       <button class="logout" id="btn-logout">Salir</button>
     </div>
@@ -415,7 +415,7 @@ loginForm.addEventListener('submit',async function(ev){
 
   if(r.data.lang && r.data.lang === 'pt'){
     try{sessionStorage.setItem('mdt_lang_redirect_done','1');}catch(e){}
-    location.replace('/pt/painel?lang=pt');
+    location.replace('https://pt.mapadotarot.leadgo.dev/painel?lang=pt');
     return;
   }
 

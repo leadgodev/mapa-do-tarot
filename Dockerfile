@@ -1,6 +1,6 @@
 FROM node:22-alpine
 WORKDIR /app
-COPY index.html termos.html privacidade.html ./
+COPY index.html termos.html privacidade.html obrigado.html ./
 COPY pt ./pt
 COPY es ./es
 COPY assets ./assets

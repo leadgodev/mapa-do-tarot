@@ -545,6 +545,8 @@ loginForm.addEventListener('submit',async function(ev){
   if(r.status!==200||!r.data.owned){loginErr.textContent='Não foi possível verificar agora. Tenta de novo ou fala com o suporte.';return;}
   loginErr.textContent='';
   setEmail(val);setOwned(r.data.owned);
+  // Comprador do mercado ES (USD) cai no painel em espanhol, no domínio dele.
+  if(r.data.lang==='es'&&location.hostname!=='mapadeltarot.leadgo.dev'){location.replace('https://mapadeltarot.leadgo.dev/painel?lang=es');return;}
   location.hash='#hub';
   route();
 });

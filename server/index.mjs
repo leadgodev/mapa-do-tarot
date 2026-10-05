@@ -149,6 +149,22 @@ const MUNDPAY_NAME_SKUS = [
   [/essencial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
   [/b[aá]sico.*(es|spanish|español)?/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
 ];
+const FX_CURRENCIES = ['MXN', 'COP', 'ARS', 'CLP', 'PEN', 'BOB', 'PYG', 'UYU', 'GTQ', 'HNL', 'NIO', 'CRC', 'DOP', 'VES', 'EUR', 'BRL', 'CAD'];
+let fxCache = { at: 0, rates: null };
+async function getFxRates() {
+  if (fxCache.rates && Date.now() - fxCache.at < 12 * 3600 * 1000) return fxCache.rates;
+  try {
+    const r = await fetch('https://open.er-api.com/v6/latest/USD', { signal: AbortSignal.timeout(5000) });
+    const d = await r.json();
+    if (d.result !== 'success' || !d.rates) throw new Error('bad fx response');
+    const rates = {};
+    for (const c of FX_CURRENCIES) if (d.rates[c]) rates[c] = d.rates[c];
+    fxCache = { at: Date.now(), rates };
+  } catch (e) {
+    console.error('fx fetch failed', e.message);
+  }
+  return fxCache.rates;
+}
 function handleMundpayWebhook(payload) {
   const paid = String(payload.status || '').toLowerCase() === 'paid' || /\.paid$/i.test(String(payload.event_type || ''));
   if (!paid) return { code: 200, body: { ok: true, ignored: 'not-paid-event' } };
@@ -270,6 +286,12 @@ http.createServer(async (req, res) => {
       res.writeHead(301, { location: `https://${newHost}${rest}${url.search}` });
       return res.end();
     }
+    // Página de obrigado bilíngue (Mundpay PT/ES usa o mesmo produto, logo o mesmo redirect):
+    // mesma página em qualquer domínio, botão para o painel PT e ES.
+    if (p === '/obrigado' || p === '/gracias' || p === '/obrigado/' || p === '/gracias/') {
+      res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-cache' });
+      return fs.createReadStream(path.join(ROOT, 'obrigado.html')).pipe(res);
+    }
     // Domínio PT/ES: reescreve pathname para o prefixo interno já existente,
     // menos webhook (global) e /painel/api/* (compartilhado, sem prefixo).
     if ((host === HOST_PT || host === HOST_ES) && !p.startsWith('/painel/api/')) {
@@ -281,6 +303,13 @@ http.createServer(async (req, res) => {
       else if (p === '/termos' || p === '/privacidade') p = `/${lang}${p}`;
       else if (p.startsWith('/painel/')) { /* mantém: treino, conteudo, conteudo-es, api já fora */ }
       else if (!p.startsWith(`/${lang}/`) && !p.startsWith('/assets/') && !p.startsWith('/js/')) p = `/${lang}${p}`;
+    }
+    // Câmbio USD→moeda local da página ES (preço aproximado na moeda do visitante).
+    // Cache 12h; se a fonte cair, devolve o último valor bom (ou 503 e a página fica só em USD).
+    if (p === '/painel/api/fx') {
+      const rates = await getFxRates();
+      if (!rates) return json(res, 503, { error: 'fx-unavailable' });
+      return json(res, 200, { base: 'USD', rates }, { 'cache-control': 'public, max-age=3600' });
     }
     if (p === '/painel/api/webhooks/wiven') {
       if (req.method !== 'POST') return json(res, 405, { error: 'method' });
