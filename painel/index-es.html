@@ -432,14 +432,14 @@ function renderTreinoCard(owned){
   const mount=document.getElementById('treino-card-mount');
   const unlocked=owned.includes('completo');
   const cardTag=unlocked?'a':'a';
-  const href=unlocked?'treino/':'#';
+  const href=unlocked?'treino-es/':'#';
   const target=unlocked?'':' target="_blank" rel="noopener"';
   mount.innerHTML=
     '<div class="treino-card-wrap">'+
       '<'+cardTag+' class="treino-card '+(unlocked?'unlocked':'locked')+'" href="'+href+'"'+target+(unlocked?'':' data-tk-value="14.90"')+'>'+
-        '<span class="treino-pill">🎁 Bonificación Especial · App de Entrenamient</span>'+
+        '<span class="treino-pill">🎁 Bonificación Especial · App de Entrenamiento</span>'+
         '<span class="treino-img-wrap">'+
-          '<img class="treino-img" src="'+assetUrl('assets/webp/bonus5-app-treino.webp')+'" alt="App de Entrenamiento del Tarot" loading="eager">'+
+          '<img class="treino-img" src="/es/assets/webp/bonus5-app-treino.webp?v='+ASSET_VERSION+'" alt="App de Entrenamiento del Tarot" loading="eager">'+
           (unlocked?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Disponible en Plan Completo</span></span>')+
         '</span>'+
         '<span class="treino-text">'+

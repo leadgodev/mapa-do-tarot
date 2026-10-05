@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<base href="/painel/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App de Entrenamiento — Mapa del Tarot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="treino-es/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/painel/"><span class="star">✦</span> Mapa del Tarot</a>
+  <div class="topbar-right">
+    <span id="streak-pill" class="pill hidden">🔥 <span id="streak-n">0</span> días</span>
+    <a href="./" class="btn-ghost-sm">← Panel</a>
+  </div>
+</header>
+
+<div class="hero-mini">
+  <div class="hero-mini-inner">
+    <p class="eyebrow">Bono</p>
+    <h1>App de Entrenamiento del Tarot</h1>
+    <p class="sub">Aprende las 78 cartas de verdad — estudia, practica y sigue tu progreso.</p>
+  </div>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="mapas" role="tab" aria-selected="true">🗺️ Mapas</button>
+  <button class="tab" data-tab="praticar" role="tab" aria-selected="false">🎯 Practicar</button>
+  <button class="tab" data-tab="progresso" role="tab" aria-selected="false">📊 Progreso</button>
+</nav>
+
+<main class="wrap">
+
+  <!-- ===== PESTAÑA MAPAS ===== -->
+  <section id="panel-mapas" class="panel active">
+    <div class="progress-block">
+      <div class="progress-head">
+        <strong id="mapas-count">0 de 78 estudiadas</strong>
+        <span id="mapas-pct">0%</span>
+      </div>
+      <div class="bar"><div id="mapas-bar-fill" class="bar-fill"></div></div>
+    </div>
+
+    <input id="busca" class="busca" type="search" placeholder="Buscar carta o palabra clave…" autocomplete="off">
+
+    <div id="filtros" class="filtros">
+      <button class="filtro active" data-filtro="todas">Todas</button>
+      <button class="filtro" data-filtro="maior">Arcanos Mayores</button>
+      <button class="filtro" data-filtro="paus">Bastos</button>
+      <button class="filtro" data-filtro="copas">Copas</button>
+      <button class="filtro" data-filtro="espadas">Espadas</button>
+      <button class="filtro" data-filtro="ouros">Oros</button>
+    </div>
+
+    <div id="grade-cartas" class="grade-cartas"></div>
+    <p id="grade-vazia" class="vazia hidden">No se encontró ninguna carta.</p>
+  </section>
+
+  <!-- ===== PESTAÑA PRACTICAR ===== -->
+  <section id="panel-praticar" class="panel">
+    <div id="praticar-intro" class="praticar-intro">
+      <h2>Elige un modo</h2>
+      <p class="sub">Cada ronda tiene 10 cartas. Priorizamos las que más fallas.</p>
+      <div class="modos">
+        <button class="modo-card" data-modo="nome">
+          <span class="modo-ico">🃏</span>
+          <strong>¿Qué carta es?</strong>
+          <span>Mira la imagen y elige el nombre correcto entre 4 opciones.</span>
+        </button>
+        <button class="modo-card" data-modo="essencia">
+          <span class="modo-ico">✨</span>
+          <strong>¿Cuál es la esencia?</strong>
+          <span>Mira la imagen y el nombre, elige la palabra clave correcta.</span>
+        </button>
+        <button class="modo-card" data-modo="flash">
+          <span class="modo-ico">🔄</span>
+          <strong>Tarjetas</strong>
+          <span>Piensa la respuesta, da vuelta la tarjeta y di si la sabías.</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="praticar-jogo" class="praticar-jogo hidden">
+      <div class="jogo-head">
+        <span id="jogo-progresso">1 / 10</span>
+        <button id="jogo-sair" class="link-btn">Terminar</button>
+      </div>
+      <div class="bar sm"><div id="jogo-bar" class="bar-fill"></div></div>
+
+      <div id="jogo-card" class="jogo-card"></div>
+    </div>
+
+    <div id="praticar-fim" class="praticar-fim hidden">
+      <h2>¡Ronda terminada!</h2>
+      <p id="fim-resultado" class="fim-resultado"></p>
+      <button id="fim-outra" class="btn-primary">Practicar de nuevo</button>
+      <button id="fim-voltar" class="btn-ghost-sm">Volver a los modos</button>
+    </div>
+  </section>
+
+  <!-- ===== PESTAÑA PROGRESO ===== -->
+  <section id="panel-progresso" class="panel">
+    <div class="stat-grid">
+      <div class="stat-box">
+        <span class="stat-n" id="stat-estudadas">0</span>
+        <span class="stat-l">de 78 estudiadas</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-n" id="stat-sequencia">0</span>
+        <span class="stat-l">días seguidos</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-n" id="stat-acerto">0%</span>
+        <span class="stat-l">aciertos generales</span>
+      </div>
+    </div>
+
+    <h3 class="section-title">Aciertos por modo</h3>
+    <div id="acertos-modo" class="acertos-modo"></div>
+
+    <h3 class="section-title">Cartas que más fallas</h3>
+    <div id="mais-erra" class="mais-erra"></div>
+    <p id="mais-erra-vazio" class="vazia hidden">¡Ningún fallo registrado todavía — buena señal!</p>
+  </section>
+
+</main>
+
+<!-- Modal de carta -->
+<div id="modal-carta" class="modal-bg hidden">
+  <div class="modal">
+    <button id="modal-fechar" class="modal-x" aria-label="Cerrar">✕</button>
+    <div class="modal-cover">
+      <img id="modal-img" src="" alt="">
+    </div>
+    <div class="modal-body">
+      <span id="modal-tipo" class="modal-tipo"></span>
+      <h3 id="modal-nome"></h3>
+      <p id="modal-essencia"></p>
+      <div id="modal-mapa-wrap"></div>
+      <div class="modal-actions">
+        <button id="modal-estudada" class="btn-primary"></button>
+        <button id="modal-praticar" class="btn-ghost-sm">Practicar esta carta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de zoom -->
+<div id="modal-zoom" class="zoom-bg hidden">
+  <img id="zoom-img" src="" alt="">
+</div>
+
+<script src="treino-es/app.js"></script>
+</body>
+</html>
