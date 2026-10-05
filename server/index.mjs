@@ -210,11 +210,11 @@ function serveStatic(req, res, pathname) {
   if (rel === '/privacidade' || rel === '/pt/privacidade') rel = '/privacidade.html';
   if (rel === '/pt/painel' || rel === '/pt/painel/index.html') rel = '/painel/index-pt.html';
   if (rel === '/es/painel' || rel === '/es/painel/index.html') rel = '/painel/index-es.html';
-  if (rel.startsWith('/es/assets/') && !fs.existsSync(path.join(ROOT, rel))) rel = rel.slice(3);
+  if ((rel.startsWith('/es/assets/') || rel.startsWith('/pt/assets/')) && !fs.existsSync(path.join(ROOT, rel))) rel = rel.slice(3);
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
   if (top === 'es' && !rel.startsWith('/es/assets/') && !rel.endsWith('.html')) return json(res, 404, { error: 'not-found' });
-  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || top === 'upsell-cigano' || top === 'js')) return json(res, 404, { error: 'not-found' });
+  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || rel.startsWith('/pt/assets/') || top === 'upsell-cigano' || top === 'js')) return json(res, 404, { error: 'not-found' });
   // conteúdo pago: exige sessão + ownership do SKU
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
   const mEs = /^\/painel\/conteudo-es\/([^/]+)\//.exec(rel);
@@ -228,8 +228,8 @@ function serveStatic(req, res, pathname) {
     const skuToCheck = mEs[1].startsWith('cigano-') || mEs[1] === 'cigano' ? 'cigano' : mEs[1];
     if (!o || !o.includes(skuToCheck)) return json(res, 403, { error: 'forbidden' });
   }
-  // App de Treino: bônus exclusivo do Nível Completo (SKU 'completo').
-  if (rel === '/painel/treino' || rel.startsWith('/painel/treino/')) {
+  // App de Treino (PT e ES): bônus exclusivo do Nível Completo (SKU 'completo').
+  if (rel === '/painel/treino' || rel.startsWith('/painel/treino/') || rel === '/painel/treino-es' || rel.startsWith('/painel/treino-es/')) {
     const o = owned(cookieEmail(req) || '');
     if (!o || !o.includes('completo')) {
       res.writeHead(302, { location: '/painel' });
@@ -310,6 +310,8 @@ http.createServer(async (req, res) => {
       else if (p === '/painel' || p === '/painel/' || p === '/painel/index.html') p = `/${lang}/painel`;
       else if (p === '/termos' || p === '/privacidade') p = `/${lang}${p}`;
       else if (p.startsWith('/painel/')) { /* mantém: treino, conteudo, conteudo-es, api já fora */ }
+      // Imagem própria do mercado (es/assets, pt/assets) vence a do BR; sem ela, cai em /assets.
+      else if (p.startsWith('/assets/') && fs.existsSync(path.join(ROOT, lang, p))) p = `/${lang}${p}`;
       else if (!p.startsWith(`/${lang}/`) && !p.startsWith('/assets/') && !p.startsWith('/js/')) p = `/${lang}${p}`;
     }
     // Câmbio USD→moeda local da página ES (preço aproximado na moeda do visitante).
