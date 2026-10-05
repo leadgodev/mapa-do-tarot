@@ -1,0 +1,2123 @@
+{
+  "_comentario": "Textos ES (espanhol neutro latino, tuteo 'tú' só onde o original usa imperativo informal; sem voseo) para as páginas 01-61 do módulo completo. Marcação **negrito** dentro da string. Chaves = número da página (2 dígitos).",
+  "cartas": {
+    "03": {
+      "naipe": "paus",
+      "rank": "as",
+      "title": "As de Bastos",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "chispa inicial. Surge una idea nueva, un proyecto o las ganas de actuar con fuerza."
+        ],
+        [
+          "Símbolos y elementos",
+          "la mano sale de la nube sosteniendo el bastón con hojas, paisaje fértil al fondo, castillo lejano. **Elemento:** Fuego puro."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = agarrar la chispa y empezar. Sombra = dejar que la idea muera por dudar."
+        ],
+        [
+          "Derecha",
+          "inicio, energía, inspiración, potencia creativa."
+        ],
+        [
+          "Invertida",
+          "idea sin acción, retraso al comienzo, energía mal dirigida."
+        ],
+        [
+          "Combinaciones",
+          "con Caballero de Bastos = acción inmediata sobre la idea nueva; con 10 de Espadas = idea que nace después de un final difícil."
+        ]
+      ],
+      "consejo": "empieza hoy, aunque sea pequeño. La energía de este As no espera un plan perfecto."
+    },
+    "04": {
+      "naipe": "paus",
+      "rank": "02",
+      "title": "2 de Bastos",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "planificación, elección de camino. El mundo en las manos, decidiendo hacia dónde ir."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura en el castillo mirando el horizonte, globo en las manos, dos bastos fijos. **Elemento:** Fuego/Marte."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = planificar con visión clara. Sombra = quedarse atascado en el «y si» y no salir del castillo."
+        ],
+        [
+          "Derecha",
+          "planificación, decisión, expansión, dominio."
+        ],
+        [
+          "Invertida",
+          "miedo a arriesgar, indecisión, plan guardado en un cajón."
+        ],
+        [
+          "Combinaciones",
+          "con As de Copas = decisión movida por el corazón; con La Torre = plan que necesita cambiar de rumbo."
+        ]
+      ],
+      "consejo": "mira el mapa, pero marca la fecha en que te pones en marcha."
+    },
+    "05": {
+      "naipe": "paus",
+      "rank": "03",
+      "title": "3 de Bastos",
+      "strip": "3 DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "expansión en movimiento. El plan ya salió del papel y está en curso."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura de espaldas observando los barcos que parten, los tres bastos firmes, el río. **Elemento:** Fuego/Sol."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = confiar en el proceso en marcha. Sombra = impaciencia por no ver todavía el resultado."
+        ],
+        [
+          "Derecha",
+          "progreso, expansión, cooperación, movimiento."
+        ],
+        [
+          "Invertida",
+          "retraso, obstáculo en el camino, falta de apoyo."
+        ],
+        [
+          "Combinaciones",
+          "con 10 de Oros = expansión que se vuelve patrimonio; con 5 de Bastos = progreso interrumpido por conflicto."
+        ]
+      ],
+      "consejo": "el barco ya partió. Acompaña el recorrido sin forzar la llegada.",
+      "strip_rect": [
+        378,
+        447,
+        510,
+        467
+      ]
+    },
+    "06": {
+      "naipe": "paus",
+      "rank": "04",
+      "title": "4 de Bastos",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "celebración, conquista parcial, estabilidad afianzada. Una pausa de alegría antes de seguir."
+        ],
+        [
+          "Símbolos y elementos",
+          "los cuatro bastos formando un arco floral, la pareja al fondo, el castillo. **Elemento:** Fuego/Venus."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = celebrar lo que ya se construyó. Sombra = ignorar la tensión de fondo por miedo a arruinar la fiesta."
+        ],
+        [
+          "Derecha",
+          "celebración, armonía, conquista, hogar."
+        ],
+        [
+          "Invertida",
+          "conflicto doméstico, celebración aplazada, inestabilidad momentánea."
+        ],
+        [
+          "Combinaciones",
+          "con 10 de Copas = celebración y realización emocional; con La Torre = fiesta interrumpida por una ruptura."
+        ]
+      ],
+      "consejo": "celebra la etapa cumplida antes de correr a la siguiente."
+    },
+    "07": {
+      "naipe": "paus",
+      "rank": "05",
+      "title": "5 de Bastos",
+      "strip": "5 DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "competencia, conflicto de intereses. Varias fuerzas tirando en direcciones distintas."
+        ],
+        [
+          "Símbolos y elementos",
+          "cinco figuras cruzando bastos, ropas distintas, ninguna venciendo con claridad. **Elemento:** Fuego/Saturno."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = usar la competencia para crecer. Sombra = pelear por pelear y perder de vista el objetivo común."
+        ],
+        [
+          "Derecha",
+          "competencia, conflicto, desafío, tensión creativa."
+        ],
+        [
+          "Invertida",
+          "conflicto resuelto, evitar la confrontación, cooperación forzada."
+        ],
+        [
+          "Combinaciones",
+          "con La Justicia = conflicto que necesitará mediación; con 3 de Bastos = competencia que en realidad es cooperación disfrazada."
+        ]
+      ],
+      "consejo": "pregúntate si compites por el objetivo o solo por el ego."
+    },
+    "08": {
+      "naipe": "paus",
+      "rank": "06",
+      "title": "6 de Bastos",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "victoria reconocida. El esfuerzo fue visto y recompensado en público."
+        ],
+        [
+          "Símbolos y elementos",
+          "el jinete con corona de laurel en el bastón, la multitud alrededor, el caballo blanco. **Elemento:** Fuego/Júpiter."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = recibir el crédito con humildad. Sombra = necesitar aplausos todo el tiempo para sentirte valioso."
+        ],
+        [
+          "Derecha",
+          "victoria, reconocimiento, progreso, confianza."
+        ],
+        [
+          "Invertida",
+          "reconocimiento atrasado, victoria incompleta, arrogancia."
+        ],
+        [
+          "Combinaciones",
+          "con El Sol = éxito pleno y visible; con 7 de Copas = victoria que todavía necesita elegir el siguiente paso."
+        ]
+      ],
+      "consejo": "disfruta el reconocimiento, pero piensa ya en el próximo objetivo."
+    },
+    "09": {
+      "naipe": "paus",
+      "rank": "07",
+      "title": "7 de Bastos",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "defensa de posición. Mantener lo conquistado exige esfuerzo continuo."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura en lo alto defendiendo con un bastón contra seis de abajo, penacho. **Elemento:** Fuego/Marte."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = defender lo tuyo con firmeza. Sombra = guerra sin fin por orgullo, aunque ya hayas ganado."
+        ],
+        [
+          "Derecha",
+          "desafío, perseverancia, defensa, ventaja mantenida."
+        ],
+        [
+          "Invertida",
+          "ceder a la presión, agotamiento, abandonar la posición."
+        ],
+        [
+          "Combinaciones",
+          "con La Fuerza = defensa con serenidad, no con desesperación; con 10 de Bastos = sobrecarga por seguir defendiendo todo solo."
+        ]
+      ],
+      "consejo": "ya llevas ventaja. Defiéndela sin agotarte."
+    },
+    "10": {
+      "naipe": "paus",
+      "rank": "08",
+      "title": "8 de Bastos",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "velocidad, mensajes que llegan, acción rápida que se acerca."
+        ],
+        [
+          "Símbolos y elementos",
+          "ocho bastos volando en paralelo, cielo abierto, paisaje al fondo. **Elemento:** Fuego/Mercurio."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = actuar rápido cuando se abre la ventana. Sombra = actuar tan rápido que se pierde precisión."
+        ],
+        [
+          "Derecha",
+          "rapidez, noticia, movimiento súbito, progreso acelerado."
+        ],
+        [
+          "Invertida",
+          "retraso frustrante, confusión, prisa que erra el objetivo."
+        ],
+        [
+          "Combinaciones",
+          "con El Mago = acción rápida con foco; con 5 de Espadas = prisa que genera conflicto."
+        ]
+      ],
+      "consejo": "la respuesta llega rápido. Prepárate para actuar sin dar rodeos."
+    },
+    "11": {
+      "naipe": "paus",
+      "rank": "09",
+      "title": "9 de Bastos",
+      "strip": "9 DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "resistencia, casi lo logras. Cansado, pero con fuerza para dar el último paso."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura apoyada en el bastón, herida pero de pie, ocho bastos detrás como una cerca, luna al fondo. **Elemento:** Fuego/Marte-Luna."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = reunir la última fuerza y terminar. Sombra = desistir a un paso de la meta."
+        ],
+        [
+          "Derecha",
+          "resiliencia, persistencia, casi al final, fuerza interior."
+        ],
+        [
+          "Invertida",
+          "agotamiento, desistir cerca del final, paranoia por el desgaste."
+        ],
+        [
+          "Combinaciones",
+          "con El Ermitaño = resistencia solitaria que todavía necesita fe; con 10 de Bastos = el peso final antes de soltar la carga."
+        ]
+      ],
+      "consejo": "falta poco. Descansa si lo necesitas, pero no te rindas ahora."
+    },
+    "12": {
+      "naipe": "paus",
+      "rank": "10",
+      "title": "10 de Bastos",
+      "strip": "10 DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "sobrecarga. El peso de lo que se construyó se volvió carga. Hora de delegar o soltar."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura encorvada cargando diez bastos, ciudad al fondo, postura cerrada. **Elemento:** Fuego/Saturno."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = entregar la carga y completar el ciclo. Sombra = cargar todo solo hasta romperte."
+        ],
+        [
+          "Derecha",
+          "sobrecarga, responsabilidad excesiva, esfuerzo final, peso."
+        ],
+        [
+          "Invertida",
+          "alivio, delegar, soltar el peso, evitar el burnout."
+        ],
+        [
+          "Combinaciones",
+          "con La Torre = colapso por cargar peso de más; con As de Bastos = soltar esa carga para abrir espacio a un nuevo comienzo."
+        ]
+      ],
+      "consejo": "pregúntate qué parte de esta carga puede repartirse o dejarse en el camino.",
+      "strip_rect": [
+        378,
+        439,
+        510,
+        458
+      ],
+      "consel_rect": [
+        192,
+        538,
+        708,
+        569
+      ]
+    },
+    "13": {
+      "naipe": "paus",
+      "rank": "pajem",
+      "title": "Sota de Bastos",
+      "strip": "SOTA DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "entusiasmo por una idea nueva, todavía en fase de explorar y probar."
+        ],
+        [
+          "Símbolos y elementos",
+          "joven observando el bastón con hojas que brotan, postura atenta, paisaje desértico al fondo. **Elemento:** Fuego joven/Tierra."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = probar la idea con libertad genuina. Sombra = empezar todo y no terminar nada."
+        ],
+        [
+          "Derecha",
+          "entusiasmo, exploración, idea nueva, energía libre."
+        ],
+        [
+          "Invertida",
+          "impulsividad sin plan, idea abandonada rápido, inmadurez creativa."
+        ],
+        [
+          "Combinaciones",
+          "con As de Bastos = chispa creativa doblada; con 5 de Copas = entusiasmo que todavía carga una decepción del pasado."
+        ]
+      ],
+      "consejo": "explora la idea nueva, pero anota los primeros pasos para no perderte en ella.",
+      "strip_rect": [
+        378,
+        434,
+        508,
+        449
+      ]
+    },
+    "14": {
+      "naipe": "paus",
+      "rank": "cavaleiro",
+      "title": "Caballero de Bastos",
+      "strip": "CABALLERO DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "acción rápida, impulsiva, llena de coraje. Partir sin esperar condiciones perfectas."
+        ],
+        [
+          "Símbolos y elementos",
+          "caballo encabritado, armadura con salamandras, pluma en el casco. **Elemento:** Fuego en movimiento."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = actuar con osadía calculada. Sombra = actuar solo por la adrenalina y dejar rastro de problemas."
+        ],
+        [
+          "Derecha",
+          "acción, aventura, impulso, coraje."
+        ],
+        [
+          "Invertida",
+          "impulsividad destructiva, prisa irresponsable, frustración por actuar sin pensar."
+        ],
+        [
+          "Combinaciones",
+          "con El Loco = salto de fe doblado; con 7 de Espadas = acción rápida que corta camino sin avisar a nadie."
+        ]
+      ],
+      "consejo": "confirma la dirección antes de soltar las riendas al impulso.",
+      "strip_rect": [
+        388,
+        436,
+        498,
+        448
+      ]
+    },
+    "15": {
+      "naipe": "paus",
+      "rank": "rainha",
+      "title": "Reina de Bastos",
+      "strip": "REINA DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "confianza magnética, creatividad independiente, energía que atrae sin necesidad de forzar."
+        ],
+        [
+          "Símbolos y elementos",
+          "girasoles, gato negro a los pies, bastón firme. **Elemento:** Fuego maduro/Tierra."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = liderar con el ejemplo y con la propia luz. Sombra = competir con quien está a tu lado."
+        ],
+        [
+          "Derecha",
+          "confianza, independencia, carisma, determinación cálida."
+        ],
+        [
+          "Invertida",
+          "inseguridad disfrazada de arrogancia, celos, energía dispersa."
+        ],
+        [
+          "Combinaciones",
+          "con La Emperatriz = creatividad y magnetismo doblados; con 3 de Espadas = confianza herida por traición o crítica."
+        ]
+      ],
+      "consejo": "brilla a tu manera. No hace falta apagar a nadie para eso.",
+      "strip_rect": [
+        390,
+        444,
+        509,
+        460
+      ]
+    },
+    "16": {
+      "naipe": "paus",
+      "rank": "rei",
+      "title": "Rey de Bastos",
+      "strip": "REY DE BASTOS",
+      "boxes": [
+        [
+          "Significado general",
+          "liderazgo visionario maduro. Ya sabe convertir una idea en resultado concreto e inspirar a otros en el proceso."
+        ],
+        [
+          "Símbolos y elementos",
+          "salamandras en el trono, bastón florido, leones en la corona. **Elemento:** Fuego consolidado."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = inspirar y sostener lo que promete. Sombra = liderar por ego, prometer más de lo que entrega."
+        ],
+        [
+          "Derecha",
+          "liderazgo, visión, carisma, emprendimiento."
+        ],
+        [
+          "Invertida",
+          "arrogancia, impulsividad al mando, promesas grandiosas sin entrega."
+        ],
+        [
+          "Combinaciones",
+          "con El Emperador = liderazgo doblado, estructura y visión juntas; con 9 de Copas = ambición realizada y satisfecha."
+        ]
+      ],
+      "consejo": "usa la visión para abrir camino a los demás, no solo para brillar tú.",
+      "strip_rect": [
+        378,
+        447,
+        510,
+        468
+      ]
+    },
+    "18": {
+      "naipe": "copas",
+      "rank": "as",
+      "title": "As de Copas",
+      "strip": "AS DE COPAS",
+      "boxes": [
+        [
+          "Significado general",
+          "el corazón se abre. Amor nuevo, emoción nueva, una invitación a sentir de verdad."
+        ],
+        [
+          "Símbolos y elementos",
+          "mano que sale de la nube con un cáliz desbordando, paloma descendiendo, loto en el agua. **Elemento:** Agua pura."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = dejar entrar lo que toca el corazón. Sombra = protegerse tanto que nada más llega."
+        ],
+        [
+          "Derecha",
+          "amor nuevo, apertura emocional, intuición, compasión."
+        ],
+        [
+          "Invertida",
+          "corazón cerrado, emoción reprimida, oportunidad de amor perdida."
+        ],
+        [
+          "Combinaciones",
+          "con Los Enamorados = amor que florece de verdad; con 5 de Espadas = corazón abierto justo después de una herida."
+        ]
+      ],
+      "consejo": "recibe el sentimiento nuevo sin necesidad de controlar adónde va a llevarte.",
+      "header_rect": [
+        360,
+        16,
+        528,
+        44
+      ],
+      "strip_rect": [
+        378,
+        440,
+        510,
+        457
+      ]
+    },
+    "19": {
+      "naipe": "copas",
+      "rank": "02",
+      "title": "2 de Copas",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "conexión mutua, unión de corazones. Un vínculo que nace con reciprocidad."
+        ],
+        [
+          "Símbolos y elementos",
+          "dos figuras intercambiando cálices, león alado arriba, caduceo entre ellos. **Elemento:** Agua/Venus."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = construir juntos con la misma intensidad. Sombra = dar más de lo que se recibe, o al revés."
+        ],
+        [
+          "Derecha",
+          "alianza, atracción, unión, respeto mutuo."
+        ],
+        [
+          "Invertida",
+          "desequilibrio en el vínculo, ruptura, desconfianza."
+        ],
+        [
+          "Combinaciones",
+          "con Los Enamorados = vínculo confirmado; con La Torre = conexión que se rompe de repente."
+        ]
+      ],
+      "consejo": "observa si el intercambio está de verdad equilibrado de los dos lados.",
+      "strip_rect": false
+    },
+    "20": {
+      "naipe": "copas",
+      "rank": "03",
+      "title": "3 de Copas",
+      "strip": "3 DE COPAS",
+      "boxes": [
+        [
+          "Significado general",
+          "celebración compartida. Amistad, comunidad, alegría en grupo."
+        ],
+        [
+          "Símbolos y elementos",
+          "tres figuras levantando cálices, frutas en el suelo, danza ligera. **Elemento:** Agua/Mercurio."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = celebrar con quien realmente suma. Sombra = grupo que rivaliza en vez de apoyar."
+        ],
+        [
+          "Derecha",
+          "amistad, celebración, comunidad, apoyo social."
+        ],
+        [
+          "Invertida",
+          "chisme, exclusión, fiesta que esconde tensión de grupo."
+        ],
+        [
+          "Combinaciones",
+          "con 6 de Copas = celebración ligada a la memoria afectiva; con 5 de Bastos = alegría de grupo con competencia escondida."
+        ]
+      ],
+      "consejo": "elige con quién celebrar. Eso dice mucho sobre la etapa.",
+      "header_rect": [
+        360,
+        10,
+        528,
+        44
+      ]
+    },
+    "21": {
+      "naipe": "copas",
+      "rank": "04",
+      "title": "4 de Copas",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "introspección emocional, un leve aburrimiento o insatisfacción ante lo que ya se tiene."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura de brazos cruzados mirando las tres copas ofrecidas, cáliz flotando arriba, árbol aislado. **Elemento:** Agua/Luna."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = usar la pausa para entender lo que realmente falta. Sombra = cerrarse tanto que ni se ve lo que ya está siendo ofrecido."
+        ],
+        [
+          "Derecha",
+          "apatía, contemplación, insatisfacción silenciosa, retraimiento."
+        ],
+        [
+          "Invertida",
+          "salida de la apatía, nueva motivación, volver a abrirse a lo que se estaba rechazando."
+        ],
+        [
+          "Combinaciones",
+          "con El Ermitaño = introspección que pide más tiempo; con As de Copas = la oferta emocional que todavía no fue vista."
+        ]
+      ],
+      "consejo": "mira de nuevo lo que ya está frente a ti antes de decir que no hay nada bueno."
+    },
+    "22": {
+      "naipe": "copas",
+      "rank": "05",
+      "title": "5 de Copas",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "decepción, pérdida emocional, duelo por algo que no salió como se esperaba."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura de capa negra mirando las copas derramadas, dos copas en pie detrás, río y puente. **Elemento:** Agua/Marte."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = sentir el dolor y después mirar lo que todavía está en pie. Sombra = quedarse atrapado en las copas derramadas para siempre."
+        ],
+        [
+          "Derecha",
+          "decepción, duelo, arrepentimiento, foco en la pérdida."
+        ],
+        [
+          "Invertida",
+          "aceptación, perdón, seguir adelante, encontrar lo que queda."
+        ],
+        [
+          "Combinaciones",
+          "con La Torre = pérdida que viene de una ruptura mayor; con 6 de Copas = memoria afectiva ayudando a sanar el dolor."
+        ]
+      ],
+      "consejo": "llora lo que haga falta y luego vuelve la mirada a lo que aún queda."
+    },
+    "23": {
+      "naipe": "copas",
+      "rank": "06",
+      "title": "6 de Copas",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "nostalgia, memoria afectiva, dulzura del pasado revisitada."
+        ],
+        [
+          "Símbolos y elementos",
+          "niña entregando una flor en un cáliz, casa antigua al fondo, cálices con flores. **Elemento:** Agua/Sol."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = buscar en el pasado lo que todavía nutre. Sombra = vivir preso en una fase que ya terminó."
+        ],
+        [
+          "Derecha",
+          "nostalgia, ternura, reencuentro, infancia."
+        ],
+        [
+          "Invertida",
+          "apego al pasado, idealización, dificultad para seguir adelante."
+        ],
+        [
+          "Combinaciones",
+          "con El Sol = alegría simple y genuina; con La Muerte = necesidad de soltar lo que ya quedó solo en la memoria."
+        ]
+      ],
+      "consejo": "visita el buen recuerdo, pero vuelve al presente para vivir lo nuevo."
+    },
+    "24": {
+      "naipe": "copas",
+      "rank": "07",
+      "title": "7 de Copas",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "opciones emocionales, fantasías delante de los ojos. Muchas opciones, no todas reales."
+        ],
+        [
+          "Símbolos y elementos",
+          "siete cálices con visiones distintas, figura dudosa, nube entre ella y los cálices. **Elemento:** Agua/Venus-Luna."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = soñar y luego elegir con discernimiento. Sombra = vivir de fantasía y nunca decidir nada."
+        ],
+        [
+          "Derecha",
+          "opciones, sueños, fantasía, indecisión."
+        ],
+        [
+          "Invertida",
+          "claridad sobre lo que es real, elección por fin hecha, ilusión deshecha."
+        ],
+        [
+          "Combinaciones",
+          "con La Luna = ilusión doblada, difícil separar lo real; con 6 de Bastos = elegir y por fin cosechar reconocimiento."
+        ]
+      ],
+      "consejo": "pregúntate cuáles de esos deseos realmente irías a buscar.",
+      "strip_rect": false
+    },
+    "25": {
+      "naipe": "copas",
+      "rank": "08",
+      "title": "8 de Copas",
+      "strip": "8 DE COPAS",
+      "boxes": [
+        [
+          "Significado general",
+          "alejamiento consciente. Dejar algo emocionalmente satisfactorio en la superficie para buscar algo más verdadero."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura de espaldas que se va de noche, ocho cálices apilados incompletos, luna y eclipse. **Elemento:** Agua/Marte."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = partir en busca de lo que de verdad importa. Sombra = huir sin llegar nunca a ningún lugar."
+        ],
+        [
+          "Derecha",
+          "alejamiento, búsqueda de un sentido mayor, desapego, viaje interior."
+        ],
+        [
+          "Invertida",
+          "miedo a seguir, estancamiento por comodidad, evitar lo inevitable."
+        ],
+        [
+          "Combinaciones",
+          "con El Ermitaño = búsqueda interior confirmada; con 10 de Copas = lo que se busca es justamente esa plenitud."
+        ]
+      ],
+      "consejo": "está permitido dejar algo bueno atrás cuando ya no basta.",
+      "strip_rect": [
+        378,
+        434,
+        510,
+        452
+      ],
+      "consel_rect": [
+        192,
+        529,
+        708,
+        572
+      ]
+    },
+    "26": {
+      "naipe": "copas",
+      "rank": "09",
+      "title": "9 de Copas",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "satisfacción, deseo realizado, contento emocional."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura sentada con brazos cruzados frente a nueve cálices en arco, postura confiada. **Elemento:** Agua/Marte-Venus."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = sentir gratitud genuina por lo conquistado. Sombra = mostrar una felicidad que no se siente por dentro."
+        ],
+        [
+          "Derecha",
+          "satisfacción, realización emocional, contento, deseo cumplido."
+        ],
+        [
+          "Invertida",
+          "satisfacción superficial, vacío tras la conquista, exceso indulgente."
+        ],
+        [
+          "Combinaciones",
+          "con El Sol = alegría plena y verdadera; con 4 de Copas = contraste entre satisfacción y apatía reciente."
+        ]
+      ],
+      "consejo": "comprueba si la satisfacción es de verdad tuya o solo una imagen para mostrar a los demás."
+    },
+    "27": {
+      "naipe": "copas",
+      "rank": "10",
+      "title": "10 de Copas",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "armonía familiar, plenitud emocional colectiva. El ciclo emocional del palo llega a su cima."
+        ],
+        [
+          "Símbolos y elementos",
+          "arcoíris con diez cálices, pareja con niños bailando, casa al fondo. **Elemento:** Agua/Marte-completo."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = celebrar los vínculos que sostienen la vida. Sombra = mantener apariencia de armonía mientras algo real está roto."
+        ],
+        [
+          "Derecha",
+          "armonía, familia, plenitud, felicidad duradera."
+        ],
+        [
+          "Invertida",
+          "conflicto familiar, armonía quebrada, felicidad que parece fachada."
+        ],
+        [
+          "Combinaciones",
+          "con El Mundo = realización completa en todas las áreas; con 5 de Copas = contraste entre el duelo pasado y la paz actual."
+        ]
+      ],
+      "consejo": "cultiva ese vínculo con presencia, no solo con buenas intenciones."
+    },
+    "28": {
+      "naipe": "copas",
+      "rank": "pajem",
+      "title": "Sota de Copas",
+      "strip": "SOTA DE COPAS",
+      "boxes": [
+        [
+          "Significado general",
+          "sensibilidad curiosa, un mensaje emocional o creativo que llega de forma inocente."
+        ],
+        [
+          "Símbolos y elementos",
+          "pez que sale del cáliz, ropas floridas, postura atenta al cáliz. **Elemento:** Agua joven/Tierra."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = acoger la intuición nueva sin necesidad de demostrar nada. Sombra = tomarlo todo como algo personal y ofenderse con facilidad."
+        ],
+        [
+          "Derecha",
+          "sensibilidad, creatividad, mensaje afectivo, intuición en formación."
+        ],
+        [
+          "Invertida",
+          "inmadurez emocional, sensibilidad de más, mensaje mal interpretado."
+        ],
+        [
+          "Combinaciones",
+          "con La Sacerdotisa = intuición doblada, mensaje que viene de dentro; con 3 de Espadas = sensibilidad herida por crítica."
+        ]
+      ],
+      "consejo": "escucha esa sensación nueva con cariño, sin necesidad de decidir nada todavía.",
+      "strip_rect": [
+        388,
+        436,
+        498,
+        448
+      ]
+    },
+    "29": {
+      "naipe": "copas",
+      "rank": "cavaleiro",
+      "title": "Caballero de Copas",
+      "strip": "CABALLERO DE COPAS",
+      "boxes": [
+        [
+          "Significado general",
+          "romanticismo en movimiento. Una propuesta, una invitación, una declaración que nace del corazón."
+        ],
+        [
+          "Símbolos y elementos",
+          "caballo blanco al paso lento, alas en el casco, cáliz en alto. **Elemento:** Agua en movimiento."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = expresar el sentimiento con sinceridad. Sombra = usar el encanto solo para conquistar, sin intención real."
+        ],
+        [
+          "Derecha",
+          "romance, invitación, encanto, expresión emocional."
+        ],
+        [
+          "Invertida",
+          "promesa vacía, romanticismo engañoso, decepción amorosa."
+        ],
+        [
+          "Combinaciones",
+          "con As de Copas = declaración de un amor genuino; con El Diablo = encanto usado para manipular."
+        ]
+      ],
+      "consejo": "evalúa si la promesa viene con acción detrás o solo con palabras bonitas.",
+      "header_rect": [
+        360,
+        13,
+        528,
+        44
+      ],
+      "strip_rect": [
+        388,
+        436,
+        498,
+        448
+      ]
+    },
+    "30": {
+      "naipe": "copas",
+      "rank": "rainha",
+      "title": "Reina de Copas",
+      "strip": "REINA DE COPAS",
+      "boxes": [
+        [
+          "Significado general",
+          "intuición profunda, cuidado emocional maduro. Siente todo y sabe acoger sin perderse."
+        ],
+        [
+          "Símbolos y elementos",
+          "cáliz cerrado con tapa, trono a la orilla del mar, conchas en el trono. **Elemento:** Agua madura."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = cuidar de los demás sin olvidarte de ti. Sombra = apagarte por completo para acoger a todo el mundo."
+        ],
+        [
+          "Derecha",
+          "intuición, compasión, cuidado, sensibilidad equilibrada."
+        ],
+        [
+          "Invertida",
+          "dependencia emocional, sensibilidad que se vuelve manipulación sutil, descuido de uno mismo."
+        ],
+        [
+          "Combinaciones",
+          "con La Sacerdotisa = intuición doblada, sabiduría silenciosa; con 9 de Espadas = cuidado emocional frente a una angustia ajena o propia."
+        ]
+      ],
+      "consejo": "cuida a quien amas sin dejar de cuidarte a ti primero.",
+      "header_rect": [
+        360,
+        10,
+        528,
+        44
+      ],
+      "strip_rect": [
+        381,
+        430,
+        511,
+        448
+      ]
+    },
+    "31": {
+      "naipe": "copas",
+      "rank": "rei",
+      "title": "Rey de Copas",
+      "strip": "REY DE COPAS",
+      "boxes": [
+        [
+          "Significado general",
+          "equilibrio entre sentir y controlar. La calma emocional que sostiene a los demás aun en medio de la tempestad."
+        ],
+        [
+          "Símbolos y elementos",
+          "trono flotando en el mar agitado, pez saltando, barco hundido al fondo. **Elemento:** Agua consolidada."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = sentir profundamente sin ahogarse. Sombra = tragarse toda la emoción hasta que explote en otro lugar."
+        ],
+        [
+          "Derecha",
+          "equilibrio emocional, sabiduría, diplomacia, generosidad."
+        ],
+        [
+          "Invertida",
+          "represión emocional, manipulación disfrazada de calma, inestabilidad escondida."
+        ],
+        [
+          "Combinaciones",
+          "con La Templanza = equilibrio emocional doblado; con La Luna = calma que esconde un mar de dudas por dentro."
+        ]
+      ],
+      "consejo": "deja algún espacio para que la emoción salga antes de que se vuelva represa.",
+      "strip_rect": [
+        378,
+        436,
+        510,
+        456
+      ],
+      "boxes_rects": [
+        [
+          50,
+          143,
+          313,
+          250
+        ],
+        [
+          46,
+          269,
+          324,
+          379
+        ],
+        [
+          50,
+          400,
+          313,
+          518
+        ],
+        [
+          588,
+          143,
+          850,
+          250
+        ],
+        [
+          588,
+          265,
+          850,
+          375
+        ],
+        [
+          588,
+          393,
+          850,
+          518
+        ]
+      ],
+      "box_inner": true
+    },
+    "33": {
+      "naipe": "espadas",
+      "rank": "as",
+      "title": "Espadas · As",
+      "strip": "AS DE ESPADAS",
+      "boxes": [
+        [
+          "Significado",
+          "claridad mental súbita, una verdad que corta la confusión."
+        ],
+        [
+          "Símbolos",
+          "mano que empuña una espada erguida saliendo de la nube, corona dorada en la punta, montañas al fondo."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = ver con nitidez y decidir con honestidad. Sombra = usar la verdad para herir o actuar con frialdad."
+        ],
+        [
+          "Derecha",
+          "claridad, verdad, idea nueva, decisión certera."
+        ],
+        [
+          "Invertida",
+          "confusión mental, decisión precipitada, verdad usada para herir."
+        ],
+        [
+          "Combinaciones",
+          "con Justicia = discernimiento y verdad; con La Luna = niebla mental que se disipa; con 2 de Espadas = decisión que ya no puede seguir postergada."
+        ]
+      ],
+      "consejo": "di la verdad que necesita ser dicha, con cuidado en el cómo."
+    },
+    "34": {
+      "naipe": "espadas",
+      "rank": "02",
+      "fam": "F4",
+      "title": "Espadas · 2",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "impasse, decisión evitada."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura de ojos vendados con dos espadas cruzadas, mar agitado detrás, luna."
+        ],
+        [
+          "Palabras clave",
+          "impasse, indecisión, equilibrio tenso."
+        ],
+        [
+          "Invertida",
+          "decisión finalmente tomada."
+        ]
+      ],
+      "consejo": "quítate la venda. La elección se vuelve más simple cuando miras de frente."
+    },
+    "35": {
+      "naipe": "espadas",
+      "rank": "03",
+      "title": "Espadas · 3",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "dolor emocional causado por palabras o traición."
+        ],
+        [
+          "Símbolos y elementos",
+          "tres espadas atravesando un corazón, tempestad al fondo, cielo gris."
+        ],
+        [
+          "Elemento",
+          "Aire. Representa la mente, los pensamientos y la comunicación."
+        ],
+        [
+          "Palabras clave",
+          "herida, traición, dolor emocional."
+        ],
+        [
+          "Invertida",
+          "curación del dolor, perdón."
+        ],
+        [
+          "Combinaciones",
+          "con La Torre = ruptura; con El Sol = curación y alivio; con 6 de Espadas = superación y continuidad."
+        ]
+      ],
+      "consejo": "nombra el dolor con claridad. Solo así empieza a pasar."
+    },
+    "36": {
+      "naipe": "espadas",
+      "rank": "04",
+      "title": "Espadas · 4",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "descanso mental necesario."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura acostada en posición de descanso, tres espadas en la pared, una espada abajo, vitral."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = pausa para recuperarte. Sombra = estancamiento por evitar actuar."
+        ],
+        [
+          "Derecha",
+          "descanso, recuperación, tregua."
+        ],
+        [
+          "Invertida",
+          "agotamiento por no descansar."
+        ],
+        [
+          "Combinaciones",
+          "con La Justicia = pausa para reflexionar con claridad; con El Ermitaño = necesidad de aislamiento e introspección."
+        ]
+      ],
+      "consejo": "para antes de que el cuerpo o la mente pidan parada a la fuerza."
+    },
+    "37": {
+      "naipe": "espadas",
+      "rank": "05",
+      "fam": "F4W",
+      "title": "Espadas · 5",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "conflicto, victoria amarga."
+        ],
+        [
+          "Símbolos y elementos",
+          "tres espadas en las manos del vencedor, dos en el suelo, figuras alejándose, cielo turbulento."
+        ],
+        [
+          "Palabras clave",
+          "conflicto, disputa, desgaste."
+        ],
+        [
+          "Invertida",
+          "reconciliación, remordimiento o conflicto persistente."
+        ]
+      ],
+      "consejo": "elige tus batallas. Vencer no tiene por qué significar herir."
+    },
+    "38": {
+      "naipe": "espadas",
+      "rank": "06",
+      "fam": "F4W",
+      "title": "Espadas · 6",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "transición, alejamiento del conflicto."
+        ],
+        [
+          "Símbolos y elementos",
+          "barco con seis espadas, adulto y niño sentados, barquero, aguas rumbo a la otra orilla."
+        ],
+        [
+          "Palabras clave",
+          "transición, travesía, alivio."
+        ],
+        [
+          "Invertida",
+          "resistencia al cambio, equipaje emocional."
+        ]
+      ],
+      "consejo": "avanza con calma. La travesía también es parte del cambio."
+    },
+    "39": {
+      "naipe": "espadas",
+      "rank": "07",
+      "fam": "F4W",
+      "title": "Espadas · 7",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "estrategia, discreción, acción indirecta."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura que lleva cinco espadas, dos dejadas en el suelo, campamento al fondo."
+        ],
+        [
+          "Palabras clave",
+          "estrategia, secreto, cautela."
+        ],
+        [
+          "Invertida",
+          "verdad revelada, revisión de la estrategia."
+        ]
+      ],
+      "consejo": "usa la inteligencia sin renunciar a la honestidad."
+    },
+    "40": {
+      "naipe": "espadas",
+      "rank": "08",
+      "fam": "F4W",
+      "title": "Espadas · 8",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "restricción, miedo, sensación de estar atrapado."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura vendada y atada, ocho espadas alrededor, castillo distante."
+        ],
+        [
+          "Palabras clave",
+          "limitación, miedo, bloqueo."
+        ],
+        [
+          "Invertida",
+          "liberación, nueva perspectiva."
+        ]
+      ],
+      "consejo": "observa qué es un obstáculo real y qué es miedo."
+    },
+    "41": {
+      "naipe": "espadas",
+      "rank": "09",
+      "fam": "F4W",
+      "title": "Espadas · 9",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "preocupación, culpa, pensamientos repetitivos."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura sentada en la cama, manos en el rostro, nueve espadas en la pared."
+        ],
+        [
+          "Palabras clave",
+          "ansiedad, culpa, preocupación."
+        ],
+        [
+          "Invertida",
+          "alivio gradual o sufrimiento guardado."
+        ]
+      ],
+      "consejo": "acoge lo que sientes y busca apoyo cuando lo necesites."
+    },
+    "42": {
+      "naipe": "espadas",
+      "rank": "10",
+      "fam": "F4W",
+      "title": "Espadas · 10",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "final doloroso, fin de un ciclo."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura caída, diez espadas en la espalda, cielo oscuro y luz en el horizonte."
+        ],
+        [
+          "Palabras clave",
+          "fin, agotamiento, cierre."
+        ],
+        [
+          "Invertida",
+          "recuperación o resistencia al final."
+        ]
+      ],
+      "consejo": "respeta tus límites. Un final puede abrir espacio para volver a empezar."
+    },
+    "43": {
+      "naipe": "espadas",
+      "rank": "pajem",
+      "fam": "F4W",
+      "title": "Espadas · Sota",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "curiosidad, vigilancia, ideas nuevas."
+        ],
+        [
+          "Símbolos y elementos",
+          "joven con espada en alto, viento, nubes y pájaros."
+        ],
+        [
+          "Palabras clave",
+          "curiosidad, atención, comunicación."
+        ],
+        [
+          "Invertida",
+          "chisme, precipitación, información incompleta."
+        ]
+      ],
+      "consejo": "pregunta y confirma antes de sacar conclusiones."
+    },
+    "44": {
+      "naipe": "espadas",
+      "rank": "cavaleiro",
+      "fam": "F4W",
+      "title": "Espadas · Caballero",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "acción rápida, determinación, impulso mental."
+        ],
+        [
+          "Símbolos y elementos",
+          "caballero con armadura, espada en alto, caballo blanco al galope."
+        ],
+        [
+          "Palabras clave",
+          "rapidez, coraje, determinación."
+        ],
+        [
+          "Invertida",
+          "impulsividad, agresividad, prisa."
+        ]
+      ],
+      "consejo": "avanza con dirección. La prisa puede esconder detalles."
+    },
+    "45": {
+      "naipe": "espadas",
+      "rank": "rainha",
+      "fam": "F4W",
+      "title": "Espadas · Reina",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "claridad, autonomía, discernimiento."
+        ],
+        [
+          "Símbolos y elementos",
+          "reina en el trono, espada erguida, mano extendida, cielo con nubes."
+        ],
+        [
+          "Palabras clave",
+          "claridad, límites, independencia."
+        ],
+        [
+          "Invertida",
+          "frialdad, juicio rígido, resentimiento."
+        ]
+      ],
+      "consejo": "di la verdad con firmeza y sensibilidad."
+    },
+    "46": {
+      "naipe": "espadas",
+      "rank": "rei",
+      "fam": "F4W",
+      "title": "Espadas · Rey",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "razón, autoridad, decisión consciente."
+        ],
+        [
+          "Símbolos y elementos",
+          "rey en el trono, espada en alto, mariposas esculpidas, cielo abierto."
+        ],
+        [
+          "Palabras clave",
+          "lógica, justicia, autoridad."
+        ],
+        [
+          "Invertida",
+          "autoritarismo, manipulación, rigidez."
+        ]
+      ],
+      "consejo": "decide con criterios claros y escucha antes de juzgar."
+    },
+    "48": {
+      "naipe": "oros",
+      "rank": "as",
+      "fam": "P",
+      "title": "As de Oros",
+      "strip": "AS DE OROS",
+      "boxes": [
+        [
+          "Significado general",
+          "nueva oportunidad material. Una semilla concreta de prosperidad, trabajo o dinero."
+        ],
+        [
+          "Palabras clave · derecha",
+          "nueva oportunidad, prosperidad, estabilidad material, inicio concreto."
+        ],
+        [
+          "Símbolos y elementos",
+          "mano que sale de la nube ofreciendo una moneda de oro (oportunidad concreta), jardín florido abajo (terreno fértil para crecer), arco de flores (portal de abundancia). **Elemento:** Tierra pura."
+        ],
+        [
+          "Palabras clave · invertida",
+          "oportunidad perdida, inseguridad financiera, plan mal fundamentado."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = plantar la semilla con cuidado y paciencia. Sombra = dejar pasar la oportunidad por miedo a arriesgar lo poco que ya tienes."
+        ],
+        [
+          "Combinaciones",
+          "con El Mago = oportunidad que ya tiene los recursos para realizarse; con 10 de Espadas = oportunidad que nace bien después de un final difícil."
+        ]
+      ],
+      "consejo": "acepta esta oportunidad con un plan, no solo con esperanza.",
+      "strip_rect": [
+        322,
+        772,
+        588,
+        812
+      ]
+    },
+    "49": {
+      "naipe": "oros",
+      "rank": "02",
+      "fam": "P",
+      "title": "2 de Oros",
+      "strip": "2 DE OROS",
+      "boxes": [
+        [
+          "Significado general",
+          "equilibrio entre múltiples responsabilidades. Malabarismo financiero o de tiempo."
+        ],
+        [
+          "Palabras clave · derecha",
+          "equilibrio, adaptación, multitarea, flexibilidad financiera."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura que baila mientras equilibra dos monedas unidas por el infinito (flujo continuo), barcos al fondo en mar agitado (inestabilidad siendo administrada). **Elemento:** Tierra/Júpiter."
+        ],
+        [
+          "Palabras clave · invertida",
+          "sobrecarga, desorganización financiera, perder el equilibrio entre prioridades."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = adaptarte con ligereza incluso bajo presión. Sombra = intentar equilibrar tantas cosas que todo empieza a caer."
+        ],
+        [
+          "Combinaciones",
+          "con La Rueda = ciclos financieros que van y vienen, exigiendo adaptación constante; con 10 de Bastos = sobrecarga que ya pasó del punto de ser sostenible."
+        ]
+      ],
+      "consejo": "elige dos prioridades reales. Intentar equilibrar todo a la vez cansa sin generar resultado.",
+      "strip_rect": [
+        322,
+        828,
+        588,
+        864
+      ]
+    },
+    "50": {
+      "naipe": "oros",
+      "rank": "03",
+      "fam": "P",
+      "title": "3 de Oros",
+      "strip": "3 DE OROS",
+      "boxes": [
+        [
+          "Significado general",
+          "colaboración y reconocimiento por el trabajo bien hecho. El primer fruto del esfuerzo en equipo."
+        ],
+        [
+          "Palabras clave · derecha",
+          "colaboración, competencia, reconocimiento profesional, trabajo en equipo."
+        ],
+        [
+          "Símbolos y elementos",
+          "artesano trabajando en una catedral (maestría en construcción), figuras que observan con respeto (reconocimiento del trabajo), plano arquitectónico (planificación y habilidad). **Elemento:** Tierra/Marte."
+        ],
+        [
+          "Palabras clave · invertida",
+          "falta de cooperación, trabajo no reconocido, calidad por debajo de lo esperado."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = construir algo mayor junto con quien tiene una competencia complementaria. Sombra = querer hacerlo todo solo y perder calidad en el resultado."
+        ],
+        [
+          "Combinaciones",
+          "con El Hierofante = aprendizaje técnico aplicado con maestría; con 6 de Bastos = reconocimiento público de ese trabajo bien hecho."
+        ]
+      ],
+      "consejo": "acepta ayuda de quien sabe lo que tú no sabes. El resultado queda mejor.",
+      "strip_rect": [
+        322,
+        898,
+        588,
+        946
+      ],
+      "consel_rect": [
+        140,
+        1118,
+        760,
+        1264
+      ]
+    },
+    "51": {
+      "naipe": "oros",
+      "rank": "04",
+      "fam": "P",
+      "title": "4 de Oros",
+      "strip": "4 DE OROS",
+      "boxes": [
+        [
+          "Significado general",
+          "apego a lo que ya se conquistó. Seguridad financiera, pero con miedo a perder el control."
+        ],
+        [
+          "Palabras clave · derecha",
+          "seguridad, control financiero, conservadurismo, cautela."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura que sujeta una moneda con los brazos y sostiene otras en la cabeza y en los pies (control rígido sobre los recursos), ciudad al fondo (el mundo que queda fuera de ese cierre). **Elemento:** Tierra/Sol."
+        ],
+        [
+          "Palabras clave · invertida",
+          "avaricia, miedo a perder, apego excesivo al dinero o a los bienes."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = construir una base financiera sólida y protegida. Sombra = retener tanto que nadie, ni la propia vida, entra o sale."
+        ],
+        [
+          "Combinaciones",
+          "con El Diablo = apego que ya se volvió prisión; con 10 de Oros = la seguridad que se construye cuando ese control se usa con sabiduría, no con miedo."
+        ]
+      ],
+      "consejo": "pregúntate si estás guardando por seguridad o por miedo a nunca más tener lo suficiente.",
+      "strip_rect": [
+        322,
+        872,
+        588,
+        910
+      ]
+    },
+    "52": {
+      "naipe": "oros",
+      "rank": "05",
+      "fam": "P",
+      "title": "5 de Oros",
+      "strip": "5 DE OROS",
+      "boxes": [
+        [
+          "Significado general",
+          "dificultad material, sensación de exclusión o pérdida de recursos."
+        ],
+        [
+          "Palabras clave · derecha",
+          "dificultad financiera, exclusión, pérdida material, inseguridad."
+        ],
+        [
+          "Símbolos y elementos",
+          "figuras necesitadas en la nieve (dificultad visible), vitral iluminado al fondo (ayuda o refugio disponible, pero no buscado), muletas (limitación temporal). **Elemento:** Tierra/Marte."
+        ],
+        [
+          "Palabras clave · invertida",
+          "recuperación, pedir ayuda, encontrar el refugio que estaba cerca."
+        ],
+        [
+          "Luz × Sombra",
+          "Luz = buscar apoyo y ver las puertas todavía abiertas. Sombra = quedarse atrapado en la sensación de carencia sin buscar salida."
+        ],
+        [
+          "Combinaciones",
+          "con La Torre = pérdida material que viene de una ruptura súbita; con 6 de Oros = generosidad que puede aliviar esta fase."
+        ]
+      ],
+      "consejo": "el vitral iluminado está ahí mismo. Pide ayuda antes de intentar atravesar esto por tu cuenta.",
+      "strip_rect": [
+        322,
+        914,
+        588,
+        952
+      ],
+      "header_rect": [
+        312,
+        38,
+        588,
+        92
+      ],
+      "title_rect": [
+        250,
+        100,
+        650,
+        215
+      ],
+      "box_inner": false,
+      "boxes_rects": [
+        [
+          45,
+          270,
+          267,
+          450
+        ],
+        [
+          45,
+          488,
+          267,
+          818
+        ],
+        [
+          45,
+          863,
+          278,
+          1103
+        ],
+        [
+          640,
+          270,
+          862,
+          500
+        ],
+        [
+          645,
+          555,
+          862,
+          802
+        ],
+        [
+          637,
+          863,
+          862,
+          1103
+        ]
+      ]
+    },
+    "53": {
+      "naipe": "oros",
+      "rank": "06",
+      "fam": "F4W",
+      "title": "Oros · 6",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "generosidad, intercambio, equilibrio material."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura que reparte monedas, balanza en la mano, dos personas recibiendo."
+        ],
+        [
+          "Palabras clave",
+          "reparto, ayuda, reciprocidad."
+        ],
+        [
+          "Invertida",
+          "intercambio desigual, ayuda con condiciones."
+        ]
+      ],
+      "consejo": "ofrece y recibe con equilibrio. Observa las condiciones."
+    },
+    "54": {
+      "naipe": "oros",
+      "rank": "07",
+      "fam": "F4W",
+      "title": "Oros · 7",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "paciencia, evaluación, resultados en construcción."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura apoyada en la herramienta, planta con siete monedas, cosecha observada."
+        ],
+        [
+          "Palabras clave",
+          "paciencia, cultivo, evaluación."
+        ],
+        [
+          "Invertida",
+          "impaciencia, esfuerzo sin dirección."
+        ]
+      ],
+      "consejo": "evalúa lo que está creciendo antes de cambiar de camino."
+    },
+    "55": {
+      "naipe": "oros",
+      "rank": "08",
+      "fam": "F4W",
+      "title": "Oros · 8",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "aprendizaje, dedicación, perfeccionamiento."
+        ],
+        [
+          "Símbolos y elementos",
+          "artesano trabajando una moneda, ocho oros, ciudad al fondo."
+        ],
+        [
+          "Palabras clave",
+          "práctica, habilidad, dedicación."
+        ],
+        [
+          "Invertida",
+          "desatención, perfeccionismo, trabajo repetitivo."
+        ]
+      ],
+      "consejo": "practica con atención. La constancia construye habilidad."
+    },
+    "56": {
+      "naipe": "oros",
+      "rank": "09",
+      "fam": "F4W",
+      "title": "Oros · 9",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "autonomía, confort, frutos del esfuerzo."
+        ],
+        [
+          "Símbolos y elementos",
+          "figura elegante en el jardín, nueve monedas, ave en la mano, viñedos."
+        ],
+        [
+          "Palabras clave",
+          "autonomía, conquista, confort."
+        ],
+        [
+          "Invertida",
+          "dependencia, exceso, inseguridad material."
+        ]
+      ],
+      "consejo": "reconoce tus conquistas y cuida lo que construiste."
+    },
+    "57": {
+      "naipe": "oros",
+      "rank": "10",
+      "fam": "F4W",
+      "title": "Oros · 10",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "estabilidad, legado, prosperidad compartida."
+        ],
+        [
+          "Símbolos y elementos",
+          "familia bajo un arco, anciano, perros, diez monedas."
+        ],
+        [
+          "Palabras clave",
+          "legado, familia, estabilidad."
+        ],
+        [
+          "Invertida",
+          "conflicto familiar, inestabilidad, disputa material."
+        ]
+      ],
+      "consejo": "piensa en lo que quieres construir y compartir a largo plazo."
+    },
+    "58": {
+      "naipe": "oros",
+      "rank": "pajem",
+      "fam": "F4W",
+      "title": "Oros · Sota",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "oportunidad concreta, estudio, inicio de proyecto."
+        ],
+        [
+          "Símbolos y elementos",
+          "joven observando una moneda, campo verde, montañas al fondo."
+        ],
+        [
+          "Palabras clave",
+          "estudio, oportunidad, planificación."
+        ],
+        [
+          "Invertida",
+          "distracción, aplazamiento, falta de aplicación."
+        ]
+      ],
+      "consejo": "convierte la idea en un primer paso posible."
+    },
+    "59": {
+      "naipe": "oros",
+      "rank": "cavaleiro",
+      "fam": "F4W",
+      "title": "Oros · Caballero",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "constancia, responsabilidad, progreso seguro."
+        ],
+        [
+          "Símbolos y elementos",
+          "caballero en el caballo quieto, moneda en la mano, campo cultivado."
+        ],
+        [
+          "Palabras clave",
+          "constancia, disciplina, responsabilidad."
+        ],
+        [
+          "Invertida",
+          "estancamiento, terquedad, rutina excesiva."
+        ]
+      ],
+      "consejo": "mantén la constancia y ajusta lo que dejó de funcionar."
+    },
+    "60": {
+      "naipe": "oros",
+      "rank": "rainha",
+      "fam": "F4W",
+      "title": "Oros · Reina",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "cuidado práctico, seguridad, generosidad."
+        ],
+        [
+          "Símbolos y elementos",
+          "reina contemplando una moneda, jardín fértil, conejo cerca."
+        ],
+        [
+          "Palabras clave",
+          "cuidado, seguridad, acogida."
+        ],
+        [
+          "Invertida",
+          "sobrecarga, descuido, dependencia material."
+        ]
+      ],
+      "consejo": "cuídate con la misma atención que ofreces a los demás."
+    },
+    "61": {
+      "naipe": "oros",
+      "rank": "rei",
+      "fam": "F4W",
+      "title": "Oros · Rey",
+      "strip": null,
+      "boxes": [
+        [
+          "Significado general",
+          "estabilidad, gestión, realización material."
+        ],
+        [
+          "Símbolos y elementos",
+          "rey en el trono, moneda y cetro, viñedos, castillo al fondo."
+        ],
+        [
+          "Palabras clave",
+          "gestión, prosperidad, estabilidad."
+        ],
+        [
+          "Invertida",
+          "codicia, control, apego al estatus."
+        ]
+      ],
+      "consejo": "administra tus recursos con responsabilidad y generosidad."
+    }
+  },
+  "intros": {
+    "01": {
+      "fam": "ABERT",
+      "title": "Los Arcanos Menores — cómo leer",
+      "blocks": [
+        "Si los 22 Mayores son los grandes temas de la vida, los 56 Menores son el día a día dentro de esos temas: el trabajo de la semana, la conversación difícil, el dinero que entra o te traba, la fase emocional que atraviesas ahora.",
+        "Los Menores se organizan en 4 palos (Bastos, Copas, Espadas, Oros), cada uno ligado a un elemento y a un área de la vida.",
+        "**Cómo leer:** identifica el palo (el área de la vida) y luego el número o la **corte** (el momento dentro de esa área). Derecha = energía fluyendo. Invertida = energía bloqueada, atrasada o en exceso.",
+        "Dentro de cada palo, 10 cartas numéricas (As al 10) cuentan una historia en progresión, del impulso inicial (As) al resultado maduro (10). Las 4 cortes (Sota, Caballero, Reina, Rey) representan personalidades o fases de madurez dentro de la energía del palo.",
+        "Combina siempre con las cartas vecinas de la tirada: ninguna carta habla sola."
+      ],
+      "footer": "56 Arcanos Menores · 4 palos · As → Rey."
+    },
+    "02": {
+      "fam": "NAIPE_A",
+      "title": "Bastos (Fuego)",
+      "blocks": [
+        [
+          "Elemento",
+          "Fuego."
+        ],
+        [
+          "Área de la vida",
+          "acción, trabajo, creatividad, proyectos, ambición, energía física y sexual."
+        ],
+        [
+          "Energía — Luz",
+          "iniciativa, valor para crear y actuar, entusiasmo que mueve las cosas hacia adelante."
+        ],
+        [
+          "Energía — Sombra",
+          "impulsividad, impaciencia, agotamiento por exceso de acción, conflicto por ego."
+        ],
+        [
+          "Cómo funciona la numeración",
+          "El As de Bastos es la chispa: la idea o la voluntad que nace. Del 2 al 10, esa chispa se transforma en movimiento: alianza y elección (2-3), conquista rápida y obstáculo (4-7), casi llegando y sobrecarga (8-10). En Bastos, crecer puede significar también cansancio, no solo éxito."
+        ],
+        [
+          "Cómo funcionan las cortes",
+          "La Sota de Bastos es la idea recién nacida, todavía probando; el Caballero es la acción en movimiento rápido, a veces sin mirar; la Reina es la confianza magnética, creativa e independiente; el Rey es el liderazgo visionario que ya sabe transformar la idea en resultado."
+        ]
+      ],
+      "footer": "Bastos · Fuego · As → Rey.",
+      "title_rect": [
+        352,
+        12,
+        548,
+        63
+      ],
+      "footer_rect": [
+        326,
+        548,
+        574,
+        587
+      ]
+    },
+    "17": {
+      "fam": "NAIPE_B",
+      "title": "Copas (Agua)",
+      "blocks": [
+        [
+          "Elemento",
+          "Agua."
+        ],
+        [
+          "Área de la vida",
+          "emociones, relaciones, amor, intuición, vida interior, creatividad sensible."
+        ],
+        [
+          "Energía — Luz",
+          "afecto verdadero, conexión, imaginación, sanación emocional."
+        ],
+        [
+          "Energía — Sombra",
+          "dependencia emocional, ilusión, rencor no resuelto, sensibilidad que se vuelve victimismo."
+        ],
+        [
+          "Cómo funciona la numeración",
+          "El As de Copas es el corazón que se abre: la invitación al amor o a una emoción nueva. Del 2 al 10, esa emoción se desarrolla: unión y celebración (2-3), estancamiento y desilusión (4-5), nostalgia y elección del corazón (6-7), búsqueda de algo mayor y realización (8-10). Copas termina en armonía familiar y satisfacción emocional plena."
+        ],
+        [
+          "Cómo funcionan las cortes",
+          "La Sota de Copas es la sensibilidad curiosa, creativa y todavía ingenua; el Caballero es el romanticismo en movimiento, la declaración, la invitación; la Reina es la intuición profunda y el cuidado emocional maduro; el Rey es el equilibrio entre sentir y controlar: la calma emocional que sostiene a los demás."
+        ]
+      ],
+      "footer": "Copas · Agua · As → Rey.",
+      "title_rect": [
+        352,
+        13,
+        548,
+        63
+      ],
+      "footer_rect": [
+        326,
+        546,
+        574,
+        583
+      ]
+    },
+    "32": {
+      "fam": "ESP32",
+      "title": "Espadas (Aire)",
+      "blocks": [
+        [
+          "Elemento",
+          "Aire."
+        ],
+        [
+          "Área de la vida",
+          "pensamientos, comunicación, decisiones, conflictos, claridad y límites."
+        ],
+        [
+          "Energía — Luz",
+          "verdad, discernimiento, diálogo claro, valor para decidir."
+        ],
+        [
+          "Energía — Sombra",
+          "confusión mental, rigidez, palabras que hieren, preocupación excesiva."
+        ],
+        [
+          "Cómo funciona la numeración",
+          "El As trae claridad y una idea nueva. Del 2 al 10 surgen elecciones y conflictos (2-5), travesía y estrategia (6-7), límites y preocupaciones (8-9), hasta el cierre de un ciclo (10). Observa la pregunta y las cartas vecinas."
+        ],
+        [
+          "Cómo funcionan las cortes",
+          "La Sota de Espadas observa, pregunta y aprende; el Caballero actúa con rapidez; la Reina establece límites con discernimiento; el Rey decide con razón y responsabilidad."
+        ]
+      ],
+      "footer": "Espadas · Aire · As → Rey."
+    },
+    "47": {
+      "fam": "OROS",
+      "title": "OROS",
+      "sub": "Tierra",
+      "blocks": [
+        [
+          "Elemento",
+          "Tierra."
+        ],
+        [
+          "Área de la vida",
+          "dinero, trabajo material, cuerpo, seguridad, patrimonio, resultado concreto."
+        ],
+        [
+          "Energía — Luz",
+          "prosperidad construida con esfuerzo, estabilidad, cuidado del cuerpo y de los recursos."
+        ],
+        [
+          "Energía — Sombra",
+          "materialismo, apego al dinero, estancamiento por miedo a arriesgar, valor propio ligado solo a lo que se tiene."
+        ],
+        [
+          "Cómo funciona la numeración",
+          "El As de Oros es la semilla de la oportunidad material. Del 2 al 10 crece: equilibrio y primer fruto (2-3), acumulación y generosidad (4-6), trabajo y cosecha (7-9), hasta la herencia y la estructura consolidada de la familia (10). Oros es el palo de la construcción lenta y del resultado que dura."
+        ],
+        [
+          "Cómo funcionan las cortes",
+          "La Sota de Oros es la estudiante práctica y dedicada, que todavía aprende a manejar recursos; el Caballero es la disciplina en movimiento, lenta pero constante; la Reina es el cuidado que sostiene con generosidad y practicidad; el Rey es la prosperidad consolidada, el proveedor que ya cosechó lo que sembró."
+        ]
+      ],
+      "footer": "Oros · Tierra · As → Rey.",
+      "title_rect": [
+        262,
+        24,
+        638,
+        139
+      ]
+    }
+  }
+}
