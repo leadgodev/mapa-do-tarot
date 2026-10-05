@@ -651,7 +651,10 @@
     };
     var CUR = { MX:'MXN', CO:'COP', AR:'ARS', CL:'CLP', PE:'PEN', BO:'BOB', PY:'PYG', UY:'UYU', GT:'GTQ', HN:'HNL', NI:'NIO', CR:'CRC', DO:'DOP', VE:'VES', ES:'EUR' };
     var cc = null;
-    try {
+    // Teste: ?pais=MX (ou CO, AR, CL, PE, ES...) força o país sem depender do fuso.
+    var qp = /[?&]pais=([a-z]{2})/i.exec(location.search);
+    if (qp) cc = qp[1].toUpperCase();
+    if (!cc) try {
       var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       cc = TZ[tz] || (tz.indexOf('America/Argentina/') === 0 ? 'AR' : null);
     } catch (e) {}

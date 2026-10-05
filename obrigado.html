@@ -44,7 +44,10 @@
   // redireciona em 5s. Qualquer clique ou "quedarme aquí" cancela.
   (function () {
     var lang = null;
-    try {
+    // Teste: ?lang=es ou ?lang=pt força o idioma sem depender do fuso.
+    var ql = /[?&]lang=(es|pt)\b/.exec(location.search);
+    if (ql) lang = ql[1];
+    if (!lang) try {
       var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       if (/^(Europe\/Lisbon|Atlantic\/(Azores|Madeira))$/.test(tz)) lang = 'pt';
       else if (/^(Europe\/Madrid|Africa\/Ceuta|Atlantic\/Canary)$/.test(tz)) lang = 'es';
