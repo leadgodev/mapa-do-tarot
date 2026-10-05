@@ -120,7 +120,7 @@ function handleWebhook(payload) {
   // do webhook confirmado ainda (só temos o id da URL de checkout, que a Wiven usa
   // diferente do product.id do payload). Casa pelo offerCode, que é único por oferta
   // -- não depende do product id.
-  if (String(payload.offerCode || '') === 'JXE3KNA') skus.add('cigano');
+  if (['JXE3KNA', 'AQNS7ED'].includes(String(payload.offerCode || ''))) skus.add('cigano');
   if (!skus.size) return { code: 200, body: { ok: true, ignored: 'no-known-product' } };
   const b = db.buyers[email] || { skus: [], name: (payload.client || {}).name || '' };
   const novos = [...skus].filter((s) => !b.skus.includes(s));
