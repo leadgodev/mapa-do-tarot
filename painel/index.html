@@ -431,7 +431,7 @@ function buyHref(m){
    Calculado sempre a partir do preço normal do config — nunca hardcode do valor final. */
 // Override: preço real confirmado ao vivo na Wiven (não cai na fórmula de 30%).
 const PRODUTO_SKUS = ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo'];
-const MEMBER_PRICE_OVERRIDE = {'completo': 13.90};
+const MEMBER_PRICE_OVERRIDE = {'completo': 13.90, 'cigano-upgrade': 13.90};
 function memberPrice(normal,sku){
   if(sku && MEMBER_PRICE_OVERRIDE[sku]!==undefined) return MEMBER_PRICE_OVERRIDE[sku];
   const normalCents=Math.round(normal*100);
@@ -450,6 +450,19 @@ function priceBadgeHTML(normal,sku){
 const CIGANO_NORMAL = 27.90;
 // Checkout Wiven da oferta "Mapa do Baralho Cigano - Área de Membros" (29/09/2026).
 const CIGANO_URL = 'https://checkout.wiven.com.br/checkout/cmulz3f9d020801oojrzs3854?offer=JXE3KNA';
+// Ofertas de membro do Cigano (Wiven, 05/10/2026). Cada uma é um item único, com checkout só dele.
+// upgrade = Básico→Completo (50% off, 13,90) · cross = Completo p/ comprador só-Tarot (30% off, 18,90)
+// combo / folha = 30% off (combo 13,90, folha 9,90) · flash / perguntas caem no piso: preço normal.
+const CIGANO_OFERTAS = {
+  upgrade:    {url: CIGANO_URL, normal: 27.90, price: 13.90},
+  cross:      {url: 'https://checkout.wiven.com.br/checkout/cmulz3f9d020801oojrzs3854?offer=84JGZRF', normal: 27.90, price: 18.90},
+  combo:      {url: 'https://checkout.wiven.com.br/checkout/cmuvsiah800qf01oe3rud0ec5?offer=VQH5SJ3', normal: 20.90, price: 13.90},
+  folha:      {url: 'https://checkout.wiven.com.br/checkout/cmuvsdyyf006m01pr727b2f5h?offer=QFY94IH', normal: 14.90, price: 9.90},
+  flash:      {url: 'https://checkout.wiven.com.br/checkout/cmurhf87601cv01q2qc8lhnkb?offer=WH9FDAL', normal: 12.00, price: 12.00},
+  perguntas:  {url: 'https://checkout.wiven.com.br/checkout/cmurhgvnn01fg01q2c5div02a?offer=G15WLAZ', normal: 9.90, price: 9.90},
+};
+// Comprador só-Tarot vê o Mapa do Tarot Completo como oferta de membro (30% off, 18,90).
+const TAROT_CROSS = {url: 'https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=BEBAQWS', normal: 27.90, price: 18.90};
 
 const MODULES = [
   {
@@ -647,9 +660,11 @@ const CIGANO_ACCESS = {
 };
 const ciganoOwns=(owned,folder)=>(CIGANO_ACCESS[folder]||[]).some(s=>owned.includes(s));
 const ciganoAny=(owned)=>owned.some(s=>s.startsWith('cigano'));
-// Locked: Básico com Mapa comprado faz upgrade pro Completo (checkout de membro); quem não tem nada vai pro upsell.
-const ciganoLockHref=(owned)=>owned.includes('cigano-basico')?CIGANO_URL:'/upsell-cigano/';
-const ciganoTk=(owned)=>owned.includes('cigano-basico')&&!owned.includes('cigano-completo')?' data-tk-value="'+memberPrice(CIGANO_NORMAL).toFixed(2)+'" data-tk-currency="BRL"':'';
+// Cadeado do Completo: Básico faz upgrade (50%); quem não tem Cigano compra o Completo de membro (30%, cross).
+const ciganoUpsell=(owned)=>owned.includes('cigano-basico')?CIGANO_OFERTAS.upgrade:CIGANO_OFERTAS.cross;
+const ciganoLockHref=(owned)=>ciganoUpsell(owned).url;
+const ciganoTk=(owned)=>' data-tk-value="'+ciganoUpsell(owned).price.toFixed(2)+'" data-tk-currency="BRL"';
+const tarotAny=(owned)=>owned.some(s=>PRODUTO_SKUS.includes(s));
 
 function renderCiganoApp(owned){
   const mount=document.getElementById('cigano-app-mount');
@@ -671,40 +686,96 @@ function renderCiganoApp(owned){
       '</a>'+
     '</div>';
 }
-// Bumps: cadeado + compra via a página do Cigano até o checkout de cada bump existir na Wiven.
-const CIGANO_BUMP_HREF=null;
+// Card do Cigano. Bloqueado = <a> direto pro checkout daquele item, com data-tk-value do preço de membro.
+// Desbloqueado = <button> (abre o leitor ou fica "em atualização").
+function ciganoCard(o){
+  const el=document.createElement(o.url?'a':'button');
+  if(o.url){
+    el.href=o.url; el.target='_blank'; el.rel='noopener';
+    el.setAttribute('data-tk-value',o.tk.toFixed(2)); el.setAttribute('data-tk-currency','BRL');
+  } else { el.type='button'; }
+  el.className='card'+(o.unlocked?'':' locked')+(o.cls?' '+o.cls:'');
+  const coverHTML=o.cover?'<img src="'+assetUrl(o.cover)+'" alt="'+o.title+'" loading="lazy">':'<span class="cig-ph" aria-hidden="true">🃏</span>';
+  const badge=o.unlocked?o.badge:'<span class="badge badge-price">'+o.priceHTML+'</span>';
+  const lockOv=o.unlocked?'':'<span class="lock-ov">'+LOCK_SVG+'</span>';
+  el.innerHTML='<span class="cover">'+coverHTML+badge+lockOv+'</span>'+
+    '<span class="body"><span class="card-title">'+o.title+'</span><span class="card-subtitle">'+o.subtitle+'</span><span class="cta">'+o.cta+'</span></span>';
+  if(o.onOpen) el.addEventListener('click',o.onOpen);
+  return el;
+}
+// Oferta de membro com preço: normal riscado + preço de membro (memberPrice = mesma conta da Wiven).
+const ciganoOfferCard=(o,sku,extra)=>Object.assign({
+  url:o.url, normal:o.normal, sku, tk:o.price, cta:'Comprar oferta',
+  priceHTML:priceBadgeHTML(o.normal,sku),
+},extra);
 function renderCiganoGrid(owned){
   const grid=document.getElementById('cigano-grid');
   const bumps=document.getElementById('cigano-grid-bumps');
   grid.innerHTML='';
   bumps.innerHTML='';
-  const paint=(target,list,isBump)=>list.forEach(m=>{
-    const card=document.createElement('button');
-    card.type='button';
+  // Linha 1: módulos do plano. Bloqueado → oferta do plano (upgrade ou Completo de membro).
+  const up=ciganoUpsell(owned);
+  CIGANO_ITEMS.forEach(m=>{
     const folder=CIGANO_KEY[m.key];
     const unlocked=ciganoOwns(owned,folder);
-    const basicoOnly=(CIGANO_ACCESS[folder]||[]).includes('cigano-basico');
     const rd=folder&&CIGANO_READER[folder];
-    card.className='card'+(unlocked?'':' locked')+(m.key==='cigano-36cartas'?' cigano-principal':'');
-    const priceLabel = isBump ? 'Oferta especial' : (basicoOnly?'Plano Básico':'Plano Completo');
-    const badge = unlocked && !rd ? '<span class="badge badge-soon">Em atualização</span>' : unlocked && rd && rd.pages.length<rd.total ? '<span class="badge badge-free">Liberado · '+rd.pages.length+'/'+rd.total+' pág.</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>' : '<span class="badge badge-price">'+priceLabel+'</span>';
-    const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
-    const cta = unlocked && !rd ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : (isBump ? 'Comprar oferta' : 'Desbloquear');
-    const coverHTML = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="lazy">' : '<span class="cig-ph" aria-hidden="true">🃏</span>';
-    card.innerHTML=
-      '<span class="cover">'+coverHTML+badge+lockOv+'</span>'+
-      '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span><span class="cta">'+cta+'</span></span>';
-    if(unlocked && !rd) {
-      card.addEventListener('click',e=>e.preventDefault());
-    } else if(unlocked) {
-      card.addEventListener('click',()=>{location.hash='#cigano-ler/'+folder;route();});
-    } else {
-      card.addEventListener('click',()=>{window.open(CIGANO_BUMP_HREF||ciganoLockHref(owned),'_blank','noopener');});
-    }
-    target.appendChild(card);
+    const badge = !unlocked ? '' : !rd ? '<span class="badge badge-soon">Em atualização</span>' : rd.pages.length<rd.total ? '<span class="badge badge-free">Liberado · '+rd.pages.length+'/'+rd.total+' pág.</span>' : '<span class="badge badge-free">Liberado</span>';
+    const cta = unlocked && !rd ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : 'Desbloquear';
+    grid.appendChild(ciganoCard({
+      title:m.title, subtitle:m.subtitle, cover:m.cover, unlocked, badge, cta,
+      cls: m.key==='cigano-36cartas'?'cigano-principal':'',
+      url: unlocked ? null : up.url, tk: up.price,
+      priceHTML: owned.includes('cigano-basico') ? 'Upgrade' : 'Plano Completo',
+      onOpen: unlocked ? (rd ? ()=>{location.hash='#cigano-ler/'+folder;route();} : (e)=>e.preventDefault()) : null,
+    }));
   });
-  paint(grid,CIGANO_ITEMS,false);
-  paint(bumps,CIGANO_BUMPS,true);
+  // Linha 2 (Ofertas especiais): upgrade/Completo primeiro, Combo, depois bumps do mais caro pro mais barato.
+  // Quem tem o Combo não vê bump avulso à venda (o Combo libera os 3).
+  const cards=[];
+  if(!owned.includes('cigano-completo')){
+    cards.push(ciganoCard(ciganoOfferCard(up===CIGANO_OFERTAS.upgrade?CIGANO_OFERTAS.upgrade:CIGANO_OFERTAS.cross,
+      up===CIGANO_OFERTAS.upgrade?'cigano-upgrade':'cigano-completo',{
+        title: up===CIGANO_OFERTAS.upgrade?'Upgrade para o Plano Completo':'Plano Completo · Baralho Cigano',
+        subtitle:'36 cartas, dicionário de combinações, bônus e App de Treino.',
+        cover:'assets/cigano/capa-cigano.jpg', cls:'cigano-principal', unlocked:false,
+        cta: up===CIGANO_OFERTAS.upgrade?'Fazer upgrade':'Comprar oferta', badge:'',
+      })));
+  }
+  const combo=CIGANO_BUMPS.find(m=>m.key==='cigano-combo');
+  const bumpDefs=[
+    {m:CIGANO_BUMPS.find(x=>x.key==='cigano-folha'),folder:'cigano-folha',o:CIGANO_OFERTAS.folha,sku:'cigano-folha'},
+    {m:CIGANO_BUMPS.find(x=>x.key==='cigano-flash'),folder:'cigano-flash',o:CIGANO_OFERTAS.flash,sku:'cigano-flash'},
+    {m:CIGANO_BUMPS.find(x=>x.key==='cigano-perguntas'),folder:'cigano-perguntas',o:CIGANO_OFERTAS.perguntas,sku:'cigano-perguntas'},
+  ];
+  const ownsCombo=owned.includes('cigano-combo');
+  if(!ownsCombo){
+    cards.push(ciganoCard(ciganoOfferCard(CIGANO_OFERTAS.combo,'cigano-combo',{
+      title:combo.title, subtitle:combo.subtitle, cover:null, unlocked:false, badge:'', cta:'Comprar oferta',
+    })));
+  }
+  bumpDefs.forEach(({m,folder,o,sku})=>{
+    const unlocked=ciganoOwns(owned,folder);
+    if(!unlocked && ownsCombo) return;
+    if(unlocked){
+      const rd=CIGANO_READER[folder];
+      cards.push(ciganoCard({
+        title:m.title, subtitle:m.subtitle, cover:m.cover, unlocked:true, cls:'',
+        badge: !rd ? '<span class="badge badge-soon">Em atualização</span>' : '<span class="badge badge-free">Liberado</span>',
+        cta: rd ? 'Acessar →' : 'Em atualização — aguarde',
+        onOpen: rd ? ()=>{location.hash='#cigano-ler/'+folder;route();} : (e)=>e.preventDefault(),
+      }));
+    } else {
+      cards.push(ciganoCard(ciganoOfferCard(o,sku,{title:m.title, subtitle:m.subtitle, cover:m.cover, unlocked:false, badge:'', cta:'Comprar oferta'})));
+    }
+  });
+  // Cross-sell: quem só tem o Cigano vê o Mapa do Tarot como oferta de membro (30% off).
+  if(ciganoAny(owned) && !tarotAny(owned)){
+    cards.push(ciganoCard(ciganoOfferCard(TAROT_CROSS,'cigano-tarot',{
+      title:'Mapa do Tarot', subtitle:'Oferta de membro: 30% off para quem já tem o Baralho Cigano.',
+      cover:'capas/principal.jpg', unlocked:false, badge:'', cta:'Comprar oferta',
+    })));
+  }
+  cards.forEach(c=>bumps.appendChild(c));
 }
 
 /* ---------- home (2 cards de produto) ---------- */
@@ -747,13 +818,17 @@ function renderHub(){
   renderCiganoGrid(owned);
   const ciganoCta=document.getElementById('cigano-cta');
   ciganoCta.classList.toggle('hidden',owned.includes('cigano-completo'));
-  ciganoCta.href=CIGANO_URL;
-  ciganoCta.setAttribute('data-tk-value', memberPrice(CIGANO_NORMAL).toFixed(2));
+  // Oferta de membro do Cigano: upgrade (Básico) ou Completo de membro (30%) — cada uma com checkout próprio.
+  const cigUp=ciganoUpsell(owned);
+  const cigSku=cigUp===CIGANO_OFERTAS.upgrade?'cigano-upgrade':'cigano-completo';
+  ciganoCta.href=cigUp.url;
+  ciganoCta.setAttribute('data-tk-value', cigUp.price.toFixed(2));
+  ciganoCta.setAttribute('data-tk-currency','BRL');
   ciganoCta.target='_blank';
   ciganoCta.rel='noopener';
-  ciganoCta.innerHTML=(owned.includes('cigano-basico')?'Fazer upgrade para o Completo — ':'Quero o Baralho Cigano — ')+priceBadgeHTML(CIGANO_NORMAL);
+  ciganoCta.innerHTML=(cigUp===CIGANO_OFERTAS.upgrade?'Fazer upgrade para o Completo — ':'Quero o Baralho Cigano — ')+priceBadgeHTML(CIGANO_NORMAL,cigSku);
   ciganoCta.onclick=function(){
-    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Mapa do Baralho Cigano',content_type:'product',value:memberPrice(CIGANO_NORMAL),currency:'BRL'});}
+    if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Mapa do Baralho Cigano',content_type:'product',value:cigUp.price,currency:'BRL'});}
   };
   // Linha 1: o que vem no produto — Básico (principal + bônus 1-4) e depois o Completo.
   // Linha 2: "Ofertas especiais" (itens vendidos à parte no checkout). Nunca escrever "order bump" na área.

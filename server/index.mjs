@@ -53,7 +53,9 @@ const PRODUCT_SKUS = {
 const CIGANO_PRODUCT = 'cmulz3f9a020701oo4fstsegf';
 const CIGANO_OFFERS = {
   E6JPHKE: ['cigano-basico'], K9XTAHE: ['cigano-basico'],
-  AQNS7ED: ['cigano-completo'], UTK2YWV: ['cigano-completo'], JXE3KNA: ['cigano-completo'],
+  AQNS7ED: ['cigano-completo'], UTK2YWV: ['cigano-completo'],
+  // Upgrade Básico→Completo (50% off, 13,90) e Completo de comprador só-Tarot (30% off, 18,90).
+  JXE3KNA: ['cigano-completo'], '84JGZRF': ['cigano-completo'],
 };
 // Módulo do Cigano (nome da pasta em painel/conteudo) -> SKUs que liberam. Mapa do Básico é só
 // as 36 cartas (página: "Plano Básico" tem ✦ Mapa e ✗ o resto). Completo libera tudo + app.
@@ -70,7 +72,8 @@ const CIGANO_ACCESS = {
 // SKU antigo 'cigano' (um pacote só, antes da separação em planos) = Completo. Expande na leitura.
 const CIGANO_EXPAND = { cigano: ['cigano-basico', 'cigano-completo'], 'cigano-completo': ['cigano-basico'] };
 // Ofertas do produto principal que incluem o Nível Completo.
-const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW', 'G8MYTZF']);
+// BEBAQWS = "Mapa do Tarot - Área de Membros" (30% off, comprador só-Cigano) libera o Tarot completo.
+const COMPLETO_OFFERS = new Set(['I38JADD', 'IIUQ8EW', 'G8MYTZF', 'BEBAQWS']);
 const NOT_PAID_EVENT = /CREATED|CANCEL|REFUND|CHARGEBACK|CONTEST|MED|ABANDON|SESSION|TRANSFER|UPDATED/i;
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
