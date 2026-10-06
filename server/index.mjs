@@ -188,7 +188,8 @@ const MUNDPAY_NAME_SKUS = [
   [/essencial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
   [/b[aá]sico.*(es|spanish|español)?/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
 ];
-const FX_CURRENCIES = ['MXN', 'COP', 'ARS', 'CLP', 'PEN', 'BOB', 'PYG', 'UYU', 'GTQ', 'HNL', 'NIO', 'CRC', 'DOP', 'VES', 'EUR', 'BRL', 'CAD'];
+// Fuso→país (tzdata) e país→moeda (CLDR), mundo inteiro. Gerado uma vez; refazer se surgir país novo.
+const FX_GEO = JSON.parse(fs.readFileSync(path.join(ROOT, 'server', 'fx-geo.json'), 'utf8'));
 let fxCache = { at: 0, rates: null };
 async function getFxRates() {
   if (fxCache.rates && Date.now() - fxCache.at < 12 * 3600 * 1000) return fxCache.rates;
@@ -196,8 +197,7 @@ async function getFxRates() {
     const r = await fetch('https://open.er-api.com/v6/latest/USD', { signal: AbortSignal.timeout(5000) });
     const d = await r.json();
     if (d.result !== 'success' || !d.rates) throw new Error('bad fx response');
-    const rates = {};
-    for (const c of FX_CURRENCIES) if (d.rates[c]) rates[c] = d.rates[c];
+    const rates = d.rates;
     fxCache = { at: Date.now(), rates };
   } catch (e) {
     console.error('fx fetch failed', e.message);
@@ -365,7 +365,12 @@ http.createServer(async (req, res) => {
     if (p === '/painel/api/fx') {
       const rates = await getFxRates();
       if (!rates) return json(res, 503, { error: 'fx-unavailable' });
-      return json(res, 200, { base: 'USD', rates }, { 'cache-control': 'public, max-age=3600' });
+      // País: ?cc= (teste ?pais=) > fuso do aparelho > região do idioma. Moeda sai do país.
+      const q = url.searchParams;
+      const ccOf = (v) => (/^[a-z]{2}$/i.test(v || '') ? v.toUpperCase() : null);
+      const country = ccOf(q.get('cc')) || FX_GEO.tz[q.get('tz') || ''] || ccOf(q.get('lr'));
+      const currency = (country && FX_GEO.cur[country]) || null;
+      return json(res, 200, { base: 'USD', rates, country, currency }, { 'cache-control': 'public, max-age=3600' });
     }
     if (p === '/painel/api/webhooks/wiven') {
       if (req.method !== 'POST') return json(res, 405, { error: 'method' });

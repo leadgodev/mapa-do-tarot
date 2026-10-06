@@ -637,33 +637,20 @@
   // cross-domain e envia browser + CAPI com o mesmo event_id, deduplicado.
 
   // Preço na moeda do visitante (aproximado) em cima, US$ menor embaixo como referência.
-  // País pelo fuso horário (fallback: região do idioma). Câmbio do /painel/api/fx (cache 12h no servidor).
-  // País que usa dólar, desconhecido ou API fora do ar: página fica só em US$, como antes.
+  // Qualquer país: o servidor resolve país (fuso do aparelho, fallback região do idioma) e moeda,
+  // e manda o câmbio do dia (/painel/api/fx, cache 12h). País que usa dólar, desconhecido ou API
+  // fora do ar: página fica só em US$, como antes.
   (function () {
-    var TZ = {
-      'America/Mexico_City':'MX','America/Cancun':'MX','America/Merida':'MX','America/Monterrey':'MX','America/Matamoros':'MX',
-      'America/Chihuahua':'MX','America/Ciudad_Juarez':'MX','America/Ojinaga':'MX','America/Mazatlan':'MX','America/Bahia_Banderas':'MX',
-      'America/Hermosillo':'MX','America/Tijuana':'MX',
-      'America/Bogota':'CO','America/Buenos_Aires':'AR','America/Santiago':'CL','America/Punta_Arenas':'CL','Pacific/Easter':'CL',
-      'America/Lima':'PE','America/La_Paz':'BO','America/Asuncion':'PY','America/Montevideo':'UY','America/Guatemala':'GT',
-      'America/Tegucigalpa':'HN','America/Managua':'NI','America/Costa_Rica':'CR','America/Santo_Domingo':'DO','America/Caracas':'VE',
-      'Europe/Madrid':'ES','Africa/Ceuta':'ES','Atlantic/Canary':'ES'
-    };
-    var CUR = { MX:'MXN', CO:'COP', AR:'ARS', CL:'CLP', PE:'PEN', BO:'BOB', PY:'PYG', UY:'UYU', GT:'GTQ', HN:'HNL', NI:'NIO', CR:'CRC', DO:'DOP', VE:'VES', ES:'EUR' };
-    var cc = null;
-    // Teste: ?pais=MX (ou CO, AR, CL, PE, ES...) força o país sem depender do fuso.
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var lr = (/-([A-Z]{2})$/.exec(navigator.language || '') || [])[1] || '';
+    // Teste: ?pais=MX (ou JP, IN, DE, ZA...) força o país sem depender do fuso.
     var qp = /[?&]pais=([a-z]{2})/i.exec(location.search);
-    if (qp) cc = qp[1].toUpperCase();
-    if (!cc) try {
-      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      cc = TZ[tz] || (tz.indexOf('America/Argentina/') === 0 ? 'AR' : null);
-    } catch (e) {}
-    if (!cc) { var m = /-([A-Z]{2})$/.exec(navigator.language || ''); if (m && CUR[m[1]]) cc = m[1]; }
-    var cur = cc && CUR[cc];
-    if (!cur) return;
+    var qs = '?tz=' + encodeURIComponent(tz) + '&lr=' + lr + (qp ? '&cc=' + qp[1] : '');
     var usd = new Intl.NumberFormat('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    fetch('/painel/api/fx').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
-      var rate = d && d.rates && d.rates[cur];
+    fetch('/painel/api/fx' + qs).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var cc = d && d.country, cur = d && d.currency;
+      var rate = cur && cur !== 'USD' && d.rates && d.rates[cur];
       if (!rate) return;
       function local(v) {
         var x = v * rate, dec = x >= 100 ? 0 : 2;
@@ -672,7 +659,7 @@
       }
       document.querySelectorAll('[data-usd]').forEach(function (el) {
         var v = local(parseFloat(el.getAttribute('data-usd')));
-        var code = cur === 'EUR' ? '' : '<small class="fx-code">' + cur + '</small>';
+        var code = (cur === 'EUR' || v.indexOf(cur) >= 0) ? '' : '<small class="fx-code">' + cur + '</small>';
         el.innerHTML = (el.hasAttribute('data-usd-strike') ? '' : '≈') + v + code;
         el.style.whiteSpace = 'nowrap';
       });
