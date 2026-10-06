@@ -77,6 +77,9 @@
   /* ===== HERO ===== */
   .hero{position:relative;height:15rem;background:linear-gradient(120deg,#3b1a6b,#8b3ff0 60%,#a668ff);overflow:hidden;display:flex;align-items:flex-end;}
   .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 20%,rgba(255,255,255,.35),transparent 45%);pointer-events:none;}
+  body.only-cigano{--accent:#c86a3f;--accent-press:#b5502a;--sky-100:#f1e2c4;--sky-200:#ead2ab;--sky-300:#e0b98c;--ink-900:#2b2018;--ink-700:#4a3a2c;}
+  body.only-cigano .hero{background:linear-gradient(120deg,#4a2e1f,#c86a3f 60%,#d98a63);}
+  body.only-cigano .btn-primary{background:var(--accent);box-shadow:0 10px 24px rgba(200,106,63,.32);}
   .hero .grad{position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(to top,var(--sky-300),transparent);}
   .hero-inner{position:relative;z-index:2;padding:0 clamp(16px,4vw,40px) 22px;max-width:1180px;margin:0 auto;width:100%;}
   .hero-inner .eyebrow{font-family:var(--font-head);font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.85);margin:0 0 6px;}
@@ -405,7 +408,7 @@
 
 // Coolify serves /painel without redirecting to /painel/. Never resolve assets
 // against that document URL: "conteudo/..." would become /conteudo/... (404).
-const ASSET_VERSION = '20261005-cigano-tiers';
+const ASSET_VERSION = '20261005-cigano-home';
 function assetUrl(path){return '/painel/'+path+'?v='+ASSET_VERSION;}
 
 // Checkout Wiven de cada item avulso. Ofertas "- Área de Membros" (preço de membro,
@@ -780,23 +783,37 @@ function renderCiganoGrid(owned){
 
 /* ---------- home (2 cards de produto) ---------- */
 function renderHomeCards(owned){
-  const ciganoUnlocked=ciganoAny(owned);
+  const tarot=tarotAny(owned), cig=ciganoAny(owned);
   const grid=document.getElementById('home-grid');
-  grid.innerHTML=
-    '<button type="button" class="home-card" data-market="tarot">'+
-      '<img src="'+assetUrl('capas/principal.jpg')+'" alt="Mapa do Tarot">'+
-      '<span class="home-card-body"><span class="home-card-eyebrow">🔮 Seu produto</span><h3>Mapa do Tarot</h3><p>Módulos, bônus e o App de Treino do Tarô.</p><span class="home-card-cta">Acessar →</span></span>'+
-    '</button>'+
-    '<button type="button" class="home-card'+(ciganoUnlocked?'':' locked')+'" data-market="cigano">'+
-      '<img src="'+assetUrl('assets/cigano/capa-cigano.jpg')+'" alt="Mapa do Baralho Cigano" style="object-fit:contain;background:#f1e2c4;">'+
-      (ciganoUnlocked?'':'<span class="home-lock">🔒 Bloqueado</span>')+
-      '<span class="home-card-body"><span class="home-card-eyebrow">🃏 '+(ciganoUnlocked?'Seu produto':'Conheça')+'</span><h3>Baralho Cigano</h3><p>'+(ciganoUnlocked?'36 cartas, dicionário de combinações e bônus.':'Método Visual 3C — desbloqueie o plano completo.')+'</p><span class="home-card-cta">'+(ciganoUnlocked?'Acessar →':'Ver oferta →')+'</span></span>'+
-    '</button>';
-  grid.querySelector('[data-market="tarot"]').addEventListener('click',()=>{location.hash='#tarot';});
-  grid.querySelector('[data-market="cigano"]').addEventListener('click',()=>{
-    if(ciganoUnlocked){location.hash='#cigano';}
-    else{window.open('/upsell-cigano/','_blank','noopener');}
-  });
+  const tarotCard=(tarot)=>tarot
+    ? '<button type="button" class="home-card" data-market="tarot">'+
+        '<img src="'+assetUrl('capas/principal.jpg')+'" alt="Mapa do Tarot">'+
+        '<span class="home-card-body"><span class="home-card-eyebrow">🔮 Seu produto</span><h3>Mapa do Tarot</h3><p>Módulos, bônus e o App de Treino do Tarô.</p><span class="home-card-cta">Acessar →</span></span>'+
+      '</button>'
+    : '<a class="home-card locked" href="'+TAROT_CROSS.url+'" target="_blank" rel="noopener" data-tk-value="'+TAROT_CROSS.price.toFixed(2)+'" data-tk-currency="BRL">'+
+        '<img src="'+assetUrl('capas/principal.jpg')+'" alt="Mapa do Tarot">'+
+        '<span class="home-lock">🔒 Bloqueado</span>'+
+        '<span class="home-card-body"><span class="home-card-eyebrow">🔮 Oferta de membro</span><h3>Mapa do Tarot</h3><p>'+priceBadgeHTML(TAROT_CROSS.normal,'cigano-tarot')+' · 30% off para quem já tem o Cigano.</p><span class="home-card-cta">Desbloquear →</span></span>'+
+      '</a>';
+  const ciganoCard=(cig)=>cig
+    ? '<button type="button" class="home-card" data-market="cigano">'+
+        '<img src="'+assetUrl('assets/cigano/mockup-basico-mapa.webp')+'" alt="Mapa do Baralho Cigano" style="object-fit:contain;background:#f1e2c4;">'+
+        '<span class="home-card-body"><span class="home-card-eyebrow">🃏 Seu produto</span><h3>Mapa do Baralho Cigano</h3><p>36 cartas, dicionário de combinações e bônus.</p><span class="home-card-cta">Acessar →</span></span>'+
+      '</button>'
+    : '<a class="home-card locked" href="'+CIGANO_OFERTAS.cross.url+'" target="_blank" rel="noopener" data-tk-value="'+CIGANO_OFERTAS.cross.price.toFixed(2)+'" data-tk-currency="BRL">'+
+        '<img src="'+assetUrl('assets/cigano/mockup-basico-mapa.webp')+'" alt="Mapa do Baralho Cigano" style="object-fit:contain;background:#f1e2c4;">'+
+        '<span class="home-lock">🔒 Bloqueado</span>'+
+        '<span class="home-card-body"><span class="home-card-eyebrow">🃏 Oferta de membro</span><h3>Mapa do Baralho Cigano</h3><p>'+priceBadgeHTML(CIGANO_OFERTAS.cross.normal,'cigano-completo')+' · 30% off para quem já tem o Tarot.</p><span class="home-card-cta">Desbloquear →</span></span>'+
+      '</a>';
+  // Produto que a pessoa tem vem primeiro; a oferta de membro depois.
+  grid.innerHTML = (cig && !tarot) ? ciganoCard(true)+tarotCard(false) : tarotCard(tarot)+ciganoCard(cig);
+  grid.querySelectorAll('[data-market="tarot"]').forEach(b=>b.addEventListener('click',()=>{location.hash='#tarot';}));
+  grid.querySelectorAll('[data-market="cigano"]').forEach(b=>b.addEventListener('click',()=>{location.hash='#cigano';}));
+  // Só Cigano: a página vira Cigano (título e paleta terrosa). Quem tem os dois fica como está.
+  const only=cig && !tarot;
+  document.body.classList.toggle('only-cigano', only);
+  const h2=document.querySelector('.hero-inner h2');
+  if(h2) h2.textContent = only ? 'Mapa do Baralho Cigano' : 'Sua área de membros ✨';
 }
 function showMarket(which){
   document.getElementById('view-home').classList.toggle('hidden', !!which);
