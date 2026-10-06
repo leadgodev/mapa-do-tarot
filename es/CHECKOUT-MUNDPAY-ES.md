@@ -1,62 +1,86 @@
 # Checkout Mundpay — Mapa del Tarot ES (USD)
 
-Produto Mundpay próprio: **Mapa del Tarot - ES** (`01a10edc-f0d8-7011-9877-cff035cc2282`).
-Status do produto: **Em análise** (ainda não ativado para venda). Entrega: Integração Externa, `https://mapadeltarot.leadgo.dev/painel/`, conta teste padrão `teste-4423c38c@leadgo.dev`.
+**Decisão da dona (05/10/2026):** ES NÃO tem produto Mundpay próprio. ES vende dentro do produto PT já aprovado:
+**Mapa do Tarot Essencial - PT** (`01a0d98a-e8f5-72a6-b1d4-43b36f5ee190`), com ofertas `– ES` em USD.
+Produto `Mapa del Tarot - ES` (`01a10edc-f0d8-7011-9877-cff035cc2282`) fica **Em análise**, sem uso: ofertas
+desativadas, bumps desligados, webhooks desativados. Nada foi apagado.
 
-Regra de pagamento da dona (todas as ofertas ES, principal e bumps): só recebimento na hora (cartão, Apple/Google Pay, Pix e transferência instantânea). Sem boleto, OXXO, dinheiro em loja, voucher, Efecty, PagoEfectivo.
+Regra de pagamento (todas as ofertas ES): só recebimento na hora (cartão, Pix, Apple/Google Pay, carteiras e
+transferência instantânea). Sem boleto, OXXO, Efecty, Rapipago, dinheiro em loja, voucher, PagoEfectivo.
 
-## Ofertas do produto ES
+## Ofertas ES (produto 01a0d98a)
 
-| Oferta | Valor | Checkout (link atual da página) | Status | Métodos |
+| Oferta | Valor | Checkout (link na página ES) | Status | Métodos |
 |---|---|---|---|---|
-| Básico - ES | US$ 7,90 | `01a10ee5-49dd-7348-9a21-350927feb4f0` — https://pay.mycheckoutt.com/01a10ee5-49dd-7348-9a21-350927feb4f0?ref= | Ativo (no produto) | 4 principais + alternativos instantâneos (ver abaixo) |
-| Mapa del Tarot Completo - ES | US$ 14,90 | `01a10ede-2288-7064-b9a1-55f5502822c5` — https://pay.mycheckoutt.com/01a10ede-2288-7064-b9a1-55f5502822c5?ref= | Ativo | só instantâneos (criada assim no pane anterior; não reverificada nesta rodada) |
-| Mapa del Tarot Oferta Especial - ES (popup) | US$ 12,90 | `01a10ede-d49e-700c-a945-f7bf3d79f356` — https://pay.mycheckoutt.com/01a10ede-d49e-700c-a945-f7bf3d79f356?ref= | Ativo | só instantâneos (criada assim no pane anterior; não reverificada nesta rodada) |
-| Mapa del Tarot Básico - ES (antiga) | US$ 7,90 | — | **Inativo** (desativada, não apagada) | padrão (64, com boleto/OXXO) |
+| Mapa del Tarot Basico - ES | US$ 7,90 | `01a0f31a-3680-70ba-97df-674bf221c815` | Ativo | 4 principais + 22 alternativos instantâneos |
+| Mapa del Tarot Completo - ES | US$ 14,90 | `01a0f31b-96df-70a0-9e7c-1891d7fcd5ac` | Ativo | idem |
+| Mapa del Tarot Oferta Especial - ES (popup) | US$ 12,90 | `01a0f31c-06d3-73ae-866f-74e142a2fc53` | Ativo | idem |
 
-Pendente: reverificar os métodos de Completo e Oferta Especial na tela de edição antes de liberar tráfego.
-
-### Métodos instantâneos do Básico - ES (marcados)
-- Principais: Cartão de Crédito, Pix, Apple Pay, Google Pay.
+Métodos alternativos instantâneos marcados (24 itens, por país):
 - Argentina: Mercado Pago, MODO, Khipu.
 - Brasil: PicPay.
-- Chile: Khipu, Mach, Banco de Chile, Banco Estado, Banco Falabella, Banco Santander, BCI, Fintoc (ServiPag fora: pagamento em rede de caixas).
-- Colômbia: PSE, Nequi PSE (Efecty fora).
+- Chile: Khipu, Mach, Banco de Chile, Banco Estado, Banco Falabella, Banco Santander, BCI, Fintoc.
+- Colômbia: PSE, Nequi PSE.
 - Costa Rica: Banco Nacional.
-- Equador: Banco Guayaquil, Banco Pichincha (Red Activa, Mi Comisariato, Pichincha Mi Vecino fora).
-- México: SPEI, Scotiabank (OXXO, lojas e demais fora).
-- Peru: Banco de Crédito, Interbank, Scotiabank, BBVA Continental, Khipu (Caja, Ripley, Western Union, Kasnet fora).
-- Excluídos: Boleto Bancário (BR), Rapipago, Otros Bancos/Billeteras (AR), Efecty (CO), todas as lojas/redes de pagamento em espécie.
+- Equador: Banco Guayaquil, Banco Pichincha.
+- México: SPEI, Scotiabank.
+- Peru: Banco de Crédito, Interbank, Scotiabank, BBVA Continental, Khipu.
+- Principais: Cartão de Crédito, Pix, Apple Pay, Google Pay.
 
-Decisão de critério: Mercado Pago, MODO, PicPay, Scotiabank e Khipu entram como instantâneos (carteira ou transferência). Se a dona quiser restringir mais, tirar esses.
+Excluídos: Boleto (BR), Rapipago, Otros Bancos/Billeteras (AR), ServiPag (CL), Efecty (CO), Red Activa, Mi Comisariato,
+Pichincha Mi Vecino (EC), OXXO e lojas (MX), Caja/Ripley/Western Union/Kasnet (PE).
+Obs.: o painel mostra "26/64" no cabeçalho (4 principais + 22), mas o total por país é 24 itens. A contagem global do
+painel conta Khipu/Scotiabank uma vez só. Não é erro de seleção (conferido por país ao reabrir a oferta).
 
-## Order bumps do produto ES (Order Bumps)
+Checkout público (teste, país padrão Brasil): cada link mostra o preço convertido para BRL no seletor local e o total
+em R$. O preço em moeda do comprador (ES/MX/CO…) NÃO foi conferido: exige trocar o país no checkout.
 
-A Mundpay só aceita oferta de OUTRO produto como bump. Por isso os bumps ES usam as ofertas ES que estão no produto compartilhado **Extras Mapa do Tarot - PT** (`01a0eaf0`). Ligados como order bump no produto ES (4):
+## Order bumps (produto 01a0d98a, aba Order Bumps)
 
-| Bump (título exibido) | Oferta de origem | Preço |
+Ligados como order bump (4 ofertas ES, origem no produto `Extras Mapa do Tarot - PT`, `01a0eaf0`):
+
+| Título exibido | Oferta de origem | Preço |
 |---|---|---|
 | 80 Preguntas Poderosas | Extras Mapa del Tarot - ES - 80 Preguntas Poderosas - ES | US$ 5,90 |
 | Hoja de Consulta del Tarot | Hoja de Consulta del Tarot - ES | US$ 6,90 |
 | Guía Flash · Arcanos Mayores | Guía Flash · Arcanos Mayores - ES | US$ 5,00 |
 | Llévate los 3 con descuento | Llévate los 3 con descuento - ES (combo) | US$ 11,90 |
 
-Pendências dos bumps:
-- As 4 ofertas continuam ATIVAS no produto Extras PT: são a fonte dos bumps. Desativar quebra o bump.
-- Imagem do bump não tem campo no formulário Mundpay (não anexada).
-- Risco: os bumps ES vivem no produto Extras PT, que também é ligado no webhook PT. Vendas de bump ES podem chegar ao Trackeador PT e ao painel PT. Solução limpa = produto "Extras Mapa del Tarot - ES" próprio (exige o código de 4 dígitos do suporte, bloqueado sem humano).
+- Bump não tem escopo por oferta: os 4 ES também aparecem no checkout PT (dona aceitou). Os 3 bumps PT continuam ligados.
+- Bump ES: 4 principais + 0 alternativos (só instantâneos).
+- Imagem do bump: sem campo no formulário Mundpay.
+- Bump aparece no checkout só depois de identificação (email)? Não verificado: não preenchi email pra não gerar lead.
+  Pendente: fazer uma compra de teste ou conferir pelo fluxo real antes de tráfego.
 
 ## Webhooks Mundpay (Integrações → Webhook Genérico)
 
-- `Trackeador - Mapa del Tarot ES`: produto Mapa del Tarot - ES; eventos padrão (Pago, Reembolsado, Chargeback incluídos); URL = conexão `dabe9e22-00de-4cf7-8a8c-a15f3e6ba56e` no adstrackeador (token em `~/.trackeador/mundpay-es-webhook-secret.txt`).
-- `Painel ES - liberacao de acesso`: produto Mapa del Tarot - ES; URL `https://mapadeltarot.leadgo.dev/painel/api/webhooks/mundpay?token=<MUNDPAY_WEBHOOK_TOKEN>` (mesmo token do painel).
-- Sem prova de disparo real: nenhuma venda teste feita (produto em análise).
+| Nome | Produto | URL (destino) | Status |
+|---|---|---|---|
+| Painel PT - liberacao de acesso | Mapa do Tarot Essencial - PT | `mapadotarot.leadgo.dev/painel/api/webhooks/mundpay` | Ativo |
+| Trackeador - Mapa do Tarot PT | Mapa do Tarot Essencial - PT | conexão `6d593083-…` | Ativo |
+| Painel ES - liberacao de acesso | Mapa del Tarot - ES | `mapadeltarot.leadgo.dev/painel/…` | **Inativo** |
+| Trackeador - Mapa del Tarot ES | Mapa del Tarot - ES | conexão `dabe9e22-…` | **Inativo** |
+
+Venda ES do produto compartilhado chega pelos webhooks do PT (produto 01a0d98a). Painel: o mapeamento de SKU é por nome
+da oferta (`MUNDPAY_NAME_SKUS` em `server/index.mjs`): `– ES` cai nos mesmos regex do PT e USD força `lang=es`.
 
 ## Trackeador
 
-- Conexão `Mapa del Tarot - ES — Mundpay` (`dabe9e22`): dashboard `MAPA DE TAROT - LATAM`, pixel LATAM `1107064091683532`, CAPI desligada (de propósito, até provar a cadeia).
-- `default_country`: deixado VAZIO de propósito (LATAM multi-país). Doctor acusa aviso; decisão da dona.
-- Prova ponta a ponta (`checkout simular`, `test flow`) não rodada: o CLI não tem modo de teste para essa conexão sem enviar eventos; `check` acusa só "CAPI desligada" e produto não cadastrado (esperado enquanto não há CAPI).
+- Conexão ES `dabe9e22-00de-4cf7-8a8c-a15f3e6ba56e` (`Mapa del Tarot - ES — Mundpay`): pixel LATAM `1107064091683532`,
+  CAPI desligada, webhook Mundpay **inativo** (produto 01a10edc, sem vendas).
+- Conexão PT `6d593083-…` (`Mapa do Tarot - PT — Mundpay`): pixel PT `4048960295234961`, CAPI desligada (decisão de 29/09).
+- **Pendência de roteamento:** venda ES do produto 01a0d98a cai na conexão PT (o webhook filtra por produto, não por
+  oferta). Sem ajuste, a venda ES é atribuída à conexão/pixel PT e não gera Purchase no pixel ES. Opções a decidir:
+  (a) Trackeador roteando por moeda/oferta; (b) produto Mundpay ES separado (rejeitado pela dona); (c) aceitar.
+
+## Gate no ar (05/10/2026, headed, `mapadeltarot.leadgo.dev/es/` com UTM)
+
+- PageView ✓ e ViewContent ✓ (`facebook.com/tr`, id `1107064091683532`), ViewContent `value 14.9 USD`.
+- InitiateCheckout ✓ em cada um dos 5 botões de checkout, uma vez por clique, moeda USD:
+  Completo 14.9 · Completo 14.9 · Downsell 12.9 · Básico 7.9 · Saída 12.9.
 
 ## Histórico
-- 2026-10-05: oferta Básico - ES criada (US$ 7,90, instantâneos); antiga Básico desativada. Bumps ES criados e ligados (4). Webhook Trackeador e painel ES cadastrados. Link do checkout Básico trocado na página ES (commit local, não publicado).
+- 2026-10-05: produto separado "Mapa del Tarot - ES" abandonado (ofertas e webhooks desativados). ES volta pro produto
+  compartilhado 01a0d98a. Ofertas ES com métodos instantâneos. Bumps ES ligados no produto compartilhado.
+  Página ES repontada (commit `13ad322`, já publicado; o commit `da4e0d9` que trocava pro produto separado também já estava no remoto,
+  por isso não foi revertido: foi feito commit novo).
