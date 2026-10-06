@@ -69,9 +69,13 @@ da oferta (`MUNDPAY_NAME_SKUS` em `server/index.mjs`): `– ES` cai nos mesmos r
 - Conexão ES `dabe9e22-00de-4cf7-8a8c-a15f3e6ba56e` (`Mapa del Tarot - ES — Mundpay`): pixel LATAM `1107064091683532`,
   CAPI desligada, webhook Mundpay **inativo** (produto 01a10edc, sem vendas).
 - Conexão PT `6d593083-…` (`Mapa do Tarot - PT — Mundpay`): pixel PT `4048960295234961`, CAPI desligada (decisão de 29/09).
-- **Pendência de roteamento:** venda ES do produto 01a0d98a cai na conexão PT (o webhook filtra por produto, não por
-  oferta). Sem ajuste, a venda ES é atribuída à conexão/pixel PT e não gera Purchase no pixel ES. Opções a decidir:
-  (a) Trackeador roteando por moeda/oferta; (b) produto Mundpay ES separado (rejeitado pela dona); (c) aceitar.
+- **Roteamento por oferta (05/10/2026, deploy Trackeador `03203e7` em origin/master):** venda ES do produto 01a0d98a
+  (oferta/produto com ` - ES` ou payload USD sem oferta) vai pra conexão ES `dabe9e22` (pixel LATAM). O resto segue na PT
+  `6d593083`. Regra e par em `web/lib/mundpay-es-routing.ts` (repo trackeador-mvp). Testes unitários: 5/5.
+  Prova ponta a ponta no webhook de produção: PENDENTE (o guard bloqueia curl em /api/webhooks; falta uma venda real ou
+  teste autorizado). Smoke de produção ok (5/5).
+- Painel ES: SKUs ES mapeados por nome no `server/index.mjs` (`MUNDPAY_NAME_SKUS`), webhook do painel = "Painel PT - liberacao
+  de acesso". Prova com conta teste pendente.
 
 ## Gate no ar (05/10/2026, headed, `mapadeltarot.leadgo.dev/es/` com UTM)
 
