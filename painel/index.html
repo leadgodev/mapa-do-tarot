@@ -297,7 +297,7 @@
 <!-- ===================== HUB ===================== -->
 <div id="view-hub" class="hidden">
   <header class="topbar">
-    <div class="brand"><span class="star">✦</span> Mapa do Tarot</div>
+    <div class="brand"><span class="star">✦</span> <span id="brand-name">Mapa do Tarot</span></div>
     <div class="topbar-right">
       <a class="support" href="mailto:support@leadgo.dev">Suporte</a>
       <button class="logout" id="btn-logout">Sair</button>
@@ -814,6 +814,8 @@ function renderHomeCards(owned){
   document.body.classList.toggle('only-cigano', only);
   const h2=document.querySelector('.hero-inner h2');
   if(h2) h2.textContent = only ? 'Mapa do Baralho Cigano' : 'Sua área de membros ✨';
+  const brand=document.getElementById('brand-name');
+  if(brand) brand.textContent = only ? 'Mapa do Baralho Cigano' : 'Mapa do Tarot';
 }
 function showMarket(which){
   document.getElementById('view-home').classList.toggle('hidden', !!which);
