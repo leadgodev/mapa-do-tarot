@@ -654,23 +654,22 @@ const ciganoTk=(owned)=>owned.includes('cigano-basico')&&!owned.includes('cigano
 function renderCiganoApp(owned){
   const mount=document.getElementById('cigano-app-mount');
   const full=owned.includes('cigano-completo');
-  const href=full?'#':ciganoLockHref(owned);
+  const href=full?'treino-cigano/':ciganoLockHref(owned);
   const target=full?'':' target="_blank" rel="noopener"';
   mount.innerHTML=
     '<div class="treino-card-wrap">'+
       '<a class="treino-card '+(full?'unlocked':'locked')+'" href="'+href+'"'+target+(full?'':ciganoTk(owned))+'>'+
         '<span class="treino-pill">🎁 Bônus Especial · App de Treino</span>'+
         '<span class="treino-img-wrap">'+
-          '<img class="treino-img" src="'+assetUrl('assets/cigano/bonus-6-cut.webp')+'" alt="App de Treino do Baralho Cigano" loading="eager">'+
+          '<img class="treino-img" src="'+assetUrl('assets/cigano/mockup-app-treino.webp')+'" alt="App de Treino do Baralho Cigano" loading="eager">'+
           (full?'':'<span class="treino-lock"><span class="treino-lock-ico">🔒</span><span class="treino-lock-text">Incluso no Plano Completo</span></span>')+
         '</span>'+
         '<span class="treino-text">'+
           '<span class="treino-title">App de Treino do Baralho Cigano</span>'+
-          '<span class="treino-sub">'+(full?'Em atualização — flashcards e treino de combinações no celular.':'Toque para desbloquear no Plano Completo')+'</span>'+
+          '<span class="treino-sub">'+(full?'36 cartas, consulta rápida, treino de reconhecimento e 216 pares para praticar.':'Toque para desbloquear no Plano Completo')+'</span>'+
         '</span>'+
       '</a>'+
     '</div>';
-  if(full){mount.querySelector('a').addEventListener('click',e=>e.preventDefault());}
 }
 // Bumps: cadeado + compra via a página do Cigano até o checkout de cada bump existir na Wiven.
 const CIGANO_BUMP_HREF=null;

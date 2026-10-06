@@ -406,11 +406,15 @@ http.createServer(async (req, res) => {
       const email = cookieEmail(req);
       if (!email) return json(res, 401, { error: 'no-session' });
       const o = owned(email);
-      if (!o || !o.includes('completo')) return json(res, 403, { error: 'forbidden' });
-      if (req.method === 'GET') return json(res, 200, { ok: true, progresso: (db.buyers[email] && db.buyers[email].treino) || null });
+      // ?app=cigano: progresso do App do Baralho Cigano, chave própria (não mistura com o do Tarot).
+      const cigano = url.searchParams.get('app') === 'cigano';
+      const campo = cigano ? 'treinoCigano' : 'treino';
+      const liberado = cigano ? canOpenFolder(o, 'cigano-app') : !!(o && o.includes('completo'));
+      if (!liberado) return json(res, 403, { error: 'forbidden' });
+      if (req.method === 'GET') return json(res, 200, { ok: true, progresso: (db.buyers[email] && db.buyers[email][campo]) || null });
       if (req.method === 'POST') {
         let b; try { b = JSON.parse(await readBody(req, 64 * 1024)); } catch { return json(res, 400, { error: 'bad-json' }); }
-        db.buyers[email].treino = b.progresso || {};
+        db.buyers[email][campo] = b.progresso || {};
         save();
         return json(res, 200, { ok: true });
       }

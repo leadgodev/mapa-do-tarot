@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<base href="/painel/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App de Treino do Baralho Cigano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="treino-cigano/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/painel/"><span class="star">✦</span> Baralho Cigano</a>
+  <div class="topbar-right">
+    <span id="streak-pill" class="pill hidden">🔥 <span id="streak-n">0</span> dias</span>
+    <a href="./" class="btn-ghost-sm">← Painel</a>
+  </div>
+</header>
+
+<div class="hero-mini">
+  <div class="hero-mini-inner">
+    <p class="eyebrow">Bônus · Plano Completo</p>
+    <h1>App de Treino do Baralho Cigano</h1>
+    <p class="sub">36 cartas, consulta rápida, treino de reconhecimento e 216 pares para praticar.</p>
+  </div>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="cartas" role="tab" aria-selected="true">🂠 Cartas</button>
+  <button class="tab" data-tab="reconhecer" role="tab" aria-selected="false">🎯 Reconhecer</button>
+  <button class="tab" data-tab="combinacoes" role="tab" aria-selected="false">🔗 Combinações</button>
+  <button class="tab" data-tab="progresso" role="tab" aria-selected="false">📊 Meu progresso</button>
+</nav>
+
+<main class="wrap">
+
+  <!-- ===== ABA CARTAS ===== -->
+  <section id="panel-cartas" class="panel active">
+    <div class="progress-block">
+      <div class="progress-head">
+        <strong id="cartas-count">0 de 36 estudadas</strong>
+        <span id="cartas-pct">0%</span>
+      </div>
+      <div class="bar"><div id="cartas-bar-fill" class="bar-fill"></div></div>
+    </div>
+
+    <input id="busca" class="busca" type="search" placeholder="Buscar por nome, número ou palavra-chave" autocomplete="off">
+
+    <div id="grade-cartas" class="grade-cartas"></div>
+    <p id="grade-vazia" class="vazia hidden">Nenhuma carta encontrada.</p>
+  </section>
+
+  <!-- ===== ABA RECONHECER ===== -->
+  <section id="panel-reconhecer" class="panel">
+    <div id="praticar-intro" class="praticar-intro">
+      <h2>Escolha um modo</h2>
+      <p class="sub">Cada rodada tem 10 cartas. A gente prioriza as que você mais erra.</p>
+      <div class="modos">
+        <button class="modo-card" data-modo="essencia">
+          <span class="modo-ico">✨</span>
+          <strong>Qual a essência?</strong>
+          <span>Veja a carta e escolha o significado certo entre 4 opções.</span>
+        </button>
+        <button class="modo-card" data-modo="nome">
+          <span class="modo-ico">🔎</span>
+          <strong>Qual carta é?</strong>
+          <span>Leia a essência e escolha a carta certa entre 4 imagens.</span>
+        </button>
+        <button class="modo-card" data-modo="flash">
+          <span class="modo-ico">🔄</span>
+          <strong>Cartões</strong>
+          <span>Pense na resposta, vire o cartão e diga se sabia.</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="praticar-jogo" class="praticar-jogo hidden">
+      <div class="jogo-head">
+        <span id="jogo-progresso">1 / 10</span>
+        <button id="jogo-sair" class="link-btn">Encerrar</button>
+      </div>
+      <div class="bar sm"><div id="jogo-bar" class="bar-fill"></div></div>
+      <div id="jogo-card" class="jogo-card"></div>
+    </div>
+
+    <div id="praticar-fim" class="praticar-fim hidden">
+      <h2>Você concluiu esta sessão.</h2>
+      <p id="fim-resultado" class="fim-resultado"></p>
+      <p class="fim-dica">Registre uma ideia que aprendeu.</p>
+      <button id="fim-outra" class="btn-primary">Praticar de novo</button>
+      <button id="fim-voltar" class="btn-ghost-sm">Voltar aos modos</button>
+    </div>
+  </section>
+
+  <!-- ===== ABA COMBINAÇÕES ===== -->
+  <section id="panel-combinacoes" class="panel">
+    <div class="praticar-intro">
+      <h2>Treino de combinações</h2>
+      <p class="sub">Duas cartas, uma frase. Escreva a sua antes de ver o exemplo.</p>
+    </div>
+    <div id="comb-card" class="comb-card"></div>
+  </section>
+
+  <!-- ===== ABA PROGRESSO ===== -->
+  <section id="panel-progresso" class="panel">
+    <p id="aviso-local" class="aviso-local hidden">Seu progresso fica neste navegador e pode ser apagado ao limpar os dados.</p>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <span class="stat-n" id="stat-estudadas">0</span>
+        <span class="stat-l">de 36 cartas estudadas</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-n" id="stat-sequencia">0</span>
+        <span class="stat-l">dias seguidos</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-n" id="stat-revisar">0</span>
+        <span class="stat-l">cartas para rever</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-n" id="stat-pares">0</span>
+        <span class="stat-l">pares praticados</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-n" id="stat-acerto">0%</span>
+        <span class="stat-l">acerto geral</span>
+      </div>
+    </div>
+
+    <h3 class="section-title">Acertos por modo</h3>
+    <div id="acertos-modo" class="acertos-modo"></div>
+
+    <h3 class="section-title">Cartas que você mais erra</h3>
+    <div id="mais-erra" class="mais-erra"></div>
+    <p id="mais-erra-vazio" class="vazia hidden">Nenhum erro registrado ainda. Bom sinal.</p>
+
+    <button id="continuar" class="btn-primary continuar">Continuar estudo</button>
+  </section>
+
+</main>
+
+<!-- Modal de carta -->
+<div id="modal-carta" class="modal-bg hidden">
+  <div class="modal">
+    <button id="modal-fechar" class="modal-x" aria-label="Fechar">✕</button>
+    <div class="modal-cover">
+      <img id="modal-img" src="" alt="">
+    </div>
+    <div class="modal-body">
+      <span id="modal-tipo" class="modal-tipo"></span>
+      <h3 id="modal-nome"></h3>
+      <p id="modal-essencia" class="modal-essencia"></p>
+      <div id="modal-palavras" class="palavras"></div>
+      <dl id="modal-detalhes" class="detalhes"></dl>
+      <div id="modal-mapa-wrap"></div>
+      <div class="modal-actions">
+        <button id="modal-estudada" class="btn-primary"></button>
+        <button id="modal-revisar" class="btn-ghost-sm"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de zoom -->
+<div id="modal-zoom" class="zoom-bg hidden">
+  <img id="zoom-img" src="" alt="">
+</div>
+
+<script src="treino-cigano/app.js"></script>
+</body>
+</html>
