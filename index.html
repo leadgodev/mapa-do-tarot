@@ -7,7 +7,86 @@
 <title>Mapa do Tarot — Aprenda a Ler o Tarot Sem Decorar Nenhuma Carta</title>
 <meta name="description" content="O mapa visual que explica cada carta do Tarot, suas combinações e uma página para praticar — para você aprender de verdade, hoje mesmo. Sem decorar. Garantia de 7 dias.">
 <!-- Meta Pixel -->
-<script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
+<script>(function (w, d) {
+  if (w.__tkStamp) return;
+  var TRACKED = { PageView: "pv", ViewContent: "vc", Lead: "ld" };
+  var seq = 0;
+  var st = (w.__tkStamp = { list: [], hook: null, pvDone: false, vcDone: false });
+  function mint(name) {
+    seq++;
+    return TRACKED[name] + ":tk" + Date.now().toString(36) + "-" + seq + Math.random().toString(36).slice(2, 7);
+  }
+  function rebuild(args) {
+    var m = args[0];
+    var ni, pi, oi;
+    if (m === "track") { ni = 1; pi = 2; oi = 3; }
+    else if (m === "trackSingle") { ni = 2; pi = 3; oi = 4; }
+    else return true;
+    var name = args[ni];
+    if (!Object.prototype.hasOwnProperty.call(TRACKED, name)) return true;
+    // Chamada do PRÓPRIO loader (w.__tkSelf): já tem eventID e já é reportada por ele.
+    if (w.__tkSelf) { if (name === "PageView") st.pvDone = true; if (name === "ViewContent") st.vcDone = true; return true; }
+    // Um PageView por página: o do loader ou o do site que chegar depois do primeiro some.
+    if (name === "PageView" && st.pvDone) return false;
+    var params = args[pi] || {};
+    var opts = args[oi] || null;
+    var id;
+    if (opts && opts.eventID) id = String(opts.eventID);
+    else {
+      id = mint(name);
+      var o = {};
+      for (var k in opts) if (Object.prototype.hasOwnProperty.call(opts, k)) o[k] = opts[k];
+      o.eventID = id;
+      opts = o;
+    }
+    if (name === "PageView") st.pvDone = true;
+    if (name === "ViewContent") st.vcDone = true;
+    var entry = { name: name, id: id, params: params };
+    if (typeof st.hook === "function") { try { st.hook(entry); } catch (e) {} }
+    else st.list.push(entry);
+    var out = [m, name, params, opts];
+    for (var i = 0; i < out.length; i++) args[i] = out[i];
+    try { args.length = out.length; } catch (e) {}
+    return true;
+  }
+  if (!w.fbq) {
+    var n = (w.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); });
+    if (!w._fbq) w._fbq = n;
+    n.push = n; n.loaded = true; n.version = "2.0"; n.queue = [];
+    try {
+      var t = d.createElement("script");
+      t.async = true;
+      t.src = "https://connect.facebook.net/en_US/fbevents.js";
+      var s = d.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(t, s);
+    } catch (e) {}
+  }
+  var f = w.fbq;
+  var q = f.queue;
+  if (q && typeof q.push === "function") {
+    var kept = [];
+    for (var i = 0; i < q.length; i++) if (rebuild(q[i])) kept.push(q[i]);
+    q.length = 0;
+    for (var j = 0; j < kept.length; j++) q.push(kept[j]);
+    var origPush = q.push;
+    q.push = function () {
+      var ok = [];
+      for (var a = 0; a < arguments.length; a++) if (rebuild(arguments[a])) ok.push(arguments[a]);
+      return ok.length ? origPush.apply(q, ok) : q.length;
+    };
+  }
+  var realCm = f.callMethod;
+  Object.defineProperty(f, "callMethod", {
+    configurable: true, enumerable: true,
+    get: function () {
+      return realCm ? function () {
+        if (!rebuild(arguments)) return;
+        return realCm.apply(this, arguments);
+      } : undefined;
+    },
+    set: function (v) { realCm = v; }
+  });
+})(window, document);</script>
 <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -23,6 +102,7 @@
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=2042984746336241&ev=PageView&noscript=1"/></noscript>
+<script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
 <!-- /Meta Pixel -->
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon.ico" sizes="32x32">
