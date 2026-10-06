@@ -179,10 +179,10 @@ function handleWebhook(payload) {
 // 80 Perguntas Poderosas - PT"), não do produto — por isso o SKU é resolvido casando por trecho do nome,
 // não por offers[].id (que no teste veio igual ao id do PRODUTO, não da oferta individual).
 const MUNDPAY_NAME_SKUS = [
-  [/leve os 3 com desconto/i, ['combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta']],
-  [/80 perguntas poderosas/i, ['perguntas-80']],
-  [/folha de consulta/i, ['folha-consulta']],
-  [/guia flash/i, ['guia-flash']],
+  [/leve os 3 com desconto|llévate los 3 con descuento|llevate los 3 con descuento/i, ['combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta']],
+  [/80 perguntas poderosas|80 preguntas poderosas/i, ['perguntas-80']],
+  [/folha de consulta|hoja de consulta/i, ['folha-consulta']],
+  [/guia flash|guía flash/i, ['guia-flash']],
   [/oferta especial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
   [/completo/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
   [/essencial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
