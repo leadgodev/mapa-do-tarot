@@ -421,11 +421,11 @@ def process_intro(img, key, data):
             data["sub"], lambda z: cg(z, "Medium"), s[2] - s[0] - 6, s[3] - s[1] - 2, 30), ink)])
     if data["fam"] == "ABERT":
         for rect, body in zip(geo["rects"], data["blocks"]):
-            erase = (rect[0] - 6, rect[1] - 6, rect[2] + 6, rect[3] + 6)
+            erase = (rect[0] - 20, rect[1] - 16, rect[2] + 20, rect[3] + 20)
             g.erase_write("bloco", erase, lambda d, ink, a=rect, b=body: _layout_plain(d, a, b, ink))
     else:
         for rect, (head, body) in zip(geo["rects"], data["blocks"]):
-            erase = (rect[0] - 6, rect[1] - 6, rect[2] + 6, rect[3] + 6)
+            erase = (rect[0] - 20, rect[1] - 16, rect[2] + 20, rect[3] + 20)
             align = "left" if data["fam"] == "OROS" else "center"
             g.erase_write(f"bloco:{head}", erase, lambda d, ink, a=rect, hd=head, bd=body, al=align:
                           _layout_intro(d, a, hd, bd, ink, al))

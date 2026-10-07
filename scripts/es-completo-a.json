@@ -5,7 +5,7 @@
       "naipe": "paus",
       "rank": "as",
       "title": "As de Bastos",
-      "strip": null,
+      "strip": "AS DE BASTOS",
       "boxes": [
         [
           "Significado general",
@@ -32,7 +32,13 @@
           "con Caballero de Bastos = acción inmediata sobre la idea nueva; con 10 de Espadas = idea que nace después de un final difícil."
         ]
       ],
-      "consejo": "empieza hoy, aunque sea pequeño. La energía de este As no espera un plan perfecto."
+      "consejo": "empieza hoy, aunque sea pequeño. La energía de este As no espera un plan perfecto.",
+      "strip_rect": [
+        378,
+        447,
+        510,
+        467
+      ]
     },
     "04": {
       "naipe": "paus",
