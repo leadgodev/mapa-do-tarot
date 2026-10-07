@@ -12,9 +12,10 @@ transferência instantânea). Sem boleto, OXXO, Efecty, Rapipago, dinheiro em lo
 
 | Oferta | Valor | Checkout (link na página ES) | Status | Métodos |
 |---|---|---|---|---|
-| Mapa del Tarot Basico - ES | US$ 7,90 | `01a0f31a-3680-70ba-97df-674bf221c815` | Ativo | 4 principais + 22 alternativos instantâneos |
-| Mapa del Tarot Completo - ES | US$ 14,90 | `01a0f31b-96df-70a0-9e7c-1891d7fcd5ac` | Ativo | idem |
-| Mapa del Tarot Oferta Especial - ES (popup) | US$ 12,90 | `01a0f31c-06d3-73ae-866f-74e142a2fc53` | Ativo | idem |
+| Mapa do Tarot Basico - ES | US$ 6,50 | `01a0f31a-3680-70ba-97df-674bf221c815` | Ativo | Não alterados nesta tarefa |
+| Mapa del Tarot Completo - ES | US$ 12,50 | `01a0f31b-96df-70a0-9e7c-1891d7fcd5ac` | Ativo | Não alterados nesta tarefa |
+| Mapa del Tarot Oferta Especial - ES (downsell) | US$ 9,50 | `01a0f31c-06d3-73ae-866f-74e142a2fc53` | Ativo | Não alterados nesta tarefa |
+| Mapa del Tarot Completo Salida - ES (popup de saída) | US$ 7,50 | `01a11632-63df-730a-8058-f271468e61d0` | Ativo | Não alterados nesta tarefa |
 
 Métodos alternativos instantâneos marcados (24 itens, por país):
 - Argentina: Mercado Pago, MODO, Khipu.
