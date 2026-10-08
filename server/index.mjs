@@ -184,6 +184,8 @@ const MUNDPAY_NAME_SKUS = [
   [/folha de consulta|hoja de consulta/i, ['folha-consulta']],
   [/guia flash|guía flash/i, ['guia-flash']],
   [/oferta especial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
+  // Popup de saída ES (oferta 01a11632): chega como "Mapa del Tarot de la Última Oportunidad - ES"; vende o Completo.
+  [/[uú]ltima oportunidad/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
   [/completo/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
   [/essencial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
   [/b[aá]sico.*(es|spanish|español)?/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
