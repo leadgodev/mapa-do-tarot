@@ -49,13 +49,17 @@ const PRODUCT_SKUS = {
 };
 // Baralho Cigano (produto único cmulz3f9…, 2 planos). O plano vem do offerCode da compra,
 // conferido na Wiven em 05/10/2026 (produto > Ofertas): Plano Básico R$17,90, Popup Básico R$16,90,
-// Plano Completo/Upsell R$27,90, Popup Completo R$22,90 e "Área de Membros" R$18,90 (preço de membro).
+// Plano Completo/Upsell R$17,90 (08/10/2026, era R$27,90), Popup Completo R$22,90 e "Área de Membros"
+// R$18,90 (preço de membro). GFW4NKG = "Última Chance" R$9,90, popup pós-clique em "ir pra área de
+// membros" (08/10/2026).
 const CIGANO_PRODUCT = 'cmulz3f9a020701oo4fstsegf';
 const CIGANO_OFFERS = {
   E6JPHKE: ['cigano-basico'], K9XTAHE: ['cigano-basico'],
   AQNS7ED: ['cigano-completo'], UTK2YWV: ['cigano-completo'],
   // Upgrade Básico→Completo (50% off, 13,90) e Completo de comprador só-Tarot (30% off, 18,90).
   JXE3KNA: ['cigano-completo'], '84JGZRF': ['cigano-completo'],
+  // Última Chance R$9,90 (popup ao clicar em "ir pra área de membros").
+  GFW4NKG: ['cigano-completo'],
 };
 // Módulo do Cigano (nome da pasta em painel/conteudo) -> SKUs que liberam. Mapa do Básico é só
 // as 36 cartas (página: "Plano Básico" tem ✦ Mapa e ✗ o resto). Completo libera tudo + app.
