@@ -110,7 +110,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" as="image" href="assets/webp/producto-basico.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/webp/producto-basico.webp" imagesrcset="assets/webp/producto-basico-400.webp 400w, assets/webp/producto-basico.webp 800w" imagesizes="(max-width:444px) 90vw, 400px" fetchpriority="high">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional"></noscript>
 <style>
   :root{
@@ -239,13 +239,13 @@
       <p style="max-width:680px; margin:0 auto 36px; font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--ink-700);">O mapa visual que explica cada carta, suas combinações e te dá uma página para praticar — para você aprender de verdade, hoje mesmo. Sem livros grossos, sem termos confusos.</p>
 
       <div style="width:min(400px,90vw); margin:0 auto 32px;">
-        <img src="assets/webp/producto-basico.webp" width="800" height="600" loading="eager" fetchpriority="high" decoding="async" alt="Mapa do Tarot — produto completo" style="width:100%; height:auto; display:block;">
+        <img src="assets/webp/producto-basico.webp" srcset="assets/webp/producto-basico-400.webp 400w, assets/webp/producto-basico.webp 800w" sizes="(max-width:444px) 90vw, 400px" width="800" height="600" loading="eager" fetchpriority="high" decoding="async" alt="Mapa do Tarot — produto completo" style="width:100%; height:auto; display:block;">
       </div>
 
       <div style="max-width:520px; margin:0 auto 24px; background:var(--cream-100); border-radius:16px; box-shadow:var(--shadow-md); padding:24px 26px 26px; text-align:center;">
         <p style="margin:0 0 14px; font-size:15px; line-height:1.5; color:var(--ink-700);"><strong style="color:var(--accent-press);">Método simples, sem decorar:</strong> cada carta vem com significados claros, palavras-chave e combinações — para você ler com confiança hoje.</p>
         <div style="margin:0 0 16px;"><span style="display:inline-block; background:var(--accent-soft); color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:16px; padding:8px 20px; border-radius:999px;">apenas R$17,90</span></div>
-        <a class="btn btn-lg btn-primary" href="index.html#oferta" style="width:100%;">Quero meu mapa agora <span class="arr">→</span></a>
+        <a class="btn btn-lg btn-primary" href="#oferta" style="width:100%;">Quero meu mapa agora <span class="arr">→</span></a>
       </div>
 
       <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
@@ -270,7 +270,7 @@
       <div style="position:relative;">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
         <img src="assets/webp/producto-basico.webp" width="800" height="600" loading="lazy" decoding="async" alt="Mapa Completo do Tarot — guia visual em tablet" style="width:100%; height:auto; display:block; filter:drop-shadow(0 18px 30px rgba(20,36,47,.22));">
-        <div style="text-align:center; margin-top:26px;"><a class="btn btn-lg btn-primary" href="index.html#oferta">Quero meu mapa agora <span class="arr">→</span></a></div>
+        <div style="text-align:center; margin-top:26px;"><a class="btn btn-lg btn-primary" href="#oferta">Quero meu mapa agora <span class="arr">→</span></a></div>
       </div>
     </div>
   </section>
@@ -338,14 +338,14 @@
           </figure>
           <figure style="margin:0; flex:1; min-width:300px; max-width:480px; text-align:center;">
             <div style="position:relative; aspect-ratio:1500/1054; border-radius:14px; overflow:hidden; box-shadow:var(--shadow-lg); border:6px solid var(--white); transform:rotate(1.5deg);">
-              <img class="peek-major" src="assets/webp/pagina-dentro-sacerdotisa-exercicio.webp" width="880" height="618" loading="lazy" decoding="async" alt="A página de prática — A Sacerdotisa" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
-              <img class="peek-minor" src="assets/webp/pagina-dentro-imperatriz-exercicio.webp" width="880" height="618" loading="lazy" decoding="async" alt="A página de prática — A Imperatriz" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <img class="peek-major" src="assets/webp/pagina-dentro-sacerdotisa-exercicio-fast.webp" width="720" height="960" loading="lazy" decoding="async" alt="A página de prática — A Sacerdotisa" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <img class="peek-minor" src="assets/webp/pagina-dentro-imperatriz-exercicio-fast.webp" width="720" height="960" loading="lazy" decoding="async" alt="A página de prática — A Imperatriz" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
             </div>
             <figcaption style="margin-top:16px; font-size:14px; color:var(--ink-700);"><strong style="font-family:var(--font-heading); color:var(--ink-900);">A página de prática</strong> — para a mesma carta, para você treinar e fixar o que lê.</figcaption>
           </figure>
         </div>
         <p style="text-align:center; max-width:560px; margin:26px auto 0; font-size:14px; line-height:1.55; color:var(--ink-500);">As <strong style="color:var(--ink-900);">78 cartas</strong> — Arcanos Maiores <em>e</em> Menores — têm o mesmo mapa visual e página de prática.</p>
-        <div style="text-align:center; margin-top:30px;"><a class="btn btn-lg btn-primary" href="index.html#oferta">Quero meu mapa agora <span class="arr">→</span></a></div>
+        <div style="text-align:center; margin-top:30px;"><a class="btn btn-lg btn-primary" href="#oferta">Quero meu mapa agora <span class="arr">→</span></a></div>
       </div>
     </div>
   </section>
@@ -380,15 +380,15 @@
         </div>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:30px;">
-        <div style="width:100%; display:flex; justify-content:center;"><div style="background:var(--cream-100); border:2px solid var(--teal-600); border-radius:14px; padding:22px 32px; display:flex; align-items:center; gap:24px; max-width:580px; box-shadow:var(--shadow-md);" role="region" aria-label="Selo de confiança Aura Mystica"><img src="assets/webp/logo-auramystica.webp" width="88" height="88" loading="lazy" decoding="async" alt="Aura Mystica" style="width:88px; height:88px; flex:none; display:block;"><div style="display:flex; flex-direction:column; gap:7px;"><div style="font-family:var(--font-heading); font-weight:800; font-size:19px; color:var(--teal-600); line-height:1;">Mapa do Tarot</div><div style="font-size:14px; color:var(--ink-700); font-weight:600;">por Aura Mystica</div><div style="display:flex; align-items:center; gap:8px; font-size:15px; color:var(--teal-600); font-weight:700;">★ 4.9 <span style="opacity:.6;">·</span> Avaliações reais</div><!-- TODO: dono define volume/tempo se quiser --></div></div></div>
-        <div style="width:100%; display:flex; justify-content:center;"><img src="assets/webp/testimonios.webp" width="780" height="775" loading="lazy" decoding="async" alt="Comentários reais de clientes: adorei o material, super organizado e fácil de aprender, muito didático" style="width:100%; max-width:520px; height:auto; display:block; filter:drop-shadow(0 10px 22px rgba(20,36,47,.14));"></div>
+        <div style="width:100%; display:flex; justify-content:center;"><div style="background:var(--cream-100); border:2px solid var(--teal-600); border-radius:14px; padding:22px 32px; display:flex; align-items:center; gap:24px; max-width:580px; box-shadow:var(--shadow-md);" role="region" aria-label="Selo de confiança Aura Mystica"><img src="assets/webp/logo-auramystica.webp" width="150" height="150" loading="lazy" decoding="async" alt="Aura Mystica" style="width:88px; height:88px; flex:none; display:block;"><div style="display:flex; flex-direction:column; gap:7px;"><div style="font-family:var(--font-heading); font-weight:800; font-size:19px; color:var(--teal-600); line-height:1;">Mapa do Tarot</div><div style="font-size:14px; color:var(--ink-700); font-weight:600;">por Aura Mystica</div><div style="display:flex; align-items:center; gap:8px; font-size:15px; color:var(--teal-600); font-weight:700;">★ 4.9 <span style="opacity:.6;">·</span> Avaliações reais</div><!-- TODO: dono define volume/tempo se quiser --></div></div></div>
+        <div style="width:100%; display:flex; justify-content:center;"><img src="assets/webp/testimonios.webp" width="780" height="780" loading="lazy" decoding="async" alt="Comentários reais de clientes: adorei o material, super organizado e fácil de aprender, muito didático" style="width:100%; max-width:520px; height:auto; display:block; filter:drop-shadow(0 10px 22px rgba(20,36,47,.14));"></div>
       </div>
     </div>
   </section>
 
 
   <!-- ============ OFFER + PRICING ============ -->
-  <section id="oferta" style="position:relative; background:var(--teal-600); color:var(--cream-100); padding:clamp(56px,7vw,96px) 24px; overflow:hidden;">
+  <section style="position:relative; background:var(--teal-600); color:var(--cream-100); padding:clamp(56px,7vw,96px) 24px; overflow:hidden;">
     <div aria-hidden="true" style="position:absolute; inset:0; background-image:url('assets/texture-paper.svg'); background-size:420px; opacity:.5; mix-blend-mode:multiply; pointer-events:none;"></div>
     <div style="position:relative; z-index:1; max-width:920px; margin:0 auto;">
       <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(26px,3.4vw,38px); text-align:center; color:var(--cream-100); margin:0 0 40px;">Isto é <span style="color:var(--gold-300);">TUDO</span> o que você recebe hoje</h2>
@@ -397,7 +397,7 @@
       <div class="item01-grid" style="display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(24px,4vw,46px); align-items:center; max-width:940px; margin:0 auto 12px;">
         <div style="position:relative; display:flex; justify-content:center;">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
-          <img src="assets/webp/producto-bundle.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Mapa Completo do Tarot — com todos os materiais e bônus" style="width:100%; max-width:440px; height:auto; display:block; filter:drop-shadow(0 16px 30px rgba(0,0,0,.34));">
+          <img src="assets/webp/producto-bundle.webp" width="880" height="660" loading="lazy" decoding="async" alt="Mapa Completo do Tarot — com todos os materiais e bônus" style="width:100%; max-width:440px; height:auto; display:block; filter:drop-shadow(0 16px 30px rgba(0,0,0,.34));">
           <span style="position:absolute; bottom:6%; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:7px 16px; border-radius:999px; box-shadow:var(--shadow-md); white-space:nowrap;">★ O conjunto completo</span>
         </div>
         <div style="background:var(--cream-100); color:var(--ink-700); border-radius:20px; padding:clamp(26px,3.5vw,38px); box-shadow:var(--shadow-lg);">
@@ -424,7 +424,7 @@
         <p style="text-align:center; font-size:14px; color:var(--cream-100); opacity:.82; margin:0 0 32px;">Para que suas leituras fiquem ainda mais poderosas, você também recebe — sem custo extra:</p>
         <div class="bonus-list" style="display:flex; flex-direction:column; gap:18px;">
           <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:2.5px solid var(--accent); box-shadow:0 0 24px rgba(139,63,240,.45); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
-            <img src="assets/webp/bonus5-app-treino.webp" width="1100" height="1077" loading="lazy" decoding="async" alt="Bônus especial — App de Treino do Tarô, mapas e flashcards no celular" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <img src="assets/webp/bonus5-app-treino-fast.webp" width="700" height="685" loading="lazy" decoding="async" alt="Bônus especial — App de Treino do Tarô, mapas e flashcards no celular" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
             <div>
               <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">🎁 BÔNUS ESPECIAL</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">R$27</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
               <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">App de Treino do Tarô</h3>
@@ -433,7 +433,7 @@
           </div>
           <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
-            <img src="assets/webp/b3.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Bônus 1 — Guia de Interpretação Intuitiva" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <img src="assets/webp/b3.webp" width="680" height="510" loading="lazy" decoding="async" alt="Bônus 1 — Guia de Interpretação Intuitiva" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
             <div>
               <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 1</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">R$19</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
               <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Guia de Interpretação Intuitiva</h3>
@@ -442,7 +442,7 @@
           </div>
           <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
-            <img src="assets/webp/b1.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Bônus 2 — Livro das Tiragens" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <img src="assets/webp/b1.webp" width="680" height="510" loading="lazy" decoding="async" alt="Bônus 2 — Livro das Tiragens" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
             <div>
               <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 2</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">R$17</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
               <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Livro das Tiragens</h3>
@@ -451,7 +451,7 @@
           </div>
           <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
-            <img src="assets/webp/b4.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Bônus 3 — Cuidado e Conexão com seu Tarot" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <img src="assets/webp/b4.webp" width="680" height="510" loading="lazy" decoding="async" alt="Bônus 3 — Cuidado e Conexão com seu Tarot" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
             <div>
               <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 3</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">R$15</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
               <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Cuidado e Conexão com seu Tarot</h3>
@@ -460,7 +460,7 @@
           </div>
           <div style="display:flex; gap:clamp(16px,3vw,26px); align-items:center; background:rgba(0,0,0,.14); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px clamp(18px,3vw,26px);">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
-            <img src="assets/webp/b2.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Bônus 4 — Guia Passo a Passo: Minha Primeira Tiragem" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
+            <img src="assets/webp/b2.webp" width="680" height="510" loading="lazy" decoding="async" alt="Bônus 4 — Guia Passo a Passo: Minha Primeira Tiragem" style="width:clamp(150px,32vw,210px); height:auto; flex:none; display:block; filter:drop-shadow(0 8px 16px rgba(0,0,0,.32));">
             <div>
               <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><span style="background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:800; font-size:10px; letter-spacing:.08em; padding:3px 9px; border-radius:999px;">BÔNUS 4</span><span style="text-decoration:line-through; opacity:.5; font-size:13px;">R$19</span><span style="background:#fff; color:var(--accent-press); font-family:var(--font-heading); font-weight:800; font-size:11px; letter-spacing:.06em; padding:2px 9px; border-radius:999px;">GRÁTIS</span></div>
               <h3 style="font-family:var(--font-heading); font-weight:700; font-size:clamp(16px,2vw,19px); color:#fff; margin:0 0 6px;">Guia Passo a Passo: "Minha Primeira Tiragem"</h3>
@@ -478,7 +478,7 @@
           <span style="background:var(--accent); border-radius:8px; padding:6px 12px; font-size:26px; min-width:52px;"><span id="cd-s">00</span><span style="display:block; font-size:9px; font-weight:600; letter-spacing:.1em;">SEG</span></span>
         </div>
       </div>
-      <p style="text-align:center; font-family:var(--font-heading); font-weight:800; font-size:clamp(17px,2.4vw,22px); letter-spacing:.06em; text-transform:uppercase; color:var(--cream-100); margin:0 0 26px;">Escolha a melhor opção para você:</p>
+      <p id="oferta" style="scroll-margin-top:60px; text-align:center; font-family:var(--font-heading); font-weight:800; font-size:clamp(17px,2.4vw,22px); letter-spacing:.06em; text-transform:uppercase; color:var(--cream-100); margin:0 0 26px;">Escolha a melhor opção para você:</p>
 
       <!-- PLANS -->
       <div style="display:flex; gap:22px; flex-wrap:wrap; align-items:stretch; justify-content:center; max-width:760px; margin:0 auto;">
@@ -511,7 +511,7 @@
           <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%);"><span style="display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-heading); font-weight:700; font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:5px 14px; border-radius:999px; box-shadow:var(--shadow-sm);">★ O preferido</span></div>
           <div style="margin-bottom:20px; text-align:center;">
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
-            <img src="assets/webp/producto-bundle.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Tudo incluído — o Mapa Completo do Tarot, páginas de prática e os 4 bônus" style="width:100%; max-width:300px; height:auto; display:block; margin:0 auto; filter:drop-shadow(0 10px 18px rgba(20,36,47,.22));">
+            <img src="assets/webp/producto-bundle.webp" width="880" height="660" loading="lazy" decoding="async" alt="Tudo incluído — o Mapa Completo do Tarot, páginas de prática e os 4 bônus" style="width:100%; max-width:300px; height:auto; display:block; margin:0 auto; filter:drop-shadow(0 10px 18px rgba(20,36,47,.22));">
           </div>
           <div style="font-family:var(--font-heading); font-weight:700; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-press); margin-bottom:8px;">Plano Completo</div>
           <p style="margin:0 0 14px; font-size:13px; font-weight:600; color:var(--ink-900);">Todos os materiais — entrega imediata:</p>
@@ -547,7 +547,7 @@
       <div style="position:relative; width:clamp(170px,38vw,210px); margin:34px auto 0; aspect-ratio:1;">
         <div aria-hidden="true" style="position:absolute; inset:-24%; background:radial-gradient(circle, rgba(227,205,142,.55) 0%, rgba(207,169,77,.28) 42%, transparent 68%); border-radius:999px; pointer-events:none;"></div>
 <!-- TODO: trocar por mockup nosso (pane mockups em andamento) -->
-        <img src="assets/webp/seal-7day-v2.webp" width="302" height="302" loading="lazy" decoding="async" alt="Garantia de devolução de 7 dias" style="position:relative; width:100%; height:auto; display:block; filter:drop-shadow(0 6px 16px rgba(154,120,41,.5));">
+        <img src="assets/webp/seal-7day-v2.webp" width="596" height="588" loading="lazy" decoding="async" alt="Garantia de devolução de 7 dias" style="position:relative; width:100%; height:auto; display:block; filter:drop-shadow(0 6px 16px rgba(154,120,41,.5));">
       </div>
       <div style="max-width:580px; margin:18px auto 0; text-align:center;">
         <h3 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(20px,2.6vw,26px); color:var(--cream-100); margin:0 0 10px;">Garantia incondicional · Risco zero</h3>
