@@ -207,6 +207,14 @@
   .cg-banner-text .btn{align-self:flex-start;margin-top:8px;background:#fff;color:#4a2e1f;box-shadow:0 10px 24px rgba(0,0,0,.22);}
   .cg-banner-text .btn:hover{background:#f1e2c4;}
 
+  /* Banner Combo Místico (cross-sell AstroDicas no painel) — imagem 3:1, o texto
+     e o preço já vêm desenhados na arte, então o card é só a imagem clicável. */
+  .combo-banner{display:block;width:100%;border-radius:18px;overflow:hidden;margin:0 0 26px;
+    box-shadow:var(--shadow-md);border:1px solid rgba(255,255,255,.08);background:#1a0f2e;
+    transition:transform .2s,box-shadow .2s;}
+  .combo-banner:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+  .combo-banner img{display:block;width:100%;height:auto;}
+
   /* ===== HOME — 2 cards de produto ===== */
   .home-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:920px;margin:0 auto;}
   @media(min-width:680px){.home-grid{grid-template-columns:1fr 1fr;}}
@@ -314,6 +322,11 @@
 
   <main class="wrap">
     <div id="view-home">
+      <!-- Combo Místico — cross-sell AstroDicas. R$37,90, checkout Wiven.
+           O trackeador:pixel decora este href com utm + _tkid na hora do clique. -->
+      <a class="combo-banner" href="https://checkout.wiven.com.br/checkout/cmv189c5s0cll01pvkxod26uz?offer=V4RQRAJ" target="_blank" rel="noopener">
+        <img src="assets/astro/combo-mistico.webp" alt="Combo Místico — Mapa Astral Completo + Mapa do Amor por R$37,90" width="2172" height="724" loading="lazy">
+      </a>
       <div class="home-grid" id="home-grid"></div>
     </div>
 
