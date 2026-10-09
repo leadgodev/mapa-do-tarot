@@ -69,7 +69,7 @@ da oferta (`MUNDPAY_NAME_SKUS` em `server/index.mjs`): `– ES` cai nos mesmos r
 
 - Conexão ES `dabe9e22-00de-4cf7-8a8c-a15f3e6ba56e` (`Mapa del Tarot - ES — Mundpay`): pixel LATAM `1107064091683532`,
   CAPI desligada, webhook Mundpay **inativo** (produto 01a10edc, sem vendas).
-- Conexão PT `6d593083-…` (`Mapa do Tarot - PT — Mundpay`): pixel PT `1661093678974999` (novo desde 09/10, era `4048960295234961`), CAPI desligada (decisão de 29/09).
+- Conexão PT `6d593083-…` (`Mapa do Tarot - PT — Mundpay`): pixel PT `4048960295234961` (definitivo desde 09/10 — o dataset é compartilhado com a conta nova), **CAPI de Purchase LIGADA desde 09/10**.
 - **Roteamento por oferta (05/10/2026, deploy Trackeador `03203e7` em origin/master):** venda ES do produto 01a0d98a
   (oferta/produto com ` - ES` ou payload USD sem oferta) vai pra conexão ES `dabe9e22` (pixel LATAM). O resto segue na PT
   `6d593083`. Regra e par em `web/lib/mundpay-es-routing.ts` (repo trackeador-mvp). Testes unitários: 5/5.
