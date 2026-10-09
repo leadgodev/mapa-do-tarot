@@ -199,6 +199,10 @@ const MUNDPAY_NAME_SKUS = [
   // Básico/Essencial = só o principal (bônus é do Completo — regra da dona 09/10/2026).
   [/essencial/i, ['principal']],
   [/b[aá]sico.*(es|spanish|español)?/i, ['principal']],
+  // Último caso (depois de essencial/básico, senão o Essencial cai aqui): oferta do
+  // COMPLETO PT na Mundpay se chama "Acesso vitalício" (09/10) — sem esta regra o
+  // comprador PT do Completo respondia no-known-offer e ficava SEM ACESSO.
+  [/acesso vitalício/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
 ];
 // Fuso→país (tzdata) e país→moeda (CLDR), mundo inteiro. Gerado uma vez; refazer se surgir país novo.
 const FX_GEO = JSON.parse(fs.readFileSync(path.join(ROOT, 'server', 'fx-geo.json'), 'utf8'));
@@ -265,7 +269,7 @@ function serveStatic(req, res, pathname) {
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
   if (top === 'es' && !rel.startsWith('/es/assets/') && !rel.endsWith('.html')) return json(res, 404, { error: 'not-found' });
-  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || rel.startsWith('/pt/assets/') || top === 'upsell-cigano' || top === 'js')) return json(res, 404, { error: 'not-found' });
+  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || rel.startsWith('/pt/assets/') || top === 'upsell-cigano' || top === 'upsell-mapa-astral' || top === 'js')) return json(res, 404, { error: 'not-found' });
   // conteúdo pago: exige sessão + ownership do SKU
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
   const mEs = /^\/painel\/conteudo-es\/([^/]+)\//.exec(rel);
