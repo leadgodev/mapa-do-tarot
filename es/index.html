@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" as="image" href="assets/webp/producto-basico-fast.webp" imagesrcset="assets/webp/producto-basico-400.webp 400w, assets/webp/producto-basico-fast.webp 720w" imagesizes="(max-width:444px) 90vw, 400px" fetchpriority="high">
+<link rel="preload" as="image" href="assets/hero-demo-poster.jpg" imagesizes="(max-width:444px) 84vw, 320px" fetchpriority="high">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional"></noscript>
 <style>
   :root{
@@ -157,9 +157,23 @@
       <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(34px,5.2vw,58px); line-height:1.08; letter-spacing:-.01em; color:var(--ink-900); margin:0 0 22px;">Aprende a Leer el Tarot <span style="color:var(--accent);">Sin Memorizar</span> Ninguna Carta</h1>
       <p style="max-width:680px; margin:0 auto 36px; font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--ink-700);">El mapa visual que explica cada carta y sus combinaciones, y te da una hoja para practicar — para que aprendas de verdad, hoy mismo. Sin libros gruesos, sin términos confusos.</p>
 
-      <div style="width:min(400px,90vw); margin:0 auto 32px;">
-        <img src="assets/webp/producto-basico-fast.webp" srcset="assets/webp/producto-basico-400.webp 400w, assets/webp/producto-basico-fast.webp 720w" sizes="(max-width:444px) 90vw, 400px" width="720" height="540" loading="eager" fetchpriority="high" decoding="async" alt="Mapa del Tarot — producto completo" style="width:100%; height:auto; display:block;">
+      <div style="width:min(320px,84vw); margin:0 auto 32px; position:relative; border-radius:22px; overflow:hidden; box-shadow:var(--shadow-md); background:#241d3d; aspect-ratio:9/16;">
+        <video id="hero-demo" src="assets/hero-demo.mp4" poster="assets/hero-demo-poster.jpg" width="720" height="1280" muted autoplay loop playsinline preload="metadata" disablepictureinpicture style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" aria-label="Demostración en video del Mapa del Tarot"></video>
+        <button id="hero-demo-sound" type="button" aria-label="Activar el sonido del video" style="position:absolute; left:50%; bottom:14px; transform:translateX(-50%); border:0; border-radius:999px; background:rgba(20,16,40,.78); color:#fff; font-family:var(--font-body); font-size:13px; font-weight:600; padding:9px 16px; cursor:pointer; white-space:nowrap; backdrop-filter:blur(4px);">🔊 Haz clic para escuchar</button>
       </div>
+      <script>
+      (function(){
+        var v=document.getElementById('hero-demo'), b=document.getElementById('hero-demo-sound');
+        if(!v||!b) return;
+        function alterna(){
+          v.muted=!v.muted;
+          if(!v.muted){ v.play(); b.textContent='\u{1F507} Silenciar'; }
+          else { b.textContent='\u{1F50A} Haz clic para escuchar'; }
+        }
+        v.addEventListener('click', alterna);
+        b.addEventListener('click', function(e){ e.stopPropagation(); alterna(); });
+      })();
+      </script>
 
       <div style="max-width:520px; margin:0 auto 24px; background:var(--cream-100); border-radius:16px; box-shadow:var(--shadow-md); padding:24px 26px 26px; text-align:center;">
         <p style="margin:0 0 14px; font-size:15px; line-height:1.5; color:var(--ink-700);"><strong style="color:var(--accent-press);">Método simple, sin memorizar:</strong> cada carta viene con significados claros, palabras clave y combinaciones — para que leas con confianza hoy.</p>
