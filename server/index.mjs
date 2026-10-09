@@ -35,7 +35,9 @@ function generatePDF(moduleKey, outputPath, callback) {
 
 // Produto Wiven -> SKUs do painel.
 const PRODUCT_SKUS = {
-  cmubqz6yu010o01pqgcgfw6j0: ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4'],
+  // BÁSICO = só o principal. Os 4 bônus são do COMPLETO (libera COMPLETO_OFFERS abaixo) —
+  // regra da dona 09/10/2026: bônus é parte do produto, não vira produto no checkout.
+  cmubqz6yu010o01pqgcgfw6j0: ['principal'],
   cmubsge6l026s01pux12tog1s: ['guia-flash'],
   cmubsk2bd023001pqtloo3zrz: ['perguntas-80'],
   cmubsl72o023t01pq3y1awjpj: ['folha-consulta'],
@@ -160,7 +162,8 @@ function handleWebhook(payload) {
   for (const item of (payload.orderItems || tx.orderItems || [])) {
     const pid = item && item.product && item.product.id;
     (PRODUCT_SKUS[pid] || []).forEach((s) => skus.add(s));
-    if (pid === 'cmubqz6yu010o01pqgcgfw6j0' && COMPLETO_OFFERS.has(offerCode)) skus.add('completo');
+    if (pid === 'cmubqz6yu010o01pqgcgfw6j0' && COMPLETO_OFFERS.has(offerCode))
+      ['completo', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4'].forEach((s) => skus.add(s));
     // Baralho Cigano: produto único, o plano sai da oferta. Oferta desconhecida = nada liberado (log "ignored").
     if (pid === CIGANO_PRODUCT) (CIGANO_OFFERS[offerCode] || []).forEach((s) => skus.add(s));
   }
@@ -193,8 +196,9 @@ const MUNDPAY_NAME_SKUS = [
   // Popup de saída PT (oferta 01a11c82): chega como "Mapa Tarot - Oferta Saída - PT" €7,50; vende o Completo.
   [/oferta sa[ií]da|salida/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
   [/completo/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4', 'completo']],
-  [/essencial/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
-  [/b[aá]sico.*(es|spanish|español)?/i, ['principal', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4']],
+  // Básico/Essencial = só o principal (bônus é do Completo — regra da dona 09/10/2026).
+  [/essencial/i, ['principal']],
+  [/b[aá]sico.*(es|spanish|español)?/i, ['principal']],
 ];
 // Fuso→país (tzdata) e país→moeda (CLDR), mundo inteiro. Gerado uma vez; refazer se surgir país novo.
 const FX_GEO = JSON.parse(fs.readFileSync(path.join(ROOT, 'server', 'fx-geo.json'), 'utf8'));
