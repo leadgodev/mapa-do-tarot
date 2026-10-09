@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" as="image" href="assets/hero-demo-poster.jpg" imagesizes="(max-width:444px) 84vw, 320px" fetchpriority="high">
+<link rel="preload" as="image" href="assets/hero-demo-poster.jpg" imagesizes="(max-width:444px) 88vw, 420px" fetchpriority="high">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=optional"></noscript>
 <style>
   :root{
@@ -146,20 +146,20 @@
 <div style="background:var(--sky-300); font-family:var(--font-body); color:var(--ink-700); overflow-x:hidden; -webkit-font-smoothing:antialiased;">
 
   <!-- ============ HERO ============ -->
-  <section style="position:relative; background:var(--sky-300); padding:clamp(48px,7vw,84px) 24px clamp(56px,7vw,92px); overflow:hidden;">
+  <section style="position:relative; background:var(--sky-300); padding:clamp(28px,5vw,56px) 24px clamp(40px,6vw,72px); overflow:hidden;">
     <div aria-hidden="true" style="position:absolute; top:6%; left:50%; width:920px; height:920px; transform:translateX(-50%); background:radial-gradient(circle, rgba(255,255,255,.55) 0%, transparent 62%); pointer-events:none;"></div>
     <div aria-hidden="true" style="position:absolute; inset:0; background-image:url('assets/texture-paper.svg'); background-size:420px; opacity:.45; mix-blend-mode:multiply; pointer-events:none;"></div>
     <div style="position:relative; z-index:1; max-width:880px; margin:0 auto; text-align:center;">
-      <div style="display:inline-flex; align-items:center; gap:10px; font-family:var(--font-heading); font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-500); opacity:.9; margin-bottom:26px;">
+      <div style="display:inline-flex; align-items:center; gap:10px; font-family:var(--font-heading); font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-500); opacity:.9; margin-bottom:18px;">
         <span style="color:var(--orange-500); font-size:16px;">✦</span>
         Aprende a leer las cartas con claridad
       </div>
-      <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(34px,5.2vw,58px); line-height:1.08; letter-spacing:-.01em; color:var(--ink-900); margin:0 0 22px;">Aprende a Leer el Tarot <span style="color:var(--accent);">Sin Memorizar</span> Ninguna Carta</h1>
-      <p style="max-width:680px; margin:0 auto 36px; font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--ink-700);">El mapa visual que explica cada carta y sus combinaciones, y te da una hoja para practicar — para que aprendas de verdad, hoy mismo. Sin libros gruesos, sin términos confusos.</p>
+      <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(34px,5.2vw,58px); line-height:1.08; letter-spacing:-.01em; color:var(--ink-900); margin:0 0 16px;">Aprende a Leer el Tarot <span style="color:var(--accent);">Sin Memorizar</span> Ninguna Carta</h1>
+      <p style="max-width:680px; margin:0 auto 24px; font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--ink-700);">El mapa visual que explica cada carta y sus combinaciones, y te da una hoja para practicar — para que aprendas de verdad, hoy mismo. Sin libros gruesos, sin términos confusos.</p>
 
-      <div style="width:min(320px,84vw); max-height:min(500px,66vh); margin:0 auto 32px; position:relative; border-radius:22px; overflow:hidden; box-shadow:var(--shadow-md); background:#241d3d; aspect-ratio:9/16;">
-        <video id="hero-demo" src="assets/hero-demo.mp4" poster="assets/hero-demo-poster.jpg" width="720" height="1280" muted autoplay loop playsinline preload="metadata" disablepictureinpicture style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" aria-label="Demostración en video del Mapa del Tarot"></video>
-        <button id="hero-demo-sound" type="button" aria-label="Activar el sonido del video" style="position:absolute; left:50%; bottom:14px; transform:translateX(-50%); border:0; border-radius:999px; background:rgba(20,16,40,.78); color:#fff; font-family:var(--font-body); font-size:13px; font-weight:600; padding:9px 16px; cursor:pointer; white-space:nowrap; backdrop-filter:blur(4px);">🔊 Haz clic para escuchar</button>
+      <div style="height:min(240px,23vh); aspect-ratio:16/9; width:auto; margin:0 auto 20px; position:relative; border-radius:18px; overflow:hidden; box-shadow:var(--shadow-md); background:#241d3d;">
+        <video id="hero-demo" src="assets/hero-demo.mp4" poster="assets/hero-demo-poster.jpg" width="854" height="480" muted autoplay loop playsinline preload="metadata" disablepictureinpicture style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" aria-label="Demostración en video del Mapa del Tarot"></video>
+        <button id="hero-demo-sound" type="button" aria-label="Activar el sonido del video" style="position:absolute; right:10px; bottom:10px; border:0; border-radius:999px; background:rgba(20,16,40,.78); color:#fff; font-family:var(--font-body); font-size:12px; font-weight:600; padding:7px 12px; cursor:pointer; white-space:nowrap; backdrop-filter:blur(4px);">🔊 Haz clic para escuchar</button>
       </div>
       <script>
       (function(){
