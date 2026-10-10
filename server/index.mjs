@@ -58,6 +58,8 @@ const CIGANO_PRODUCT = 'cmulz3f9a020701oo4fstsegf';
 const CIGANO_OFFERS = {
   E6JPHKE: ['cigano-basico'], K9XTAHE: ['cigano-basico'],
   AQNS7ED: ['cigano-completo'], UTK2YWV: ['cigano-completo'],
+  // Oferta própria da página avulsa do Cigano (criada 09/10 — AQNS7ED virou a do upsell do Tarot a 17,90).
+  W92PEGP: ['cigano-completo'],
   // Upgrade Básico→Completo (50% off, 13,90) e Completo de comprador só-Tarot (30% off, 18,90).
   JXE3KNA: ['cigano-completo'], '84JGZRF': ['cigano-completo'],
   // Última Chance R$9,90 (popup ao clicar em "ir pra área de membros").
