@@ -655,7 +655,7 @@ function renderTreinoCard(owned){
         '</span>'+
         '<span class="treino-text">'+
           '<span class="treino-title">App de Treino do Tarô</span>'+
-          '<span class="treino-sub">'+(unlocked?'Estude e pratique as 78 cartas — quiz, flashcards e progresso.':'Toque para desbloquear no Plano Completo · '+priceBadgeHTML(27.90,'completo'))+'</span>'+
+          '<span class="treino-sub">'+(unlocked?'Estude e pratique as 78 cartas — quiz, flashcards e progresso.':'Upgrade com desconto · '+priceBadgeHTML(27.90,'completo'))+'</span>'+
         '</span>'+
       '</'+cardTag+'>'+
     '</div>';
@@ -882,12 +882,12 @@ function renderHub(){
     card.dataset.sku=m.sku;
     card.className='card'+(unlocked?'':' locked');
     let badge = (unlocked&&m.soon) ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>'
-              : '<span class="badge badge-price">'+(m.included?'Completo '+priceBadgeHTML(27.90,'completo'):priceBadgeHTML(m.normal,m.sku))+'</span>';
+              : '<span class="badge badge-price">'+(m.included?'Upgrade '+priceBadgeHTML(27.90,'completo'):priceBadgeHTML(m.normal,m.sku))+'</span>';
     const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
                              : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
     const partial = m.partial && !m.soon ? '<span class="badge-partial">conteúdo inicial · mais em breve</span>' : '';
     const lockOv = unlocked ? '' : '<span class="lock-ov">'+LOCK_SVG+'</span>';
-    const cta = (unlocked&&m.soon) ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : (m.soon ? 'Desbloquear cedo' : 'Desbloquear');
+    const cta = (unlocked&&m.soon) ? 'Em atualização — aguarde' : unlocked ? 'Acessar →' : (m.soon ? 'Desbloquear cedo' : (m.included||m.sku==='completo' ? 'Upgrade com desconto' : 'Desbloquear'));
     card.innerHTML=
       '<span class="cover">'+coverImg+badge+lockOv+'</span>'+
       '<span class="body"><span class="card-title">'+m.title+'</span><span class="card-subtitle">'+m.subtitle+'</span>'+partial+'<span class="cta">'+cta+'</span></span>';
@@ -909,8 +909,8 @@ function openModal(sku){
      '<div class="m-body">'+
        '<h3>'+m.title+'</h3>'+
        '<p>'+(m.desc||m.subtitle)+'</p>'+
-       '<div class="price">'+(m.included?priceBadgeHTML(27.90,'completo')+' <small>· incluso no Plano Completo (preço de membro)</small>':priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small>')+'</div>'+
-       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'"'+(CHECKOUT_URL[m.sku]?' data-tk-value="'+(m.included?memberPrice(27.90,'completo'):memberPrice(m.normal,m.sku)).toFixed(2)+'"':'')+' target="_blank" rel="noopener">Quero desbloquear</a></div>'+
+       '<div class="price">'+(m.included?priceBadgeHTML(27.90,'completo')+' <small>· upgrade com desconto para o Plano Completo</small>':priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small>')+'</div>'+
+       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'"'+(CHECKOUT_URL[m.sku]?' data-tk-value="'+(m.included?memberPrice(27.90,'completo'):memberPrice(m.normal,m.sku)).toFixed(2)+'"':'')+' target="_blank" rel="noopener">'+(m.included||m.sku==='completo'?'Quero o upgrade com desconto':'Quero desbloquear')+'</a></div>'+
        '<div class="m-close" id="modal-close">Agora não</div>'+
      '</div></div></div>';
   document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
