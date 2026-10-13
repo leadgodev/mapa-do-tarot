@@ -479,6 +479,8 @@ const CIGANO_OFERTAS = {
   folha:      {url: 'https://checkout.wiven.com.br/checkout/cmuvsdyyf006m01pr727b2f5h?offer=QFY94IH', normal: 14.90, price: 9.90},
   flash:      {url: 'https://checkout.wiven.com.br/checkout/cmurhf87601cv01q2qc8lhnkb?offer=WH9FDAL', normal: 12.00, price: 12.00},
   perguntas:  {url: 'https://checkout.wiven.com.br/checkout/cmurhgvnn01fg01q2c5div02a?offer=G15WLAZ', normal: 9.90, price: 9.90},
+  // Card da ENTRADA (home) pra quem só tem o Tarot: "apenas R$ 9,90" (dona, 13/10/2026) — oferta Última Chance GFW4NKG, libera cigano-completo.
+  entrada:    {url: 'https://checkout.wiven.com.br/checkout/cmulz3f9d020801oojrzs3854?offer=GFW4NKG', normal: 27.90, price: 9.90},
 };
 // Comprador só-Tarot vê o Mapa do Tarot Completo como oferta de membro (30% off, 18,90).
 const TAROT_CROSS = {url: 'https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=BEBAQWS', normal: 27.90, price: 18.90};
@@ -816,10 +818,10 @@ function renderHomeCards(owned){
         '<img src="'+assetUrl('assets/cigano/mockup-basico-mapa.webp')+'" alt="Mapa do Baralho Cigano" style="object-fit:contain;background:#f1e2c4;">'+
         '<span class="home-card-body"><span class="home-card-eyebrow">🃏 Seu produto</span><h3>Mapa do Baralho Cigano</h3><p>36 cartas, dicionário de combinações e bônus.</p><span class="home-card-cta">Acessar →</span></span>'+
       '</button>'
-    : '<a class="home-card locked" href="'+CIGANO_OFERTAS.cross.url+'" target="_blank" rel="noopener" data-tk-value="'+CIGANO_OFERTAS.cross.price.toFixed(2)+'" data-tk-currency="BRL">'+
+    : '<a class="home-card locked" href="'+CIGANO_OFERTAS.entrada.url+'" target="_blank" rel="noopener" data-tk-value="'+CIGANO_OFERTAS.entrada.price.toFixed(2)+'" data-tk-currency="BRL">'+
         '<img src="'+assetUrl('assets/cigano/mockup-basico-mapa.webp')+'" alt="Mapa do Baralho Cigano" style="object-fit:contain;background:#f1e2c4;">'+
         '<span class="home-lock">🔒 Bloqueado</span>'+
-        '<span class="home-card-body"><span class="home-card-eyebrow">🃏 Oferta de membro</span><h3>Mapa do Baralho Cigano</h3><p>'+priceBadgeHTML(CIGANO_OFERTAS.cross.normal,'cigano-completo')+' · 30% off para quem já tem o Tarot.</p><span class="home-card-cta">Desbloquear →</span></span>'+
+        '<span class="home-card-body"><span class="home-card-eyebrow">🃏 Oferta de membro</span><h3>Mapa do Baralho Cigano</h3><p><span style="text-decoration:line-through;opacity:.62;font-weight:600;font-size:.82em;margin-right:5px;">'+fmtR(CIGANO_OFERTAS.entrada.normal)+'</span>apenas '+fmtR(CIGANO_OFERTAS.entrada.price)+' · oferta de membro.</p><span class="home-card-cta">Desbloquear →</span></span>'+
       '</a>';
   // Produto que a pessoa tem vem primeiro; a oferta de membro depois.
   grid.innerHTML = (cig && !tarot) ? ciganoCard(true)+tarotCard(false) : tarotCard(tarot)+ciganoCard(cig);
