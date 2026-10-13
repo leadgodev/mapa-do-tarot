@@ -471,6 +471,8 @@ http.createServer(async (req, res) => {
       }
       if (sku.startsWith('cigano-') && url.searchParams.get('lang') !== 'es') {
         generatePDF(sku, pdfPath, (err) => {
+          // Sem pasta de conteúdo (cigano-completo/basico = marcador de plano, cigano-app = app) não há PDF: 404, não 500.
+          if (err && err.message === 'html-not-found') return json(res, 404, { error: 'pdf-not-found' });
           if (err) return json(res, 500, { error: 'pdf-generation-failed' });
           const st = fs.statSync(pdfPath);
           res.writeHead(200, { 'content-type': 'application/pdf', 'content-length': st.size, 'cache-control': 'private, no-cache' });
