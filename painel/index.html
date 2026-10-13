@@ -433,7 +433,7 @@ const W=C+'cmubqz6yy010p01pqilaiahqe?offer=';
 const CHECKOUT_URL = {
   'completo': W+'G8MYTZF',
   'combo-3-bonus': C+'cmubwg9ah052m01puqslkbogu?offer=CFJDIOJ', 'guia-flash': C+'cmubsge70026t01pujoks75g2?offer=RLLEDP8', 'perguntas-80': C+'cmubsk2bg023101pqxrvx8q4s?offer=ZWWA35E', 'folha-consulta': C+'cmubsl72s023u01pq0h7vf7a9?offer=N6J40YD',
-  'bonus-1': null, 'bonus-2': null, 'bonus-3': null, 'bonus-4': null, 'principal': W+'Q2J6TBK'
+  'bonus-1': W+'G8MYTZF', 'bonus-2': W+'G8MYTZF', 'bonus-3': W+'G8MYTZF', 'bonus-4': W+'G8MYTZF', 'principal': W+'Q2J6TBK'
 };
 function buyHref(m){
   const u=CHECKOUT_URL[m.sku];
@@ -446,8 +446,9 @@ function buyHref(m){
    Arredonda pro final ,90 mais próximo ABAIXO. Piso R$9,90: se ficar abaixo, sem desconto.
    Calculado sempre a partir do preço normal do config — nunca hardcode do valor final. */
 // Override: preço real confirmado ao vivo na Wiven (não cai na fórmula de 30%).
+// Completo (upgrade Essencial→Completo, área de membros): R$ 5,90 — oferta G8MYTZF (regra da dona, 13/10/2026)
 const PRODUTO_SKUS = ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo'];
-const MEMBER_PRICE_OVERRIDE = {'completo': 13.90, 'cigano-upgrade': 13.90,
+const MEMBER_PRICE_OVERRIDE = {'completo': 5.90, 'cigano-upgrade': 13.90,
   // Preços REAIS cobrados pela oferta (conferidos na Wiven em 09/10/2026) — valem sobre o cálculo de 30%.
   'principal': 17.90, 'combo-3-bonus': 9.90, 'guia-flash': 4.90, 'perguntas-80': 4.90, 'folha-consulta': 4.90};
 function memberPrice(normal,sku){
@@ -881,7 +882,7 @@ function renderHub(){
     card.dataset.sku=m.sku;
     card.className='card'+(unlocked?'':' locked');
     let badge = (unlocked&&m.soon) ? '<span class="badge badge-soon">Em atualização</span>' : unlocked ? '<span class="badge badge-free">Liberado</span>'
-              : '<span class="badge badge-price">'+(m.included?'Incluso no Completo':priceBadgeHTML(m.normal,m.sku))+'</span>';
+              : '<span class="badge badge-price">'+(m.included?'Completo '+priceBadgeHTML(27.90,'completo'):priceBadgeHTML(m.normal,m.sku))+'</span>';
     const coverImg = m.cover ? '<img src="'+assetUrl(m.cover)+'" alt="'+m.title+'" loading="eager">'
                              : '<span style="display:block;width:100%;height:100%;background:linear-gradient(135deg,#3b1a6b,#8b3ff0);"></span>';
     const partial = m.partial && !m.soon ? '<span class="badge-partial">conteúdo inicial · mais em breve</span>' : '';
@@ -908,8 +909,8 @@ function openModal(sku){
      '<div class="m-body">'+
        '<h3>'+m.title+'</h3>'+
        '<p>'+(m.desc||m.subtitle)+'</p>'+
-       '<div class="price">'+(m.included?'Incluso <small>no Plano Completo</small>':priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small>')+'</div>'+
-       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'"'+(CHECKOUT_URL[m.sku]?' data-tk-value="'+memberPrice(m.normal,m.sku).toFixed(2)+'"':'')+' target="_blank" rel="noopener">Quero desbloquear</a></div>'+
+       '<div class="price">'+(m.included?priceBadgeHTML(27.90,'completo')+' <small>· incluso no Plano Completo (preço de membro)</small>':priceBadgeHTML(m.normal,m.sku)+' <small>'+(m.soon?'· acesso antecipado':'à vista')+'</small>')+'</div>'+
+       '<div style="margin:18px 0 4px;"><a class="btn btn-primary" id="modal-buy" style="width:100%;" href="'+buyHref(m)+'"'+(CHECKOUT_URL[m.sku]?' data-tk-value="'+(m.included?memberPrice(27.90,'completo'):memberPrice(m.normal,m.sku)).toFixed(2)+'"':'')+' target="_blank" rel="noopener">Quero desbloquear</a></div>'+
        '<div class="m-close" id="modal-close">Agora não</div>'+
      '</div></div></div>';
   document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target.id==='modal-bg')closeModal();});
