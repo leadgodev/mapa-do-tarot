@@ -781,16 +781,21 @@
     document.getElementById('exitpopup').addEventListener('click', function (ev) { if (ev.target === this) closeExitPopup(); });
 
     // nunca depois de clicar em qualquer link de checkout
+    var clickGuardUntil = 0;
     document.addEventListener('click', function (ev) {
       var a = ev.target.closest && ev.target.closest('a[href*="checkout.wiven.com.br"]');
       if (a) checkoutClicked = true;
+      var btn = ev.target.closest && ev.target.closest('a.btn, button.btn');
+      if (btn) clickGuardUntil = Date.now() + 1200;
     }, true);
 
     // desktop: mouse sai pelo topo (só em dispositivo com mouse de verdade —
-    // touch/rolagem no mobile gera mouseleave sintético com clientY 0)
+    // touch/rolagem no mobile gera mouseleave sintético com clientY 0; clique em
+    // CTA que só rola a página também pode gerar mouseleave falso pelo salto)
     var isRealMouse = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (isRealMouse) {
       document.addEventListener('mouseleave', function (ev) {
+        if (Date.now() < clickGuardUntil) return;
         if (ev.clientY <= 0) openExitPopup();
       });
     }
