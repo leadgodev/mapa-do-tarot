@@ -6,6 +6,8 @@ COPY es ./es
 COPY assets ./assets
 COPY painel ./painel
 COPY upsell-cigano ./upsell-cigano
+COPY upsell-mapa-astral ./upsell-mapa-astral
+COPY upsell-diario-astral ./upsell-diario-astral
 COPY js ./js
 COPY server ./server
 ENV PORT=80 DATA_DIR=/data

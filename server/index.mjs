@@ -271,7 +271,7 @@ function serveStatic(req, res, pathname) {
   const abs = path.join(ROOT, rel);
   const top = rel.split('/')[1];
   if (top === 'es' && !rel.startsWith('/es/assets/') && !rel.endsWith('.html')) return json(res, 404, { error: 'not-found' });
-  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || rel.startsWith('/pt/assets/') || top === 'upsell-cigano' || top === 'upsell-mapa-astral' || top === 'js')) return json(res, 404, { error: 'not-found' });
+  if (!abs.startsWith(ROOT + path.sep) || !(rel === '/index.html' || rel === '/es/index.html' || rel === '/pt/index.html' || rel === '/termos.html' || rel === '/privacidade.html' || rel === '/es/termos.html' || rel === '/es/privacidade.html' || top === 'assets' || top === 'painel' || top === 'es' || rel.startsWith('/pt/assets/') || top === 'upsell-cigano' || top === 'upsell-mapa-astral' || top === 'upsell-diario-astral' || top === 'js')) return json(res, 404, { error: 'not-found' });
   // conteúdo pago: exige sessão + ownership do SKU
   const m = /^\/painel\/conteudo\/([^/]+)\//.exec(rel);
   const mEs = /^\/painel\/conteudo-es\/([^/]+)\//.exec(rel);
