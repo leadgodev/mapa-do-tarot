@@ -785,8 +785,7 @@
     document.addEventListener('click', function (ev) {
       var a = ev.target.closest && ev.target.closest('a[href*="checkout.wiven.com.br"]');
       if (a) checkoutClicked = true;
-      var btn = ev.target.closest && ev.target.closest('a.btn, button.btn');
-      if (btn) clickGuardUntil = Date.now() + 1200;
+      clickGuardUntil = Date.now() + 1200;
     }, true);
 
     // desktop: mouse sai pelo topo (só em dispositivo com mouse de verdade —
