@@ -547,8 +547,37 @@ function downloadPDF(sku){
       URL.revokeObjectURL(url);
     });
   }).catch(()=>{
-    window.print();
+    pdfDownloadErro(sku);
   });
+}
+// Error de descarga: el catch llamaba a window.print() — abría el diálogo de
+// impresión en vez de bajar el archivo y el cliente veía "da error". Ahora:
+// aviso + enlace directo (15/10, queja de cliente "no baja el PDF").
+function pdfDownloadErro(sku){
+  const url=`/painel/api/modulo-pdf/${sku}?lang=es&v=${ASSET_VERSION}`;
+  const old=document.querySelector('.pdf-erro');if(old)old.remove();
+  const p=document.createElement('p');
+  p.className='pdf-erro';
+  p.style.cssText='color:#b42318;font-size:13px;margin:10px 0 0;text-align:center;';
+  p.innerHTML='No se pudo descargar ahora. <a href="'+url+'" style="text-decoration:underline;">Intentar de nuevo</a> — si no abre, copia el enlace y ábrelo en Chrome o Safari fuera de la app.';
+  document.getElementById('reader-pages').appendChild(p);
+}
+// Aviso preventivo cuando la lectura ocurre dentro de la app de Instagram/Facebook:
+// ahí la descarga directa se bloquea en silencio (el cliente ve "no baja", sin error).
+function isInAppBrowser(){return /Instagram|FBAN|FBAV|FB_IAB|WhatsApp/i.test(navigator.userAgent);}
+function pdfInAppHint(){
+  const d=document.createElement('div');
+  d.className='pdf-hint';
+  d.style.cssText='font-size:12.5px;color:var(--ink-500);margin:0 0 14px;line-height:1.5;text-align:center;padding:10px 12px;background:rgba(20,36,47,.05);border-radius:10px;';
+  d.innerHTML='¿Descargando desde la app? Si el archivo no aparece, copia el enlace y ábrelo en Chrome o Safari: <button type="button" style="background:none;border:1px solid var(--ink-500);border-radius:6px;padding:3px 10px;cursor:pointer;font-size:12px;font-weight:600;color:var(--ink-900);">Copiar enlace del panel</button>';
+  d.querySelector('button').addEventListener('click',function(){
+    const link=location.origin+'/painel';
+    const btn=this;
+    const ok=()=>{btn.textContent='¡Copiado!';setTimeout(()=>btn.textContent='Copiar enlace del panel',1800);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(link).then(ok).catch(()=>window.prompt('Copia el enlace:',link));}
+    else window.prompt('Copia el enlace:',link);
+  });
+  return d;
 }
 function openReader(sku){
   location.hash='#ler/'+sku;
@@ -561,6 +590,7 @@ function renderReader(m){
   document.getElementById('reader-title').textContent=m.title;
   pages.dataset.sku=m.sku;
   pages.innerHTML='';
+  if(isInAppBrowser())pages.appendChild(pdfInAppHint());
 
   const filteredPages = filterPagesByManifest(m.pages, m.sku);
 

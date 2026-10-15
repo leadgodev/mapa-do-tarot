@@ -941,8 +941,37 @@ function downloadPDF(sku){
       URL.revokeObjectURL(url);
     });
   }).catch(()=>{
-    window.print();
+    pdfDownloadErro(sku);
   });
+}
+// Erro no download: o catch chamava window.print() — abria a caixa de impressão do
+// navegador em vez de baixar o arquivo e o cliente via "dá erro". Agora: aviso +
+// link direto (15/10, queixa de cliente "PDF não baixa").
+function pdfDownloadErro(sku){
+  const url=`/painel/api/modulo-pdf/${sku}?v=${ASSET_VERSION}`;
+  const old=document.querySelector('.pdf-erro');if(old)old.remove();
+  const p=document.createElement('p');
+  p.className='pdf-erro';
+  p.style.cssText='color:#b42318;font-size:13px;margin:10px 0 0;text-align:center;';
+  p.innerHTML='Não deu pra baixar agora. <a href="'+url+'" style="text-decoration:underline;">Tentar de novo</a> — se não abrir, copie o link e abra no Chrome ou Safari fora do app.';
+  document.getElementById('reader-pages').appendChild(p);
+}
+// Aviso preventivo quando a leitura acontece dentro do app do Instagram/Facebook:
+// ali o download direto é bloqueado em silêncio (cliente vê "não baixa", sem erro).
+function isInAppBrowser(){return /Instagram|FBAN|FBAV|FB_IAB|WhatsApp/i.test(navigator.userAgent);}
+function pdfInAppHint(){
+  const d=document.createElement('div');
+  d.className='pdf-hint';
+  d.style.cssText='font-size:12.5px;color:var(--ink-500);margin:0 0 14px;line-height:1.5;text-align:center;padding:10px 12px;background:rgba(20,36,47,.05);border-radius:10px;';
+  d.innerHTML='Baixando pelo app? Se o arquivo não aparecer, copie o link e abra no Chrome ou Safari: <button type="button" style="background:none;border:1px solid var(--ink-500);border-radius:6px;padding:3px 10px;cursor:pointer;font-size:12px;font-weight:600;color:var(--ink-900);">Copiar link do painel</button>';
+  d.querySelector('button').addEventListener('click',function(){
+    const link=location.origin+'/painel';
+    const btn=this;
+    const ok=()=>{btn.textContent='Copiado!';setTimeout(()=>btn.textContent='Copiar link do painel',1800);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(link).then(ok).catch(()=>window.prompt('Copie o link:',link));}
+    else window.prompt('Copie o link:',link);
+  });
+  return d;
 }
 // Botão "Baixar PDF" no fim do módulo: o PDF é do módulo inteiro, nunca imagem por imagem.
 function pdfBottomButton(onClick){
@@ -968,6 +997,7 @@ function renderReader(m){
   pages.dataset.sku=m.sku;
   delete pages.dataset.ratio;
   pages.innerHTML='';
+  if(isInAppBrowser())pages.appendChild(pdfInAppHint());
   if(!m.pages.length){
     pages.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink-500);"><p style="font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--ink-900);margin:0 0 10px;">Conteúdo em atualização ✨</p><p style="font-size:14.5px;line-height:1.55;margin:0;">Você já tem acesso liberado. Assim que este módulo for publicado, ele aparece aqui automaticamente — sem custo extra.</p></div>';
     return;
