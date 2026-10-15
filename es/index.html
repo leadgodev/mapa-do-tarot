@@ -699,6 +699,7 @@
         history.pushState({ mdtExit: true }, '');
         window.addEventListener('popstate', function (ev) {
           if (ev.state && ev.state.mdtExit) return;
+          if (Date.now() < clickGuardUntil) return;
           openExitPopup();
           try { history.pushState({ mdtExit: true }, ''); } catch (e) {}
         });

@@ -810,6 +810,7 @@
         history.pushState({ mdtExit: true }, '');
         window.addEventListener('popstate', function (ev) {
           if (ev.state && ev.state.mdtExit) return; // entrou no nosso guard, não é o voltar da pessoa
+          if (Date.now() < clickGuardUntil) return;
           openExitPopup();
           try { history.pushState({ mdtExit: true }, ''); } catch (e) {}
         });
