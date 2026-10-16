@@ -15,17 +15,17 @@
 window.LP = {
   // SKUs do checkout interno (BR e AR), preço oficial vem do servidor, sem desconto de bump/exit.
   // produtos reais, já cadastrados na Wiven (conta LeadGo) em 09/10/2026
-  PRODUCT_BASICO:    "https://checkout.wiven.com.br/checkout/cmv17kv3o0bc801pv6f7yk7x1?offer=MNRHJFF",   // Diário Astral R$27,90
+  PRODUCT_BASICO:    "https://checkout.wiven.com.br/checkout/cmv17kv3o0bc801pv6f7yk7x1?offer=MNRHJFF",   // Diário Astral R$17,90
   PRODUCT_COMPLETO:  "https://checkout.wiven.com.br/checkout/cmv189iu00cm901pvnc9vyqlc?offer=K9050YB",   // Diário Astral Completo R$97,00
   PRODUCT_BUMP:      "https://checkout.wiven.com.br/checkout/cmv189gle0clv01pv5yqbl9ec?offer=58UO6F2",   // Diário Astral Completo (oferta) R$57,90
-  PRODUCT_EXIT:      "https://checkout.wiven.com.br/checkout/cmv189e2v05p001pzugux2agk?offer=QF36POI",   // Diário Astral (oferta especial) R$20,90
+  PRODUCT_EXIT:      "https://checkout.wiven.com.br/checkout/cmv189e2v05p001pzugux2agk?offer=QF36POI",   // Diário Astral (oferta especial) R$12,90 — downsell (saída + recusa)
 
   // Cada valor é um produto separado no catalogo.
   // BASICO e EXIT = 30 dias de acesso | COMPLETO e BUMP = pagamento único.
-  BASICO:      "27,90",  BASICO_DE: "67",      // Diário Astral (vitrine)
+  BASICO:      "17,90",  BASICO_DE: "67",      // Diário Astral (vitrine)
   COMPLETO:    "97,00",                        // Premium (vitrine, pgto único), caro de propósito
   BUMP:        "57,90",                        // Premium (pgto único), só pra quem clica no básico
-  EXIT:        "20,90",                        // Diário Astral, só pra quem tenta sair da página
+  EXIT:        "12,90",                        // Diário Astral downsell — popup de saída E recusa pra área de membros
 
   // ── Vídeo da hero ──────────────────────────────────────────
   // Preencha UM dos dois. Deixe ambos vazios pra esconder o player.
@@ -863,8 +863,8 @@ fbq('track', 'PageView');
       <b>R$ <span data-lp="exit">20,90</span></b>
       <span>30 dias de acesso · sem cartão salvo · sem renovação automática</span>
     </div>
-    <button class="cta" data-cta="exit">QUERO O DIÁRIO ASTRAL POR R$ <span data-lp="exit">20,90</span><small>30 dias de acesso, sem cobrança automática</small></button>
-    <button class="modal-skip" data-close>Não, prefiro perder essa condição</button>
+    <button class="cta" data-cta="exit">QUERO O DIÁRIO ASTRAL POR R$ <span data-lp="exit">12,90</span><small>30 dias de acesso, sem cobrança automática</small></button>
+    <button class="modal-skip" id="exitSkip">Não, quero ir pra minha área de membros</button>
   </div>
 </div>
 
@@ -912,7 +912,12 @@ fbq('track', 'PageView');
   }
 
   var RECUSA_URL = '../painel/';
-  document.querySelectorAll('.js-recusa').forEach(function(a){ a.addEventListener('click', function(ev){ ev.preventDefault(); window.location.href = RECUSA_URL; }); });
+  /* Recusa ("seguir para minha área de membros") e popup de saída caem no MESMO
+     downsell de R$12,90 (decisão da dona 16/10): em vez de mandar direto pro
+     /painel, abre a última-chance; o botão de skip do modal é que leva ao /painel. */
+  document.querySelectorAll('.js-recusa').forEach(function(a){ a.addEventListener('click', function(ev){ ev.preventDefault(); open('mExit'); }); });
+  var exitSkip = document.getElementById('exitSkip');
+  if (exitSkip) exitSkip.addEventListener('click', function(){ window.location.href = RECUSA_URL; });
 
   var jaOfertou=false;   // trava: bump e exit nunca aparecem os dois
 
