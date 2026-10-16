@@ -217,6 +217,21 @@
   .combo-banner:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
   .combo-banner img{display:block;width:100%;height:auto;}
 
+  /* Banner Diário Astral (oferta de membro R$12,90) — arte 3:1 desktop / retrato no celular,
+     com faixa de preço/CTA abaixo lida da fonte única (DIARIO_ASTRAL). Fora das views. */
+  .diario-banner{display:block;margin:0 0 26px;border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow-md);border:1px solid rgba(255,255,255,.10);background:#0b1130;
+    transition:transform .2s,box-shadow .2s;}
+  .diario-banner:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+  .diario-banner a{display:block;color:inherit;text-decoration:none;}
+  .diario-banner picture img{display:block;width:100%;height:auto;}
+  .diario-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:12px clamp(14px,3vw,22px);background:linear-gradient(90deg,#2b1a55,#6d28d9);color:#fff;}
+  .diario-cta .dc-t{font-family:var(--font-head);font-weight:700;font-size:14px;}
+  .diario-cta .dc-p{font-family:var(--font-head);font-weight:800;font-size:16px;color:#ffd979;margin-left:6px;}
+  .diario-cta .dc-btn{flex:none;font-family:var(--font-head);font-weight:800;font-size:12px;text-transform:uppercase;
+    letter-spacing:.04em;background:#fff;color:#3b1a6b;border-radius:999px;padding:9px 16px;white-space:nowrap;}
+
   /* ===== HOME — 2 cards de produto ===== */
   .home-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:920px;margin:0 auto;}
   @media(min-width:680px){.home-grid{grid-template-columns:1fr 1fr;}}
@@ -233,6 +248,32 @@
   .home-lock{position:absolute;top:16px;right:16px;z-index:3;background:rgba(20,10,35,.6);color:#fff;font-family:var(--font-head);font-weight:700;font-size:11px;padding:6px 12px;border-radius:999px;}
   .market-back{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink-500);background:none;border:none;cursor:pointer;padding:0 0 18px;touch-action:manipulation;}
   .market-back:hover{color:var(--accent);}
+
+  /* ===== BARRA FIXA DE OFERTAS (camada de monetização, 16/10/2026) =====
+     Uma oferta por vez, rodízio por peso + contexto, fechável (X). Mora fora das
+     views (aparece no hub E no leitor). Desktop = barra centralizada; celular = full. */
+  .offer-bar{position:fixed;left:0;right:0;bottom:0;z-index:90;display:flex;align-items:center;gap:12px;
+    padding:10px clamp(12px,3vw,20px);padding-bottom:calc(10px + env(safe-area-inset-bottom));
+    background:linear-gradient(90deg,#2b1a55,#6d28d9);box-shadow:0 -8px 26px rgba(20,36,47,.28);
+    border-top:1px solid rgba(255,255,255,.14);}
+  body.only-cigano .offer-bar{background:linear-gradient(90deg,#3a2418,#c86a3f);}
+  .obar-link{display:flex;align-items:center;gap:12px;flex:1;min-width:0;color:#fff;}
+  .obar-ico{font-size:26px;flex:none;line-height:1;}
+  .obar-ico-img{width:40px;height:40px;flex:none;border-radius:9px;object-fit:cover;border:1px solid rgba(255,255,255,.35);}
+  .obar-txt{display:flex;flex-direction:column;min-width:0;line-height:1.22;}
+  .obar-eye{font-family:var(--font-head);font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);}
+  .obar-t{font-family:var(--font-head);font-weight:700;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .obar-t b{font-weight:800;}
+  .obar-s{font-size:11.5px;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .obar-cta{flex:none;font-family:var(--font-head);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;background:#fff;color:#3b1a6b;border-radius:999px;padding:9px 16px;}
+  body.only-cigano .obar-cta{color:#4a2e1f;}
+  .obar-x{flex:none;background:none;border:none;color:rgba(255,255,255,.75);font-size:24px;line-height:1;cursor:pointer;padding:2px 6px;touch-action:manipulation;}
+  .obar-x:hover{color:#fff;}
+  @media(max-width:520px){.obar-s{display:none;}.obar-ico{font-size:22px;}}
+  @media(min-width:820px){
+    .offer-bar{left:50%;right:auto;transform:translateX(-50%);bottom:14px;width:min(680px,calc(100% - 32px));border-radius:16px;border:1px solid rgba(255,255,255,.16);}
+  }
+  body.has-offer-bar{padding-bottom:78px;}
 </style>
 <!-- trackeador:pixel:start (gerado por trackeador init — não edite à mão) -->
 <script src="https://adstrackeador.leadgo.dev/api/pixel?org=ffab873c-a278-49f3-b475-35976a35aa14" async></script>
@@ -328,6 +369,10 @@
     <a class="combo-banner" href="https://checkout.wiven.com.br/checkout/cmv189c5s0cll01pvkxod26uz?offer=V4RQRAJ" target="_blank" rel="noopener">
       <img src="assets/astro/combo-mistico.webp" alt="Combo Místico — Mapa Astral Completo + Mapa do Amor por R$37,90" width="2172" height="724" loading="lazy">
     </a>
+    <!-- Diário Astral (oferta de membro R$12,90) — banner FORA das views: aparece na home E na
+         tela dos módulos, igual ao Combo Místico. Arte (Mapa Astral de brinde + o que vem) + faixa
+         de preço/CTA montada por renderDiarioBanner() a partir da fonte única DIARIO_ASTRAL. -->
+    <div id="diario-banner" class="diario-banner hidden"></div>
     <div id="view-home">
       <div class="home-grid" id="home-grid"></div>
     </div>
@@ -403,6 +448,9 @@
   </div>
   <div id="cigano-mount" style="max-width:820px;margin:0 auto;padding:26px clamp(12px,3vw,24px) 80px;"></div>
 </div>
+
+<!-- ===================== BARRA FIXA DE OFERTAS ===================== -->
+<div id="offer-bar" class="offer-bar hidden" role="complementary" aria-label="Oferta de membro"></div>
 
 <!-- ===================== MODAL MOUNT ===================== -->
 <div id="modal-mount"></div>
@@ -486,6 +534,16 @@ const CIGANO_OFERTAS = {
 };
 // Comprador só-Tarot vê o Mapa do Tarot Completo como oferta de membro (30% off, 18,90).
 const TAROT_CROSS = {url: 'https://checkout.wiven.com.br/checkout/cmubqz6yy010p01pqilaiahqe?offer=BEBAQWS', normal: 27.90, price: 18.90};
+
+// Diário Astral na área de membros — R$12,90 (oferta Wiven QF36POI, o downsell do Upsell 2).
+// FONTE ÚNICA de preço/link dessa peça: a barra fixa e o banner leem DAQUI — zero literal no HTML.
+// Checkout público conferido em 16/10/2026 (SSR da Wiven: "code":"QF36POI","price":12.9,"currency":"BRL").
+const DIARIO_ASTRAL = {
+  url: 'https://checkout.wiven.com.br/checkout/cmv189e2v05p001pzugux2agk?offer=QF36POI',
+  price: 12.90,
+  img: '/painel/assets/astro/diario-astral-desktop.webp?v=20261016-diario',
+  imgMobile: '/painel/assets/astro/diario-astral-mobile.webp?v=20261016-diario'
+};
 
 const MODULES = [
   {
@@ -611,6 +669,114 @@ const CIGANO_READER = {"cigano-antes": {"pages": ["conteudo/cigano-antes/pagina-
 const CIGANO_KEY = {'cigano-antes':'cigano-antes','cigano-36cartas':'cigano-36cartas','cigano-dicionario':'cigano-dicionario','cigano-tiragens':'cigano-bonus-1','cigano-primeira':'cigano-bonus-2','cigano-intuitiva':'cigano-intuitiva','cigano-cuidado':'cigano-cuidado','cigano-flash':'cigano-bonus-3','cigano-perguntas':'cigano-bonus-4','cigano-folha':'cigano-folha','cigano-combo':'cigano-combo','cigano-mesa-real':'cigano-bonus-5'};
 
 const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10V7a6 6 0 1112 0v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="11" rx="2.5" fill="#fff"/><circle cx="12" cy="15" r="1.6" fill="#14242f"/><path d="M12 16.4V18" stroke="#14242f" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
+/* ===== BARRA FIXA DE OFERTAS (camada de monetização — 16/10/2026) =====
+   Uma oferta por vez, rodízio por peso + contexto (Tarot × Cigano), fechável (X) com
+   memória de 24h. Fonte única = OFERTAS_BARRA. Só entra o que o cliente AINDA não tem.
+   O botão leva data-tk-value/currency: o IC sai pelo Trackeador (sem fbq manual = sem dup). */
+const OFERTAS_BARRA = [
+  // Cigano SEMPRE aparece no painel do Tarot (regra da dona, 16/10).
+  { id:'cigano', ctx:['tarot'], peso:3,
+    titulo:'Mapa do Baralho Cigano', sub:'O segundo oráculo, do mesmo jeito',
+    url:function(){return CIGANO_OFERTAS.entrada.url;}, valor:function(){return CIGANO_OFERTAS.entrada.price;},
+    need:function(o){return !ciganoAny(o);} },
+  // Diário Astral R$12,90 na área — ATIVO (checkout público conferido 16/10: R$12,90).
+  { id:'diario-astral', ctx:['tarot','cigano'], peso:2,
+    titulo:'Diário Astral', sub:'30 dias + Mapa Astral de brinde + Guia do Mês',
+    url:function(){return DIARIO_ASTRAL.url;}, valor:function(){return DIARIO_ASTRAL.price;},
+    img:function(){return DIARIO_ASTRAL.img;},
+    need:function(){return true;} },
+  { id:'completo', ctx:['tarot'], peso:1,
+    titulo:'Nível Completo', sub:'Os 56 Arcanos Menores + bônus + App de Treino',
+    url:function(){return CHECKOUT_URL['completo'];}, valor:function(){return memberPrice(27.90,'completo');},
+    need:function(o){return !o.includes('completo');} },
+  { id:'combo-mistico', ctx:['tarot','cigano'], peso:1,
+    titulo:'Combo Místico', sub:'Mapa Astral Completo + Mapa do Amor',
+    url:'https://checkout.wiven.com.br/checkout/cmv189c5s0cll01pvkxod26uz?offer=V4RQRAJ', valor:37.90,
+    need:function(){return true;} },
+  { id:'tarot', ctx:['cigano'], peso:3,
+    titulo:'Mapa do Tarot', sub:'30% off para quem já tem o Cigano',
+    url:function(){return TAROT_CROSS.url;}, valor:function(){return TAROT_CROSS.price;},
+    need:function(o){return !tarotAny(o);} }
+];
+let barHiddenAt='';
+function barSeen(){try{return JSON.parse(localStorage.getItem('mdt_bar_seen')||'{}');}catch(e){return {};}}
+function barMarkSeen(id){const s=barSeen();s[id]=Date.now();try{localStorage.setItem('mdt_bar_seen',JSON.stringify(s));}catch(e){}}
+function barCtx(hash,owned){
+  if(hash.indexOf('#cigano')===0)return 'cigano';
+  if(hash.indexOf('#tarot')===0||hash.indexOf('#ler/')===0)return 'tarot';
+  return (ciganoAny(owned)&&!tarotAny(owned))?'cigano':'tarot';
+}
+function barElegiveis(ctx,owned){
+  const out=[];
+  OFERTAS_BARRA.forEach(function(o){
+    if(o.ctx.indexOf(ctx)<0)return;
+    const url=typeof o.url==='function'?o.url():o.url;
+    if(!url)return;
+    if(!o.need(owned))return;
+    out.push({id:o.id,titulo:o.titulo,sub:o.sub,url:url,valor:(typeof o.valor==='function'?o.valor():o.valor),peso:o.peso,img:(typeof o.img==='function'?o.img():o.img)});
+  });
+  return out;
+}
+function barPick(ctx,owned){
+  const seen=barSeen(),now=Date.now(),DAY=864e5;
+  const elig=barElegiveis(ctx,owned);
+  if(!elig.length)return null;
+  const fresh=elig.filter(function(o){return !(seen[o.id]&&now-seen[o.id]<DAY);});
+  const pool=fresh.length?fresh:elig;
+  pool.sort(function(a,b){return (b.peso-a.peso)||((seen[a.id]||0)-(seen[b.id]||0));});
+  return pool[0];
+}
+function renderOfferBar(viewId){
+  const bar=document.getElementById('offer-bar');
+  if(!bar)return;
+  function hide(){bar.classList.add('hidden');bar.innerHTML='';document.body.classList.remove('has-offer-bar');}
+  if(!getEmail()||viewId==='view-login'){hide();return;}
+  if(barHiddenAt===location.hash){hide();return;}
+  const owned=getOwned();
+  const o=barPick(barCtx(location.hash||'',owned),owned);
+  if(!o){hide();return;}
+  bar.classList.remove('hidden');
+  document.body.classList.add('has-offer-bar');
+  const val=o.valor.toFixed(2);
+  const ico=o.img
+    ? '<img class="obar-ico-img" src="'+o.img+'" alt="" decoding="async">'
+    : '<span class="obar-ico" aria-hidden="true">🎁</span>';
+  bar.innerHTML=
+    '<a class="obar-link" href="'+o.url+'" target="_blank" rel="noopener" data-tk-value="'+val+'" data-tk-currency="BRL">'+
+      ico+
+      '<span class="obar-txt"><span class="obar-eye">Oferta de membro</span>'+
+        '<span class="obar-t">'+o.titulo+' · <b>R$'+val.replace('.',',')+'</b></span>'+
+        '<span class="obar-s">'+o.sub+'</span></span>'+
+      '<span class="obar-cta">Ver →</span>'+
+    '</a>'+
+    '<button type="button" class="obar-x" aria-label="Fechar oferta" title="Fechar">×</button>';
+  bar.querySelector('.obar-x').addEventListener('click',function(ev){
+    ev.preventDefault();ev.stopPropagation();
+    barMarkSeen(o.id);barHiddenAt=location.hash;hide();
+  });
+}
+
+/* Banner Diário Astral (fora das views: home + módulos). Preço/link vêm de DIARIO_ASTRAL
+   (fonte única); o <a> leva data-tk-value/currency — o Trackeador emite o IC, sem fbq manual. */
+function renderDiarioBanner(){
+  const mount=document.getElementById('diario-banner');
+  if(!mount)return;
+  if(!getEmail()){mount.classList.add('hidden');mount.innerHTML='';return;}
+  const val=DIARIO_ASTRAL.price.toFixed(2), valBR=val.replace('.',',');
+  mount.innerHTML=
+    '<a href="'+DIARIO_ASTRAL.url+'" target="_blank" rel="noopener" data-tk-value="'+val+'" data-tk-currency="BRL" '+
+      'aria-label="Diário Astral — oferta de membro por R$'+valBR+': 30 dias de horóscopo no seu mapa, com 1 Mapa Astral Completo de brinde, Guia do Mês, previsão semanal e avisos de lua e retrógrados">'+
+      '<picture>'+
+        '<source media="(max-width:700px)" srcset="'+DIARIO_ASTRAL.imgMobile+'" type="image/webp">'+
+        '<img src="'+DIARIO_ASTRAL.img+'" width="1600" height="533" decoding="async" '+
+          'alt="Diário Astral — Mapa Astral Completo de brinde: horóscopo diário no seu mapa, previsão semanal, Guia do Mês e avisos de lua e retrógrados">'+
+      '</picture>'+
+      '<span class="diario-cta"><span class="dc-t">Diário Astral<b class="dc-p">R$'+valBR+'</b></span>'+
+        '<span class="dc-btn">Quero o Diário →</span></span>'+
+    '</a>';
+  mount.classList.remove('hidden');
+}
 
 /* ---------- estado ---------- */
 function getEmail(){try{return localStorage.getItem('mdt_email');}catch(e){return null;}}
@@ -1125,7 +1291,7 @@ document.getElementById('cigano-pdf-btn').addEventListener('click',async functio
 });
 
 /* ---------- router ---------- */
-function show(id){['view-login','view-hub','view-reader','view-cigano'].forEach(v=>{document.getElementById(v).classList.toggle('hidden',v!==id);});}
+function show(id){['view-login','view-hub','view-reader','view-cigano'].forEach(v=>{document.getElementById(v).classList.toggle('hidden',v!==id);});renderOfferBar(id);}
 function route(){
   const email=getEmail();
   const h=location.hash;
@@ -1148,6 +1314,7 @@ function route(){
     location.hash='#hub';
   }
   renderHub();
+  renderDiarioBanner();
   show('view-hub');
   showMarket(h==='#tarot'?'tarot':h==='#cigano'?'cigano':null);
 }
