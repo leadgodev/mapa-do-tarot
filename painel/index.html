@@ -285,7 +285,8 @@
   body.only-cigano .obar-cta{color:#4a2e1f;}
   .obar-x{flex:none;background:none;border:none;color:rgba(255,255,255,.75);font-size:24px;line-height:1;cursor:pointer;padding:2px 6px;touch-action:manipulation;}
   .obar-x:hover{color:#fff;}
-  @media(max-width:520px){.obar-s{display:none;}.obar-ico{font-size:22px;}}
+  @media(max-width:520px){.obar-ico{font-size:22px;}.obar-s{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;}}
+  @media(max-width:520px){body.has-offer-bar{padding-bottom:108px;}}
   @media(min-width:820px){
     .offer-bar{left:50%;right:auto;transform:translateX(-50%);bottom:14px;width:min(680px,calc(100% - 32px));border-radius:16px;border:1px solid rgba(255,255,255,.16);}
   }
@@ -559,8 +560,19 @@ const DIARIO_ASTRAL = {
   price: 12.90,
   img: '/painel/assets/astro/diario-astral-desktop.webp?v=20261016-diario2',
   imgMobile: '/painel/assets/astro/diario-astral-mobile.webp?v=20261016-diario2',
-  thumb: '/painel/assets/astro/diario-astral-thumb.webp?v=20261016-diario2'
+  thumb: '/painel/assets/astro/diario-astral-thumb.webp?v=20261016-diario2',
+  // O QUE VEM = fonte única. O banner monta os bullets daqui (html) e a barra fixa usa o
+  // `short` dos itens marcados com bar:true (1 linha no desktop, até 2 no celular).
+  itens: [
+    {html:'Horóscopo diário calculado no <b>SEU mapa</b>', short:'Horóscopo diário no seu mapa', bar:true},
+    {html:'✦ Mapa Astral Completo — <b>de brinde</b>', short:'Mapa Astral de brinde', bar:true, hl:true},
+    {html:'Previsão da semana (todo sábado)', short:'Previsão semanal', bar:false},
+    {html:'Avisos de lua nova/cheia e retrógrados', short:'lua e retrógrados', bar:false},
+    {html:'<b>Guia do Mês</b> incluso', short:'Guia do Mês', bar:true},
+    {html:'Área no site com tudo salvo', short:'tudo salvo no site', bar:false}
+  ]
 };
+function diarioBarLine(){return DIARIO_ASTRAL.itens.filter(function(i){return i.bar;}).map(function(i){return i.short;}).join(' · ');}
 
 const MODULES = [
   {
@@ -699,7 +711,7 @@ const OFERTAS_BARRA = [
     need:function(o){return !ciganoAny(o);} },
   // Diário Astral R$12,90 na área — ATIVO (checkout público conferido 16/10: R$12,90).
   { id:'diario-astral', ctx:['tarot','cigano'], peso:2,
-    titulo:'Diário Astral', sub:'30 dias + Mapa Astral de brinde + Guia do Mês',
+    titulo:'Diário Astral', sub:diarioBarLine(),
     url:function(){return DIARIO_ASTRAL.url;}, valor:function(){return DIARIO_ASTRAL.price;},
     img:function(){return DIARIO_ASTRAL.thumb;},
     need:function(){return true;} },
@@ -792,12 +804,7 @@ function renderDiarioBanner(){
       '<span class="diario-cta">'+
         '<span class="dc-head"><span class="dc-t">Diário Astral</span><span class="dc-p">R$'+valBR+'</span></span>'+
         '<span class="dc-list">'+
-          '<span class="dc-it">Horóscopo diário calculado no <b>SEU mapa</b></span>'+
-          '<span class="dc-it dc-hl">✦ Mapa Astral Completo — <b>de brinde</b></span>'+
-          '<span class="dc-it">Previsão da semana (todo sábado)</span>'+
-          '<span class="dc-it">Avisos de lua nova/cheia e retrógrados</span>'+
-          '<span class="dc-it"><b>Guia do Mês</b> incluso</span>'+
-          '<span class="dc-it">Área no site com tudo salvo</span>'+
+          DIARIO_ASTRAL.itens.map(function(it){return '<span class="dc-it'+(it.hl?' dc-hl':'')+'">'+it.html+'</span>';}).join('')+
         '</span>'+
         '<span class="dc-btn">Quero meu Diário Astral →</span>'+
       '</span>'+
