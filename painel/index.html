@@ -227,10 +227,18 @@
   .diario-banner picture img{display:block;width:100%;height:auto;}
   .diario-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;
     padding:12px clamp(14px,3vw,22px);background:linear-gradient(90deg,#2b1a55,#6d28d9);color:#fff;}
+  .diario-cta .dc-lines{display:flex;flex-direction:column;min-width:0;line-height:1.28;}
   .diario-cta .dc-t{font-family:var(--font-head);font-weight:700;font-size:14px;}
   .diario-cta .dc-p{font-family:var(--font-head);font-weight:800;font-size:16px;color:#ffd979;margin-left:6px;}
+  .diario-cta .dc-bonus{font-family:var(--font-display);font-style:italic;font-weight:600;font-size:14px;
+    color:#ffd979;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .diario-cta .dc-btn{flex:none;font-family:var(--font-head);font-weight:800;font-size:12px;text-transform:uppercase;
     letter-spacing:.04em;background:#fff;color:#3b1a6b;border-radius:999px;padding:9px 16px;white-space:nowrap;}
+  @media(max-width:520px){
+    .diario-cta{flex-wrap:wrap;gap:8px;}
+    .diario-cta .dc-lines{flex:1 1 100%;}
+    .diario-cta .dc-btn{flex:0 0 auto;margin-left:auto;}
+  }
 
   /* ===== HOME — 2 cards de produto ===== */
   .home-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:920px;margin:0 auto;}
@@ -541,8 +549,9 @@ const TAROT_CROSS = {url: 'https://checkout.wiven.com.br/checkout/cmubqz6yy010p0
 const DIARIO_ASTRAL = {
   url: 'https://checkout.wiven.com.br/checkout/cmv189e2v05p001pzugux2agk?offer=QF36POI',
   price: 12.90,
-  img: '/painel/assets/astro/diario-astral-desktop.webp?v=20261016-diario',
-  imgMobile: '/painel/assets/astro/diario-astral-mobile.webp?v=20261016-diario'
+  img: '/painel/assets/astro/diario-astral-desktop.webp?v=20261016-diario2',
+  imgMobile: '/painel/assets/astro/diario-astral-mobile.webp?v=20261016-diario2',
+  thumb: '/painel/assets/astro/diario-astral-thumb.webp?v=20261016-diario2'
 };
 
 const MODULES = [
@@ -684,7 +693,7 @@ const OFERTAS_BARRA = [
   { id:'diario-astral', ctx:['tarot','cigano'], peso:2,
     titulo:'Diário Astral', sub:'30 dias + Mapa Astral de brinde + Guia do Mês',
     url:function(){return DIARIO_ASTRAL.url;}, valor:function(){return DIARIO_ASTRAL.price;},
-    img:function(){return DIARIO_ASTRAL.img;},
+    img:function(){return DIARIO_ASTRAL.thumb;},
     need:function(){return true;} },
   { id:'completo', ctx:['tarot'], peso:1,
     titulo:'Nível Completo', sub:'Os 56 Arcanos Menores + bônus + App de Treino',
@@ -772,7 +781,8 @@ function renderDiarioBanner(){
         '<img src="'+DIARIO_ASTRAL.img+'" width="1600" height="533" decoding="async" '+
           'alt="Diário Astral — Mapa Astral Completo de brinde: horóscopo diário no seu mapa, previsão semanal, Guia do Mês e avisos de lua e retrógrados">'+
       '</picture>'+
-      '<span class="diario-cta"><span class="dc-t">Diário Astral<b class="dc-p">R$'+valBR+'</b></span>'+
+      '<span class="diario-cta"><span class="dc-lines"><span class="dc-t">Diário Astral<b class="dc-p">R$'+valBR+'</b></span>'+
+        '<span class="dc-bonus">✦ Mapa Astral COMPLETO de brinde</span></span>'+
         '<span class="dc-btn">Quero o Diário →</span></span>'+
     '</a>';
   mount.classList.remove('hidden');
