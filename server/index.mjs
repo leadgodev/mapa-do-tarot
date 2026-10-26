@@ -45,6 +45,12 @@ const PRODUCT_SKUS = {
   // Upgrade Essencial → Completo (produto separado criado 16/10/2026, offer OOUCX49): entra como 1º order
   // bump do checkout do principal (escopo Básica) e libera o pacote Completo (completo + bônus 1–4).
   cmvbfyp4j03rb01pp9o9xyqlj: ['completo', 'bonus-1', 'bonus-2', 'bonus-3', 'bonus-4'],
+  // Manuais de Interpretação (order bumps criados 20/10/2026, ligados 26/10/2026; HH9D2WK / GP11LOW).
+  cmvhabxnc0amw01pw6kezg7sr: ['manual-relacionamentos'],
+  cmvhadrl60aq001pwwfavmw59: ['manual-carreira'],
+  // Combo 5 Guias = os 2 manuais + os 3 Guias Essenciais.
+  cmvhho37r0qx101pww88xz0fz: ['combo-5-guias', 'manual-relacionamentos', 'manual-carreira',
+    'combo-3-bonus', 'guia-flash', 'perguntas-80', 'folha-consulta'],
   // Order bumps do Baralho Cigano: liberam só o próprio módulo (não o pacote).
   // O produto principal Cigano (cmulz3f9…) NÃO entra aqui: o plano sai do offerCode (CIGANO_OFFERS).
   cmurhf87201cu01q2wh0whdz0: ['cigano-flash'], // Guia Flash 36 Cartas
