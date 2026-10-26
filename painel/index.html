@@ -500,7 +500,9 @@ const W=C+'cmubqz6yy010p01pqilaiahqe?offer=';
 const CHECKOUT_URL = {
   'completo': W+'G8MYTZF',
   'combo-3-bonus': C+'cmubwg9ah052m01puqslkbogu?offer=CFJDIOJ', 'guia-flash': C+'cmubsge70026t01pujoks75g2?offer=RLLEDP8', 'perguntas-80': C+'cmubsk2bg023101pqxrvx8q4s?offer=ZWWA35E', 'folha-consulta': C+'cmubsl72s023u01pq0h7vf7a9?offer=N6J40YD',
-  'bonus-1': W+'G8MYTZF', 'bonus-2': W+'G8MYTZF', 'bonus-3': W+'G8MYTZF', 'bonus-4': W+'G8MYTZF', 'principal': W+'Q2J6TBK'
+  'bonus-1': W+'G8MYTZF', 'bonus-2': W+'G8MYTZF', 'bonus-3': W+'G8MYTZF', 'bonus-4': W+'G8MYTZF', 'principal': W+'Q2J6TBK',
+  // Manuais de Interpretação — ofertas de membro R$5,90 (criadas 26/10/2026, funil → /painel)
+  'manual-relacionamentos': C+'cmvhabxnh0amx01pwq56r1nia?offer=TC868QC', 'manual-carreira': C+'cmvhadrld0aq101pw72yo1rwf?offer=AFJ3BAZ'
 };
 function buyHref(m){
   const u=CHECKOUT_URL[m.sku];
@@ -517,7 +519,8 @@ function buyHref(m){
 const PRODUTO_SKUS = ['principal','bonus-1','bonus-2','bonus-3','bonus-4','completo'];
 const MEMBER_PRICE_OVERRIDE = {'completo': 5.90, 'cigano-upgrade': 13.90,
   // Preços REAIS cobrados pela oferta (conferidos na Wiven em 09/10/2026) — valem sobre o cálculo de 30%.
-  'principal': 17.90, 'combo-3-bonus': 9.90, 'guia-flash': 4.90, 'perguntas-80': 4.90, 'folha-consulta': 4.90};
+  'principal': 17.90, 'combo-3-bonus': 9.90, 'guia-flash': 4.90, 'perguntas-80': 4.90, 'folha-consulta': 4.90,
+  'manual-relacionamentos': 5.90, 'manual-carreira': 5.90};
 function memberPrice(normal,sku){
   if(sku && MEMBER_PRICE_OVERRIDE[sku]!==undefined) return MEMBER_PRICE_OVERRIDE[sku];
   const normalCents=Math.round(normal*100);
@@ -656,6 +659,22 @@ const MODULES = [
       Array.from({length:10},(_,i)=>'conteudo/perguntas-80/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','amor','dinheiro','autoconhecimento','decisoes','familia','espiritualidade','saude','superacao','sombra'][i]+'.jpg'),
       Array.from({length:10},(_,i)=>'conteudo/folha-consulta/pagina-'+String(i+1).padStart(2,'0')+'-'+['capa','arcanos-0-8','arcanos-9-21','copas','ouros','espadas','paus','sim-ou-nao','tempo-de-resposta','elementos'][i]+'.jpg')
     )
+  },
+  {
+    // Order bump 26/10/2026 (Wiven cmvhabxnc… / HH9D2WK). MVP 16 de 41 páginas — texto: produto/ORDER-BUMPS/manual-relacionamentos/TEXTO.md
+    sku:'manual-relacionamentos', unlocked:false, normal:9.90, partial:true, partialTitle:'Arcanos XI–XXI, naipes e mais tiragens · Em atualização ✨',
+    title:'Manual de Interpretação · Relacionamentos', subtitle:'Amor, reconciliação, separação e sentimentos.',
+    cover:'capas/manual-relacionamentos.jpg',
+    desc:'Interprete o Tarot pra amor, reconciliação e separação: cada Arcano com o que diz sobre sentimentos, reconciliação, separação e conselho, mais sim ou não e tiragens do amor com exemplo resolvido.',
+    pages:[['01','capa'],['02','boas-vindas'],['03','como-perguntar'],['04','louco'],['05','mago'],['06','sacerdotisa'],['07','imperatriz'],['08','imperador'],['09','hierofante'],['10','enamorados'],['11','carro'],['12','forca'],['13','eremita'],['14','roda-fortuna'],['34','tiragem-coracao'],['35','tiragem-coracao-exemplo']].map(p=>'conteudo/manual-relacionamentos/pagina-'+p[0]+'-'+p[1]+'.jpg')
+  },
+  {
+    // Order bump 26/10/2026 (Wiven cmvhadrl… / GP11LOW). MVP 16 de 41 páginas — texto: produto/ORDER-BUMPS/manual-carreira/TEXTO.md
+    sku:'manual-carreira', unlocked:false, normal:9.90, partial:true, partialTitle:'Arcanos XI–XXI, naipes e mais tiragens · Em atualização ✨',
+    title:'Manual de Interpretação · Carreira e Finanças', subtitle:'Carreira, negócios e dinheiro.',
+    cover:'capas/manual-carreira.jpg',
+    desc:'Use o Tarot pra decisões de carreira, negócios e finanças: cada Arcano com o que diz sobre carreira, negócios, dinheiro e conselho, mais sim ou não e tiragens com exemplo resolvido.',
+    pages:[['01','capa'],['02','boas-vindas'],['03','como-perguntar'],['04','louco'],['05','mago'],['06','sacerdotisa'],['07','imperatriz'],['08','imperador'],['09','hierofante'],['10','enamorados'],['11','carro'],['12','forca'],['13','eremita'],['14','roda-fortuna'],['34','tiragem-decisao'],['35','tiragem-decisao-exemplo']].map(p=>'conteudo/manual-carreira/pagina-'+p[0]+'-'+p[1]+'.jpg')
   },
   {
     sku:'bonus-4', unlocked:false, included:true, normal:17.90,
