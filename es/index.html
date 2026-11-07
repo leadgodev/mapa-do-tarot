@@ -62,9 +62,10 @@
   .btn-secondary{background:var(--cream-200); color:var(--ink-900); border:2px solid var(--accent);}
   .btn-secondary:hover{background:var(--accent); color:#fff;}
   .btn .arr{font-weight:400; font-size:1.1em;}
-  .usd-ref{display:none; font-family:var(--font-body); font-weight:400; font-size:13.5px; line-height:1.45; color:var(--ink-900); letter-spacing:0; margin-top:6px;}
+  .usd-ref{display:none; font-family:var(--font-body); font-weight:400; font-size:14px; line-height:1.4; color:var(--ink-500); letter-spacing:0; margin-top:4px;}
   .usd-ref span{display:block;}
-  .usd-ref .fx-aprox{font-size:12px; opacity:.7;}
+  .usd-ref .fx-aprox{font-size:11px; color:var(--ink-300); margin-bottom:4px;}
+  .usd-ref-dark, .usd-ref-dark .fx-aprox{color:var(--cream-100);} .usd-ref-dark{opacity:.85;} .usd-ref-dark .fx-aprox{opacity:.7;}
   .fx-on .usd-ref{display:block;}
   .fx-code{font-size:.45em; font-weight:700; margin-left:.25em; letter-spacing:.02em;}
   .icon-badge{width:66px; height:66px; border-radius:999px; background:var(--cream-200); display:flex; align-items:center; justify-content:center; flex:none; color:var(--accent-press);}
@@ -531,7 +532,7 @@
       <p style="font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--gold-300); margin:0 0 14px;">Imagina abrir tu baraja la próxima semana y entender lo que las cartas tienen para decirte — con calma, con claridad, con confianza.</p>
       <p style="font-size:clamp(16px,1.7vw,19px); line-height:1.6; color:var(--cream-100); margin:0 0 38px;">No necesitas memorizar 78 cartas. No necesitas años. Necesitas el mapa correcto.</p>
       <a class="btn btn-lg btn-primary" href="https://pay.mycheckoutt.com/01a0f31c-06d3-73ae-866f-74e142a2fc53?ref=" data-tk-value="9.50" data-price="9.50" data-plan="unico">Quiero empezar hoy — <span data-usd="9.50">US$ 9,50</span> <span class="arr">→</span></a>
-      <div class="usd-ref" data-usd-ref="9.50" style="text-align:center; margin:10px 0 0; color:var(--cream-100);"></div>
+      <div class="usd-ref usd-ref-dark" data-usd-ref="9.50" style="text-align:center; margin:10px 0 0;"></div>
       <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; font-size:13.5px; color:var(--cream-100); opacity:.85; margin-top:22px;">
         <span>✓ Acceso inmediato</span><span>✓ Garantía de 7 días</span><span>✓ Todos los bonos incluidos</span>
       </div>
